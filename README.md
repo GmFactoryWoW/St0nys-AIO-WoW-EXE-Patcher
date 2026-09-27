@@ -142,44 +142,44 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 
 ## Patch-Übersicht
 
-| Nr. | Patch | Standard |
-|----:|-------|:--------:|
-| 1  | 4GB-Patch (Large Address Aware) | ✅ |
-| 2  | Custom Glue-XML erlauben | ✅ |
-| 3  | Falsch/Nicht signierte MPQs zulassen | ✅ |
-| 4  | Scan DLL deaktivieren | ✅ |
-| 5  | CACHE Ordner Erstellung deaktivieren | – |
-| 6  | Item-Cache sofort aktualisieren | ✅ |
-| 7  | Remote Code Execution Exploit Fix | ✅ |
-| 8  | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | – |
-| 9  | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) | ✅ |
-| 10 | Erweiterte MPQ-Namen erlauben | ✅ |
-| 11 | Nahkampf-Schwung bei Rechtsklick entfernt | ✅ |
-| 12 | NPC-Angriffsanimation beim Drehen unterdrückt | ✅ |
-| 13 | Zauber-Animation nach Abbruch repariert | ✅ |
-| 14 | Blauer Mond am Nachthimmel reaktiviert | ✅ |
-| 15 | Nackter-Charakter-Bug behoben | ✅ |
-| 16 | Force-Reaction bei /reload erhalten | ✅ |
-| 17 | Quest-Tracker automatisch sortieren | ✅ |
-| 18 | Erweiterte Weltkarte standardmäßig aktiv | ✅ |
-| 19 | CVar farclip unlock (max 10000) | ✅ |
-| 20 | CVar horizonFarclipScale unlock (max 12) | ✅ |
-| 21 | CVar environmentDetail unlock (kein Limit statt 1.5) | ✅ |
-| 22 | CVar groundEffectDist unlock (max 3166 statt 140) | ✅ |
-| 23 | Grafikoptionen: Slider-Maxima erweitern | ✅ |
-| 24 | Fenstermodus als Standard setzen | ✅ |
-| 25 | Fenstermodus maximiert als Standard setzen | ✅ |
-| 26 | Cast Bars auf allen Frames | ✅ |
-| 27 | Max Characters pro Server auf 255 erhöht | – |
-| 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | – |
-| 29 | Mausflackern / Kamerasprünge Fix | ✅ |
-| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | ✅ |
-| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | ✅ |
-| 32 | Occluder Fix für Stormwind (Open Azeroth) | ✅ |
-| 33 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | – |
-| 34 | Sound-Einstellungen optimieren | ✅ |
-| 35 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | – |
-| 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | ✅ |
+| Nr. | Patch | Autor | Standard |
+|----:|-------|-------|:--------:|
+| 1  | 4GB-Patch (Large Address Aware) |  | ✅ |
+| 2  | Custom Glue-XML erlauben |  | ✅ |
+| 3  | Falsch/Nicht signierte MPQs zulassen |  | ✅ |
+| 4  | Scan DLL deaktivieren |  | ✅ |
+| 5  | CACHE Ordner Erstellung deaktivieren |  | – |
+| 6  | Item-Cache sofort aktualisieren |  | ✅ |
+| 7  | Remote Code Execution Exploit Fix |  | ✅ |
+| 8  | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* |  | – |
+| 9  | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) |  | ✅ |
+| 10 | Erweiterte MPQ-Namen erlauben |  | ✅ |
+| 11 | Nahkampf-Schwung bei Rechtsklick entfernt |  | ✅ |
+| 12 | NPC-Angriffsanimation beim Drehen unterdrückt |  | ✅ |
+| 13 | Zauber-Animation nach Abbruch repariert |  | ✅ |
+| 14 | Blauer Mond am Nachthimmel reaktiviert |  | ✅ |
+| 15 | Nackter-Charakter-Bug behoben |  | ✅ |
+| 16 | Force-Reaction bei /reload erhalten |  | ✅ |
+| 17 | Quest-Tracker automatisch sortieren |  | ✅ |
+| 18 | Erweiterte Weltkarte standardmäßig aktiv |  | ✅ |
+| 19 | CVar farclip unlock (max 10000) |  | ✅ |
+| 20 | CVar horizonFarclipScale unlock (max 12) |  | ✅ |
+| 21 | CVar environmentDetail unlock (kein Limit statt 1.5) |  | ✅ |
+| 22 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
+| 23 | Grafikoptionen: Slider-Maxima erweitern | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 24 | Fenstermodus als Standard setzen | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 25 | Fenstermodus maximiert als Standard setzen | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 26 | Cast Bars auf allen Frames |  | ✅ |
+| 27 | Max Characters pro Server auf 255 erhöht | [St0ny](https://github.com/Raz0r1337) | – |
+| 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
+| 29 | Mausflackern / Kamerasprünge Fix |  | ✅ |
+| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 32 | Occluder Fix für Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
+| 33 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
+| 34 | Sound-Einstellungen optimieren | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 35 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* |  | – |
+| 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
 
 ---
 
@@ -261,7 +261,7 @@ Ermöglicht die Nutzung von Wildcard-Namen für MPQ-Archive
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 28, standardmäßig aus)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 28, standardmäßig aus, Autor: MacWarrior)*
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
 6 Bordüren, 17 Bordürenfarben, 51 Hintergrundfarben. Der Tabard-Designer
@@ -320,11 +320,11 @@ des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
 Entsperrt den CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
-**Fenstermodus als Standard setzen** *(Nr. 24)*
+**Fenstermodus als Standard setzen** *(Nr. 24, Autor: [St0ny](https://github.com/Raz0r1337))*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 25)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 25, Autor: [St0ny](https://github.com/Raz0r1337))*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
@@ -333,7 +333,7 @@ Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus)*
+**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus, Autor: [St0ny](https://github.com/Raz0r1337))*
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
@@ -348,7 +348,7 @@ und unkontrollierte Kamerabewegungen.
 
 ### GameObject-Sichtweite
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 30)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 30, Autor: [St0ny](https://github.com/Raz0r1337))*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -370,7 +370,7 @@ Mit Patch Nr. 31 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
 unlock“ (Nr. 21) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 31)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 31, Autor: [St0ny](https://github.com/Raz0r1337))*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab.
 Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
@@ -478,7 +478,7 @@ sie unabhängig von den Distanzen verbreitern.
 
 ### Charakter-Portraits (HD)
 
-**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 36)*
+**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 36, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
 statt der Standard-64×64. Bildausschnitt, Neigung und Zoom bleiben unverändert
 – nur die Renderauflösung steigt, die Portraits werden also deutlich schärfer.
@@ -516,14 +516,14 @@ Spiel wirkt.
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 32)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 32, Autor: OpenAzeroth)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
 
 ### Grafikoptionen (UI-Slider)
 
-**Slider-Maxima im Video-Menü erweitern** *(Nr. 23)*
+**Slider-Maxima im Video-Menü erweitern** *(Nr. 23, Autor: [St0ny](https://github.com/Raz0r1337))*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -622,7 +622,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 
 ### DLL-Unterstützung
 
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 33, standardmäßig aus)*
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 33, standardmäßig aus, Autor: FrostAtom)*
 Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
 Server.
@@ -630,7 +630,7 @@ Server.
 
 ### Sound-Einstellungen
 
-**Sound-Einstellungen optimieren** *(Nr. 34)*
+**Sound-Einstellungen optimieren** *(Nr. 34, Autor: [St0ny](https://github.com/Raz0r1337))*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben

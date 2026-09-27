@@ -298,6 +298,7 @@ function Add-HdPortraits([int]$SIZE) {
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
 #    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
+#    Author - optional: Urheber des Patches (nur zur Dokumentation)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    Code  - Scriptblock mit den Patch-Aufrufen
@@ -482,6 +483,7 @@ $patches = @(
     }}
 
     @{ Id = 'sliders'; On = $true; Needs = @('farclip', 'envdetail', 'grounddist')
+       Author = 'St0ny'
        De = 'Grafikoptionen: Slider-Maxima erweitern'
        En = 'Graphics options: extend slider maximums'
        Code = {
@@ -579,6 +581,7 @@ $patches = @(
     }}
 
     @{ Id = 'window'; On = $true
+       Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
        Code = {
@@ -586,6 +589,7 @@ $patches = @(
     }}
 
     @{ Id = 'maximize'; On = $true
+       Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
        Code = {
@@ -600,6 +604,7 @@ $patches = @(
     }}
 
     @{ Id = 'maxchars'; On = $false
+       Author = 'St0ny'
        De = 'Max Characters pro Server auf 255 erhoeht'
        En = 'Max characters per realm raised to 255'
        Code = {
@@ -607,6 +612,7 @@ $patches = @(
     }}
 
     @{ Id = 'emblems'; On = $false; Needs = @('mpqnames')
+       Author = 'MacWarrior'
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'
        NoteDe = 'benoetigt Patch-G'
@@ -671,6 +677,7 @@ $patches = @(
     }}
 
     @{ Id = 'goscale'; On = $true; Needs = @('envdetail')
+       Author = 'St0ny'
        De = 'GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen'
        En = 'GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail'
        Code = {
@@ -717,6 +724,7 @@ $patches = @(
     }}
 
     @{ Id = 'cat0'; On = $true
+       Author = 'St0ny'
        De = 'GameObject Sichtweite: Cat 0 von 30 auf 50 Yards'
        En = 'GameObject view distance: Cat 0 from 30 to 50 yards'
        Code = {
@@ -753,6 +761,7 @@ $patches = @(
     }}
 
     @{ Id = 'occluder'; On = $true
+       Author = 'OpenAzeroth'
        De = 'Occluder Fix fuer Stormwind (Open Azeroth)'
        En = 'Occluder fix for Stormwind (Open Azeroth)'
        Code = {
@@ -760,6 +769,7 @@ $patches = @(
     }}
 
     @{ Id = 'awesome'; On = $false
+       Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
        NoteDe = 'benoetigt awesome_wotlk'
@@ -772,6 +782,7 @@ $patches = @(
     }}
 
     @{ Id = 'sound'; On = $true
+       Author = 'St0ny'
        De = 'Sound-Einstellungen optimieren'
        En = 'Optimize sound settings'
        Code = {
@@ -797,6 +808,7 @@ $patches = @(
     }}
 
     @{ Id = 'hdportraits'; On = $true
+       Author = 'Badgermilk0'
        De = 'HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)'
        En = 'HD unit frame portraits: 256x256 (live 3D portraits)'
        Code = {
