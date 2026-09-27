@@ -428,7 +428,6 @@ $patches = @(
     }}
 
     @{ Id = 'level101'; On = $false
-       Author = 'Robinsch'
        De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
        En = 'Level 101+ fix (druid base stats and barber chair)'
        Code = {

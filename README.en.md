@@ -158,7 +158,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 12 | Suppress NPC attack animation when turning | Robinsch | ✅ |
 | 13 | Fix spell animation after cancelled channel | Robinsch | ✅ |
 | 14 | Fix "ghost" attack when NPCs evade from combat | Robinsch | ✅ |
-| 15 | Level 101+ fix (druid base stats and barber chair) | Robinsch | – |
+| 15 | Level 101+ fix (druid base stats and barber chair) |  | – |
 | 16 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 17 | Fix naked character bug | Robinsch | ✅ |
 | 18 | Keep force reaction on /reload |  | ✅ |
@@ -250,7 +250,7 @@ channelled spell.
 **Fix "ghost" attack when NPCs evade from combat** *(No. 14, Author: Robinsch)*
 Fixes the "ghost" attack NPCs perform when they evade from combat.
 
-**Level 101+ fix for druid base stats and barber chair** *(No. 15, off by default, Author: Robinsch)*
+**Level 101+ fix for druid base stats and barber chair** *(No. 15, off by default)*
 Druids at level 101 and above can view their base stats again, and the
 barber chair works for all characters at level 101 and above.
 Author's note: *"Use XML MD5"*.

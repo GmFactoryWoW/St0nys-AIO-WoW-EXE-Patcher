@@ -158,7 +158,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 12 | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ |
 | 13 | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ |
 | 14 | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch | ✅ |
-| 15 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | Robinsch | – |
+| 15 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) |  | – |
 | 16 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
 | 17 | Nackter-Charakter-Bug behoben | Robinsch | ✅ |
 | 18 | Force-Reaction bei /reload erhalten |  | ✅ |
@@ -252,7 +252,7 @@ Vorbereitungsanimation hängen blieb.
 Behebt den „Geister“-Angriff, den NPCs ausführen, wenn sie aus dem Kampf
 evaden.
 
-**Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 15, standardmäßig aus, Autor: Robinsch)*
+**Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 15, standardmäßig aus)*
 Druiden ab Level 101 können ihre Grundwerte wieder ansehen, und der
 Barbierstuhl funktioniert für alle Charaktere ab Level 101.
 Hinweis des Autors: *„Use XML MD5“*.
