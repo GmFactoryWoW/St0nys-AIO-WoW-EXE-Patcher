@@ -367,7 +367,7 @@ $patches = @(
         Patch 0x2689FD @(0x00, 0x00)
     }}
 
-    @{ Id = 'rce'; On = $true
+    @{ Id = 'rce'; On = $false
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
@@ -376,7 +376,7 @@ $patches = @(
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; On = $false; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; On = $true; Obsoletes = @('rce')
        Author = 'Robinsch'
        De = 'Warden komplett abschalten (RCE-Fix)'
        En = 'Disable Warden completely (RCE fix)'

@@ -150,8 +150,8 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 4  | Disable scan DLL | 12th Gen exe | ✅ |
 | 5  | Disable CACHE folder creation | Kebabstorm | – |
 | 6  | Refresh item cache immediately | WoWFix335 | ✅ |
-| 7  | Remote code execution exploit fix | Robinsch | ✅ |
-| 8  | Disable Warden completely (RCE fix) *(may get you kicked if Warden is active)* | Robinsch | – |
+| 7  | Remote code execution exploit fix | Robinsch | – |
+| 8  | Disable Warden completely (RCE fix) *(may get you kicked if Warden is active)* | Robinsch | ✅ |
 | 9  | Disallow client patches from the server | Kebabstorm | – |
 | 10 | Disallow hardware surveys from the server | Kebabstorm | – |
 | 11 | Disable HTTP requests to Battle.net | Kebabstorm | ✅ |
@@ -227,13 +227,13 @@ content on private servers.
 **Disable scan DLL** *(No. 4, Author: 12th Gen exe)*
 Disables the Warden scan DLL mechanism in the client.
 
-**Remote code execution exploit fix** *(No. 7, Author: Robinsch)*
+**Remote code execution exploit fix** *(No. 7, off by default, Author: Robinsch)*
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
 are no longer loaded from the local cache. Warden itself keeps working, so
 servers with active Warden are not a problem.
 
-**Disable Warden completely (RCE fix)** *(No. 8, off by default, Author: Robinsch)*
+**Disable Warden completely (RCE fix)** *(No. 8, Author: Robinsch)*
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix

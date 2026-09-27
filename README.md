@@ -150,8 +150,8 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 4  | Scan DLL deaktivieren | 12th Gen exe | ✅ |
 | 5  | CACHE Ordner Erstellung deaktivieren | Kebabstorm | – |
 | 6  | Item-Cache sofort aktualisieren | WoWFix335 | ✅ |
-| 7  | Remote Code Execution Exploit Fix | Robinsch | ✅ |
-| 8  | Warden komplett abschalten (RCE-Fix) *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – |
+| 7  | Remote Code Execution Exploit Fix | Robinsch | – |
+| 8  | Warden komplett abschalten (RCE-Fix) *(Kick-Gefahr bei aktivem Warden)* | Robinsch | ✅ |
 | 9  | Client-Patches vom Server verbieten | Kebabstorm | – |
 | 10 | Hardware-Umfragen vom Server verbieten | Kebabstorm | – |
 | 11 | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | ✅ |
@@ -227,13 +227,13 @@ Custom-Content auf privaten Servern.
 **Scan-DLL deaktivieren** *(Nr. 4, Autor: 12th Gen exe)*
 Deaktiviert den Warden-Scan-DLL-Mechanismus im Client.
 
-**Remote Code Execution Exploit Fix** *(Nr. 7, Autor: Robinsch)*
+**Remote Code Execution Exploit Fix** *(Nr. 7, standardmäßig aus, Autor: Robinsch)*
 Schließt eine Sicherheitslücke, die Remote-Code-Ausführung über manipulierte
 Pakete ermöglichen konnte: Die Sektion `.zdata` verliert ihr Ausführungsrecht,
 und Warden-Module werden nicht mehr aus dem lokalen Cache geladen. Warden selbst
 läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 
-**Warden komplett abschalten (RCE-Fix)** *(Nr. 8, standardmäßig aus, Autor: Robinsch)*
+**Warden komplett abschalten (RCE-Fix)** *(Nr. 8, Autor: Robinsch)*
 Der Client verwirft alle Warden-Pakete des Servers (`SMSG_WARDEN_DATA`).
 Warden-Module sind Code, den der Server im Client ausführen lässt – mit diesem
 Patch ist das überhaupt nicht mehr möglich, auch nicht über künftige Tricks.
