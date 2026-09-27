@@ -75,7 +75,9 @@ $TEXT = @{
         NoneSelected  = 'Es ist kein Patch ausgewaehlt.'
         BadSelect     = '[FEHLER] Ungueltiger Wert fuer -Select: {0}'
         Summary       = 'Folgende {0} Patches werden eingespielt:'
-        Hint          = 'HINWEIS: "{0}" wirkt nur vollstaendig zusammen mit:'
+        HintHead      = 'HINWEIS zu "{0}":'
+        Hint          = 'wirkt nur vollstaendig zusammen mit:'
+        Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
@@ -115,7 +117,9 @@ $TEXT = @{
         NoneSelected  = 'No patch is selected.'
         BadSelect     = '[ERROR] Invalid value for -Select: {0}'
         Summary       = 'The following {0} patches will be applied:'
-        Hint          = 'NOTE: "{0}" only takes full effect together with:'
+        HintHead      = 'NOTE on "{0}":'
+        Hint          = 'only takes full effect together with:'
+        Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
@@ -298,7 +302,9 @@ function Add-HdPortraits([int]$SIZE) {
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
 #    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
-#    Author - optional: Urheber des Patches (nur zur Dokumentation)
+#    Author - optional: Urheber bzw. Quelle des Patches (nur zur Dokumentation)
+#    Obsoletes - optional: Ids von Patches, die dieser ueberfluessig macht
+#            (erzeugt nur einen Hinweis, wenn beide ausgewaehlt sind)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    Code  - Scriptblock mit den Patch-Aufrufen
@@ -329,6 +335,7 @@ $patches = @(
     }}
 
     @{ Id = 'mpqsig'; On = $true
+       Author = '12th Gen exe'
        De = 'Falsch/Nicht signierte MPQs zulassen'
        En = 'Allow unsigned / incorrectly signed MPQs'
        Code = {
@@ -336,6 +343,7 @@ $patches = @(
     }}
 
     @{ Id = 'scandll'; On = $true
+       Author = '12th Gen exe'
        De = 'Scan DLL deaktivieren'
        En = 'Disable scan DLL'
        Code = {
@@ -352,6 +360,7 @@ $patches = @(
     }}
 
     @{ Id = 'itemcache'; On = $true
+       Author = 'WoWFix335'
        De = 'Item-Cache sofort aktualisieren'
        En = 'Refresh item cache immediately'
        Code = {
@@ -365,6 +374,63 @@ $patches = @(
        Code = {
         Patch 0x2A7 @(0xC0)
         Patch 0x3D9D7C @(0x90, 0x90)
+    }}
+
+    @{ Id = 'wardenoff'; On = $false; Obsoletes = @('rce')
+       Author = 'Robinsch'
+       De = 'Warden komplett abschalten (RCE-Fix)'
+       En = 'Disable Warden completely (RCE fix)'
+       NoteDe = 'Kick-Gefahr bei aktivem Warden'
+       NoteEn = 'may get you kicked if Warden is active'
+       Code = {
+        # Verwirft SMSG_WARDEN_DATA (Opcode 0x2E6) direkt am Eingang des
+        # Paket-Handlers (VA 0x7DA850): je -> nop, der Handler kehrt sofort mit 0
+        # zurueck. Damit kann der Server ueber Warden keinerlei Code mehr im
+        # Client ausfuehren. Der Client antwortet aber auch nicht mehr auf
+        # Warden - Server mit aktivem Warden koennen deshalb kicken.
+        # Macht den RCE-Fix (rce) ueberfluessig, beide zusammen schaden nicht.
+        Patch 0x3D9C5B @(0x90, 0x90)
+    }}
+
+    @{ Id = 'noserverpatch'; On = $false
+       Author = 'Kebabstorm'
+       De = 'Client-Patches vom Server verbieten'
+       En = 'Disallow client patches from the server'
+       Code = {
+        Patch 0xDA2A8 @(0x90, 0x90, 0xEB)
+    }}
+
+    @{ Id = 'nosurvey'; On = $false
+       Author = 'Kebabstorm'
+       De = 'Hardware-Umfragen vom Server verbieten'
+       En = 'Disallow hardware surveys from the server'
+       Code = {
+        Patch 0xDA2BD @(0xE9, 0xEB, 0x0A, 0x00, 0x00)
+    }}
+
+    @{ Id = 'nohttp'; On = $true
+       Author = 'Kebabstorm'
+       De = 'HTTP-Anfragen an Battle.net deaktivieren'
+       En = 'Disable HTTP requests to Battle.net'
+       Code = {
+        # News, Hilfe-Artikel und Nutzungsbedingungen werden nicht mehr abgerufen.
+        Patch 0x46F28F @(0x90, 0x90, 0x90, 0x90)
+    }}
+
+    @{ Id = 'skipbnet'; On = $true
+       Author = 'Kebabstorm'
+       De = 'Battle.net-Login ueberspringen'
+       En = 'Skip Battle.net login'
+       Code = {
+        Patch 0x2B1F48 @(0xEB)
+    }}
+
+    @{ Id = 'skiprdp'; On = $true
+       Author = 'Kebabstorm'
+       De = 'Remote-Desktop-Pruefung ueberspringen'
+       En = 'Skip Remote Desktop check'
+       Code = {
+        Patch 0x36AE40 @(0xEB)
     }}
 
     @{ Id = 'afk'; On = $false
@@ -381,6 +447,7 @@ $patches = @(
     }}
 
     @{ Id = 'areatrigger'; On = $true
+       Author = 'WoWFix335'
        De = 'Area-Trigger-Timer Verbesserung (250ms auf 50ms)'
        En = 'Area trigger timer accuracy (250 ms to 50 ms)'
        Code = {
@@ -393,6 +460,28 @@ $patches = @(
        Code = {
         Patch 0x5E0F09 @(0x2A)
         Patch 0x5E0F16 @(0x2A)
+    }}
+
+    @{ Id = 'localdata'; On = $false
+       Author = '12th Gen exe'
+       De = 'Daten direkt aus dem Data-Ordner laden (ohne MPQ)'
+       En = 'Load data directly from the Data folder (no MPQ)'
+       Code = {
+        # Z.B. Data\DBFilesClient\ItemDisplayInfo.dbc wird direkt aus dem Ordner gelesen.
+        Patch 0x1F2A @(0x90, 0x90, 0x90, 0x90, 0x90, 0x6A, 0xFF)
+    }}
+
+    @{ Id = 'luaunlock'; On = $false
+       Author = '12th Gen exe'
+       De = 'LUA Unlock (geschuetzte Funktionen freigeben)'
+       En = 'LUA unlock (allow protected functions)'
+       NoteDe = 'kann als Botting gewertet werden'
+       NoteEn = 'may be treated as botting'
+       Code = {
+        # Gibt geschuetzte Lua-Funktionen fuer Addons/Makros frei, z.B.
+        # CastSpellByName, CastSpellByID, TargetUnit, FocusUnit, InteractUnit,
+        # Bewegungsfunktionen, ReloadUI. AttackTarget meldet weiterhin einen Fehler.
+        Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
     @{ Id = 'swing'; On = $true
@@ -427,12 +516,15 @@ $patches = @(
         Patch 0x0355BF @(0xEB)
     }}
 
-    @{ Id = 'level101'; On = $false
+    @{ Id = 'level101'; On = $false; Needs = @('glue')
+       Author = '12th Gen exe'
        De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
        En = 'Level 101+ fix (druid base stats and barber chair)'
        Code = {
         # Druiden koennen ihre Grundwerte wieder ansehen und der Barbierstuhl
         # funktioniert fuer alle Charaktere ab Level 101.
+        # Braucht laut Quelle "XML MD5" = den Patch "Disable XML SIG MD5", das ist
+        # hier der Patch "Custom Glue-XML erlauben" (glue).
         Patch 0x3F5DC2 @(0x90, 0x90, 0x90)
     }}
 
@@ -453,10 +545,48 @@ $patches = @(
     }}
 
     @{ Id = 'forcereaction'; On = $true
+       Author = 'WoWFix335'
        De = 'Force-Reaction bei /reload erhalten'
        En = 'Keep force reaction on /reload'
        Code = {
         Patch 0x12811E @(0x90, 0x90, 0x90, 0x90, 0x90)
+    }}
+
+    @{ Id = 'mail'; On = $false
+       Author = 'WoWFix335'
+       De = 'Neue Post ohne 60 Sekunden Wartezeit'
+       En = 'New mail without the 60-second wait'
+       Code = {
+        Patch 0x16D899 @(0x05, 0x01, 0x00, 0x00, 0x00)
+    }}
+
+    @{ Id = 'deadchat'; On = $false
+       Author = 'WoWFix335'
+       De = 'Chat-Befehle auch im Tod erlauben'
+       En = 'Allow chat commands while dead'
+       Code = {
+        Patch 0x10CA41 @(0xEB)
+    }}
+
+    @{ Id = 'raceclass'; On = $false
+       Author = 'WoWFix335'
+       De = 'Unbegrenzte Rasse/Klasse-Kombinationen'
+       En = 'Unlimited race/class combinations'
+       NoteDe = 'Server muss es unterstuetzen'
+       NoteEn = 'server must support it'
+       Code = {
+        Patch 0xE0355 @(0x78)
+        Patch 0xE038E @(0x88)
+        Patch 0xE03A3 @(0x88)
+        Patch 0xE03C3 @(0x88)
+    }}
+
+    @{ Id = 'notransparency'; On = $false
+       Author = '12th Gen exe'
+       De = 'Keine Transparenz beim Heranzoomen'
+       En = 'No character transparency when zooming in'
+       Code = {
+        Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
     @{ Id = 'tracker'; On = $true
@@ -474,6 +604,7 @@ $patches = @(
     }}
 
     @{ Id = 'farclip'; On = $true
+       Author = '12th Gen exe'
        De = 'CVar farclip unlock (max 10000)'
        En = 'CVar farclip unlock (max 10000)'
        Code = {
@@ -489,6 +620,7 @@ $patches = @(
     }}
 
     @{ Id = 'horizon'; On = $true
+       Author = 'St0ny'
        De = 'CVar horizonFarclipScale unlock (max 12)'
        En = 'CVar horizonFarclipScale unlock (max 12)'
        Code = {
@@ -622,6 +754,14 @@ $patches = @(
        En = 'Maximized window by default'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
+    }}
+
+    @{ Id = 'windowfix'; On = $false
+       Author = 'WoWFix335'
+       De = 'Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus'
+       En = 'No black screen when switching to windowed mode'
+       Code = {
+        Patch 0xE94 @(0xEB)
     }}
 
     @{ Id = 'castbars'; On = $true
@@ -1147,8 +1287,24 @@ foreach ($p in $chosen) {
     }
     if ($missing.Count -gt 0) {
         Write-Host ''
-        Say (T 'Hint' (PatchName $p)) 'Yellow'
+        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'Hint') 'Yellow'
         foreach ($m in $missing) { Say "  - $m" 'Yellow' }
+    }
+}
+foreach ($p in $chosen) {
+    if (-not $p.Obsoletes) { continue }
+    $both = @()
+    foreach ($id in $p.Obsoletes) {
+        if ($chosenIds -contains $id) {
+            foreach ($q in $patches) { if ($q.Id -eq $id) { $both += PatchName $q } }
+        }
+    }
+    if ($both.Count -gt 0) {
+        Write-Host ''
+        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'Obsolete') 'Yellow'
+        foreach ($m in $both) { Say "  - $m" 'Yellow' }
     }
 }
 Write-Host ''
