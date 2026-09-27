@@ -16,7 +16,9 @@
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "default",
 #                             "all" oder Nummern/Bereiche wie "1,3,5-8"
-#    -Unattended              Keine Rueckfragen und keine Pausen
+#    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
+#                             -Language gilt Deutsch, ohne -Select die
+#                             gespeicherte bzw. die Standard-Auswahl
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 # ============================================================
 
@@ -30,7 +32,20 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-if (-not $Path) { $Path = Join-Path $scriptDir 'Wow.exe' }
+if (-not $Path) {
+    $Path = Join-Path $scriptDir 'Wow.exe'
+} elseif (-not [System.IO.Path]::IsPathRooted($Path)) {
+    # .NET loest relative Pfade gegen das Prozessverzeichnis auf, nicht gegen
+    # das aktuelle PowerShell-Verzeichnis - daher selbst absolut machen.
+    $Path = Join-Path (Get-Location).ProviderPath $Path
+}
+
+# -Unattended stellt keine Rueckfragen: ohne -Language Deutsch, ohne -Select
+# die gespeicherte Auswahl (bzw. die Standard-Auswahl, wenn es keine gibt).
+if ($Unattended) {
+    if (-not $Language) { $Language = 'de' }
+    if (-not $Select) { $Select = 'saved' }
+}
 $file = $Path
 $backup = $file + '.BAK'
 $settingsFile = Join-Path $scriptDir 'patcher_selection.ini'
@@ -149,6 +164,17 @@ function PatchName($p) {
     if ($script:lang -eq 'en') { $n = $p.En; $note = $p.NoteEn } else { $n = $p.De; $note = $p.NoteDe }
     if ($note) { $n = "$n ($note)" }
     return $n
+}
+
+# Eingabe lesen. Read-Host liefert bei Strg+Z bzw. geschlossener Eingabe $null -
+# dann gibt es keine Antwort mehr, also abbrechen (Exit-Code 2, nichts geaendert).
+function Ask([string]$prompt) {
+    $r = Read-Host $prompt
+    if ($null -eq $r) {
+        Write-Host ''
+        exit 2
+    }
+    return ([string]$r).Trim()
 }
 
 function Exit-Patcher([int]$code) {
@@ -296,7 +322,8 @@ function Add-HdPortraits([int]$SIZE) {
 # ============================================================
 #  PATCH-DEFINITIONEN
 #  Jeder Patch ist eine Hashtable:
-#    Id    - interner Kurzname (fuer Abhaengigkeiten)
+#    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
+#    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
 #    On    - Standard-Auswahl: vorausgewaehlt ($true) oder nicht ($false)
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
@@ -308,12 +335,27 @@ function Add-HdPortraits([int]$SIZE) {
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    Code  - Scriptblock mit den Patch-Aufrufen
-#  Die Reihenfolge hier ist die Reihenfolge im Menue und beim Einspielen.
+#  Die Reihenfolge hier ist die Reihenfolge im Menue und beim Einspielen,
+#  Patches einer Kategorie stehen zusammen.
 # ============================================================
+
+$CATEGORIES = @{
+    system   = @{ De = 'System & Leistung';                 En = 'System & performance' }
+    security = @{ De = 'Sicherheit & Datenschutz';          En = 'Security & privacy' }
+    login    = @{ De = 'Login & Verbindung';                En = 'Login & connection' }
+    modding  = @{ De = 'Modding: Interface, MPQs & Addons'; En = 'Modding: interface, MPQs & addons' }
+    gameplay = @{ De = 'Gameplay-Fixes';                    En = 'Gameplay fixes' }
+    graphics = @{ De = 'Grafik & Sichtweite';               En = 'Graphics & view distance' }
+    ui       = @{ De = 'Interface & Komfort';               En = 'Interface & comfort' }
+    window   = @{ De = 'Fenster & Maus';                    En = 'Window & mouse' }
+    sound    = @{ De = 'Sound';                             En = 'Sound' }
+}
 
 $patches = @(
 
-    @{ Id = 'laa'; On = $true
+    # --- System & Leistung ---
+
+    @{ Id = 'laa'; Cat = 'system'; On = $true
        Author = 'Kebabstorm'
        De = '4GB-Patch (Large Address Aware)'
        En = '4GB patch (Large Address Aware)'
@@ -321,45 +363,15 @@ $patches = @(
         Patch 0x126 @(0x23)
     }}
 
-    @{ Id = 'glue'; On = $true
+    @{ Id = 'cache'; Cat = 'system'; On = $false
        Author = 'Kebabstorm'
-       De = 'Custom Glue-XML erlauben'
-       En = 'Allow custom GlueXML'
-       Code = {
-        Patch 0x1F41BF @(0xEB)
-        Patch 0x415A25 @(0xEB)
-        Patch 0x415A3F @(0x03)
-        Patch 0x415A95 @(0x03)
-        Patch 0x415B46 @(0xEB)
-        Patch 0x415B5F @(0xB8, 0x03, 0x00, 0x00, 0x00, 0xEB, 0xED)
-    }}
-
-    @{ Id = 'mpqsig'; On = $true
-       Author = '12th Gen exe'
-       De = 'Falsch/Nicht signierte MPQs zulassen'
-       En = 'Allow unsigned / incorrectly signed MPQs'
-       Code = {
-        Patch 0x021350 @(0x55, 0x8B, 0xEC, 0xB9, 0x05, 0x00, 0x00, 0x00, 0x8B, 0x45, 0x0C, 0x89, 0x08, 0xB8, 0x01, 0x00, 0x00, 0x00, 0x5D, 0xC2, 0x18, 0x00)
-    }}
-
-    @{ Id = 'scandll'; On = $true
-       Author = '12th Gen exe'
-       De = 'Scan DLL deaktivieren'
-       En = 'Disable scan DLL'
-       Code = {
-        Patch 0x5F4D56 @(0xC7, 0xC7)
-        Patch 0x5F4D62 @(0xC7, 0xC7)
-    }}
-
-    @{ Id = 'cache'; On = $false
-       Author = 'Kebabstorm'
-       De = 'CACHE Ordner Erstellung deaktivieren'
+       De = 'CACHE-Ordner-Erstellung deaktivieren'
        En = 'Disable CACHE folder creation'
        Code = {
         Patch 0x61BE58 @(0x7C, 0x7C)
     }}
 
-    @{ Id = 'itemcache'; On = $true
+    @{ Id = 'itemcache'; Cat = 'system'; On = $true
        Author = 'Robinsch'
        De = 'Item-Cache sofort aktualisieren'
        En = 'Refresh item cache immediately'
@@ -367,7 +379,9 @@ $patches = @(
         Patch 0x2689FD @(0x00, 0x00)
     }}
 
-    @{ Id = 'rce'; On = $false
+    # --- Sicherheit & Datenschutz ---
+
+    @{ Id = 'rce'; Cat = 'security'; On = $false
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
@@ -376,10 +390,10 @@ $patches = @(
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; On = $true; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; Cat = 'security'; On = $true; Obsoletes = @('rce')
        Author = 'Robinsch'
-       De = 'Warden komplett abschalten (RCE-Fix)'
-       En = 'Disable Warden completely (RCE fix)'
+       De = 'Warden komplett abschalten, RCE-Fix'
+       En = 'Disable Warden completely, RCE fix'
        NoteDe = 'Kick-Gefahr bei aktivem Warden'
        NoteEn = 'may get you kicked if Warden is active'
        Code = {
@@ -392,7 +406,18 @@ $patches = @(
         Patch 0x3D9C5B @(0x90, 0x90)
     }}
 
-    @{ Id = 'noserverpatch'; On = $false
+    @{ Id = 'scandll'; Cat = 'security'; On = $true
+       Author = '12th Gen exe'
+       De = 'Scan.dll deaktivieren'
+       En = 'Disable Scan.dll'
+       Code = {
+        # Macht aus ".\Scan.dll" und ".\Scan.dll.new" ".\||an.dll" usw. - '|' ist
+        # in Dateinamen verboten, das Laden schlaegt damit garantiert fehl.
+        Patch 0x5F4D56 @(0x7C, 0x7C)
+        Patch 0x5F4D62 @(0x7C, 0x7C)
+    }}
+
+    @{ Id = 'noserverpatch'; Cat = 'security'; On = $false
        Author = 'Kebabstorm'
        De = 'Client-Patches vom Server verbieten'
        En = 'Disallow client patches from the server'
@@ -400,7 +425,7 @@ $patches = @(
         Patch 0xDA2A8 @(0x90, 0x90, 0xEB)
     }}
 
-    @{ Id = 'nosurvey'; On = $false
+    @{ Id = 'nosurvey'; Cat = 'security'; On = $false
        Author = 'Kebabstorm'
        De = 'Hardware-Umfragen vom Server verbieten'
        En = 'Disallow hardware surveys from the server'
@@ -408,7 +433,25 @@ $patches = @(
         Patch 0xDA2BD @(0xE9, 0xEB, 0x0A, 0x00, 0x00)
     }}
 
-    @{ Id = 'nohttp'; On = $true
+    # --- Login & Verbindung ---
+
+    @{ Id = 'skipbnet'; Cat = 'login'; On = $true
+       Author = 'Kebabstorm'
+       De = 'Battle.net-Login ueberspringen'
+       En = 'Skip Battle.net login'
+       Code = {
+        Patch 0x2B1F48 @(0xEB)
+    }}
+
+    @{ Id = 'skiprdp'; Cat = 'login'; On = $true
+       Author = 'Kebabstorm'
+       De = 'Remote-Desktop-Pruefung ueberspringen'
+       En = 'Skip Remote Desktop check'
+       Code = {
+        Patch 0x36AE40 @(0xEB)
+    }}
+
+    @{ Id = 'nohttp'; Cat = 'login'; On = $true
        Author = 'Kebabstorm'
        De = 'HTTP-Anfragen an Battle.net deaktivieren'
        En = 'Disable HTTP requests to Battle.net'
@@ -417,25 +460,9 @@ $patches = @(
         Patch 0x46F28F @(0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'skipbnet'; On = $true
-       Author = 'Kebabstorm'
-       De = 'Battle.net-Login ueberspringen'
-       En = 'Skip Battle.net login'
-       Code = {
-        Patch 0x2B1F48 @(0xEB)
-    }}
-
-    @{ Id = 'skiprdp'; On = $true
-       Author = 'Kebabstorm'
-       De = 'Remote-Desktop-Pruefung ueberspringen'
-       En = 'Skip Remote Desktop check'
-       Code = {
-        Patch 0x36AE40 @(0xEB)
-    }}
-
-    @{ Id = 'afk'; On = $false
+    @{ Id = 'afk'; Cat = 'login'; On = $false
        Author = 'St0ny'
-       De = 'AFK Timer IDLE Check deaktiviert'
+       De = 'AFK-Timer / IDLE-Check deaktivieren'
        En = 'Disable AFK timer idle check'
        NoteDe = 'wird fuer Character-Autologin benoetigt'
        NoteEn = 'required for character auto-login'
@@ -446,15 +473,30 @@ $patches = @(
         Patch 0x54AD02 @(0xE8, 0x19, 0xF5, 0xF1, 0xFF, 0x83, 0x3D, 0xA4, 0x99, 0xB4, 0x00, 0x00, 0x75, 0x05, 0xA3, 0xA4, 0x99, 0xB4, 0x00, 0xE9, 0x37, 0xF9, 0xBD, 0xFF)
     }}
 
-    @{ Id = 'areatrigger'; On = $true
-       Author = 'Robinsch'
-       De = 'Area-Trigger-Timer Verbesserung (250ms auf 50ms)'
-       En = 'Area trigger timer accuracy (250 ms to 50 ms)'
+    # --- Modding: Interface, MPQs & Addons ---
+
+    @{ Id = 'glue'; Cat = 'modding'; On = $true
+       Author = 'Kebabstorm'
+       De = 'Custom Glue-XML erlauben'
+       En = 'Allow custom GlueXML'
        Code = {
-        Patch 0x2DB241 @(0x32)
+        Patch 0x1F41BF @(0xEB)
+        Patch 0x415A25 @(0xEB)
+        Patch 0x415A3F @(0x03)
+        Patch 0x415A95 @(0x03)
+        Patch 0x415B46 @(0xEB)
+        Patch 0x415B5F @(0xB8, 0x03, 0x00, 0x00, 0x00, 0xEB, 0xED)
     }}
 
-    @{ Id = 'mpqnames'; On = $true
+    @{ Id = 'mpqsig'; Cat = 'modding'; On = $true
+       Author = '12th Gen exe'
+       De = 'Falsch/Nicht signierte MPQs zulassen'
+       En = 'Allow unsigned / incorrectly signed MPQs'
+       Code = {
+        Patch 0x021350 @(0x55, 0x8B, 0xEC, 0xB9, 0x05, 0x00, 0x00, 0x00, 0x8B, 0x45, 0x0C, 0x89, 0x08, 0xB8, 0x01, 0x00, 0x00, 0x00, 0x5D, 0xC2, 0x18, 0x00)
+    }}
+
+    @{ Id = 'mpqnames'; Cat = 'modding'; On = $true
        De = 'Erweiterte MPQ-Namen erlauben'
        En = 'Allow extended MPQ names'
        Code = {
@@ -462,7 +504,7 @@ $patches = @(
         Patch 0x5E0F16 @(0x2A)
     }}
 
-    @{ Id = 'localdata'; On = $false
+    @{ Id = 'localdata'; Cat = 'modding'; On = $false
        Author = '12th Gen exe'
        De = 'Daten direkt aus dem Data-Ordner laden (ohne MPQ)'
        En = 'Load data directly from the Data folder (no MPQ)'
@@ -471,7 +513,7 @@ $patches = @(
         Patch 0x1F2A @(0x90, 0x90, 0x90, 0x90, 0x90, 0x6A, 0xFF)
     }}
 
-    @{ Id = 'luaunlock'; On = $false
+    @{ Id = 'luaunlock'; Cat = 'modding'; On = $false
        Author = '12th Gen exe'
        De = 'LUA Unlock (geschuetzte Funktionen freigeben)'
        En = 'LUA unlock (allow protected functions)'
@@ -484,7 +526,30 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'swing'; On = $true
+    @{ Id = 'awesome'; Cat = 'modding'; On = $false; Needs = @('laa')
+       Author = 'FrostAtom'
+       De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
+       En = 'Enable AwesomeWotlkLib.dll support'
+       NoteDe = 'benoetigt awesome_wotlk'
+       NoteEn = 'requires awesome_wotlk'
+       Url = 'https://github.com/noname08662/awesome_wotlk'
+       Code = {
+        Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
+        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
+        Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
+    }}
+
+    # --- Gameplay-Fixes ---
+
+    @{ Id = 'areatrigger'; Cat = 'gameplay'; On = $true
+       Author = 'Robinsch'
+       De = 'Area-Trigger-Timer genauer (50 ms statt 250 ms)'
+       En = 'More precise area trigger timer (50 ms instead of 250 ms)'
+       Code = {
+        Patch 0x2DB241 @(0x32)
+    }}
+
+    @{ Id = 'swing'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Nahkampf-Schwung bei Rechtsklick entfernt'
        En = 'Remove melee swing on right-click'
@@ -492,7 +557,7 @@ $patches = @(
         Patch 0x2E1C67 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'npcanim'; On = $true
+    @{ Id = 'npcanim'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'NPC-Angriffsanimation beim Drehen unterdrueckt'
        En = 'Suppress NPC attack animation when turning'
@@ -500,7 +565,7 @@ $patches = @(
         Patch 0x33D7C9 @(0xEB)
     }}
 
-    @{ Id = 'spellanim'; On = $true
+    @{ Id = 'spellanim'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Zauber-Animation nach Abbruch repariert'
        En = 'Fix spell animation after cancelled channel'
@@ -508,7 +573,7 @@ $patches = @(
         Patch 0x33E0D6 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'ghostattack'; On = $true
+    @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Geister-Angriff von NPCs beim Evade behoben'
        En = 'Fix "ghost" attack when NPCs evade from combat'
@@ -516,7 +581,39 @@ $patches = @(
         Patch 0x0355BF @(0xEB)
     }}
 
-    @{ Id = 'level101'; On = $false; Needs = @('glue')
+    @{ Id = 'naked'; Cat = 'gameplay'; On = $true
+       Author = 'Robinsch'
+       De = 'Nackter-Charakter-Bug behoben'
+       En = 'Fix naked character bug'
+       Code = {
+        Patch 0x1DDC5D @(0xEB)
+    }}
+
+    @{ Id = 'forcereaction'; Cat = 'gameplay'; On = $true
+       Author = 'Robinsch'
+       De = 'Force-Reaction bei /reload erhalten'
+       En = 'Keep force reaction on /reload'
+       Code = {
+        Patch 0x12811E @(0x90, 0x90, 0x90, 0x90, 0x90)
+    }}
+
+    @{ Id = 'mail'; Cat = 'gameplay'; On = $false
+       Author = 'Robinsch'
+       De = 'Neue Post ohne 60 Sekunden Wartezeit'
+       En = 'New mail without the 60-second wait'
+       Code = {
+        Patch 0x16D899 @(0x05, 0x01, 0x00, 0x00, 0x00)
+    }}
+
+    @{ Id = 'deadchat'; Cat = 'gameplay'; On = $false
+       Author = 'Robinsch'
+       De = 'Chat-Befehle auch im Tod erlauben'
+       En = 'Allow chat commands while dead'
+       Code = {
+        Patch 0x10CA41 @(0xEB)
+    }}
+
+    @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
        Author = '12th Gen exe'
        De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
        En = 'Level 101+ fix (druid base stats and barber chair)'
@@ -528,47 +625,7 @@ $patches = @(
         Patch 0x3F5DC2 @(0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'bluemoon'; On = $true
-       Author = 'Robinsch'
-       De = 'Blauer Mond am Nachthimmel reaktiviert'
-       En = 'Re-enable the blue moon in the night sky'
-       Code = {
-        Patch 0x5CFBC0 @(0xC7, 0x05, 0x74, 0x8E, 0xD3, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xC3)
-    }}
-
-    @{ Id = 'naked'; On = $true
-       Author = 'Robinsch'
-       De = 'Nackter-Charakter-Bug behoben'
-       En = 'Fix naked character bug'
-       Code = {
-        Patch 0x1DDC5D @(0xEB)
-    }}
-
-    @{ Id = 'forcereaction'; On = $true
-       Author = 'Robinsch'
-       De = 'Force-Reaction bei /reload erhalten'
-       En = 'Keep force reaction on /reload'
-       Code = {
-        Patch 0x12811E @(0x90, 0x90, 0x90, 0x90, 0x90)
-    }}
-
-    @{ Id = 'mail'; On = $false
-       Author = 'Robinsch'
-       De = 'Neue Post ohne 60 Sekunden Wartezeit'
-       En = 'New mail without the 60-second wait'
-       Code = {
-        Patch 0x16D899 @(0x05, 0x01, 0x00, 0x00, 0x00)
-    }}
-
-    @{ Id = 'deadchat'; On = $false
-       Author = 'Robinsch'
-       De = 'Chat-Befehle auch im Tod erlauben'
-       En = 'Allow chat commands while dead'
-       Code = {
-        Patch 0x10CA41 @(0xEB)
-    }}
-
-    @{ Id = 'raceclass'; On = $false
+    @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false
        Author = 'Robinsch'
        De = 'Unbegrenzte Rasse/Klasse-Kombinationen'
        En = 'Unlimited race/class combinations'
@@ -581,29 +638,17 @@ $patches = @(
         Patch 0xE03C3 @(0x88)
     }}
 
-    @{ Id = 'notransparency'; On = $false
-       Author = '12th Gen exe'
-       De = 'Keine Transparenz beim Heranzoomen'
-       En = 'No character transparency when zooming in'
+    @{ Id = 'maxchars'; Cat = 'gameplay'; On = $false
+       Author = 'St0ny'
+       De = 'Max. Charaktere pro Server auf 255 erhoeht'
+       En = 'Max characters per realm raised to 255'
        Code = {
-        Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+        Patch 0x6404F @(0xFF)
     }}
 
-    @{ Id = 'tracker'; On = $true
-       De = 'Quest-Tracker automatisch sortieren'
-       En = 'Auto-sort quest tracker'
-       Code = {
-        Patch 0x11D4C5 @(0x64, 0x14, 0x9E, 0x00)
-    }}
+    # --- Grafik & Sichtweite ---
 
-    @{ Id = 'worldmap'; On = $true
-       De = 'Erweiterte Weltkarte standardmaessig aktiv'
-       En = 'Advanced world map enabled by default'
-       Code = {
-        Patch 0x11D462 @(0x64, 0x14, 0x9E, 0x00)
-    }}
-
-    @{ Id = 'farclip'; On = $true
+    @{ Id = 'farclip'; Cat = 'graphics'; On = $true
        Author = '12th Gen exe'
        De = 'CVar farclip unlock (max 10000)'
        En = 'CVar farclip unlock (max 10000)'
@@ -619,7 +664,7 @@ $patches = @(
         Patch 0x63CF0C @(0x00, 0x40, 0x1C, 0x46)
     }}
 
-    @{ Id = 'horizon'; On = $true
+    @{ Id = 'horizon'; Cat = 'graphics'; On = $true
        Author = 'St0ny'
        De = 'CVar horizonFarclipScale unlock (max 12)'
        En = 'CVar horizonFarclipScale unlock (max 12)'
@@ -627,7 +672,7 @@ $patches = @(
         Patch 0x38CBDF @(0x7C, 0x04, 0xA1, 0x00)
     }}
 
-    @{ Id = 'envdetail'; On = $true
+    @{ Id = 'envdetail'; Cat = 'graphics'; On = $true
        Author = 'St0ny'
        De = 'CVar environmentDetail unlock (kein Limit statt 1.5)'
        En = 'CVar environmentDetail unlock (no limit instead of 1.5)'
@@ -635,14 +680,14 @@ $patches = @(
         Patch 0x38D08E @(0xD8)
     }}
 
-    @{ Id = 'grounddist'; On = $true
+    @{ Id = 'grounddist'; Cat = 'graphics'; On = $true
        De = 'CVar groundEffectDist unlock (max 3166 statt 140)'
        En = 'CVar groundEffectDist unlock (max 3166 instead of 140)'
        Code = {
         Patch 0x5E74FC @(0xAB, 0xEA, 0x45, 0x45)
     }}
 
-    @{ Id = 'sliders'; On = $true; Needs = @('farclip', 'envdetail', 'grounddist')
+    @{ Id = 'sliders'; Cat = 'graphics'; On = $true; Needs = @('farclip', 'envdetail', 'grounddist')
        Author = 'St0ny'
        De = 'Grafikoptionen: Slider-Maxima erweitern'
        En = 'Graphics options: extend slider maximums'
@@ -740,31 +785,140 @@ $patches = @(
         Patch 0x6B3E80 @(0xA0, 0x57, 0x9F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5A, 0xA3, 0x40, 0xBC, 0xF3, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x40, 0x38, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x6F, 0x40, 0x60, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x40, 0x00, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'window'; On = $true
+    @{ Id = 'goscale'; Cat = 'graphics'; On = $true; Needs = @('envdetail')
        Author = 'St0ny'
-       De = 'Fenstermodus als Standard setzen'
-       En = 'Windowed mode by default'
+       De = 'GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen'
+       En = 'GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail'
        Code = {
-        Patch 0x369A7D @(0x64, 0x14, 0x9E)
+        # Ergaenzt einen im Client fehlenden Rechenschritt.
+        #
+        # Die Funktion bei VA 0x78F570 bildet aus den Basiswerten die Laufzeitwerte neu,
+        # jedes Mal wenn environmentDetail gesetzt wird. Fuer Cat 1, 2 und 3 lautet sie
+        #     Laufzeit-Sichtweite = Basiswert * environmentDetail
+        # fuer Cat 0 und Cat 4 dagegen nur
+        #     Laufzeit-Sichtweite = Basiswert
+        # Dort fehlt die Multiplikation schlicht, der Regler erreicht diese beiden
+        # Kategorien also gar nicht.
+        #
+        # Beide Bloecke beginnen mit einer Kopie der Groessen-Schwellen (Default nach
+        # Runtime). Die beiden Tabellen sind byte-gleich und werden von nichts veraendert,
+        # die Kopie ist damit wirkungslos. Ihre 12 Byte werden hier frei und reichen fuer
+        # den fehlenden Schritt:
+        #
+        #   vorher (24 Byte)                 nachher (24 Byte)
+        #   fld  [SizeThresh_def]   6        fld  [ebp+8]        3   Faktor laden
+        #   fstp [SizeThresh_rt]    6        fmul [BaseDist]     6   damit multiplizieren
+        #   fld  [BaseDist]         6        fst  [RuntimeDist]  6   Ergebnis ablegen
+        #   fst  [RuntimeDist]      6        9x nop              9   Rest auffuellen
+        #
+        # Danach ist der FPU-Stack genauso belegt wie vorher (st0 = Laufzeit-Sichtweite),
+        # der Folgecode ab "fld [FadeBand]" laeuft unveraendert weiter.
+        #
+        # WIRKUNG: die Sichtweiten-Tabellen bleiben auf den Blizzard-Werten
+        # (30/100/200/750/1250), environmentDetail wird zum sauberen Gesamtregler:
+        #   ED 1.0  ->   30 / 100 / 200 /  750 / 1250   = x1 gegenueber Blizzard
+        #   ED 2.0  ->   60 / 200 / 400 / 1500 / 2500   = x2
+        #   ED 2.4  ->   72 / 240 / 480 / 1800 / 3000   = x2.4
+        # Alle fuenf Kategorien behalten dabei ihr Verhaeltnis zueinander. Werte ueber 1.5
+        # brauchen zusaetzlich den Patch "CVar environmentDetail unlock".
+        #
+        # Der folgende Patch "Cat 0 von 30 auf 50 Yards" setzt zusaetzlich einen festen
+        # Basiswert fuer Cat 0. Er wird nur gebraucht, wenn die Kategorien UNTERSCHIEDLICH
+        # skaliert werden sollen - fuer gleichmaessiges Hoch- und Runterregeln reicht
+        # dieser Patch hier allein.
+        # Cat 0, VA 0x78F573
+        Patch 0x38E973 @(0xD9, 0x45, 0x08, 0xD8, 0x0D, 0x64, 0xF3, 0xAD, 0x00, 0xD9, 0x15, 0xA0, 0xF3, 0xAD, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+        # Cat 4, VA 0x78F664
+        Patch 0x38EA64 @(0xD9, 0x45, 0x08, 0xD8, 0x0D, 0x74, 0xF3, 0xAD, 0x00, 0xD9, 0x15, 0xB0, 0xF3, 0xAD, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'maximize'; On = $true
+    @{ Id = 'cat0'; Cat = 'graphics'; On = $true
        Author = 'St0ny'
-       De = 'Fenstermodus maximiert als Standard setzen'
-       En = 'Maximized window by default'
+       De = 'GameObject Sichtweite: Cat 0 von 30 auf 50 Yards'
+       En = 'GameObject view distance: Cat 0 from 30 to 50 yards'
        Code = {
-        Patch 0x369AB2 @(0x64, 0x14, 0x9E)
+        # Hebt ausschliesslich die kleinste Objektkategorie an (Kerzen, Buecher, Saecke,
+        # Werkzeug). Cat 1 bis 4 werden von diesem Patcher ohnehin nicht angefasst,
+        # geregelt wird die Sichtweite ueber das CVar environmentDetail (Patch davor).
+        # Cat 0 ist im Original mit 30 Yards so knapp bemessen, dass Kleinkram deutlich
+        # frueher verschwindet als alles andere; 50 verbessert das Verhaeltnis zu Cat 1
+        # von 1:3.3 auf 1:2, und der Regler zieht den Kleinkram proportional mit.
+        #
+        # Geschrieben werden nur die Cat-0-Felder, jeweils die ersten 4 Byte der Tabelle.
+        # Beim Aendern muessen alle fuenf zusammenpassen:
+        #   Basis == Laufzeit
+        #   Sichtweite^2 == Basis * Basis        (darueber cullt die Engine, spart die Wurzel)
+        #   Fade-Start   == Basis - Fade-Band    (Fade-Band Cat 0 = 5, bleibt unangetastet)
+        #   Fade-Start^2 == Fade-Start * Fade-Start
+        #
+        #   hier:      Basis 50   Laufzeit 50   Quadrat 2500  Fade-Start 45  Fade-Quadrat 2025
+        #   Blizzard:  Basis 30   Laufzeit 30   Quadrat  900  Fade-Start 25  Fade-Quadrat  625
+        #
+        # Der Client rechnet die vier abgeleiteten Werte zwar neu, sobald environmentDetail
+        # gesetzt wird - steht das CVar aber gar nicht in der Config.wtf, bleiben die
+        # Tabellenwerte stehen und muessen dann zur Basis passen.
+        # Basis-Sichtweite Cat 0: 50
+        Patch 0x6DD364 @(0x00, 0x00, 0x48, 0x42)
+        # Laufzeit-Sichtweite Cat 0: 50
+        Patch 0x6DD3A0 @(0x00, 0x00, 0x48, 0x42)
+        # Sichtweite im Quadrat Cat 0: 2500
+        Patch 0x6DD3B4 @(0x00, 0x40, 0x1C, 0x45)
+        # Fade-Start Cat 0: 45 (= 50 minus Fade-Band 5)
+        Patch 0x6DD3C8 @(0x00, 0x00, 0x34, 0x42)
+        # Fade-Start im Quadrat Cat 0: 2025
+        Patch 0x6DD3DC @(0x00, 0x20, 0xFD, 0x44)
     }}
 
-    @{ Id = 'windowfix'; On = $false
+    @{ Id = 'occluder'; Cat = 'graphics'; On = $true
        Author = 'Robinsch'
-       De = 'Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus'
-       En = 'No black screen when switching to windowed mode'
+       De = 'Occluder Fix fuer Stormwind (Open Azeroth)'
+       En = 'Occluder fix for Stormwind (Open Azeroth)'
        Code = {
-        Patch 0xE94 @(0xEB)
+        Patch 0x6EE040 @(0x9F, 0x86, 0x01, 0x00)
     }}
 
-    @{ Id = 'castbars'; On = $true
+    @{ Id = 'bluemoon'; Cat = 'graphics'; On = $true
+       Author = 'Robinsch'
+       De = 'Blauer Mond am Nachthimmel reaktiviert'
+       En = 'Re-enable the blue moon in the night sky'
+       Code = {
+        Patch 0x5CFBC0 @(0xC7, 0x05, 0x74, 0x8E, 0xD3, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xC3)
+    }}
+
+    @{ Id = 'notransparency'; Cat = 'graphics'; On = $false
+       Author = '12th Gen exe'
+       De = 'Keine Transparenz beim Heranzoomen'
+       En = 'No character transparency when zooming in'
+       Code = {
+        Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+    }}
+
+    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $true
+       Author = 'Badgermilk0'
+       De = 'HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)'
+       En = 'HD unit frame portraits: 256x256 (live 3D portraits)'
+       Code = {
+        # Haengt die .hdp-Sektion an und biegt den Model-Render-Pfad auf 256px um.
+        Add-HdPortraits 256
+    }}
+
+    # --- Interface & Komfort ---
+
+    @{ Id = 'tracker'; Cat = 'ui'; On = $true
+       De = 'Quest-Tracker automatisch sortieren'
+       En = 'Auto-sort quest tracker'
+       Code = {
+        Patch 0x11D4C5 @(0x64, 0x14, 0x9E, 0x00)
+    }}
+
+    @{ Id = 'worldmap'; Cat = 'ui'; On = $true
+       De = 'Erweiterte Weltkarte standardmaessig aktiv'
+       En = 'Advanced world map enabled by default'
+       Code = {
+        Patch 0x11D462 @(0x64, 0x14, 0x9E, 0x00)
+    }}
+
+    @{ Id = 'castbars'; Cat = 'ui'; On = $true
        Author = 'Kebabstorm'
        De = 'Cast Bars auf allen Frames'
        En = 'Cast bars on all frames'
@@ -772,15 +926,7 @@ $patches = @(
         Patch 0x123676 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'maxchars'; On = $false
-       Author = 'St0ny'
-       De = 'Max Characters pro Server auf 255 erhoeht'
-       En = 'Max characters per realm raised to 255'
-       Code = {
-        Patch 0x6404F @(0xFF)
-    }}
-
-    @{ Id = 'emblems'; On = $false; Needs = @('mpqnames')
+    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames')
        Author = 'MacWarrior'
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'
@@ -831,141 +977,11 @@ $patches = @(
         # Texturlader an. Pro Wappen also 17 Farben x 2 Haelften = 34 Dateien,
         # fuer die 26 neuen Wappen zusammen 884.
         # Der Archivname ist frei waehlbar (patch-*.MPQ), dafuer sorgt der Patch
-        # "Erweiterte MPQ-Namen erlauben" weiter oben.
+        # "Erweiterte MPQ-Namen erlauben" (mpqnames).
         Patch 0x613108 @(0xC4)
     }}
 
-    @{ Id = 'mouse'; On = $true
-       Author = 'Robinsch'
-       De = 'Mausflackern / Kameraspruenge Fix'
-       En = 'Mouse flicker / camera jump fix'
-       Code = {
-        Patch 0x469A2C @(0xE9, 0x71, 0xF0, 0x0B, 0x00, 0xF8, 0x13, 0xD4, 0x00, 0x8B, 0x1D, 0xFC)
-        Patch 0x528AA2 @(0x8D, 0x4D, 0xF0, 0x51, 0x57, 0xFF, 0x15, 0xDC, 0xF5, 0x9D, 0x00, 0x8B, 0x45, 0xF0, 0x8B, 0x15, 0xF8, 0x13, 0xD4, 0x00, 0xE9, 0x7A, 0x0F, 0xF4, 0xFF)
-        Patch 0x4691B1 @(0x89, 0xE5, 0x8B, 0x05, 0xFC, 0x13, 0xD4, 0x00, 0x8B, 0x0D, 0xF8, 0x13, 0xD4, 0x00, 0xEB, 0xC2, 0x7D, 0x03, 0x83, 0xC1, 0x01, 0x83, 0xC0, 0x32, 0x83, 0xC1, 0x32, 0x3B, 0x0D, 0xEC, 0xBC, 0xCA, 0x00, 0x7E, 0x03, 0x83, 0xE9, 0x01, 0x3B, 0x05, 0xF0, 0xBC, 0xCA, 0x00, 0x7E, 0x03, 0x83, 0xE8, 0x01, 0x83, 0xE9, 0x32, 0x83, 0xE8, 0x32, 0x89, 0x0D, 0xF8, 0x13, 0xD4, 0x00, 0x89, 0x05, 0xFC, 0x13, 0xD4, 0x00, 0x89, 0xEC, 0x5D, 0xE9, 0xB4, 0xF7, 0xFF, 0xFF, 0xEC, 0x5D, 0xC3, 0xC3)
-        Patch 0x469183 @(0x83, 0xF8, 0x32, 0x7D, 0x03, 0x83, 0xC0, 0x01, 0x83, 0xF9, 0x32, 0xEB, 0x31)
-    }}
-
-    @{ Id = 'goscale'; On = $true; Needs = @('envdetail')
-       Author = 'St0ny'
-       De = 'GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen'
-       En = 'GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail'
-       Code = {
-        # Ergaenzt einen im Client fehlenden Rechenschritt.
-        #
-        # Die Funktion bei VA 0x78F570 bildet aus den Basiswerten die Laufzeitwerte neu,
-        # jedes Mal wenn environmentDetail gesetzt wird. Fuer Cat 1, 2 und 3 lautet sie
-        #     Laufzeit-Sichtweite = Basiswert * environmentDetail
-        # fuer Cat 0 und Cat 4 dagegen nur
-        #     Laufzeit-Sichtweite = Basiswert
-        # Dort fehlt die Multiplikation schlicht, der Regler erreicht diese beiden
-        # Kategorien also gar nicht.
-        #
-        # Beide Bloecke beginnen mit einer Kopie der Groessen-Schwellen (Default nach
-        # Runtime). Die beiden Tabellen sind byte-gleich und werden von nichts veraendert,
-        # die Kopie ist damit wirkungslos. Ihre 12 Byte werden hier frei und reichen fuer
-        # den fehlenden Schritt:
-        #
-        #   vorher (24 Byte)                 nachher (24 Byte)
-        #   fld  [SizeThresh_def]   6        fld  [ebp+8]        3   Faktor laden
-        #   fstp [SizeThresh_rt]    6        fmul [BaseDist]     6   damit multiplizieren
-        #   fld  [BaseDist]         6        fst  [RuntimeDist]  6   Ergebnis ablegen
-        #   fst  [RuntimeDist]      6        9x nop              9   Rest auffuellen
-        #
-        # Danach ist der FPU-Stack genauso belegt wie vorher (st0 = Laufzeit-Sichtweite),
-        # der Folgecode ab "fld [FadeBand]" laeuft unveraendert weiter.
-        #
-        # WIRKUNG: die Sichtweiten-Tabellen bleiben auf den Blizzard-Werten
-        # (30/100/200/750/1250), environmentDetail wird zum sauberen Gesamtregler:
-        #   ED 1.0  ->   30 / 100 / 200 /  750 / 1250   = x1 gegenueber Blizzard
-        #   ED 2.0  ->   60 / 200 / 400 / 1500 / 2500   = x2
-        #   ED 2.4  ->   72 / 240 / 480 / 1800 / 3000   = x2.4
-        # Alle fuenf Kategorien behalten dabei ihr Verhaeltnis zueinander. Werte ueber 1.5
-        # brauchen zusaetzlich den Patch "CVar environmentDetail unlock".
-        #
-        # Der folgende Patch "Cat 0 von 30 auf 50 Yards" setzt zusaetzlich einen festen
-        # Basiswert fuer Cat 0. Er wird nur gebraucht, wenn die Kategorien UNTERSCHIEDLICH
-        # skaliert werden sollen - fuer gleichmaessiges Hoch- und Runterregeln reicht
-        # dieser Patch hier allein.
-        # Cat 0, VA 0x78F573
-        Patch 0x38E973 @(0xD9, 0x45, 0x08, 0xD8, 0x0D, 0x64, 0xF3, 0xAD, 0x00, 0xD9, 0x15, 0xA0, 0xF3, 0xAD, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
-        # Cat 4, VA 0x78F664
-        Patch 0x38EA64 @(0xD9, 0x45, 0x08, 0xD8, 0x0D, 0x74, 0xF3, 0xAD, 0x00, 0xD9, 0x15, 0xB0, 0xF3, 0xAD, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
-    }}
-
-    @{ Id = 'cat0'; On = $true
-       Author = 'St0ny'
-       De = 'GameObject Sichtweite: Cat 0 von 30 auf 50 Yards'
-       En = 'GameObject view distance: Cat 0 from 30 to 50 yards'
-       Code = {
-        # Hebt ausschliesslich die kleinste Objektkategorie an (Kerzen, Buecher, Saecke,
-        # Werkzeug). Cat 1 bis 4 werden von diesem Patcher ohnehin nicht angefasst,
-        # geregelt wird die Sichtweite ueber das CVar environmentDetail (Patch davor).
-        # Cat 0 ist im Original mit 30 Yards so knapp bemessen, dass Kleinkram deutlich
-        # frueher verschwindet als alles andere; 50 verbessert das Verhaeltnis zu Cat 1
-        # von 1:3.3 auf 1:2, und der Regler zieht den Kleinkram proportional mit.
-        #
-        # Geschrieben werden nur die Cat-0-Felder, jeweils die ersten 4 Byte der Tabelle.
-        # Beim Aendern muessen alle fuenf zusammenpassen:
-        #   Basis == Laufzeit
-        #   Sichtweite^2 == Basis * Basis        (darueber cullt die Engine, spart die Wurzel)
-        #   Fade-Start   == Basis - Fade-Band    (Fade-Band Cat 0 = 5, bleibt unangetastet)
-        #   Fade-Start^2 == Fade-Start * Fade-Start
-        #
-        #   hier:      Basis 50   Laufzeit 50   Quadrat 2500  Fade-Start 45  Fade-Quadrat 2025
-        #   Blizzard:  Basis 30   Laufzeit 30   Quadrat  900  Fade-Start 25  Fade-Quadrat  625
-        #
-        # Der Client rechnet die vier abgeleiteten Werte zwar neu, sobald environmentDetail
-        # gesetzt wird - steht das CVar aber gar nicht in der Config.wtf, bleiben die
-        # Tabellenwerte stehen und muessen dann zur Basis passen.
-        # Basis-Sichtweite Cat 0: 50
-        Patch 0x6DD364 @(0x00, 0x00, 0x48, 0x42)
-        # Laufzeit-Sichtweite Cat 0: 50
-        Patch 0x6DD3A0 @(0x00, 0x00, 0x48, 0x42)
-        # Sichtweite im Quadrat Cat 0: 2500
-        Patch 0x6DD3B4 @(0x00, 0x40, 0x1C, 0x45)
-        # Fade-Start Cat 0: 45 (= 50 minus Fade-Band 5)
-        Patch 0x6DD3C8 @(0x00, 0x00, 0x34, 0x42)
-        # Fade-Start im Quadrat Cat 0: 2025
-        Patch 0x6DD3DC @(0x00, 0x20, 0xFD, 0x44)
-    }}
-
-    @{ Id = 'occluder'; On = $true
-       Author = 'Robinsch'
-       De = 'Occluder Fix fuer Stormwind (Open Azeroth)'
-       En = 'Occluder fix for Stormwind (Open Azeroth)'
-       Code = {
-        Patch 0x6EE040 @(0x9F, 0x86, 0x01, 0x00)
-    }}
-
-    @{ Id = 'awesome'; On = $false
-       Author = 'FrostAtom'
-       De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
-       En = 'Enable AwesomeWotlkLib.dll support'
-       NoteDe = 'benoetigt awesome_wotlk'
-       NoteEn = 'requires awesome_wotlk'
-       Url = 'https://github.com/noname08662/awesome_wotlk'
-       Code = {
-        Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
-        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
-        Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
-    }}
-
-    @{ Id = 'sound'; On = $true
-       Author = 'St0ny'
-       De = 'Sound-Einstellungen optimieren'
-       En = 'Optimize sound settings'
-       Code = {
-        Patch 0x0C77C2 @(0xC7, 0x45, 0xF8, 0x7E, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90)
-        Patch 0x6B3F80 @(0x36, 0x34, 0x00)
-        Patch 0x6B3F84 @(0x32, 0x00)
-        Patch 0x0D0604 @(0x68, 0x84, 0x57, 0xAB, 0x00)
-        Patch 0x0D0624 @(0x68, 0x80, 0x57, 0xAB, 0x00)
-        Patch 0x0D064A @(0x68, 0x64, 0x14, 0x9E, 0x00)
-        Patch 0x0D077F @(0x68, 0x64, 0x14, 0x9E, 0x00)
-    }}
-
-    @{ Id = 'flash'; On = $false
+    @{ Id = 'flash'; Cat = 'ui'; On = $false
        Author = 'Kebabstorm'
        De = 'FlashWindow Patch'
        En = 'FlashWindow patch'
@@ -978,13 +994,57 @@ $patches = @(
         Patch 0x606EE4 @(0x46, 0x6C, 0x61, 0x73, 0x68, 0x57, 0x69, 0x6E, 0x64, 0x6F, 0x77, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'hdportraits'; On = $true
-       Author = 'Badgermilk0'
-       De = 'HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)'
-       En = 'HD unit frame portraits: 256x256 (live 3D portraits)'
+    # --- Fenster & Maus ---
+
+    @{ Id = 'window'; Cat = 'window'; On = $true
+       Author = 'St0ny'
+       De = 'Fenstermodus als Standard setzen'
+       En = 'Windowed mode by default'
        Code = {
-        # Haengt die .hdp-Sektion an und biegt den Model-Render-Pfad auf 256px um.
-        Add-HdPortraits 256
+        Patch 0x369A7D @(0x64, 0x14, 0x9E)
+    }}
+
+    @{ Id = 'maximize'; Cat = 'window'; On = $true
+       Author = 'St0ny'
+       De = 'Fenstermodus maximiert als Standard setzen'
+       En = 'Maximized window by default'
+       Code = {
+        Patch 0x369AB2 @(0x64, 0x14, 0x9E)
+    }}
+
+    @{ Id = 'windowfix'; Cat = 'window'; On = $false
+       Author = 'Robinsch'
+       De = 'Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus'
+       En = 'No black screen when switching to windowed mode'
+       Code = {
+        Patch 0xE94 @(0xEB)
+    }}
+
+    @{ Id = 'mouse'; Cat = 'window'; On = $true
+       Author = 'Robinsch'
+       De = 'Mausflackern / Kameraspruenge Fix'
+       En = 'Mouse flicker / camera jump fix'
+       Code = {
+        Patch 0x469A2C @(0xE9, 0x71, 0xF0, 0x0B, 0x00, 0xF8, 0x13, 0xD4, 0x00, 0x8B, 0x1D, 0xFC)
+        Patch 0x528AA2 @(0x8D, 0x4D, 0xF0, 0x51, 0x57, 0xFF, 0x15, 0xDC, 0xF5, 0x9D, 0x00, 0x8B, 0x45, 0xF0, 0x8B, 0x15, 0xF8, 0x13, 0xD4, 0x00, 0xE9, 0x7A, 0x0F, 0xF4, 0xFF)
+        Patch 0x4691B1 @(0x89, 0xE5, 0x8B, 0x05, 0xFC, 0x13, 0xD4, 0x00, 0x8B, 0x0D, 0xF8, 0x13, 0xD4, 0x00, 0xEB, 0xC2, 0x7D, 0x03, 0x83, 0xC1, 0x01, 0x83, 0xC0, 0x32, 0x83, 0xC1, 0x32, 0x3B, 0x0D, 0xEC, 0xBC, 0xCA, 0x00, 0x7E, 0x03, 0x83, 0xE9, 0x01, 0x3B, 0x05, 0xF0, 0xBC, 0xCA, 0x00, 0x7E, 0x03, 0x83, 0xE8, 0x01, 0x83, 0xE9, 0x32, 0x83, 0xE8, 0x32, 0x89, 0x0D, 0xF8, 0x13, 0xD4, 0x00, 0x89, 0x05, 0xFC, 0x13, 0xD4, 0x00, 0x89, 0xEC, 0x5D, 0xE9, 0xB4, 0xF7, 0xFF, 0xFF, 0xEC, 0x5D, 0xC3, 0xC3)
+        Patch 0x469183 @(0x83, 0xF8, 0x32, 0x7D, 0x03, 0x83, 0xC0, 0x01, 0x83, 0xF9, 0x32, 0xEB, 0x31)
+    }}
+
+    # --- Sound ---
+
+    @{ Id = 'sound'; Cat = 'sound'; On = $true
+       Author = 'St0ny'
+       De = 'Sound-Einstellungen optimieren'
+       En = 'Optimize sound settings'
+       Code = {
+        Patch 0x0C77C2 @(0xC7, 0x45, 0xF8, 0x7E, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90)
+        Patch 0x6B3F80 @(0x36, 0x34, 0x00)
+        Patch 0x6B3F84 @(0x32, 0x00)
+        Patch 0x0D0604 @(0x68, 0x84, 0x57, 0xAB, 0x00)
+        Patch 0x0D0624 @(0x68, 0x80, 0x57, 0xAB, 0x00)
+        Patch 0x0D064A @(0x68, 0x64, 0x14, 0x9E, 0x00)
+        Patch 0x0D077F @(0x68, 0x64, 0x14, 0x9E, 0x00)
     }}
 
 )
@@ -1069,7 +1129,14 @@ function Show-Menu($sel, [string]$message) {
     Write-Host ''
     Say (T 'MenuTitle' (Get-SelectedCount $sel) $total) 'Cyan'
     Say ('=' * 70) 'Cyan'
+    $lastCat = ''
     for ($i = 0; $i -lt $total; $i++) {
+        if ($patches[$i].Cat -ne $lastCat) {
+            $lastCat = $patches[$i].Cat
+            $c = $CATEGORIES[$lastCat]
+            if ($script:lang -eq 'en') { $title = $c.En } else { $title = $c.De }
+            Write-Host "   -- $title --" -ForegroundColor Yellow
+        }
         $nr = ([string]($i + 1)).PadLeft($width)
         if ($sel[$i]) {
             Write-Host "   $nr  [X]  $(PatchName $patches[$i])" -ForegroundColor Green
@@ -1099,7 +1166,7 @@ function Select-Patches {
     while ($true) {
         Show-Menu $sel $message
         $message = ''
-        $in = (Read-Host "  $(T 'Prompt')").Trim()
+        $in = Ask "  $(T 'Prompt')"
         switch -regex ($in) {
             '^$' {
                 if ((Get-SelectedCount $sel) -eq 0) { $message = T 'NoneSelected'; break }
@@ -1200,7 +1267,7 @@ while (-not $lang) {
     Say 'Sprache waehlen / Choose language:'
     Say '  1 = Deutsch'
     Say '  2 = English'
-    $in = (Read-Host '  [1/2]').Trim().ToLowerInvariant()
+    $in = (Ask '  [1/2]').ToLowerInvariant()
     switch ($in) {
         { $_ -eq '1' -or $_ -eq 'd' -or $_ -eq 'de' } { $lang = 'de' }
         { $_ -eq '2' -or $_ -eq 'e' -or $_ -eq 'en' } { $lang = 'en' }
@@ -1310,7 +1377,7 @@ foreach ($p in $chosen) {
 Write-Host ''
 
 if (-not $Unattended) {
-    $answer = (Read-Host "  $(T 'Confirm')").Trim().ToUpperInvariant()
+    $answer = (Ask "  $(T 'Confirm')").ToUpperInvariant()
     if ($answer -ne (T 'Yes') -and $answer -ne 'Y' -and $answer -ne 'J') {
         Write-Host ''
         Say (T 'Aborted') 'Yellow'

@@ -57,8 +57,8 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 5. SHA256 integrity check that the `Wow.exe` is original/unmodified.
 6. **Patch selection** menu (see below). Your selection from last time is
    already preselected.
-7. Summary of the selected patches, notes about missing companion patches and
-   a confirmation prompt (Y/N).
+7. Summary of the selected patches, notes about missing or redundant companion
+   patches and a confirmation prompt (Y/N).
 8. Automatic backup as `Wow.exe.BAK`.
 9. All selected patches are applied in memory (with progress output) and
    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
@@ -68,8 +68,9 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 ## Patch selection
 
 The menu lists every patch with a number. `[X]` = will be applied,
-`[ ]` = will be skipped. The recommended default selection is preselected
-(see the "Default" column in the [patch overview](#patch-overview)). Patches
+`[ ]` = will be skipped. The menu is grouped into the same categories as the
+[patch overview](#patch-overview). The recommended default selection is
+preselected (see the "Default" column in the overview). Patches
 that need something additional say so in parentheses after their name, with
 the link right below.
 
@@ -87,7 +88,8 @@ the link right below.
 Some patches only take full effect together with others (e.g. the extended
 slider maximums need the CVar unlocks). If such a companion patch is missing
 from the selection, the patcher shows a **note** before the confirmation
-prompt – nothing is blocked.
+prompt – nothing is blocked. It also points out when one patch makes another
+unnecessary (disabling Warden completely replaces the RCE fix).
 
 ### The selection is remembered
 
@@ -116,7 +118,7 @@ All parameters are optional and are passed through from `patcher.bat` to
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | skip the language prompt                                                   |
 | `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `default`, `all` or numbers/ranges like `"1,3,5-8"`. Using `-Select` does not change the saved selection. |
-| `-Unattended`          | no confirmation prompts and no pauses                                      |
+| `-Unattended`          | no prompts and no pauses. Without `-Language` German is used, without `-Select` the saved or default selection. |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
 Example:
@@ -125,7 +127,7 @@ Example:
 patcher.bat -Language en -Select saved -Unattended
 ```
 
-Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
+Exit codes: `0` = success, `1` = error, `2` = cancelled (by the user or because no more input is possible).
 
 ## Files
 
@@ -144,57 +146,66 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 
 | No. | Patch | Author | Default |
 |----:|-------|-------|:--------:|
+|    | **System & performance** |  |  |
 | 1  | 4GB patch (Large Address Aware) | Kebabstorm | ✅ |
-| 2  | Allow custom GlueXML | Kebabstorm | ✅ |
-| 3  | Allow unsigned / incorrectly signed MPQs | 12th Gen exe | ✅ |
-| 4  | Disable scan DLL | 12th Gen exe | ✅ |
-| 5  | Disable CACHE folder creation | Kebabstorm | – |
-| 6  | Refresh item cache immediately | Robinsch | ✅ |
-| 7  | Remote code execution exploit fix | Robinsch | – |
-| 8  | Disable Warden completely (RCE fix) *(may get you kicked if Warden is active)* | Robinsch | ✅ |
-| 9  | Disallow client patches from the server | Kebabstorm | – |
-| 10 | Disallow hardware surveys from the server | Kebabstorm | – |
+| 2  | Disable CACHE folder creation | Kebabstorm | – |
+| 3  | Refresh item cache immediately | Robinsch | ✅ |
+|    | **Security & privacy** |  |  |
+| 4  | Remote code execution exploit fix | Robinsch | – |
+| 5  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | ✅ |
+| 6  | Disable Scan.dll | 12th Gen exe | ✅ |
+| 7  | Disallow client patches from the server | Kebabstorm | – |
+| 8  | Disallow hardware surveys from the server | Kebabstorm | – |
+|    | **Login & connection** |  |  |
+| 9  | Skip Battle.net login | Kebabstorm | ✅ |
+| 10 | Skip Remote Desktop check | Kebabstorm | ✅ |
 | 11 | Disable HTTP requests to Battle.net | Kebabstorm | ✅ |
-| 12 | Skip Battle.net login | Kebabstorm | ✅ |
-| 13 | Skip Remote Desktop check | Kebabstorm | ✅ |
-| 14 | Disable AFK timer idle check *(required for character auto-login, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
-| 15 | Area trigger timer accuracy (250 ms to 50 ms) | Robinsch | ✅ |
-| 16 | Allow extended MPQ names |  | ✅ |
-| 17 | Load data directly from the Data folder (no MPQ) | 12th Gen exe | – |
-| 18 | LUA unlock (allow protected functions) *(may be treated as botting)* | 12th Gen exe | – |
-| 19 | Remove melee swing on right-click | Robinsch | ✅ |
-| 20 | Suppress NPC attack animation when turning | Robinsch | ✅ |
-| 21 | Fix spell animation after cancelled channel | Robinsch | ✅ |
-| 22 | Fix "ghost" attack when NPCs evade from combat | Robinsch | ✅ |
-| 23 | Level 101+ fix (druid base stats and barber chair) | 12th Gen exe | – |
-| 24 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
-| 25 | Fix naked character bug | Robinsch | ✅ |
-| 26 | Keep force reaction on /reload | Robinsch | ✅ |
-| 27 | New mail without the 60-second wait | Robinsch | – |
-| 28 | Allow chat commands while dead | Robinsch | – |
+| 12 | Disable AFK timer idle check *(required for character auto-login, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
+|    | **Modding: interface, MPQs & addons** |  |  |
+| 13 | Allow custom GlueXML | Kebabstorm | ✅ |
+| 14 | Allow unsigned / incorrectly signed MPQs | 12th Gen exe | ✅ |
+| 15 | Allow extended MPQ names |  | ✅ |
+| 16 | Load data directly from the Data folder (no MPQ) | 12th Gen exe | – |
+| 17 | LUA unlock (allow protected functions) *(may be treated as botting)* | 12th Gen exe | – |
+| 18 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
+|    | **Gameplay fixes** |  |  |
+| 19 | More precise area trigger timer (50 ms instead of 250 ms) | Robinsch | ✅ |
+| 20 | Remove melee swing on right-click | Robinsch | ✅ |
+| 21 | Suppress NPC attack animation when turning | Robinsch | ✅ |
+| 22 | Fix spell animation after cancelled channel | Robinsch | ✅ |
+| 23 | Fix "ghost" attack when NPCs evade from combat | Robinsch | ✅ |
+| 24 | Fix naked character bug | Robinsch | ✅ |
+| 25 | Keep force reaction on /reload | Robinsch | ✅ |
+| 26 | New mail without the 60-second wait | Robinsch | – |
+| 27 | Allow chat commands while dead | Robinsch | – |
+| 28 | Level 101+ fix (druid base stats and barber chair) | 12th Gen exe | – |
 | 29 | Unlimited race/class combinations *(server must support it)* | Robinsch | – |
-| 30 | No character transparency when zooming in | 12th Gen exe | – |
-| 31 | Auto-sort quest tracker |  | ✅ |
-| 32 | Advanced world map enabled by default |  | ✅ |
-| 33 | CVar farclip unlock (max 10000) | 12th Gen exe | ✅ |
-| 34 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
-| 35 | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ |
-| 36 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ |
-| 37 | Graphics options: extend slider maximums | St0ny | ✅ |
-| 38 | Windowed mode by default | St0ny | ✅ |
-| 39 | Maximized window by default | St0ny | ✅ |
-| 40 | No black screen when switching to windowed mode | Robinsch | – |
-| 41 | Cast bars on all frames | Kebabstorm | ✅ |
-| 42 | Max characters per realm raised to 255 | St0ny | – |
-| 43 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
-| 44 | Mouse flicker / camera jump fix | Robinsch | ✅ |
-| 45 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | ✅ |
-| 46 | GameObject view distance: Cat 0 from 30 to 50 yards | St0ny | ✅ |
-| 47 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | ✅ |
-| 48 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
-| 49 | Optimize sound settings | St0ny | ✅ |
-| 50 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
-| 51 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | ✅ |
+| 30 | Max characters per realm raised to 255 | St0ny | – |
+|    | **Graphics & view distance** |  |  |
+| 31 | CVar farclip unlock (max 10000) | 12th Gen exe | ✅ |
+| 32 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
+| 33 | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ |
+| 34 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ |
+| 35 | Graphics options: extend slider maximums | St0ny | ✅ |
+| 36 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | ✅ |
+| 37 | GameObject view distance: Cat 0 from 30 to 50 yards | St0ny | ✅ |
+| 38 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | ✅ |
+| 39 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
+| 40 | No character transparency when zooming in | 12th Gen exe | – |
+| 41 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | ✅ |
+|    | **Interface & comfort** |  |  |
+| 42 | Auto-sort quest tracker |  | ✅ |
+| 43 | Advanced world map enabled by default |  | ✅ |
+| 44 | Cast bars on all frames | Kebabstorm | ✅ |
+| 45 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
+| 46 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
+|    | **Window & mouse** |  |  |
+| 47 | Windowed mode by default | St0ny | ✅ |
+| 48 | Maximized window by default | St0ny | ✅ |
+| 49 | No black screen when switching to windowed mode | Robinsch | – |
+| 50 | Mouse flicker / camera jump fix | Robinsch | ✅ |
+|    | **Sound** |  |  |
+| 51 | Optimize sound settings | St0ny | ✅ |
 
 > [!NOTE]
 > **Authors wanted:** For patches without an entry in the "Author" column, the
@@ -205,60 +216,56 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 
 ## Patch descriptions
 
-### Memory & system
+### System & performance
 
 **4GB patch (Large Address Aware)** *(No. 1, Author: Kebabstorm)*
 Lets `Wow.exe` use up to 4 GB of RAM instead of the default 2 GB limit for
 32-bit applications.
 
-**Disable CACHE folder creation** *(No. 5, off by default, Author: Kebabstorm)*
+**Disable CACHE folder creation** *(No. 2, off by default, Author: Kebabstorm)*
 Prevents the client from creating a `CACHE` folder automatically.
 
-**Refresh item cache immediately** *(No. 6, Author: Robinsch)*
+**Refresh item cache immediately** *(No. 3, Author: Robinsch)*
 Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
-### Security
+### Security & privacy
 
-**Allow unsigned / incorrectly signed MPQs** *(No. 3, Author: 12th Gen exe)*
-Allows loading MPQ archives without a valid signature. Required for custom
-content on private servers.
-
-**Disable scan DLL** *(No. 4, Author: 12th Gen exe)*
-Disables the Warden scan DLL mechanism in the client.
-
-**Remote code execution exploit fix** *(No. 7, off by default, Author: Robinsch)*
+**Remote code execution exploit fix** *(No. 4, off by default, Author: Robinsch)*
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
 are no longer loaded from the local cache. Warden itself keeps working, so
 servers with active Warden are not a problem.
 
-**Disable Warden completely (RCE fix)** *(No. 8, Author: Robinsch)*
+**Disable Warden completely, RCE fix** *(No. 5, Author: Robinsch)*
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
-(No. 7) unnecessary; both together do no harm, the patcher just points it
+(No. 4) unnecessary; both together do no harm, the patcher just points it
 out.
 
 > [!WARNING]
 > The client no longer answers Warden. Servers with active Warden (e.g.
 > AzerothCore or TrinityCore with default settings) may therefore kick you.
 
-**Disallow client patches from the server** *(No. 9, off by default, Author: Kebabstorm)*
+**Disable Scan.dll** *(No. 6, Author: 12th Gen exe)*
+Disables the Warden scan DLL mechanism in the client.
+
+**Disallow client patches from the server** *(No. 7, off by default, Author: Kebabstorm)*
 The server can no longer send patch files to the client and have them
 installed.
 
-**Disallow hardware surveys from the server** *(No. 10, off by default, Author: Kebabstorm)*
+**Disallow hardware surveys from the server** *(No. 8, off by default, Author: Kebabstorm)*
 The server can no longer request a hardware survey (information about your PC)
 from the client.
 
 ### Login & connection
 
-**Skip Battle.net login** *(No. 12, Author: Kebabstorm)*
+**Skip Battle.net login** *(No. 9, Author: Kebabstorm)*
 The client skips the Battle.net login step and goes straight to the classic
 login.
 
-**Skip Remote Desktop check** *(No. 13, Author: Kebabstorm)*
+**Skip Remote Desktop check** *(No. 10, Author: Kebabstorm)*
 The client no longer checks whether it runs over a Remote Desktop connection –
 so WoW can be played via RDP, for example.
 
@@ -266,13 +273,30 @@ so WoW can be played via RDP, for example.
 The client no longer fetches news, help articles and terms of use from
 Blizzard's servers – they no longer exist for 3.3.5 anyway.
 
-### UI & glue screens
+**Disable AFK timer idle check** *(No. 12, off by default, Author: St0ny)*
+Disables the idle login check but keeps the automatic AFK disconnect timer
+active. Also prevents the CharAutoLogin bug.
+**Required for character auto-login** – details on [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
 
-**Allow custom GlueXML** *(No. 2, Author: Kebabstorm)*
+### Modding: interface, MPQs & addons
+
+**Allow custom GlueXML** *(No. 13, Author: Kebabstorm)*
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding).
 
-**LUA unlock (allow protected functions)** *(No. 18, off by default, Author: 12th Gen exe)*
+**Allow unsigned / incorrectly signed MPQs** *(No. 14, Author: 12th Gen exe)*
+Allows loading MPQ archives without a valid signature. Required for custom
+content on private servers.
+
+**Allow extended MPQ names** *(No. 15)*
+Allows wildcard names for MPQ archives (`patch-*.MPQ` and
+`patch-locale-*.MPQ`).
+
+**Load data directly from the Data folder (no MPQ)** *(No. 16, off by default, Author: 12th Gen exe)*
+The client reads files directly from the Data folder without packing them into
+an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
+
+**LUA unlock (allow protected functions)** *(No. 17, off by default, Author: 12th Gen exe)*
 Addons and macros may call protected functions, e.g. `CastSpellByName`,
 `CastSpellByID`, `TargetUnit`, `FocusUnit`, `InteractUnit`, movement functions
 or `ReloadUI`. `AttackTarget` still prints an error.
@@ -280,119 +304,65 @@ or `ReloadUI`. `AttackTarget` still prints an error.
 > [!WARNING]
 > This enables automation. Servers with anti-cheat may treat it as botting.
 
+**Enable AwesomeWotlkLib.dll support** *(No. 18, off by default, Author: FrostAtom)*
+Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
+the client with additional features and improvements for private servers.
+**Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
+
 ### Gameplay fixes
 
-**Disable AFK timer idle check** *(No. 14, off by default, Author: St0ny)*
-Disables the idle login check but keeps the automatic AFK disconnect timer
-active. Also prevents the CharAutoLogin bug.
-**Required for character auto-login** – details on [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
-
-**Area trigger timer accuracy** *(No. 15, Author: Robinsch)*
+**Area trigger timer accuracy** *(No. 19, Author: Robinsch)*
 Increases the area trigger check frequency from 250 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
-**Remove melee swing on right-click** *(No. 19, Author: Robinsch)*
+**Remove melee swing on right-click** *(No. 20, Author: Robinsch)*
 Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
-**Suppress NPC attack animation when turning** *(No. 20, Author: Robinsch)*
+**Suppress NPC attack animation when turning** *(No. 21, Author: Robinsch)*
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
 
-**Fix spell preparation animation after cancelling channelled spells** *(No. 21, Author: Robinsch)*
+**Fix spell preparation animation after cancelling channelled spells** *(No. 22, Author: Robinsch)*
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
-**Fix "ghost" attack when NPCs evade from combat** *(No. 22, Author: Robinsch)*
+**Fix "ghost" attack when NPCs evade from combat** *(No. 23, Author: Robinsch)*
 Fixes the "ghost" attack NPCs perform when they evade from combat.
 
-**Level 101+ fix for druid base stats and barber chair** *(No. 23, off by default, Author: 12th Gen exe)*
-Druids at level 101 and above can view their base stats again, and the
-barber chair works for all characters at level 101 and above.
-**Requires** the patch "Allow custom GlueXML" (No. 2). In the source it is
-called "Disable XML SIG MD5", hence the note "Use XML MD5" there.
-
-**Fix naked character bug** *(No. 25, Author: Robinsch)*
+**Fix naked character bug** *(No. 24, Author: Robinsch)*
 Disables the `SPELL_AURA_X_RAY` effect that could cause characters to be
 rendered without their equipment.
 
-**Keep force reaction on /reload** *(No. 26, Author: Robinsch)*
+**Keep force reaction on /reload** *(No. 25, Author: Robinsch)*
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
-**New mail without the 60-second wait** *(No. 27, off by default, Author: Robinsch)*
+**New mail without the 60-second wait** *(No. 26, off by default, Author: Robinsch)*
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
-**Allow chat commands while dead** *(No. 28, off by default, Author: Robinsch)*
+**Allow chat commands while dead** *(No. 27, off by default, Author: Robinsch)*
 Slash commands also work while the character is dead.
+
+**Level 101+ fix for druid base stats and barber chair** *(No. 28, off by default, Author: 12th Gen exe)*
+Druids at level 101 and above can view their base stats again, and the
+barber chair works for all characters at level 101 and above.
+**Requires** the patch "Allow custom GlueXML" (No. 13). In the source it is
+called "Disable XML SIG MD5", hence the note "Use XML MD5" there.
 
 **Unlimited race/class combinations** *(No. 29, off by default, Author: Robinsch)*
 Character creation allows every race with every class. The server has to
 support this as well.
 
-### MPQ extensions
+**Max characters per realm raised to 255** *(No. 30, off by default, Author: St0ny)*
+Raises the client-side limit from 10 to 255 characters per realm. The server
+has to support this as well. Additional interface changes (GlueXML) are
+required for the character selection screen to show more than 10 slots.
 
-**Allow extended MPQ names** *(No. 16)*
-Allows wildcard names for MPQ archives (`patch-*.MPQ` and
-`patch-locale-*.MPQ`).
+### Graphics & view distance
 
-**Load data directly from the Data folder (no MPQ)** *(No. 17, off by default, Author: 12th Gen exe)*
-The client reads files directly from the Data folder without packing them into
-an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
-
-### Visual changes
-
-**Re-enable the blue moon in the night sky** *(No. 24, Author: Robinsch)*
-Restores a removed legacy feature: the blue moon that used to be visible in
-the night sky.
-
-**No character transparency when zooming in** *(No. 30, off by default, Author: 12th Gen exe)*
-Your own character no longer becomes transparent when the camera is zoomed in
-close.
-
-**Retail guild emblems: selection extended from 170 to 196** *(No. 43, off by default, Author: MacWarrior)*
-The client keeps the number of selectable tabard variants in a small table
-(VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
-6 borders, 17 border colors, 51 background colors. The tabard designer cycles
-with "index modulo count", the random tabard picks "rand() times count" – both
-read the value at runtime, and there is no second hard-coded 170 anywhere. The
-patch raises the emblem count to retail's 196, which removes the limit
-completely.
-
-> [!WARNING]
-> **Additional MPQ patch archive required.** This patch only raises the counter
-> in the EXE, it does not ship any graphics. The 26 new emblems (index 170 to
-> 195) have to be provided as a separate MPQ archive in the `Data` folder.
-> Without it, the new slots in the tabard designer can be selected but stay
-> empty.
->
-> The matching archive is **Patch-G**: [Discord](https://discord.com/channels/407664041016688662/1541873346608889936)
-
-The client builds the file names from the emblem index and color index, in
-this order:
-
-```
-Textures\GuildEmblems\Emblem_<Index>_<Color>_TU_U   (upper half)
-Textures\GuildEmblems\Emblem_<Index>_<Color>_TL_U   (lower half)
-```
-
-The texture loader appends the `.blp` extension. That is 17 colors × 2 halves
-= 34 files per emblem, 884 files for all 26 new emblems. The archive name is
-up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
-(No. 16).
-
-### Default settings (CVars)
-
-**Auto-sort quest tracker** *(No. 31)*
-Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
-sorted automatically.
-
-**Advanced world map enabled by default** *(No. 32)*
-Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
-enabled from the start.
-
-**Farclip unlock to max 10000** *(No. 33, Author: 12th Gen exe)*
+**Farclip unlock to max 10000** *(No. 31, Author: 12th Gen exe)*
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
 upper limits for it: 1583 yards normally and 791 yards as a fallback. The 791
@@ -403,42 +373,121 @@ The lower limit of 183 yards stays untouched, and there is no separate input
 limit for the CVar – this clamp is the limit.
 Not to be confused with the 1277 from the video menu: that is the maximum of
 the view distance slider and a completely different location in the EXE (see
-[Graphics options (UI sliders)](#graphics-options-ui-sliders)).
+patch No. 35 "Extend slider maximums in the video menu").
 
-**CVar horizonFarclipScale unlocked to max 12** *(No. 34, Author: St0ny)*
+**CVar horizonFarclipScale unlocked to max 12** *(No. 32, Author: St0ny)*
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
-**Windowed mode by default** *(No. 38, Author: St0ny)*
-Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
-instead of fullscreen.
+**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 33, Author: St0ny)*
+Removes the upper limit of the CVar `environmentDetail` entirely. Originally
+the value is clamped to the range 0.5 to 1.5; the patch disables the upper
+clamp so arbitrarily high values are passed through.
+Important: this CVar does nothing but multiply the GameObject view distances
+(see patches No. 36 and 37) – in the original
+only for categories 1 to 3, with patch No. 36 for all five. That makes it the
+most convenient FPS lever for object rendering, since it works in-game without
+re-patching.
 
-**Maximized window by default** *(No. 39, Author: St0ny)*
-Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
+**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 34)*
+Raises the maximum view distance for ground effects (grass, flowers, ground
+clutter) from 140 to 3166 yards.
 
-**No black screen when switching to windowed mode** *(No. 40, off by default, Author: Robinsch)*
-Switching to windowed mode while in-game no longer results in a black
-screen.
+**Extend slider maximums in the video menu** *(No. 35, Author: St0ny)*
+Raises the maximums of four sliders in the video menu, "Effects" tab. The
+CVars themselves have long been unlocked by the unlock patches – but the
+sliders stayed at Blizzard's values because they don't take their maximum
+from the CVar limit.
 
-**Cast bars on all frames (like Cataclysm)** *(No. 41, Author: Kebabstorm)*
-Shows cast bars on all unit frames (party, arena, boss etc.), not just target
-and focus, as well as on all default nameplates. Matches the behavior from
-Cataclysm onwards.
+| CVar                  | Slider before | Slider after |
+|-----------------------|--------------:|-------------:|
+| `farclip`             | 1277          | 2477         |
+| `environmentDetail`   | 1.5           | 2.5          |
+| `groundEffectDist`    | 140           | 250          |
+| `groundEffectDensity` | 64            | 256          |
 
-**Max characters per realm raised to 255** *(No. 42, off by default, Author: St0ny)*
-Raises the client-side limit from 10 to 255 characters per realm. The server
-has to support this as well. Additional interface changes (GlueXML) are
-required for the character selection screen to show more than 10 slots.
+The minimums stay unchanged (177 / 0.5 / 70 / 16), as do the step sizes from
+the interface. They divide evenly: 8 steps for `environmentDetail`, 18 for
+`groundEffectDist`, 30 for `groundEffectDensity`. For the view distance slider
+the interface calculates the step size itself as (max−min)/10, so 230 yards
+per notch here.
 
-### Mouse flicker / camera jumps
+<details>
+<summary><b>Background: why the sliders didn't grow along before</b></summary>
 
-**Fix mouse flicker and camera jumps** *(No. 44, Author: Robinsch)*
-A larger patch (4 parts) that fixes problems with mice using a high polling
-rate. Prevents cursor flicker and uncontrolled camera movement.
+The interface builds every slider using this pattern:
 
-### GameObject view distance
+```lua
+minValue = GetCVarMin(cvar)  -- or fallback value from the Lua
+maxValue = GetCVarMax(cvar)  -- or fallback value from the Lua
+```
 
-**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 45, Author: St0ny)*
+So it asks the EXE first and only uses the fallback from
+`VideoOptionsPanels.lua` if the EXE returns nothing. In the original,
+`GetCVarMax` only knows two CVars: `extShadowQuality` and `farclip`. For
+everything else it returns nothing, and then the hard-coded Lua values
+1.5 / 140 / 64 apply. For `farclip` it returned a fixed 1277 – likewise
+regardless of how far the CVar is unlocked.
+
+The patch replaces the fixed farclip comparison with a call to a small lookup
+routine that walks a table of {CVar name, maximum}. If a CVar is listed, the
+interface gets that value; if not, everything works as before. The routine
+lives in the padding at the end of the code section, the table in the padding
+of the data section – the file does not grow.
+
+Important: `GetCVarMax` exists twice in the EXE – once for the login/character
+screens and once for the running game. Both call the same lookup routine. If
+only one of them is patched, the sliders in-game stay at 1277 / 1.5 / 140 / 64
+without any visible sign.
+
+</details>
+
+**Two limitations**
+
+- The slider only sets the CVar. Without the unlock patches the client clamps
+  the value back to its original immediately – so the patches "Farclip unlock"
+  (No. 31), "CVar environmentDetail unlock" (No. 33) and "CVar
+  groundEffectDist unlock" (No. 34) belong with it. If they are missing from
+  the selection, the patcher points this out.
+- For `groundEffectDensity` nothing changes above 64: the vertex buffer for
+  ground clutter is hard-clamped in the client to density × 64 ≤ 4096. The
+  slider goes up to 256, but visually nothing changes above 64.
+
+**The Ultra preset stays at Blizzard's values**
+
+The master "Graphics quality" slider still sets 1277 / 1.5 / 64 / 140 on
+Ultra, not the new maximums. This cannot be changed from the EXE: the preset
+values are plain Lua constants in
+`Interface\FrameXML\GraphicsQualityLevels.lua` and are written directly into
+the sliders from there. The only link from the EXE into this path is
+`VideoOptionsEffectsPanel_FixupQualityLevels`, and that function can only
+clamp – values above the maximum down, values below the minimum up. Both apply
+per CVar to all six quality levels at once; a single level cannot be
+addressed.
+
+> [!CAUTION]
+> Tempting dead end: you could pull Ultra up via the minimum
+> (`GetCVarMin("farclip")` is the double at `0x9F5798`, originally 177.0), but
+> then ALL six levels are pulled to that value – Low just like Ultra – and the
+> slider ends up with minimum above maximum, sticks to the end stop and gets a
+> negative step size. Exactly that happened in an earlier attempt and caused
+> startup crashes via `Config.wtf`. Leave the minimum double alone.
+
+If you really want Ultra at the new maximums, you need the interface side, i.e.
+an MPQ with a modified `GraphicsQualityLevels.lua` – then the values are fixed
+in the client instead of being set afterwards by an addon. This is
+deliberately not part of this patcher: it remains a pure EXE patcher that
+touches nothing but `Wow.exe`.
+
+**No slider for horizonFarclipScale**
+
+There is no slider for this CVar in the video menu at all – it doesn't appear
+anywhere in the interface. An EXE patch cannot raise anything here because
+there is nothing to raise. The value can still only be set via `Config.wtf`,
+`/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
+see above).
+
+**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 36, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
 `environmentDetail`. Cat 0 (small clutter) and Cat 4 (huge buildings) take
@@ -455,11 +504,11 @@ distances stay at Blizzard's values; everything is controlled via the CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10                | 300   | 1000  | 2000  | 7500  | 12500 |
 
-With patch No. 46, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
+With patch No. 37, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
 the table above). Values above 1.5 require the patch "CVar environmentDetail
-unlock" (No. 35).
+unlock" (No. 33).
 
-**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 46, Author: St0ny)*
+**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 37, Author: St0ny)*
 If you want to keep view distances entirely at Blizzard's values, deselect
 this patch.
 The patch only raises the smallest object category: candles, books, sacks,
@@ -562,9 +611,20 @@ you can widen them independently of the distances.
 
 </details>
 
-### Character portraits (HD)
+**Occluder fix for Stormwind (Open Azeroth)** *(No. 38, Author: Robinsch)*
+Raises the occluder threshold for Stormwind so buildings and objects are not
+hidden incorrectly. Fixes graphical glitches on custom servers with a rebuilt
+Stormwind.
 
-**HD unit frame portraits: 256x256 instead of 64x64** *(No. 51, Author: Badgermilk0)*
+**Re-enable the blue moon in the night sky** *(No. 39, Author: Robinsch)*
+Restores a removed legacy feature: the blue moon that used to be visible in
+the night sky.
+
+**No character transparency when zooming in** *(No. 40, off by default, Author: 12th Gen exe)*
+Your own character no longer becomes transparent when the camera is zoomed in
+close.
+
+**HD unit frame portraits: 256x256 instead of 64x64** *(No. 41, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
 instead of the default 64×64. Framing, tilt and zoom stay the same – only the
 render resolution increases, so the portraits become much sharper.
@@ -577,141 +637,78 @@ otherwise read past the source.
 > alpha mask + code caves + detour of the mask builder). The file grows by
 > about 69 KB.
 
-### Window notification
+### Interface & comfort
 
-**FlashWindow patch** *(No. 50, off by default, Author: Kebabstorm)*
+**Auto-sort quest tracker** *(No. 42)*
+Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
+sorted automatically.
+
+**Advanced world map enabled by default** *(No. 43)*
+Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
+enabled from the start.
+
+**Cast bars on all frames (like Cataclysm)** *(No. 44, Author: Kebabstorm)*
+Shows cast bars on all unit frames (party, arena, boss etc.), not just target
+and focus, as well as on all default nameplates. Matches the behavior from
+Cataclysm onwards.
+
+**Retail guild emblems: selection extended from 170 to 196** *(No. 45, off by default, Author: MacWarrior)*
+The client keeps the number of selectable tabard variants in a small table
+(VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
+6 borders, 17 border colors, 51 background colors. The tabard designer cycles
+with "index modulo count", the random tabard picks "rand() times count" – both
+read the value at runtime, and there is no second hard-coded 170 anywhere. The
+patch raises the emblem count to retail's 196, which removes the limit
+completely.
+
+> [!WARNING]
+> **Additional MPQ patch archive required.** This patch only raises the counter
+> in the EXE, it does not ship any graphics. The 26 new emblems (index 170 to
+> 195) have to be provided as a separate MPQ archive in the `Data` folder.
+> Without it, the new slots in the tabard designer can be selected but stay
+> empty.
+>
+> The matching archive is **Patch-G**: [Discord](https://discord.com/channels/407664041016688662/1541873346608889936)
+
+The client builds the file names from the emblem index and color index, in
+this order:
+
+```
+Textures\GuildEmblems\Emblem_<Index>_<Color>_TU_U   (upper half)
+Textures\GuildEmblems\Emblem_<Index>_<Color>_TL_U   (lower half)
+```
+
+The texture loader appends the `.blp` extension. That is 17 colors × 2 halves
+= 34 files per emblem, 884 files for all 26 new emblems. The archive name is
+up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
+(No. 15).
+
+**FlashWindow patch** *(No. 46, off by default, Author: Kebabstorm)*
 FlashWindow: makes the WoW window flash in the taskbar when a relevant event
 occurs while the game is in the background. The function can be called from
 addons.
 **Requires** the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk.
 
-### Occluder
+### Window & mouse
 
-**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 35, Author: St0ny)*
-Removes the upper limit of the CVar `environmentDetail` entirely. Originally
-the value is clamped to the range 0.5 to 1.5; the patch disables the upper
-clamp so arbitrarily high values are passed through.
-Important: this CVar does nothing but multiply the GameObject view distances
-(see [GameObject view distance](#gameobject-view-distance)) – in the original
-only for categories 1 to 3, with patch No. 45 for all five. That makes it the
-most convenient FPS lever for object rendering, since it works in-game without
-re-patching.
+**Windowed mode by default** *(No. 47, Author: St0ny)*
+Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
+instead of fullscreen.
 
-**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 36)*
-Raises the maximum view distance for ground effects (grass, flowers, ground
-clutter) from 140 to 3166 yards.
+**Maximized window by default** *(No. 48, Author: St0ny)*
+Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
-**Occluder fix for Stormwind (Open Azeroth)** *(No. 47, Author: Robinsch)*
-Raises the occluder threshold for Stormwind so buildings and objects are not
-hidden incorrectly. Fixes graphical glitches on custom servers with a rebuilt
-Stormwind.
+**No black screen when switching to windowed mode** *(No. 49, off by default, Author: Robinsch)*
+Switching to windowed mode while in-game no longer results in a black
+screen.
 
-### Graphics options (UI sliders)
+**Fix mouse flicker and camera jumps** *(No. 50, Author: Robinsch)*
+A larger patch (4 parts) that fixes problems with mice using a high polling
+rate. Prevents cursor flicker and uncontrolled camera movement.
 
-**Extend slider maximums in the video menu** *(No. 37, Author: St0ny)*
-Raises the maximums of four sliders in the video menu, "Effects" tab. The
-CVars themselves have long been unlocked by the unlock patches – but the
-sliders stayed at Blizzard's values because they don't take their maximum
-from the CVar limit.
+### Sound
 
-| CVar                  | Slider before | Slider after |
-|-----------------------|--------------:|-------------:|
-| `farclip`             | 1277          | 2477         |
-| `environmentDetail`   | 1.5           | 2.5          |
-| `groundEffectDist`    | 140           | 250          |
-| `groundEffectDensity` | 64            | 256          |
-
-The minimums stay unchanged (177 / 0.5 / 70 / 16), as do the step sizes from
-the interface. They divide evenly: 8 steps for `environmentDetail`, 18 for
-`groundEffectDist`, 30 for `groundEffectDensity`. For the view distance slider
-the interface calculates the step size itself as (max−min)/10, so 230 yards
-per notch here.
-
-<details>
-<summary><b>Background: why the sliders didn't grow along before</b></summary>
-
-The interface builds every slider using this pattern:
-
-```lua
-minValue = GetCVarMin(cvar)  -- or fallback value from the Lua
-maxValue = GetCVarMax(cvar)  -- or fallback value from the Lua
-```
-
-So it asks the EXE first and only uses the fallback from
-`VideoOptionsPanels.lua` if the EXE returns nothing. In the original,
-`GetCVarMax` only knows two CVars: `extShadowQuality` and `farclip`. For
-everything else it returns nothing, and then the hard-coded Lua values
-1.5 / 140 / 64 apply. For `farclip` it returned a fixed 1277 – likewise
-regardless of how far the CVar is unlocked.
-
-The patch replaces the fixed farclip comparison with a call to a small lookup
-routine that walks a table of {CVar name, maximum}. If a CVar is listed, the
-interface gets that value; if not, everything works as before. The routine
-lives in the padding at the end of the code section, the table in the padding
-of the data section – the file does not grow.
-
-Important: `GetCVarMax` exists twice in the EXE – once for the login/character
-screens and once for the running game. Both call the same lookup routine. If
-only one of them is patched, the sliders in-game stay at 1277 / 1.5 / 140 / 64
-without any visible sign.
-
-</details>
-
-**Two limitations**
-
-- The slider only sets the CVar. Without the unlock patches the client clamps
-  the value back to its original immediately – so the patches "Farclip unlock"
-  (No. 33), "CVar environmentDetail unlock" (No. 35) and "CVar
-  groundEffectDist unlock" (No. 36) belong with it. If they are missing from
-  the selection, the patcher points this out.
-- For `groundEffectDensity` nothing changes above 64: the vertex buffer for
-  ground clutter is hard-clamped in the client to density × 64 ≤ 4096. The
-  slider goes up to 256, but visually nothing changes above 64.
-
-**The Ultra preset stays at Blizzard's values**
-
-The master "Graphics quality" slider still sets 1277 / 1.5 / 64 / 140 on
-Ultra, not the new maximums. This cannot be changed from the EXE: the preset
-values are plain Lua constants in
-`Interface\FrameXML\GraphicsQualityLevels.lua` and are written directly into
-the sliders from there. The only link from the EXE into this path is
-`VideoOptionsEffectsPanel_FixupQualityLevels`, and that function can only
-clamp – values above the maximum down, values below the minimum up. Both apply
-per CVar to all six quality levels at once; a single level cannot be
-addressed.
-
-> [!CAUTION]
-> Tempting dead end: you could pull Ultra up via the minimum
-> (`GetCVarMin("farclip")` is the double at `0x9F5798`, originally 177.0), but
-> then ALL six levels are pulled to that value – Low just like Ultra – and the
-> slider ends up with minimum above maximum, sticks to the end stop and gets a
-> negative step size. Exactly that happened in an earlier attempt and caused
-> startup crashes via `Config.wtf`. Leave the minimum double alone.
-
-If you really want Ultra at the new maximums, you need the interface side, i.e.
-an MPQ with a modified `GraphicsQualityLevels.lua` – then the values are fixed
-in the client instead of being set afterwards by an addon. This is
-deliberately not part of this patcher: it remains a pure EXE patcher that
-touches nothing but `Wow.exe`.
-
-**No slider for horizonFarclipScale**
-
-There is no slider for this CVar in the video menu at all – it doesn't appear
-anywhere in the interface. An EXE patch cannot raise anything here because
-there is nothing to raise. The value can still only be set via `Config.wtf`,
-`/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
-see above).
-
-### DLL support
-
-**Enable AwesomeWotlkLib.dll support** *(No. 48, off by default, Author: FrostAtom)*
-Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
-the client with additional features and improvements for private servers.
-**Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
-
-### Sound settings
-
-**Optimize sound settings** *(No. 49, Author: St0ny)*
+**Optimize sound settings** *(No. 51, Author: St0ny)*
 Includes the following changes:
 
 - Sound channel hardware limit raised to 126
@@ -730,7 +727,8 @@ Includes the following changes:
   and the selection has been confirmed. An existing backup is overwritten (the
   input has just been verified to be the original).
 - If there is no `Wow.exe` in the folder, the patcher aborts.
-- To restore, simply rename `Wow.exe.BAK` to `Wow.exe`.
+- To restore, delete the patched `Wow.exe` and rename `Wow.exe.BAK` to
+  `Wow.exe`.
 - To apply a different selection, restore the original first and run the
   patcher again.
 - Use at your own risk. This project is not affiliated with Blizzard
