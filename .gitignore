@@ -1,0 +1,13 @@
+# Game binaries and backups - never commit Blizzard files
+*.exe
+*.EXE
+*.BAK
+*.ORI
+*.MPQ
+*.mpq
+
+# Local work files
+*.bak
+*.bak[0-9]*
+__pycache__/
+.claude/settings.local.json
