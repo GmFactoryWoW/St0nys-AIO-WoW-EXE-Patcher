@@ -68,8 +68,10 @@ Zum **Wiederherstellen** einfach `Wow.exe` löschen und `Wow.exe.BAK` in
 ## Patch-Auswahl
 
 Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
-`[ ]` = wird übersprungen. Standardmäßig sind **alle Patches ausgewählt** –
-du wählst nur ab, was du nicht haben möchtest.
+`[ ]` = wird übersprungen. Vorausgewählt ist die empfohlene Standard-Auswahl
+(Spalte „Standard“ in der [Patch-Übersicht](#patch-übersicht)). Patches, die
+zusätzlich etwas benötigen, zeigen das in Klammern hinter dem Namen, der Link
+dazu steht direkt darunter.
 
 | Eingabe            | Wirkung                                     |
 |--------------------|---------------------------------------------|
@@ -78,6 +80,7 @@ du wählst nur ab, was du nicht haben möchtest.
 | `10-15`            | einen Bereich an-/abwählen                  |
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus                            |
+| `S` (oder `D`)     | zurück zur Standard-Auswahl                 |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -95,15 +98,14 @@ Sicherheitsabfrage abgebrochen hast.
 
 - Gespeichert wird pro Patch (über eine interne Kennung), nicht pro Nummer.
   Kommen in einer neueren Version Patches hinzu, bleibt deine Auswahl korrekt,
-  und die neuen Patches sind zunächst angewählt.
+  und die neuen Patches starten mit ihrer Standard-Einstellung.
 - Die Datei ist eine einfache Textdatei (`4gb=1`, `cache=0`, …) und kann auch
   von Hand bearbeitet werden.
-- **Zurücksetzen:** `patcher_selection.ini` löschen – dann sind wieder alle
-  Patches ausgewählt.
+- **Zurücksetzen:** im Menü `S` drücken oder `patcher_selection.ini` löschen –
+  dann gilt wieder die Standard-Auswahl.
 
-Ohne gespeicherte Auswahl gilt die Vorauswahl aus `apply_patches.ps1`: Jeder
-Patch hat dort einen Eintrag `On = $true` (vorausgewählt). Mit `On = $false`
-ist er beim ersten Start abgewählt.
+Die Standard-Auswahl ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
+einen Eintrag `On = $true` (vorausgewählt) bzw. `On = $false` (abgewählt).
 
 ## Parameter für den unbeaufsichtigten Betrieb
 
@@ -140,44 +142,44 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 
 ## Patch-Übersicht
 
-| Nr. | Patch |
-|----:|-------|
-| 1  | 4GB-Patch (Large Address Aware) |
-| 2  | Custom Glue-XML erlauben |
-| 3  | Falsch/Nicht signierte MPQs zulassen |
-| 4  | Scan DLL deaktivieren |
-| 5  | CACHE Ordner Erstellung deaktivieren |
-| 6  | Item-Cache sofort aktualisieren |
-| 7  | Remote Code Execution Exploit Fix |
-| 8  | AFK Timer IDLE Check deaktiviert |
-| 9  | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) |
-| 10 | Erweiterte MPQ-Namen erlauben |
-| 11 | Nahkampf-Schwung bei Rechtsklick entfernt |
-| 12 | NPC-Angriffsanimation beim Drehen unterdrückt |
-| 13 | Zauber-Animation nach Abbruch repariert |
-| 14 | Blauer Mond am Nachthimmel reaktiviert |
-| 15 | Nackter-Charakter-Bug behoben |
-| 16 | Force-Reaction bei /reload erhalten |
-| 17 | Quest-Tracker automatisch sortieren |
-| 18 | Erweiterte Weltkarte standardmäßig aktiv |
-| 19 | CVar farclip unlock (max 10000) |
-| 20 | CVar horizonFarclipScale unlock (max 12) |
-| 21 | CVar environmentDetail unlock (kein Limit statt 1.5) |
-| 22 | CVar groundEffectDist unlock (max 3166 statt 140) |
-| 23 | Grafikoptionen: Slider-Maxima erweitern |
-| 24 | Fenstermodus als Standard setzen |
-| 25 | Fenstermodus maximiert als Standard setzen |
-| 26 | Cast Bars auf allen Frames |
-| 27 | Max Characters pro Server auf 255 erhöht |
-| 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert |
-| 29 | Mausflackern / Kamerasprünge Fix |
-| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen |
-| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards |
-| 32 | Occluder Fix für Stormwind (Open Azeroth) |
-| 33 | AwesomeWotlkLib.dll Unterstützung aktivieren |
-| 34 | Sound-Einstellungen optimieren |
-| 35 | FlashWindow Patch |
-| 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) |
+| Nr. | Patch | Standard |
+|----:|-------|:--------:|
+| 1  | 4GB-Patch (Large Address Aware) | ✅ |
+| 2  | Custom Glue-XML erlauben | ✅ |
+| 3  | Falsch/Nicht signierte MPQs zulassen | ✅ |
+| 4  | Scan DLL deaktivieren | ✅ |
+| 5  | CACHE Ordner Erstellung deaktivieren | – |
+| 6  | Item-Cache sofort aktualisieren | ✅ |
+| 7  | Remote Code Execution Exploit Fix | ✅ |
+| 8  | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | – |
+| 9  | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) | ✅ |
+| 10 | Erweiterte MPQ-Namen erlauben | ✅ |
+| 11 | Nahkampf-Schwung bei Rechtsklick entfernt | ✅ |
+| 12 | NPC-Angriffsanimation beim Drehen unterdrückt | ✅ |
+| 13 | Zauber-Animation nach Abbruch repariert | ✅ |
+| 14 | Blauer Mond am Nachthimmel reaktiviert | ✅ |
+| 15 | Nackter-Charakter-Bug behoben | ✅ |
+| 16 | Force-Reaction bei /reload erhalten | ✅ |
+| 17 | Quest-Tracker automatisch sortieren | ✅ |
+| 18 | Erweiterte Weltkarte standardmäßig aktiv | ✅ |
+| 19 | CVar farclip unlock (max 10000) | ✅ |
+| 20 | CVar horizonFarclipScale unlock (max 12) | ✅ |
+| 21 | CVar environmentDetail unlock (kein Limit statt 1.5) | ✅ |
+| 22 | CVar groundEffectDist unlock (max 3166 statt 140) | ✅ |
+| 23 | Grafikoptionen: Slider-Maxima erweitern | ✅ |
+| 24 | Fenstermodus als Standard setzen | ✅ |
+| 25 | Fenstermodus maximiert als Standard setzen | ✅ |
+| 26 | Cast Bars auf allen Frames | ✅ |
+| 27 | Max Characters pro Server auf 255 erhöht | – |
+| 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | – |
+| 29 | Mausflackern / Kamerasprünge Fix | ✅ |
+| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | ✅ |
+| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | ✅ |
+| 32 | Occluder Fix für Stormwind (Open Azeroth) | ✅ |
+| 33 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | – |
+| 34 | Sound-Einstellungen optimieren | ✅ |
+| 35 | FlashWindow Patch | ✅ |
+| 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | ✅ |
 
 ---
 
@@ -189,7 +191,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 Ermöglicht der `Wow.exe`, bis zu 4 GB RAM zu nutzen statt der
 standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 
-**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 5)*
+**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 5, standardmäßig aus)*
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
 **Item-Cache sofort aktualisieren** *(Nr. 6)*
@@ -217,10 +219,11 @@ XML/Lua-Dateien (Glue-Screen-Modding).
 
 ### Gameplay-Fixes
 
-**AFK-Timer / IDLE-Check deaktiviert** *(Nr. 8)*
+**AFK-Timer / IDLE-Check deaktiviert** *(Nr. 8, standardmäßig aus)*
 Deaktiviert den IDLE-Login-Check, lässt den automatischen
 AFK-Disconnect-Timer aber aktiv. Verhindert gleichzeitig den
 CharAutoLogin-Bug.
+**Wird für Character-Autologin benötigt** – Details im [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
 
 **Verbesserung der Genauigkeit des Area-Trigger-Timers** *(Nr. 9)*
 Erhöht die Prüffrequenz für Area-Trigger von 250 ms auf 50 ms. Dadurch werden
@@ -258,7 +261,7 @@ Ermöglicht die Nutzung von Wildcard-Namen für MPQ-Archive
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 28)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 28, standardmäßig aus)*
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
 6 Bordüren, 17 Bordürenfarben, 51 Hintergrundfarben. Der Tabard-Designer
@@ -273,6 +276,8 @@ von Retail an, damit fällt die Grenze vollständig.
 > (Index 170 bis 195) müssen als eigenes MPQ-Archiv im `Data`-Ordner liegen.
 > Ohne dieses Archiv sind die neuen Plätze im Tabard-Designer zwar anwählbar,
 > bleiben aber leer.
+>
+> Das passende Archiv ist **Patch-G**: [Discord](https://discord.com/channels/407664041016688662/1541873346608889936)
 
 Der Client setzt die Dateinamen aus Emblem-Index und Farbindex zusammen, in
 dieser Reihenfolge:
@@ -328,7 +333,7 @@ Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Max Characters pro Server auf 255 erhöht** *(Nr. 27)*
+**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus)*
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
@@ -616,10 +621,11 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 
 ### DLL-Unterstützung
 
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 33)*
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 33, standardmäßig aus)*
 Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
 Server.
+**Benötigt** die `AwesomeWotlkLib.dll` aus [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
 
 ### Sound-Einstellungen
 

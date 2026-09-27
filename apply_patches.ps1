@@ -65,7 +65,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
-        MenuHelp2     = 'A = alle an    N = alle aus    Q = abbrechen'
+        MenuHelp2     = 'A = alle an    N = alle aus    S = Standard-Auswahl    Q = abbrechen'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
         Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
@@ -105,7 +105,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe is original and unmodified.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
-        MenuHelp2     = 'A = all on    N = all off    Q = quit'
+        MenuHelp2     = 'A = all on    N = all off    D = default selection    Q = quit'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
         Saved         = 'Selection saved for next time.'
@@ -142,7 +142,9 @@ function Say([string]$text, [string]$color) {
 }
 
 function PatchName($p) {
-    if ($script:lang -eq 'en') { return $p.En } else { return $p.De }
+    if ($script:lang -eq 'en') { $n = $p.En; $note = $p.NoteEn } else { $n = $p.De; $note = $p.NoteDe }
+    if ($note) { $n = "$n ($note)" }
+    return $n
 }
 
 function Exit-Patcher([int]$code) {
@@ -292,7 +294,10 @@ function Add-HdPortraits([int]$SIZE) {
 #  Jeder Patch ist eine Hashtable:
 #    Id    - interner Kurzname (fuer Abhaengigkeiten)
 #    De/En - Anzeigename je Sprache
-#    On    - im Auswahlmenue vorausgewaehlt ($true) oder nicht ($false)
+#    On    - Standard-Auswahl: vorausgewaehlt ($true) oder nicht ($false)
+#    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
+#            zusaetzlich benoetigt wird
+#    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    Code  - Scriptblock mit den Patch-Aufrufen
@@ -335,7 +340,7 @@ $patches = @(
         Patch 0x5F4D62 @(0xC7, 0xC7)
     }}
 
-    @{ Id = 'cache'; On = $true
+    @{ Id = 'cache'; On = $false
        De = 'CACHE Ordner Erstellung deaktivieren'
        En = 'Disable CACHE folder creation'
        Code = {
@@ -357,9 +362,12 @@ $patches = @(
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'afk'; On = $true
+    @{ Id = 'afk'; On = $false
        De = 'AFK Timer IDLE Check deaktiviert'
        En = 'Disable AFK timer idle check'
+       NoteDe = 'wird fuer Character-Autologin benoetigt'
+       NoteEn = 'required for character auto-login'
+       Url = 'https://discord.com/channels/858041817043042364/1515439916878663701'
        Code = {
         Patch 0x12A3AF @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
         Patch 0x12A64C @(0xE9, 0xB1, 0x06, 0x42, 0x00)
@@ -591,16 +599,19 @@ $patches = @(
         Patch 0x123676 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'maxchars'; On = $true
+    @{ Id = 'maxchars'; On = $false
        De = 'Max Characters pro Server auf 255 erhoeht'
        En = 'Max characters per realm raised to 255'
        Code = {
         Patch 0x6404F @(0xFF)
     }}
 
-    @{ Id = 'emblems'; On = $true; Needs = @('mpqnames')
+    @{ Id = 'emblems'; On = $false; Needs = @('mpqnames')
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'
+       NoteDe = 'benoetigt Patch-G'
+       NoteEn = 'requires Patch-G'
+       Url = 'https://discord.com/channels/407664041016688662/1541873346608889936'
        Code = {
         # Entspricht dem Pattern-Replace "73 00 00 AA 00 00" -> "73 00 00 C4 00 00".
         # Das Muster kommt in der Original-EXE genau einmal vor, ab Datei-Offset
@@ -748,9 +759,12 @@ $patches = @(
         Patch 0x6EE040 @(0x9F, 0x86, 0x01, 0x00)
     }}
 
-    @{ Id = 'awesome'; On = $true
+    @{ Id = 'awesome'; On = $false
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
+       NoteDe = 'benoetigt awesome_wotlk'
+       NoteEn = 'requires awesome_wotlk'
+       Url = 'https://github.com/noname08662/awesome_wotlk'
        Code = {
         Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
         Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
@@ -876,6 +890,9 @@ function Show-Menu($sel, [string]$message) {
         } else {
             Write-Host "   $nr  [ ]  $(PatchName $patches[$i])" -ForegroundColor DarkGray
         }
+        if ($patches[$i].Url) {
+            Write-Host "$(' ' * ($width + 10))$($patches[$i].Url)" -ForegroundColor DarkCyan
+        }
     }
     Say ('=' * 70) 'Cyan'
     Say (T 'MenuHelp1')
@@ -904,6 +921,7 @@ function Select-Patches {
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
+            '^[sSdD]$' { $sel = Get-DefaultSelection; break }
             '^[qQxX]$' { return $null }
             default {
                 $idx = ConvertTo-Indices $in $sel.Length
@@ -1068,7 +1086,10 @@ for ($i = 0; $i -lt $patches.Count; $i++) {
 # --- 4. Zusammenfassung, Hinweise, Bestaetigung ---
 Write-Host ''
 Say (T 'Summary' $chosen.Count) 'Cyan'
-foreach ($p in $chosen) { Say "  - $(PatchName $p)" }
+foreach ($p in $chosen) {
+    Say "  - $(PatchName $p)"
+    if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
+}
 
 foreach ($p in $chosen) {
     if (-not $p.Needs) { continue }

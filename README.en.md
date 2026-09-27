@@ -68,8 +68,10 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 ## Patch selection
 
 The menu lists every patch with a number. `[X]` = will be applied,
-`[ ]` = will be skipped. By default **all patches are selected** – you only
-deselect what you don't want.
+`[ ]` = will be skipped. The recommended default selection is preselected
+(see the "Default" column in the [patch overview](#patch-overview)). Patches
+that need something additional say so in parentheses after their name, with
+the link right below.
 
 | Input              | Effect                                     |
 |--------------------|--------------------------------------------|
@@ -78,6 +80,7 @@ deselect what you don't want.
 | `10-15`            | toggle a range                             |
 | `A`                | all patches on                             |
 | `N`                | all patches off                            |
+| `D` (or `S`)       | back to the default selection              |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -95,15 +98,14 @@ prompt.
 
 - The selection is stored per patch (by an internal ID), not by number. If a
   newer version adds patches, your selection stays correct and the new patches
-  start out selected.
+  start with their default setting.
 - The file is plain text (`4gb=1`, `cache=0`, …) and can also be edited by
   hand.
-- **Reset:** delete `patcher_selection.ini` – then all patches are selected
-  again.
+- **Reset:** press `D` in the menu or delete `patcher_selection.ini` – then
+  the default selection applies again.
 
-Without a saved selection, the preselection from `apply_patches.ps1` applies:
-every patch has an entry `On = $true` (preselected). With `On = $false` it
-starts deselected on the first run.
+The default selection is defined in `apply_patches.ps1`: every patch has an
+entry `On = $true` (preselected) or `On = $false` (deselected).
 
 ## Parameters for unattended use
 
@@ -140,44 +142,44 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 
 ## Patch overview
 
-| No. | Patch |
-|----:|-------|
-| 1  | 4GB patch (Large Address Aware) |
-| 2  | Allow custom GlueXML |
-| 3  | Allow unsigned / incorrectly signed MPQs |
-| 4  | Disable scan DLL |
-| 5  | Disable CACHE folder creation |
-| 6  | Refresh item cache immediately |
-| 7  | Remote code execution exploit fix |
-| 8  | Disable AFK timer idle check |
-| 9  | Area trigger timer accuracy (250 ms to 50 ms) |
-| 10 | Allow extended MPQ names |
-| 11 | Remove melee swing on right-click |
-| 12 | Suppress NPC attack animation when turning |
-| 13 | Fix spell animation after cancelled channel |
-| 14 | Re-enable the blue moon in the night sky |
-| 15 | Fix naked character bug |
-| 16 | Keep force reaction on /reload |
-| 17 | Auto-sort quest tracker |
-| 18 | Advanced world map enabled by default |
-| 19 | CVar farclip unlock (max 10000) |
-| 20 | CVar horizonFarclipScale unlock (max 12) |
-| 21 | CVar environmentDetail unlock (no limit instead of 1.5) |
-| 22 | CVar groundEffectDist unlock (max 3166 instead of 140) |
-| 23 | Graphics options: extend slider maximums |
-| 24 | Windowed mode by default |
-| 25 | Maximized window by default |
-| 26 | Cast bars on all frames |
-| 27 | Max characters per realm raised to 255 |
-| 28 | Retail guild emblems: selection extended from 170 to 196 |
-| 29 | Mouse flicker / camera jump fix |
-| 30 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail |
-| 31 | GameObject view distance: Cat 0 from 30 to 50 yards |
-| 32 | Occluder fix for Stormwind (Open Azeroth) |
-| 33 | Enable AwesomeWotlkLib.dll support |
-| 34 | Optimize sound settings |
-| 35 | FlashWindow patch |
-| 36 | HD unit frame portraits: 256x256 (live 3D portraits) |
+| No. | Patch | Default |
+|----:|-------|:--------:|
+| 1  | 4GB patch (Large Address Aware) | ✅ |
+| 2  | Allow custom GlueXML | ✅ |
+| 3  | Allow unsigned / incorrectly signed MPQs | ✅ |
+| 4  | Disable scan DLL | ✅ |
+| 5  | Disable CACHE folder creation | – |
+| 6  | Refresh item cache immediately | ✅ |
+| 7  | Remote code execution exploit fix | ✅ |
+| 8  | Disable AFK timer idle check *(required for character auto-login, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | – |
+| 9  | Area trigger timer accuracy (250 ms to 50 ms) | ✅ |
+| 10 | Allow extended MPQ names | ✅ |
+| 11 | Remove melee swing on right-click | ✅ |
+| 12 | Suppress NPC attack animation when turning | ✅ |
+| 13 | Fix spell animation after cancelled channel | ✅ |
+| 14 | Re-enable the blue moon in the night sky | ✅ |
+| 15 | Fix naked character bug | ✅ |
+| 16 | Keep force reaction on /reload | ✅ |
+| 17 | Auto-sort quest tracker | ✅ |
+| 18 | Advanced world map enabled by default | ✅ |
+| 19 | CVar farclip unlock (max 10000) | ✅ |
+| 20 | CVar horizonFarclipScale unlock (max 12) | ✅ |
+| 21 | CVar environmentDetail unlock (no limit instead of 1.5) | ✅ |
+| 22 | CVar groundEffectDist unlock (max 3166 instead of 140) | ✅ |
+| 23 | Graphics options: extend slider maximums | ✅ |
+| 24 | Windowed mode by default | ✅ |
+| 25 | Maximized window by default | ✅ |
+| 26 | Cast bars on all frames | ✅ |
+| 27 | Max characters per realm raised to 255 | – |
+| 28 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | – |
+| 29 | Mouse flicker / camera jump fix | ✅ |
+| 30 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | ✅ |
+| 31 | GameObject view distance: Cat 0 from 30 to 50 yards | ✅ |
+| 32 | Occluder fix for Stormwind (Open Azeroth) | ✅ |
+| 33 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | – |
+| 34 | Optimize sound settings | ✅ |
+| 35 | FlashWindow patch | ✅ |
+| 36 | HD unit frame portraits: 256x256 (live 3D portraits) | ✅ |
 
 ---
 
@@ -189,7 +191,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 Lets `Wow.exe` use up to 4 GB of RAM instead of the default 2 GB limit for
 32-bit applications.
 
-**Disable CACHE folder creation** *(No. 5)*
+**Disable CACHE folder creation** *(No. 5, off by default)*
 Prevents the client from creating a `CACHE` folder automatically.
 
 **Refresh item cache immediately** *(No. 6)*
@@ -217,9 +219,10 @@ XML/Lua files (glue screen modding).
 
 ### Gameplay fixes
 
-**Disable AFK timer idle check** *(No. 8)*
+**Disable AFK timer idle check** *(No. 8, off by default)*
 Disables the idle login check but keeps the automatic AFK disconnect timer
 active. Also prevents the CharAutoLogin bug.
+**Required for character auto-login** – details on [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
 
 **Area trigger timer accuracy** *(No. 9)*
 Increases the area trigger check frequency from 250 ms to 50 ms, so zone
@@ -257,7 +260,7 @@ Allows wildcard names for MPQ archives (`patch-*.MPQ` and
 Restores a removed legacy feature: the blue moon that used to be visible in
 the night sky.
 
-**Retail guild emblems: selection extended from 170 to 196** *(No. 28)*
+**Retail guild emblems: selection extended from 170 to 196** *(No. 28, off by default)*
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
 6 borders, 17 border colors, 51 background colors. The tabard designer cycles
@@ -272,6 +275,8 @@ completely.
 > 195) have to be provided as a separate MPQ archive in the `Data` folder.
 > Without it, the new slots in the tabard designer can be selected but stay
 > empty.
+>
+> The matching archive is **Patch-G**: [Discord](https://discord.com/channels/407664041016688662/1541873346608889936)
 
 The client builds the file names from the emblem index and color index, in
 this order:
@@ -325,7 +330,7 @@ Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
-**Max characters per realm raised to 255** *(No. 27)*
+**Max characters per realm raised to 255** *(No. 27, off by default)*
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
@@ -603,9 +608,10 @@ see above).
 
 ### DLL support
 
-**Enable AwesomeWotlkLib.dll support** *(No. 33)*
+**Enable AwesomeWotlkLib.dll support** *(No. 33, off by default)*
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
+**Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
 
 ### Sound settings
 
