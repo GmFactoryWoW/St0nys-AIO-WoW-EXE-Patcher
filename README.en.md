@@ -166,18 +166,18 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 20 | CVar horizonFarclipScale unlock (max 12) |  | ✅ |
 | 21 | CVar environmentDetail unlock (no limit instead of 1.5) |  | ✅ |
 | 22 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ |
-| 23 | Graphics options: extend slider maximums | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 24 | Windowed mode by default | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 25 | Maximized window by default | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 23 | Graphics options: extend slider maximums | St0ny | ✅ |
+| 24 | Windowed mode by default | St0ny | ✅ |
+| 25 | Maximized window by default | St0ny | ✅ |
 | 26 | Cast bars on all frames |  | ✅ |
-| 27 | Max characters per realm raised to 255 | [St0ny](https://github.com/Raz0r1337) | – |
+| 27 | Max characters per realm raised to 255 | St0ny | – |
 | 28 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
 | 29 | Mouse flicker / camera jump fix |  | ✅ |
-| 30 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 31 | GameObject view distance: Cat 0 from 30 to 50 yards | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 30 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | ✅ |
+| 31 | GameObject view distance: Cat 0 from 30 to 50 yards | St0ny | ✅ |
 | 32 | Occluder fix for Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
 | 33 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
-| 34 | Optimize sound settings | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 34 | Optimize sound settings | St0ny | ✅ |
 | 35 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* |  | – |
 | 36 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | ✅ |
 
@@ -318,11 +318,11 @@ the view distance slider and a completely different location in the EXE (see
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
-**Windowed mode by default** *(No. 24, Author: [St0ny](https://github.com/Raz0r1337))*
+**Windowed mode by default** *(No. 24, Author: St0ny)*
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
-**Maximized window by default** *(No. 25, Author: [St0ny](https://github.com/Raz0r1337))*
+**Maximized window by default** *(No. 25, Author: St0ny)*
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
 **Cast bars on all frames (like Cataclysm)** *(No. 26)*
@@ -330,7 +330,7 @@ Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
-**Max characters per realm raised to 255** *(No. 27, off by default, Author: [St0ny](https://github.com/Raz0r1337))*
+**Max characters per realm raised to 255** *(No. 27, off by default, Author: St0ny)*
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
@@ -343,7 +343,7 @@ rate. Prevents cursor flicker and uncontrolled camera movement.
 
 ### GameObject view distance
 
-**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 30, Author: [St0ny](https://github.com/Raz0r1337))*
+**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 30, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
 `environmentDetail`. Cat 0 (small clutter) and Cat 4 (huge buildings) take
@@ -364,7 +364,7 @@ With patch No. 31, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
 the table above). Values above 1.5 require the patch "CVar environmentDetail
 unlock" (No. 21).
 
-**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 31, Author: [St0ny](https://github.com/Raz0r1337))*
+**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 31, Author: St0ny)*
 If you want to keep view distances entirely at Blizzard's values, deselect
 this patch.
 The patch only raises the smallest object category: candles, books, sacks,
@@ -513,7 +513,7 @@ Stormwind.
 
 ### Graphics options (UI sliders)
 
-**Extend slider maximums in the video menu** *(No. 23, Author: [St0ny](https://github.com/Raz0r1337))*
+**Extend slider maximums in the video menu** *(No. 23, Author: St0ny)*
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
 sliders stayed at Blizzard's values because they don't take their maximum
@@ -616,7 +616,7 @@ the client with additional features and improvements for private servers.
 
 ### Sound settings
 
-**Optimize sound settings** *(No. 34, Author: [St0ny](https://github.com/Raz0r1337))*
+**Optimize sound settings** *(No. 34, Author: St0ny)*
 Includes the following changes:
 
 - Sound channel hardware limit raised to 126

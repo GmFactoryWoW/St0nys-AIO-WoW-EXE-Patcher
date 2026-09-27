@@ -166,18 +166,18 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 20 | CVar horizonFarclipScale unlock (max 12) |  | ✅ |
 | 21 | CVar environmentDetail unlock (kein Limit statt 1.5) |  | ✅ |
 | 22 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
-| 23 | Grafikoptionen: Slider-Maxima erweitern | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 24 | Fenstermodus als Standard setzen | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 25 | Fenstermodus maximiert als Standard setzen | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 23 | Grafikoptionen: Slider-Maxima erweitern | St0ny | ✅ |
+| 24 | Fenstermodus als Standard setzen | St0ny | ✅ |
+| 25 | Fenstermodus maximiert als Standard setzen | St0ny | ✅ |
 | 26 | Cast Bars auf allen Frames |  | ✅ |
-| 27 | Max Characters pro Server auf 255 erhöht | [St0ny](https://github.com/Raz0r1337) | – |
+| 27 | Max Characters pro Server auf 255 erhöht | St0ny | – |
 | 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
 | 29 | Mausflackern / Kamerasprünge Fix |  | ✅ |
-| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | [St0ny](https://github.com/Raz0r1337) | ✅ |
-| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | ✅ |
+| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | ✅ |
 | 32 | Occluder Fix für Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
 | 33 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
-| 34 | Sound-Einstellungen optimieren | [St0ny](https://github.com/Raz0r1337) | ✅ |
+| 34 | Sound-Einstellungen optimieren | St0ny | ✅ |
 | 35 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* |  | – |
 | 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
 
@@ -320,11 +320,11 @@ des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
 Entsperrt den CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
-**Fenstermodus als Standard setzen** *(Nr. 24, Autor: [St0ny](https://github.com/Raz0r1337))*
+**Fenstermodus als Standard setzen** *(Nr. 24, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 25, Autor: [St0ny](https://github.com/Raz0r1337))*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 25, Autor: St0ny)*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
@@ -333,7 +333,7 @@ Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus, Autor: [St0ny](https://github.com/Raz0r1337))*
+**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus, Autor: St0ny)*
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
@@ -348,7 +348,7 @@ und unkontrollierte Kamerabewegungen.
 
 ### GameObject-Sichtweite
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 30, Autor: [St0ny](https://github.com/Raz0r1337))*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 30, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -370,7 +370,7 @@ Mit Patch Nr. 31 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
 unlock“ (Nr. 21) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 31, Autor: [St0ny](https://github.com/Raz0r1337))*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 31, Autor: St0ny)*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab.
 Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
@@ -523,7 +523,7 @@ Custom-Servern mit umgebautem Stormwind.
 
 ### Grafikoptionen (UI-Slider)
 
-**Slider-Maxima im Video-Menü erweitern** *(Nr. 23, Autor: [St0ny](https://github.com/Raz0r1337))*
+**Slider-Maxima im Video-Menü erweitern** *(Nr. 23, Autor: St0ny)*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -630,7 +630,7 @@ Server.
 
 ### Sound-Einstellungen
 
-**Sound-Einstellungen optimieren** *(Nr. 34, Autor: [St0ny](https://github.com/Raz0r1337))*
+**Sound-Einstellungen optimieren** *(Nr. 34, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
