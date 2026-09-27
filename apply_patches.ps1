@@ -936,69 +936,39 @@ function Get-SelectionFromParam([string]$value) {
 
 # ============================================================
 #  Banner
-#  Einzeilig ist es 136 Zeichen breit, das Windows-Konsolenfenster hat
-#  standardmaessig aber nur 120 Spalten. Ist das Fenster zu schmal, wird es
-#  nach Moeglichkeit verbreitert. Klappt das nicht (Bildschirm zu klein,
-#  Windows Terminal, das sich nicht per Skript verbreitern laesst), kommt die
-#  zweizeilige Fassung, damit nichts umbricht.
+#  Einzeilig (figlet-Schrift "small", 108 Zeichen breit), damit es in das
+#  Standard-Konsolenfenster mit 120 Spalten passt. Nur wenn das Fenster noch
+#  schmaler ist, kommt die zweizeilige Fassung, damit nichts umbricht.
 # ============================================================
 $BANNER_WIDE = @'
-  _____ _    ___                             _____ ____   __          ____          __               _____      _       _
- / ____| |  / _ \                      /\   |_   _/ __ \  \ \        / /\ \        / /              |  __ \    | |     | |
-| (___ | |_| | | |_ __  _   _ ___     /  \    | || |  | |  \ \  /\  / /__\ \  /\  / / _____  _____  | |__) |_ _| |_ ___| |__   ___ _ __
- \___ \| __| | | | '_ \| | | / __|   / /\ \   | || |  | |   \ \/  \/ / _ \\ \/  \/ / / _ \ \/ / _ \ |  ___/ _` | __/ __| '_ \ / _ \ '__|
- ____) | |_| |_| | | | | |_| \__ \  / ____ \ _| || |__| |    \  /\  / (_) |\  /\  / |  __/>  <  __/ | |  | (_| | || (__| | | |  __/ |
-|_____/ \__|\___/|_| |_|\__, |___/ /_/    \_\_____\____/      \/  \/ \___/  \/  \/ (_)___/_/\_\___| |_|   \__,_|\__\___|_| |_|\___|_|
-                         __/ |
-                        |___/
+ ___ _    __                  _   ___ ___   __      __ __      __              ___      _      _
+/ __| |_ /  \ _ _ _  _ ___   /_\ |_ _/ _ \  \ \    / /_\ \    / /_____ _____  | _ \__ _| |_ __| |_  ___ _ _
+\__ \  _| () | ' \ || (_-<  / _ \ | | (_) |  \ \/\/ / _ \ \/\/ // -_) \ / -_) |  _/ _` |  _/ _| ' \/ -_) '_|
+|___/\__|\__/|_||_\_, /__/ /_/ \_\___\___/    \_/\_/\___/\_/\_(_)___/_\_\___| |_| \__,_|\__\__|_||_\___|_|
+                  |__/
 '@
 
 $BANNER_NARROW = @'
-  _____ _    ___                             _____ ____
- / ____| |  / _ \                      /\   |_   _/ __ \
-| (___ | |_| | | |_ __  _   _ ___     /  \    | || |  | |
- \___ \| __| | | | '_ \| | | / __|   / /\ \   | || |  | |
- ____) | |_| |_| | | | | |_| \__ \  / ____ \ _| || |__| |
-|_____/ \__|\___/|_| |_|\__, |___/ /_/    \_\_____\____/
-                         __/ |
-                        |___/
+ ___ _    __                  _   ___ ___
+/ __| |_ /  \ _ _ _  _ ___   /_\ |_ _/ _ \
+\__ \  _| () | ' \ || (_-<  / _ \ | | (_) |
+|___/\__|\__/|_||_\_, /__/ /_/ \_\___\___/
+                  |__/
 
-__          ____          __               _____      _       _
-\ \        / /\ \        / /              |  __ \    | |     | |
- \ \  /\  / /__\ \  /\  / / _____  _____  | |__) |_ _| |_ ___| |__   ___ _ __
-  \ \/  \/ / _ \\ \/  \/ / / _ \ \/ / _ \ |  ___/ _` | __/ __| '_ \ / _ \ '__|
-   \  /\  / (_) |\  /\  / |  __/>  <  __/ | |  | (_| | || (__| | | |  __/ |
-    \/  \/ \___/  \/  \/ (_)___/_/\_\___| |_|   \__,_|\__\___|_| |_|\___|_|
+__      __ __      __              ___      _      _
+\ \    / /_\ \    / /_____ _____  | _ \__ _| |_ __| |_  ___ _ _
+ \ \/\/ / _ \ \/\/ // -_) \ / -_) |  _/ _` |  _/ _| ' \/ -_) '_|
+  \_/\_/\___/\_/\_(_)___/_\_\___| |_| \__,_|\__\__|_||_\___|_|
 '@
 
-function Get-ConsoleWidth {
-    try { return [int]$Host.UI.RawUI.WindowSize.Width } catch { return 0 }
-}
-
 function Show-Banner {
-    $need = 137
-    $redirected = $false
-    try { $redirected = [bool][Console]::IsOutputRedirected } catch { }
-    if (-not $redirected) {
-        $width = Get-ConsoleWidth
-        if ($width -gt 0 -and $width -lt $need -and -not $env:WT_SESSION) {
-            try {
-                $raw = $Host.UI.RawUI
-                if ($raw.MaxPhysicalWindowSize.Width -ge $need) {
-                    if ($raw.BufferSize.Width -lt $need) {
-                        $raw.BufferSize = New-Object System.Management.Automation.Host.Size($need, $raw.BufferSize.Height)
-                    }
-                    $raw.WindowSize = New-Object System.Management.Automation.Host.Size($need, $raw.WindowSize.Height)
-                }
-            } catch { }
-            $width = Get-ConsoleWidth
-        }
-        if ($width -gt 0 -and $width -lt $need) {
-            Write-Host $BANNER_NARROW
-            return
-        }
+    $width = 0
+    try { $width = [int]$Host.UI.RawUI.WindowSize.Width } catch { }
+    if ($width -gt 0 -and $width -le 108) {
+        Write-Host $BANNER_NARROW
+    } else {
+        Write-Host $BANNER_WIDE
     }
-    Write-Host $BANNER_WIDE
 }
 
 # ============================================================
