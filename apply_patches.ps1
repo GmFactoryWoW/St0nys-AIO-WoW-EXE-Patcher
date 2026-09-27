@@ -1,5 +1,5 @@
 # ============================================================
-#  St0nys AIO WoW EXE Patcher - Patch Engine
+#  St0nys-AIO-WoW-EXE-Patcher - Patch Engine
 #  Copyright (c) 2026 St0ny (Raz0r1337) - MIT-Lizenz, siehe LICENSE
 #
 #  Interaktiver Ablauf:
@@ -841,7 +841,7 @@ function Get-SavedSelection {
 # Auswahl in patcher_selection.ini schreiben. Liefert $null oder die Fehlermeldung.
 function Save-Selection($sel) {
     $lines = New-Object System.Collections.Generic.List[string]
-    $lines.Add("# St0nys AIO WoW EXE Patcher - gespeicherte Patch-Auswahl / saved patch selection")
+    $lines.Add("# St0nys-AIO-WoW-EXE-Patcher - gespeicherte Patch-Auswahl / saved patch selection")
     $lines.Add('# 1 = an / on, 0 = aus / off')
     $lines.Add('# Datei loeschen setzt die Auswahl zurueck / delete this file to reset the selection')
     for ($i = 0; $i -lt $patches.Count; $i++) {
@@ -935,11 +935,25 @@ function Get-SelectionFromParam([string]$value) {
 }
 
 # ============================================================
-#  ABLAUF
+#  Banner
+#  Einzeilig ist es 136 Zeichen breit, das Windows-Konsolenfenster hat
+#  standardmaessig aber nur 120 Spalten. Ist das Fenster zu schmal, wird es
+#  nach Moeglichkeit verbreitert. Klappt das nicht (Bildschirm zu klein,
+#  Windows Terminal, das sich nicht per Skript verbreitern laesst), kommt die
+#  zweizeilige Fassung, damit nichts umbricht.
 # ============================================================
+$BANNER_WIDE = @'
+  _____ _    ___                             _____ ____   __          ____          __               _____      _       _
+ / ____| |  / _ \                      /\   |_   _/ __ \  \ \        / /\ \        / /              |  __ \    | |     | |
+| (___ | |_| | | |_ __  _   _ ___     /  \    | || |  | |  \ \  /\  / /__\ \  /\  / / _____  _____  | |__) |_ _| |_ ___| |__   ___ _ __
+ \___ \| __| | | | '_ \| | | / __|   / /\ \   | || |  | |   \ \/  \/ / _ \\ \/  \/ / / _ \ \/ / _ \ |  ___/ _` | __/ __| '_ \ / _ \ '__|
+ ____) | |_| |_| | | | | |_| \__ \  / ____ \ _| || |__| |    \  /\  / (_) |\  /\  / |  __/>  <  __/ | |  | (_| | || (__| | | |  __/ |
+|_____/ \__|\___/|_| |_|\__, |___/ /_/    \_\_____\____/      \/  \/ \___/  \/  \/ (_)___/_/\_\___| |_|   \__,_|\__\___|_| |_|\___|_|
+                         __/ |
+                        |___/
+'@
 
-Write-Host ''
-Write-Host @'
+$BANNER_NARROW = @'
   _____ _    ___                             _____ ____
  / ____| |  / _ \                      /\   |_   _/ __ \
 | (___ | |_| | | |_ __  _   _ ___     /  \    | || |  | |
@@ -949,13 +963,50 @@ Write-Host @'
                          __/ |
                         |___/
 
-__          ____          __  ________   ________   _____      _       _
-\ \        / /\ \        / / |  ____\ \ / /  ____| |  __ \    | |     | |
- \ \  /\  / /__\ \  /\  / /  | |__   \ V /| |__    | |__) |_ _| |_ ___| |__   ___ _ __
-  \ \/  \/ / _ \\ \/  \/ /   |  __|   > < |  __|   |  ___/ _` | __/ __| '_ \ / _ \ '__|
-   \  /\  / (_) |\  /\  /    | |____ / . \| |____  | |  | (_| | || (__| | | |  __/ |
-    \/  \/ \___/  \/  \/     |______/_/ \_\______| |_|   \__,_|\__\___|_| |_|\___|_|
+__          ____          __               _____      _       _
+\ \        / /\ \        / /              |  __ \    | |     | |
+ \ \  /\  / /__\ \  /\  / / _____  _____  | |__) |_ _| |_ ___| |__   ___ _ __
+  \ \/  \/ / _ \\ \/  \/ / / _ \ \/ / _ \ |  ___/ _` | __/ __| '_ \ / _ \ '__|
+   \  /\  / (_) |\  /\  / |  __/>  <  __/ | |  | (_| | || (__| | | |  __/ |
+    \/  \/ \___/  \/  \/ (_)___/_/\_\___| |_|   \__,_|\__\___|_| |_|\___|_|
 '@
+
+function Get-ConsoleWidth {
+    try { return [int]$Host.UI.RawUI.WindowSize.Width } catch { return 0 }
+}
+
+function Show-Banner {
+    $need = 137
+    $redirected = $false
+    try { $redirected = [bool][Console]::IsOutputRedirected } catch { }
+    if (-not $redirected) {
+        $width = Get-ConsoleWidth
+        if ($width -gt 0 -and $width -lt $need -and -not $env:WT_SESSION) {
+            try {
+                $raw = $Host.UI.RawUI
+                if ($raw.MaxPhysicalWindowSize.Width -ge $need) {
+                    if ($raw.BufferSize.Width -lt $need) {
+                        $raw.BufferSize = New-Object System.Management.Automation.Host.Size($need, $raw.BufferSize.Height)
+                    }
+                    $raw.WindowSize = New-Object System.Management.Automation.Host.Size($need, $raw.WindowSize.Height)
+                }
+            } catch { }
+            $width = Get-ConsoleWidth
+        }
+        if ($width -gt 0 -and $width -lt $need) {
+            Write-Host $BANNER_NARROW
+            return
+        }
+    }
+    Write-Host $BANNER_WIDE
+}
+
+# ============================================================
+#  ABLAUF
+# ============================================================
+
+Write-Host ''
+Show-Banner
 Write-Host ''
 
 # --- 1. Sprache ---

@@ -1,4 +1,4 @@
-# St0nys AIO WoW EXE Patcher
+# St0nys-AIO-WoW-EXE-Patcher
 
 [🇩🇪 Deutsch](README.md) | 🇬🇧 English
 
