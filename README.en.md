@@ -178,7 +178,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 32 | Occluder fix for Stormwind (Open Azeroth) | ✅ |
 | 33 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | – |
 | 34 | Optimize sound settings | ✅ |
-| 35 | FlashWindow patch | ✅ |
+| 35 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | – |
 | 36 | HD unit frame portraits: 256x256 (live 3D portraits) | ✅ |
 
 ---
@@ -484,10 +484,11 @@ otherwise read past the source.
 
 ### Window notification
 
-**FlashWindow and FocusWindow patch** *(No. 35)*
+**FlashWindow and FocusWindow patch** *(No. 35, off by default)*
 FlashWindow: makes the WoW window flash in the taskbar when a relevant event
 occurs while the game is in the background. FocusWindow: actively brings the
 WoW window to the foreground. Both functions can be called from addons.
+**Requires** the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk.
 
 ### Occluder
 
