@@ -149,7 +149,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 3  | Falsch/Nicht signierte MPQs zulassen | 12th Gen exe | ✅ |
 | 4  | Scan DLL deaktivieren | 12th Gen exe | ✅ |
 | 5  | CACHE Ordner Erstellung deaktivieren | Kebabstorm | – |
-| 6  | Item-Cache sofort aktualisieren | WoWFix335 | ✅ |
+| 6  | Item-Cache sofort aktualisieren | Robinsch | ✅ |
 | 7  | Remote Code Execution Exploit Fix | Robinsch | – |
 | 8  | Warden komplett abschalten (RCE-Fix) *(Kick-Gefahr bei aktivem Warden)* | Robinsch | ✅ |
 | 9  | Client-Patches vom Server verbieten | Kebabstorm | – |
@@ -158,7 +158,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 12 | Battle.net-Login überspringen | Kebabstorm | ✅ |
 | 13 | Remote-Desktop-Prüfung überspringen | Kebabstorm | ✅ |
 | 14 | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
-| 15 | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) | WoWFix335 | ✅ |
+| 15 | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) | Robinsch | ✅ |
 | 16 | Erweiterte MPQ-Namen erlauben |  | ✅ |
 | 17 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | 12th Gen exe | – |
 | 18 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden)* | 12th Gen exe | – |
@@ -169,10 +169,10 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 23 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | 12th Gen exe | – |
 | 24 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
 | 25 | Nackter-Charakter-Bug behoben | Robinsch | ✅ |
-| 26 | Force-Reaction bei /reload erhalten | WoWFix335 | ✅ |
-| 27 | Neue Post ohne 60 Sekunden Wartezeit | WoWFix335 | – |
-| 28 | Chat-Befehle auch im Tod erlauben | WoWFix335 | – |
-| 29 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | WoWFix335 | – |
+| 26 | Force-Reaction bei /reload erhalten | Robinsch | ✅ |
+| 27 | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | – |
+| 28 | Chat-Befehle auch im Tod erlauben | Robinsch | – |
+| 29 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Robinsch | – |
 | 30 | Keine Transparenz beim Heranzoomen | 12th Gen exe | – |
 | 31 | Quest-Tracker automatisch sortieren |  | ✅ |
 | 32 | Erweiterte Weltkarte standardmäßig aktiv |  | ✅ |
@@ -183,7 +183,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 37 | Grafikoptionen: Slider-Maxima erweitern | St0ny | ✅ |
 | 38 | Fenstermodus als Standard setzen | St0ny | ✅ |
 | 39 | Fenstermodus maximiert als Standard setzen | St0ny | ✅ |
-| 40 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | WoWFix335 | – |
+| 40 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | – |
 | 41 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
 | 42 | Max Characters pro Server auf 255 erhöht | St0ny | – |
 | 43 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
@@ -214,7 +214,7 @@ standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 **CACHE-Ordner-Erstellung deaktivieren** *(Nr. 5, standardmäßig aus, Autor: Kebabstorm)*
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
-**Item-Cache sofort aktualisieren** *(Nr. 6, Autor: WoWFix335)*
+**Item-Cache sofort aktualisieren** *(Nr. 6, Autor: Robinsch)*
 Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
 
@@ -291,7 +291,7 @@ AFK-Disconnect-Timer aber aktiv. Verhindert gleichzeitig den
 CharAutoLogin-Bug.
 **Wird für Character-Autologin benötigt** – Details im [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
 
-**Verbesserung der Genauigkeit des Area-Trigger-Timers** *(Nr. 15, Autor: WoWFix335)*
+**Verbesserung der Genauigkeit des Area-Trigger-Timers** *(Nr. 15, Autor: Robinsch)*
 Erhöht die Prüffrequenz für Area-Trigger von 250 ms auf 50 ms. Dadurch werden
 Zonen-Übergänge und Trigger präziser erkannt.
 
@@ -321,18 +321,18 @@ heißt er „Disable XML SIG MD5“, daher der dortige Hinweis „Use XML MD5“
 Deaktiviert den `SPELL_AURA_X_RAY`-Effekt, der dazu führen konnte, dass
 Charaktere ohne Ausrüstung dargestellt wurden.
 
-**Force-Reaction bleibt bei /reload erhalten** *(Nr. 26, Autor: WoWFix335)*
+**Force-Reaction bleibt bei /reload erhalten** *(Nr. 26, Autor: Robinsch)*
 Verhindert, dass Force-Reaction-Werte (z. B. Fraktionsstatus) beim Neuladen
 der UI zurückgesetzt werden. Wichtig für Custom-Server.
 
-**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 27, standardmäßig aus, Autor: WoWFix335)*
+**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 27, standardmäßig aus, Autor: Robinsch)*
 Der Client fragt neue Post sofort ab – kein Warten mehr von 60 Sekunden und kein
 Relog, um neue Post zu bekommen.
 
-**Chat-Befehle auch im Tod erlauben** *(Nr. 28, standardmäßig aus, Autor: WoWFix335)*
+**Chat-Befehle auch im Tod erlauben** *(Nr. 28, standardmäßig aus, Autor: Robinsch)*
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
-**Unbegrenzte Rasse/Klasse-Kombinationen** *(Nr. 29, standardmäßig aus, Autor: WoWFix335)*
+**Unbegrenzte Rasse/Klasse-Kombinationen** *(Nr. 29, standardmäßig aus, Autor: Robinsch)*
 Die Charaktererstellung lässt jede Rasse mit jeder Klasse zu. Der Server muss
 das ebenfalls unterstützen.
 
@@ -424,7 +424,7 @@ Fenstermodus statt im Vollbild.
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 40, standardmäßig aus, Autor: WoWFix335)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 40, standardmäßig aus, Autor: Robinsch)*
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr.
 

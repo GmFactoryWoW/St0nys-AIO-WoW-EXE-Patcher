@@ -360,7 +360,7 @@ $patches = @(
     }}
 
     @{ Id = 'itemcache'; On = $true
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Item-Cache sofort aktualisieren'
        En = 'Refresh item cache immediately'
        Code = {
@@ -447,7 +447,7 @@ $patches = @(
     }}
 
     @{ Id = 'areatrigger'; On = $true
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Area-Trigger-Timer Verbesserung (250ms auf 50ms)'
        En = 'Area trigger timer accuracy (250 ms to 50 ms)'
        Code = {
@@ -545,7 +545,7 @@ $patches = @(
     }}
 
     @{ Id = 'forcereaction'; On = $true
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Force-Reaction bei /reload erhalten'
        En = 'Keep force reaction on /reload'
        Code = {
@@ -553,7 +553,7 @@ $patches = @(
     }}
 
     @{ Id = 'mail'; On = $false
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Neue Post ohne 60 Sekunden Wartezeit'
        En = 'New mail without the 60-second wait'
        Code = {
@@ -561,7 +561,7 @@ $patches = @(
     }}
 
     @{ Id = 'deadchat'; On = $false
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Chat-Befehle auch im Tod erlauben'
        En = 'Allow chat commands while dead'
        Code = {
@@ -569,7 +569,7 @@ $patches = @(
     }}
 
     @{ Id = 'raceclass'; On = $false
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Unbegrenzte Rasse/Klasse-Kombinationen'
        En = 'Unlimited race/class combinations'
        NoteDe = 'Server muss es unterstuetzen'
@@ -757,7 +757,7 @@ $patches = @(
     }}
 
     @{ Id = 'windowfix'; On = $false
-       Author = 'WoWFix335'
+       Author = 'Robinsch'
        De = 'Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus'
        En = 'No black screen when switching to windowed mode'
        Code = {

@@ -149,7 +149,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 3  | Allow unsigned / incorrectly signed MPQs | 12th Gen exe | ✅ |
 | 4  | Disable scan DLL | 12th Gen exe | ✅ |
 | 5  | Disable CACHE folder creation | Kebabstorm | – |
-| 6  | Refresh item cache immediately | WoWFix335 | ✅ |
+| 6  | Refresh item cache immediately | Robinsch | ✅ |
 | 7  | Remote code execution exploit fix | Robinsch | – |
 | 8  | Disable Warden completely (RCE fix) *(may get you kicked if Warden is active)* | Robinsch | ✅ |
 | 9  | Disallow client patches from the server | Kebabstorm | – |
@@ -158,7 +158,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 12 | Skip Battle.net login | Kebabstorm | ✅ |
 | 13 | Skip Remote Desktop check | Kebabstorm | ✅ |
 | 14 | Disable AFK timer idle check *(required for character auto-login, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
-| 15 | Area trigger timer accuracy (250 ms to 50 ms) | WoWFix335 | ✅ |
+| 15 | Area trigger timer accuracy (250 ms to 50 ms) | Robinsch | ✅ |
 | 16 | Allow extended MPQ names |  | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | 12th Gen exe | – |
 | 18 | LUA unlock (allow protected functions) *(may be treated as botting)* | 12th Gen exe | – |
@@ -169,10 +169,10 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 23 | Level 101+ fix (druid base stats and barber chair) | 12th Gen exe | – |
 | 24 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 25 | Fix naked character bug | Robinsch | ✅ |
-| 26 | Keep force reaction on /reload | WoWFix335 | ✅ |
-| 27 | New mail without the 60-second wait | WoWFix335 | – |
-| 28 | Allow chat commands while dead | WoWFix335 | – |
-| 29 | Unlimited race/class combinations *(server must support it)* | WoWFix335 | – |
+| 26 | Keep force reaction on /reload | Robinsch | ✅ |
+| 27 | New mail without the 60-second wait | Robinsch | – |
+| 28 | Allow chat commands while dead | Robinsch | – |
+| 29 | Unlimited race/class combinations *(server must support it)* | Robinsch | – |
 | 30 | No character transparency when zooming in | 12th Gen exe | – |
 | 31 | Auto-sort quest tracker |  | ✅ |
 | 32 | Advanced world map enabled by default |  | ✅ |
@@ -183,7 +183,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 37 | Graphics options: extend slider maximums | St0ny | ✅ |
 | 38 | Windowed mode by default | St0ny | ✅ |
 | 39 | Maximized window by default | St0ny | ✅ |
-| 40 | No black screen when switching to windowed mode | WoWFix335 | – |
+| 40 | No black screen when switching to windowed mode | Robinsch | – |
 | 41 | Cast bars on all frames | Kebabstorm | ✅ |
 | 42 | Max characters per realm raised to 255 | St0ny | – |
 | 43 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
@@ -214,7 +214,7 @@ Lets `Wow.exe` use up to 4 GB of RAM instead of the default 2 GB limit for
 **Disable CACHE folder creation** *(No. 5, off by default, Author: Kebabstorm)*
 Prevents the client from creating a `CACHE` folder automatically.
 
-**Refresh item cache immediately** *(No. 6, Author: WoWFix335)*
+**Refresh item cache immediately** *(No. 6, Author: Robinsch)*
 Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
@@ -287,7 +287,7 @@ Disables the idle login check but keeps the automatic AFK disconnect timer
 active. Also prevents the CharAutoLogin bug.
 **Required for character auto-login** – details on [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
 
-**Area trigger timer accuracy** *(No. 15, Author: WoWFix335)*
+**Area trigger timer accuracy** *(No. 15, Author: Robinsch)*
 Increases the area trigger check frequency from 250 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
@@ -316,18 +316,18 @@ called "Disable XML SIG MD5", hence the note "Use XML MD5" there.
 Disables the `SPELL_AURA_X_RAY` effect that could cause characters to be
 rendered without their equipment.
 
-**Keep force reaction on /reload** *(No. 26, Author: WoWFix335)*
+**Keep force reaction on /reload** *(No. 26, Author: Robinsch)*
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
-**New mail without the 60-second wait** *(No. 27, off by default, Author: WoWFix335)*
+**New mail without the 60-second wait** *(No. 27, off by default, Author: Robinsch)*
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
-**Allow chat commands while dead** *(No. 28, off by default, Author: WoWFix335)*
+**Allow chat commands while dead** *(No. 28, off by default, Author: Robinsch)*
 Slash commands also work while the character is dead.
 
-**Unlimited race/class combinations** *(No. 29, off by default, Author: WoWFix335)*
+**Unlimited race/class combinations** *(No. 29, off by default, Author: Robinsch)*
 Character creation allows every race with every class. The server has to
 support this as well.
 
@@ -416,7 +416,7 @@ instead of fullscreen.
 **Maximized window by default** *(No. 39, Author: St0ny)*
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
-**No black screen when switching to windowed mode** *(No. 40, off by default, Author: WoWFix335)*
+**No black screen when switching to windowed mode** *(No. 40, off by default, Author: Robinsch)*
 Switching to windowed mode while in-game no longer results in a black
 screen.
 
