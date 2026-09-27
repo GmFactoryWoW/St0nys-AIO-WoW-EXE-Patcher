@@ -253,7 +253,6 @@ Fixes the "ghost" attack NPCs perform when they evade from combat.
 **Level 101+ fix for druid base stats and barber chair** *(No. 15, off by default)*
 Druids at level 101 and above can view their base stats again, and the
 barber chair works for all characters at level 101 and above.
-Author's note: *"Use XML MD5"*.
 
 **Fix naked character bug** *(No. 17, Author: Robinsch)*
 Disables the `SPELL_AURA_X_RAY` effect that could cause characters to be

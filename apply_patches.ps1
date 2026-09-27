@@ -433,7 +433,6 @@ $patches = @(
        Code = {
         # Druiden koennen ihre Grundwerte wieder ansehen und der Barbierstuhl
         # funktioniert fuer alle Charaktere ab Level 101.
-        # Hinweis des Autors: "Use XML MD5"
         Patch 0x3F5DC2 @(0x90, 0x90, 0x90)
     }}
 

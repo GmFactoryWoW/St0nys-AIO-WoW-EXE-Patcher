@@ -255,7 +255,6 @@ evaden.
 **Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 15, standardmäßig aus)*
 Druiden ab Level 101 können ihre Grundwerte wieder ansehen, und der
 Barbierstuhl funktioniert für alle Charaktere ab Level 101.
-Hinweis des Autors: *„Use XML MD5“*.
 
 **Nackter-Charakter-Bug behoben** *(Nr. 17, Autor: Robinsch)*
 Deaktiviert den `SPELL_AURA_X_RAY`-Effekt, der dazu führen konnte, dass
