@@ -77,7 +77,6 @@ deselect what you don't want.
 | `10-15`            | toggle a range                             |
 | `A`                | all patches on                             |
 | `N`                | all patches off                            |
-| `D` (or `S`)       | back to the default selection              |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 

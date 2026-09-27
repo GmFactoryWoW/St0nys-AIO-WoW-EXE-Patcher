@@ -61,7 +61,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
-        MenuHelp2     = 'A = alle an    N = alle aus    S = Standard-Auswahl    Q = abbrechen'
+        MenuHelp2     = 'A = alle an    N = alle aus    Q = abbrechen'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen und weiter'
         Prompt        = 'Eingabe'
         BadInput      = 'Ungueltige Eingabe: {0}'
@@ -98,7 +98,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe is original and unmodified.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
-        MenuHelp2     = 'A = all on    N = all off    D = default selection    Q = quit'
+        MenuHelp2     = 'A = all on    N = all off    Q = quit'
         MenuHelp3     = 'ENTER = accept selection and continue'
         Prompt        = 'Input'
         BadInput      = 'Invalid input: {0}'
@@ -856,7 +856,6 @@ function Select-Patches {
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
-            '^[sSdD]$' { $sel = Get-DefaultSelection; break }
             '^[qQxX]$' { return $null }
             default {
                 $idx = ConvertTo-Indices $in $sel.Length

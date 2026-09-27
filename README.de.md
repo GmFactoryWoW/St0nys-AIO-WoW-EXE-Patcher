@@ -77,7 +77,6 @@ du wählst nur ab, was du nicht haben möchtest.
 | `10-15`            | einen Bereich an-/abwählen                  |
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus                            |
-| `S` (oder `D`)     | zurück zur Standard-Auswahl                 |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
