@@ -190,7 +190,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | 44 | Mouse flicker / camera jump fix | Robinsch | ✅ |
 | 45 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | ✅ |
 | 46 | GameObject view distance: Cat 0 from 30 to 50 yards | St0ny | ✅ |
-| 47 | Occluder fix for Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
+| 47 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | ✅ |
 | 48 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
 | 49 | Optimize sound settings | St0ny | ✅ |
 | 50 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
@@ -601,7 +601,7 @@ re-patching.
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
-**Occluder fix for Stormwind (Open Azeroth)** *(No. 47, Author: OpenAzeroth)*
+**Occluder fix for Stormwind (Open Azeroth)** *(No. 47, Author: Robinsch)*
 Raises the occluder threshold for Stormwind so buildings and objects are not
 hidden incorrectly. Fixes graphical glitches on custom servers with a rebuilt
 Stormwind.

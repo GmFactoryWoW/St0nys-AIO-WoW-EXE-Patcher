@@ -190,7 +190,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 44 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
 | 45 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | ✅ |
 | 46 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | ✅ |
-| 47 | Occluder Fix für Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
+| 47 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | ✅ |
 | 48 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
 | 49 | Sound-Einstellungen optimieren | St0ny | ✅ |
 | 50 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
@@ -615,7 +615,7 @@ Spiel wirkt.
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 47, Autor: OpenAzeroth)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 47, Autor: Robinsch)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
