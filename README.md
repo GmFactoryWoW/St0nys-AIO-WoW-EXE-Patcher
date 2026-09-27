@@ -55,7 +55,8 @@ Zum **Wiederherstellen** einfach `Wow.exe` löschen und `Wow.exe.BAK` in
 3. Begrüßung, ENTER zum Starten.
 4. Prüfung, ob eine `Wow.exe` im Ordner vorhanden ist.
 5. SHA256-Integritätsprüfung, ob die `Wow.exe` original/unmodifiziert ist.
-6. **Patch-Auswahl** im Menü (siehe unten).
+6. **Patch-Auswahl** im Menü (siehe unten). Die Auswahl vom letzten Mal ist
+   bereits vorausgewählt.
 7. Zusammenfassung der gewählten Patches, Hinweise auf fehlende
    Ergänzungs-Patches und Sicherheitsabfrage (J/N).
 8. Automatisches Backup als `Wow.exe.BAK`.
@@ -85,9 +86,24 @@ Slider-Maxima brauchen die CVar-Unlocks). Fehlt so ein Ergänzungs-Patch in der
 Auswahl, zeigt der Patcher vor der Sicherheitsabfrage einen **Hinweis** an –
 gesperrt wird nichts.
 
-Die Vorauswahl lässt sich in `apply_patches.ps1` ändern: Jeder Patch hat dort
-einen Eintrag `On = $true` (vorausgewählt). Mit `On = $false` ist er beim Start
-abgewählt.
+### Auswahl wird gespeichert
+
+Sobald du die Auswahl mit ENTER übernimmst, speichert der Patcher sie in der
+Datei `patcher_selection.ini` neben dem Script. Beim nächsten Start ist genau
+diese Auswahl wieder vorausgewählt – auch wenn du vorher bei der
+Sicherheitsabfrage abgebrochen hast.
+
+- Gespeichert wird pro Patch (über eine interne Kennung), nicht pro Nummer.
+  Kommen in einer neueren Version Patches hinzu, bleibt deine Auswahl korrekt,
+  und die neuen Patches sind zunächst angewählt.
+- Die Datei ist eine einfache Textdatei (`4gb=1`, `cache=0`, …) und kann auch
+  von Hand bearbeitet werden.
+- **Zurücksetzen:** `patcher_selection.ini` löschen – dann sind wieder alle
+  Patches ausgewählt.
+
+Ohne gespeicherte Auswahl gilt die Vorauswahl aus `apply_patches.ps1`: Jeder
+Patch hat dort einen Eintrag `On = $true` (vorausgewählt). Mit `On = $false`
+ist er beim ersten Start abgewählt.
 
 ## Parameter für den unbeaufsichtigten Betrieb
 
@@ -97,14 +113,14 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
 | `-Language de\|en`     | Sprachabfrage überspringen                                                  |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `default`, `all` oder Nummern/Bereiche wie `"1,3,5-8"` |
+| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `default`, `all` oder Nummern/Bereiche wie `"1,3,5-8"`. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
 | `-Unattended`          | keine Rückfragen und keine Pausen                                           |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
 Beispiel:
 
 ```bat
-patcher.bat -Language de -Select default -Unattended
+patcher.bat -Language de -Select saved -Unattended
 ```
 
 Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
@@ -117,6 +133,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | `apply_patches.ps1` | Patch-Engine: Sprachwahl, Prüfungen, Auswahlmenü, Backup; liest die EXE einmal, patcht im Speicher, schreibt einmal zurück |
 | `README.md`         | Diese Datei |
 | `README.en.md`      | Englische Anleitung |
+| `patcher_selection.ini` | Wird angelegt, sobald du eine Auswahl übernimmst, und speichert sie |
 | `LICENSE`           | MIT-Lizenz |
 
 ---

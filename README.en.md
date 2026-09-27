@@ -55,7 +55,8 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 3. Welcome message, press ENTER to start.
 4. Check that a `Wow.exe` exists in the folder.
 5. SHA256 integrity check that the `Wow.exe` is original/unmodified.
-6. **Patch selection** menu (see below).
+6. **Patch selection** menu (see below). Your selection from last time is
+   already preselected.
 7. Summary of the selected patches, notes about missing companion patches and
    a confirmation prompt (Y/N).
 8. Automatic backup as `Wow.exe.BAK`.
@@ -85,8 +86,24 @@ slider maximums need the CVar unlocks). If such a companion patch is missing
 from the selection, the patcher shows a **note** before the confirmation
 prompt – nothing is blocked.
 
-The preselection can be changed in `apply_patches.ps1`: every patch has an
-entry `On = $true` (preselected). With `On = $false` it starts deselected.
+### The selection is remembered
+
+As soon as you accept the selection with ENTER, the patcher saves it to
+`patcher_selection.ini` next to the script. On the next start exactly this
+selection is preselected again – even if you cancelled at the confirmation
+prompt.
+
+- The selection is stored per patch (by an internal ID), not by number. If a
+  newer version adds patches, your selection stays correct and the new patches
+  start out selected.
+- The file is plain text (`4gb=1`, `cache=0`, …) and can also be edited by
+  hand.
+- **Reset:** delete `patcher_selection.ini` – then all patches are selected
+  again.
+
+Without a saved selection, the preselection from `apply_patches.ps1` applies:
+every patch has an entry `On = $true` (preselected). With `On = $false` it
+starts deselected on the first run.
 
 ## Parameters for unattended use
 
@@ -96,14 +113,14 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | skip the language prompt                                                   |
-| `-Select <selection>`  | skip the selection menu: `default`, `all` or numbers/ranges like `"1,3,5-8"` |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `default`, `all` or numbers/ranges like `"1,3,5-8"`. Using `-Select` does not change the saved selection. |
 | `-Unattended`          | no confirmation prompts and no pauses                                      |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
 Example:
 
 ```bat
-patcher.bat -Language en -Select default -Unattended
+patcher.bat -Language en -Select saved -Unattended
 ```
 
 Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
@@ -116,6 +133,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled by the user.
 | `apply_patches.ps1` | Patch engine: language selection, checks, selection menu, backup; reads the EXE once, patches in memory, writes it back once |
 | `README.md`         | German documentation |
 | `README.en.md`      | This file |
+| `patcher_selection.ini` | Created when you accept a selection, stores your patch selection |
 | `LICENSE`           | MIT license |
 
 ---

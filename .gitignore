@@ -6,6 +6,9 @@
 *.MPQ
 *.mpq
 
+# Personal patch selection (created by the patcher)
+patcher_selection.ini
+
 # Local work files
 *.bak
 *.bak[0-9]*

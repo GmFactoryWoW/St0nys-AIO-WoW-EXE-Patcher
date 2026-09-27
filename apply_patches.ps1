@@ -8,11 +8,14 @@
 #    3. Patches auswaehlen (Menue mit Vorauswahl)
 #    4. Bestaetigen, Backup Wow.exe.BAK anlegen, patchen
 #
+#  Die Auswahl aus dem Menue wird in patcher_selection.ini neben dem Skript
+#  gespeichert und beim naechsten Start wieder vorausgewaehlt.
+#
 #  Optionale Parameter fuer den unbeaufsichtigten Betrieb:
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
-#                             "default", "all" oder Nummern/Bereiche
-#                             wie "1,3,5-8"
+#                             "saved" (gespeicherte Auswahl), "default",
+#                             "all" oder Nummern/Bereiche wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 # ============================================================
@@ -30,6 +33,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 if (-not $Path) { $Path = Join-Path $scriptDir 'Wow.exe' }
 $file = $Path
 $backup = $file + '.BAK'
+$settingsFile = Join-Path $scriptDir 'patcher_selection.ini'
 
 # SHA256 der originalen Wow.exe 3.3.5a (Build 12340)
 $EXPECTED_HASH = 'AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8'
@@ -62,7 +66,10 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    Q = abbrechen'
-        MenuHelp3     = 'ENTER = Auswahl uebernehmen und weiter'
+        MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
+        SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
+        Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
+        SaveFail      = 'HINWEIS: Auswahl konnte nicht gespeichert werden: {0}'
         Prompt        = 'Eingabe'
         BadInput      = 'Ungueltige Eingabe: {0}'
         NoneSelected  = 'Es ist kein Patch ausgewaehlt.'
@@ -99,7 +106,10 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    Q = quit'
-        MenuHelp3     = 'ENTER = accept selection and continue'
+        MenuHelp3     = 'ENTER = accept and save selection, continue'
+        SavedLoaded   = 'Your saved selection from last time has been loaded.'
+        Saved         = 'Selection saved for next time.'
+        SaveFail      = 'NOTE: Could not save the selection: {0}'
         Prompt        = 'Input'
         BadInput      = 'Invalid input: {0}'
         NoneSelected  = 'No patch is selected.'
@@ -809,6 +819,43 @@ function Get-DefaultSelection {
     return , $sel
 }
 
+# Gespeicherte Auswahl aus patcher_selection.ini lesen. Liefert $null, wenn es
+# keine gibt. Gespeichert wird pro Patch-Id, nicht pro Nummer: Patches, die in
+# der Datei fehlen (z.B. in einer neueren Version hinzugekommen), bekommen
+# ihren On-Wert, unbekannte Eintraege werden ignoriert.
+function Get-SavedSelection {
+    if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $null }
+    try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $null }
+    $saved = @{}
+    foreach ($l in $lines) {
+        if ($l -match '^\s*([A-Za-z0-9_]+)\s*=\s*([01])\s*$') { $saved[$matches[1]] = ($matches[2] -eq '1') }
+    }
+    if ($saved.Count -eq 0) { return $null }
+    $sel = Get-DefaultSelection
+    for ($i = 0; $i -lt $patches.Count; $i++) {
+        if ($saved.ContainsKey($patches[$i].Id)) { $sel[$i] = $saved[$patches[$i].Id] }
+    }
+    return , $sel
+}
+
+# Auswahl in patcher_selection.ini schreiben. Liefert $null oder die Fehlermeldung.
+function Save-Selection($sel) {
+    $lines = New-Object System.Collections.Generic.List[string]
+    $lines.Add("# St0ny's WoW.exe Patcher - gespeicherte Patch-Auswahl / saved patch selection")
+    $lines.Add('# 1 = an / on, 0 = aus / off')
+    $lines.Add('# Datei loeschen setzt die Auswahl zurueck / delete this file to reset the selection')
+    for ($i = 0; $i -lt $patches.Count; $i++) {
+        $v = 0; if ($sel[$i]) { $v = 1 }
+        $lines.Add("$($patches[$i].Id)=$v")
+    }
+    try {
+        [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
+        return $null
+    } catch {
+        return $_.Exception.Message
+    }
+}
+
 function Get-SelectedCount($sel) {
     $n = 0
     foreach ($s in $sel) { if ($s) { $n++ } }
@@ -843,8 +890,9 @@ function Show-Menu($sel, [string]$message) {
 
 # Interaktive Auswahl. Liefert das bool-Array oder $null bei Abbruch.
 function Select-Patches {
-    $sel = Get-DefaultSelection
+    $sel = Get-SavedSelection
     $message = ''
+    if ($null -eq $sel) { $sel = Get-DefaultSelection } else { $message = T 'SavedLoaded' }
     while ($true) {
         Show-Menu $sel $message
         $message = ''
@@ -870,6 +918,11 @@ function Select-Patches {
 function Get-SelectionFromParam([string]$value) {
     $v = $value.Trim().ToLowerInvariant()
     if ($v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
+    if ($v -eq 'saved' -or $v -eq 'gespeichert') {
+        $sel = Get-SavedSelection
+        if ($null -eq $sel) { $sel = Get-DefaultSelection }
+        return , $sel
+    }
     $sel = New-Object bool[] $patches.Count
     if ($v -eq 'all' -or $v -eq 'alle') {
         for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true }
@@ -962,6 +1015,9 @@ if ($Select) {
         Exit-Patcher 2
     }
     Clear-Host
+    Write-Host ''
+    $saveError = Save-Selection $selection
+    if ($saveError) { Say (T 'SaveFail' $saveError) 'Yellow' } else { Say (T 'Saved') 'DarkGray' }
 }
 
 $chosen = @()
