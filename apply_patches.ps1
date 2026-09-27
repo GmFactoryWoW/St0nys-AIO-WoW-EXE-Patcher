@@ -1,5 +1,5 @@
 # ============================================================
-#  St0ny's WoW.exe Patcher - Patch Engine
+#  St0nys AIO WoW EXE Patcher - Patch Engine
 #  Copyright (c) 2026 St0ny (Raz0r1337) - MIT-Lizenz, siehe LICENSE
 #
 #  Interaktiver Ablauf:
@@ -841,7 +841,7 @@ function Get-SavedSelection {
 # Auswahl in patcher_selection.ini schreiben. Liefert $null oder die Fehlermeldung.
 function Save-Selection($sel) {
     $lines = New-Object System.Collections.Generic.List[string]
-    $lines.Add("# St0ny's WoW.exe Patcher - gespeicherte Patch-Auswahl / saved patch selection")
+    $lines.Add("# St0nys AIO WoW EXE Patcher - gespeicherte Patch-Auswahl / saved patch selection")
     $lines.Add('# 1 = an / on, 0 = aus / off')
     $lines.Add('# Datei loeschen setzt die Auswahl zurueck / delete this file to reset the selection')
     for ($i = 0; $i -lt $patches.Count; $i++) {
@@ -940,14 +940,21 @@ function Get-SelectionFromParam([string]$value) {
 
 Write-Host ''
 Write-Host @'
-  _____ _    ___                   __          ____          __               _____      _       _
- / ____| |  / _ \                  \ \        / /\ \        / /              |  __ \    | |     | |
-| (___ | |_| | | |_ __  _   _ ___   \ \  /\  / /__\ \  /\  / / _____  _____  | |__) |_ _| |_ ___| |__   ___ _ __
- \___ \| __| | | | '_ \| | | / __|   \ \/  \/ / _ \\ \/  \/ / / _ \ \/ / _ \ |  ___/ _` | __/ __| '_ \ / _ \ '__|
- ____) | |_| |_| | | | | |_| \__ \    \  /\  / (_) |\  /\  / |  __/>  <  __/ | |  | (_| | || (__| | | |  __/ |
-|_____/ \__|\___/|_| |_|\__, |___/     \/  \/ \___/  \/  \/ (_)___/_/\_\___| |_|   \__,_|\__\___|_| |_|\___|_|
+  _____ _    ___                             _____ ____
+ / ____| |  / _ \                      /\   |_   _/ __ \
+| (___ | |_| | | |_ __  _   _ ___     /  \    | || |  | |
+ \___ \| __| | | | '_ \| | | / __|   / /\ \   | || |  | |
+ ____) | |_| |_| | | | | |_| \__ \  / ____ \ _| || |__| |
+|_____/ \__|\___/|_| |_|\__, |___/ /_/    \_\_____\____/
                          __/ |
                         |___/
+
+__          ____          __  ________   ________   _____      _       _
+\ \        / /\ \        / / |  ____\ \ / /  ____| |  __ \    | |     | |
+ \ \  /\  / /__\ \  /\  / /  | |__   \ V /| |__    | |__) |_ _| |_ ___| |__   ___ _ __
+  \ \/  \/ / _ \\ \/  \/ /   |  __|   > < |  __|   |  ___/ _` | __/ __| '_ \ / _ \ '__|
+   \  /\  / (_) |\  /\  /    | |____ / . \| |____  | |  | (_| | || (__| | | |  __/ |
+    \/  \/ \___/  \/  \/     |______/_/ \_\______| |_|   \__,_|\__\___|_| |_|\___|_|
 '@
 Write-Host ''
 

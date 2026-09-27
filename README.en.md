@@ -1,8 +1,8 @@
-# St0ny's WoW.exe Patcher
+# St0nys AIO WoW EXE Patcher
 
 [🇩🇪 Deutsch](README.md) | 🇬🇧 English
 
-A patcher for the `Wow.exe` of **World of Warcraft 3.3.5a (build 12340)**.
+An all-in-one (AIO) patcher for the `Wow.exe` of **World of Warcraft 3.3.5a (build 12340)**.
 It applies bug fixes, performance optimizations, extended view distances,
 improved sound settings and a few quality-of-life features directly to the
 executable – in a single pass, without extra tools or DLL injectors.
