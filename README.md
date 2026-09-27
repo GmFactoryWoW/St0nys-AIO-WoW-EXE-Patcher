@@ -181,6 +181,11 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 | 35 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* |  | – |
 | 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
 
+> [!NOTE]
+> **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
+> Urheber noch nicht bekannt. Wenn du weißt, von wem einer dieser Patches
+> stammt, schreib es bitte als [Issue](https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher/issues) – dann wird es nachgetragen.
+
 ---
 
 ## Patch-Beschreibungen
