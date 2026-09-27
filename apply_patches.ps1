@@ -307,7 +307,8 @@ function Add-HdPortraits([int]$SIZE) {
 
 $patches = @(
 
-    @{ Id = '4gb'; On = $true
+    @{ Id = 'laa'; On = $true
+       Author = 'Kebabstorm'
        De = '4GB-Patch (Large Address Aware)'
        En = '4GB patch (Large Address Aware)'
        Code = {
@@ -315,6 +316,7 @@ $patches = @(
     }}
 
     @{ Id = 'glue'; On = $true
+       Author = 'Kebabstorm'
        De = 'Custom Glue-XML erlauben'
        En = 'Allow custom GlueXML'
        Code = {
@@ -342,6 +344,7 @@ $patches = @(
     }}
 
     @{ Id = 'cache'; On = $false
+       Author = 'Kebabstorm'
        De = 'CACHE Ordner Erstellung deaktivieren'
        En = 'Disable CACHE folder creation'
        Code = {
@@ -356,6 +359,7 @@ $patches = @(
     }}
 
     @{ Id = 'rce'; On = $true
+       Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
        Code = {
@@ -364,6 +368,7 @@ $patches = @(
     }}
 
     @{ Id = 'afk'; On = $false
+       Author = 'St0ny'
        De = 'AFK Timer IDLE Check deaktiviert'
        En = 'Disable AFK timer idle check'
        NoteDe = 'wird fuer Character-Autologin benoetigt'
@@ -391,6 +396,7 @@ $patches = @(
     }}
 
     @{ Id = 'swing'; On = $true
+       Author = 'Robinsch'
        De = 'Nahkampf-Schwung bei Rechtsklick entfernt'
        En = 'Remove melee swing on right-click'
        Code = {
@@ -398,6 +404,7 @@ $patches = @(
     }}
 
     @{ Id = 'npcanim'; On = $true
+       Author = 'Robinsch'
        De = 'NPC-Angriffsanimation beim Drehen unterdrueckt'
        En = 'Suppress NPC attack animation when turning'
        Code = {
@@ -405,13 +412,34 @@ $patches = @(
     }}
 
     @{ Id = 'spellanim'; On = $true
+       Author = 'Robinsch'
        De = 'Zauber-Animation nach Abbruch repariert'
        En = 'Fix spell animation after cancelled channel'
        Code = {
         Patch 0x33E0D6 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
+    @{ Id = 'ghostattack'; On = $true
+       Author = 'Robinsch'
+       De = 'Geister-Angriff von NPCs beim Evade behoben'
+       En = 'Fix "ghost" attack when NPCs evade from combat'
+       Code = {
+        Patch 0x0355BF @(0xEB)
+    }}
+
+    @{ Id = 'level101'; On = $false
+       Author = 'Robinsch'
+       De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
+       En = 'Level 101+ fix (druid base stats and barber chair)'
+       Code = {
+        # Druiden koennen ihre Grundwerte wieder ansehen und der Barbierstuhl
+        # funktioniert fuer alle Charaktere ab Level 101.
+        # Hinweis des Autors: "Use XML MD5"
+        Patch 0x3F5DC2 @(0x90, 0x90, 0x90)
+    }}
+
     @{ Id = 'bluemoon'; On = $true
+       Author = 'Robinsch'
        De = 'Blauer Mond am Nachthimmel reaktiviert'
        En = 'Re-enable the blue moon in the night sky'
        Code = {
@@ -419,6 +447,7 @@ $patches = @(
     }}
 
     @{ Id = 'naked'; On = $true
+       Author = 'Robinsch'
        De = 'Nackter-Charakter-Bug behoben'
        En = 'Fix naked character bug'
        Code = {
@@ -469,6 +498,7 @@ $patches = @(
     }}
 
     @{ Id = 'envdetail'; On = $true
+       Author = 'St0ny'
        De = 'CVar environmentDetail unlock (kein Limit statt 1.5)'
        En = 'CVar environmentDetail unlock (no limit instead of 1.5)'
        Code = {
@@ -597,6 +627,7 @@ $patches = @(
     }}
 
     @{ Id = 'castbars'; On = $true
+       Author = 'Kebabstorm'
        De = 'Cast Bars auf allen Frames'
        En = 'Cast bars on all frames'
        Code = {
@@ -667,6 +698,7 @@ $patches = @(
     }}
 
     @{ Id = 'mouse'; On = $true
+       Author = 'Robinsch'
        De = 'Mausflackern / Kameraspruenge Fix'
        En = 'Mouse flicker / camera jump fix'
        Code = {
@@ -796,6 +828,7 @@ $patches = @(
     }}
 
     @{ Id = 'flash'; On = $false
+       Author = 'Kebabstorm'
        De = 'FlashWindow Patch'
        En = 'FlashWindow patch'
        NoteDe = 'benoetigt FlashWindow-Addon'

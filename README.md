@@ -99,7 +99,7 @@ Sicherheitsabfrage abgebrochen hast.
 - Gespeichert wird pro Patch (über eine interne Kennung), nicht pro Nummer.
   Kommen in einer neueren Version Patches hinzu, bleibt deine Auswahl korrekt,
   und die neuen Patches starten mit ihrer Standard-Einstellung.
-- Die Datei ist eine einfache Textdatei (`4gb=1`, `cache=0`, …) und kann auch
+- Die Datei ist eine einfache Textdatei (`laa=1`, `cache=0`, …) und kann auch
   von Hand bearbeitet werden.
 - **Zurücksetzen:** im Menü `S` drücken oder `patcher_selection.ini` löschen –
   dann gilt wieder die Standard-Auswahl.
@@ -144,42 +144,44 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 
 | Nr. | Patch | Autor | Standard |
 |----:|-------|-------|:--------:|
-| 1  | 4GB-Patch (Large Address Aware) |  | ✅ |
-| 2  | Custom Glue-XML erlauben |  | ✅ |
+| 1  | 4GB-Patch (Large Address Aware) | Kebabstorm | ✅ |
+| 2  | Custom Glue-XML erlauben | Kebabstorm | ✅ |
 | 3  | Falsch/Nicht signierte MPQs zulassen |  | ✅ |
 | 4  | Scan DLL deaktivieren |  | ✅ |
-| 5  | CACHE Ordner Erstellung deaktivieren |  | – |
+| 5  | CACHE Ordner Erstellung deaktivieren | Kebabstorm | – |
 | 6  | Item-Cache sofort aktualisieren |  | ✅ |
-| 7  | Remote Code Execution Exploit Fix |  | ✅ |
-| 8  | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* |  | – |
+| 7  | Remote Code Execution Exploit Fix | Robinsch | ✅ |
+| 8  | AFK Timer IDLE Check deaktiviert *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
 | 9  | Area-Trigger-Timer Verbesserung (250 ms auf 50 ms) |  | ✅ |
 | 10 | Erweiterte MPQ-Namen erlauben |  | ✅ |
-| 11 | Nahkampf-Schwung bei Rechtsklick entfernt |  | ✅ |
-| 12 | NPC-Angriffsanimation beim Drehen unterdrückt |  | ✅ |
-| 13 | Zauber-Animation nach Abbruch repariert |  | ✅ |
-| 14 | Blauer Mond am Nachthimmel reaktiviert |  | ✅ |
-| 15 | Nackter-Charakter-Bug behoben |  | ✅ |
-| 16 | Force-Reaction bei /reload erhalten |  | ✅ |
-| 17 | Quest-Tracker automatisch sortieren |  | ✅ |
-| 18 | Erweiterte Weltkarte standardmäßig aktiv |  | ✅ |
-| 19 | CVar farclip unlock (max 10000) |  | ✅ |
-| 20 | CVar horizonFarclipScale unlock (max 12) |  | ✅ |
-| 21 | CVar environmentDetail unlock (kein Limit statt 1.5) |  | ✅ |
-| 22 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
-| 23 | Grafikoptionen: Slider-Maxima erweitern | St0ny | ✅ |
-| 24 | Fenstermodus als Standard setzen | St0ny | ✅ |
-| 25 | Fenstermodus maximiert als Standard setzen | St0ny | ✅ |
-| 26 | Cast Bars auf allen Frames |  | ✅ |
-| 27 | Max Characters pro Server auf 255 erhöht | St0ny | – |
-| 28 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
-| 29 | Mausflackern / Kamerasprünge Fix |  | ✅ |
-| 30 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | ✅ |
-| 31 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | ✅ |
-| 32 | Occluder Fix für Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
-| 33 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
-| 34 | Sound-Einstellungen optimieren | St0ny | ✅ |
-| 35 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* |  | – |
-| 36 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
+| 11 | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ |
+| 12 | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ |
+| 13 | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ |
+| 14 | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch | ✅ |
+| 15 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | Robinsch | – |
+| 16 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
+| 17 | Nackter-Charakter-Bug behoben | Robinsch | ✅ |
+| 18 | Force-Reaction bei /reload erhalten |  | ✅ |
+| 19 | Quest-Tracker automatisch sortieren |  | ✅ |
+| 20 | Erweiterte Weltkarte standardmäßig aktiv |  | ✅ |
+| 21 | CVar farclip unlock (max 10000) |  | ✅ |
+| 22 | CVar horizonFarclipScale unlock (max 12) |  | ✅ |
+| 23 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ |
+| 24 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
+| 25 | Grafikoptionen: Slider-Maxima erweitern | St0ny | ✅ |
+| 26 | Fenstermodus als Standard setzen | St0ny | ✅ |
+| 27 | Fenstermodus maximiert als Standard setzen | St0ny | ✅ |
+| 28 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
+| 29 | Max Characters pro Server auf 255 erhöht | St0ny | – |
+| 30 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
+| 31 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
+| 32 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | ✅ |
+| 33 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | ✅ |
+| 34 | Occluder Fix für Stormwind (Open Azeroth) | OpenAzeroth | ✅ |
+| 35 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
+| 36 | Sound-Einstellungen optimieren | St0ny | ✅ |
+| 37 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
+| 38 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -192,11 +194,11 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = vom Benutzer abgebrochen.
 
 ### Speicher & System
 
-**4GB-Patch (Large Address Aware)** *(Nr. 1)*
+**4GB-Patch (Large Address Aware)** *(Nr. 1, Autor: Kebabstorm)*
 Ermöglicht der `Wow.exe`, bis zu 4 GB RAM zu nutzen statt der
 standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 
-**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 5, standardmäßig aus)*
+**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 5, standardmäßig aus, Autor: Kebabstorm)*
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
 **Item-Cache sofort aktualisieren** *(Nr. 6)*
@@ -212,19 +214,19 @@ Custom-Content auf privaten Servern.
 **Scan-DLL deaktivieren** *(Nr. 4)*
 Deaktiviert den Warden-Scan-DLL-Mechanismus im Client.
 
-**Remote Code Execution Exploit Fix** *(Nr. 7)*
+**Remote Code Execution Exploit Fix** *(Nr. 7, Autor: Robinsch)*
 Schließt eine Sicherheitslücke, die Remote-Code-Ausführung über manipulierte
 Pakete ermöglichen konnte.
 
 ### UI & Glue-Screen
 
-**Custom Glue-XML erlauben** *(Nr. 2)*
+**Custom Glue-XML erlauben** *(Nr. 2, Autor: Kebabstorm)*
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding).
 
 ### Gameplay-Fixes
 
-**AFK-Timer / IDLE-Check deaktiviert** *(Nr. 8, standardmäßig aus)*
+**AFK-Timer / IDLE-Check deaktiviert** *(Nr. 8, standardmäßig aus, Autor: St0ny)*
 Deaktiviert den IDLE-Login-Check, lässt den automatischen
 AFK-Disconnect-Timer aber aktiv. Verhindert gleichzeitig den
 CharAutoLogin-Bug.
@@ -234,23 +236,32 @@ CharAutoLogin-Bug.
 Erhöht die Prüffrequenz für Area-Trigger von 250 ms auf 50 ms. Dadurch werden
 Zonen-Übergänge und Trigger präziser erkannt.
 
-**Nahkampf-Schwung bei Rechtsklick entfernt** *(Nr. 11)*
+**Nahkampf-Schwung bei Rechtsklick entfernt** *(Nr. 11, Autor: Robinsch)*
 Verhindert den fehlerhaften Auto-Attack-Swing, der beim Rechtsklick auf ein
 Ziel ausgelöst wurde.
 
-**NPC-Angriffsanimation beim Drehen unterdrückt** *(Nr. 12)*
+**NPC-Angriffsanimation beim Drehen unterdrückt** *(Nr. 12, Autor: Robinsch)*
 Unterdrückt die Angriffsanimation von NPCs beim Drehen, wenn kein echter
 Angriff stattfindet.
 
-**Zaubervorbereitungs-Animation nach Abbruch kanalisierter Spells repariert** *(Nr. 13)*
+**Zaubervorbereitungs-Animation nach Abbruch kanalisierter Spells repariert** *(Nr. 13, Autor: Robinsch)*
 Behebt einen Bug, bei dem nach dem Abbrechen eines kanalisierten Zaubers die
 Vorbereitungsanimation hängen blieb.
 
-**Nackter-Charakter-Bug behoben** *(Nr. 15)*
+**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 14, Autor: Robinsch)*
+Behebt den „Geister“-Angriff, den NPCs ausführen, wenn sie aus dem Kampf
+evaden.
+
+**Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 15, standardmäßig aus, Autor: Robinsch)*
+Druiden ab Level 101 können ihre Grundwerte wieder ansehen, und der
+Barbierstuhl funktioniert für alle Charaktere ab Level 101.
+Hinweis des Autors: *„Use XML MD5“*.
+
+**Nackter-Charakter-Bug behoben** *(Nr. 17, Autor: Robinsch)*
 Deaktiviert den `SPELL_AURA_X_RAY`-Effekt, der dazu führen konnte, dass
 Charaktere ohne Ausrüstung dargestellt wurden.
 
-**Force-Reaction bleibt bei /reload erhalten** *(Nr. 16)*
+**Force-Reaction bleibt bei /reload erhalten** *(Nr. 18)*
 Verhindert, dass Force-Reaction-Werte (z. B. Fraktionsstatus) beim Neuladen
 der UI zurückgesetzt werden. Wichtig für Custom-Server.
 
@@ -262,11 +273,11 @@ Ermöglicht die Nutzung von Wildcard-Namen für MPQ-Archive
 
 ### Visuelle Änderungen
 
-**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 14)*
+**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 16, Autor: Robinsch)*
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 28, standardmäßig aus, Autor: MacWarrior)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 30, standardmäßig aus, Autor: MacWarrior)*
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
 6 Bordüren, 17 Bordürenfarben, 51 Hintergrundfarben. Der Tabard-Designer
@@ -299,15 +310,15 @@ ist frei wählbar (`patch-*.MPQ`), dafür sorgt der Patch
 
 ### Standard-Einstellungen (CVars)
 
-**Quest-Tracker automatisch sortieren** *(Nr. 17)*
+**Quest-Tracker automatisch sortieren** *(Nr. 19)*
 Setzt den CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 18)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 20)*
 Setzt den CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
 
-**Farclip unlock auf max 10000** *(Nr. 19)*
+**Farclip unlock auf max 10000** *(Nr. 21)*
 Entsperrt die maximale Sichtweite (Farclip) auf 10000 Yards. Der Client klemmt
 den Wert beim Setzen in einer einzigen Funktion (VA `0x780770`) nach oben ab
 und hält dafür zwei Grenzen bereit: 1583 Yards im Normalfall und 791 Yards als
@@ -321,24 +332,24 @@ Nicht zu verwechseln mit der 1277 aus dem Video-Menü: Das ist die Obergrenze
 des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
 [Grafikoptionen (UI-Slider)](#grafikoptionen-ui-slider)).
 
-**CVar horizonFarclipScale auf max. Wert 12 entsperrt** *(Nr. 20)*
+**CVar horizonFarclipScale auf max. Wert 12 entsperrt** *(Nr. 22)*
 Entsperrt den CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
-**Fenstermodus als Standard setzen** *(Nr. 24, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 26, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 25, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 27, Autor: St0ny)*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
-**Cast Bars auf allen Frames (wie Cataclysm)** *(Nr. 26)*
+**Cast Bars auf allen Frames (wie Cataclysm)** *(Nr. 28, Autor: Kebabstorm)*
 Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Max Characters pro Server auf 255 erhöht** *(Nr. 27, standardmäßig aus, Autor: St0ny)*
+**Max Characters pro Server auf 255 erhöht** *(Nr. 29, standardmäßig aus, Autor: St0ny)*
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
@@ -346,14 +357,14 @@ Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 ### Mausflackern / Kamerasprünge
 
-**Behebung des Mausflackerns und der Kamerasprünge** *(Nr. 29)*
+**Behebung des Mausflackerns und der Kamerasprünge** *(Nr. 31, Autor: Robinsch)*
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 ### GameObject-Sichtweite
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 30, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 32, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -371,11 +382,11 @@ geregelt wird über das CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10                | 300   | 1000  | 2000  | 7500  | 12500 |
 
-Mit Patch Nr. 31 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
+Mit Patch Nr. 33 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
-unlock“ (Nr. 21) voraus.
+unlock“ (Nr. 23) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 31, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 33, Autor: St0ny)*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab.
 Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
@@ -483,7 +494,7 @@ sie unabhängig von den Distanzen verbreitern.
 
 ### Charakter-Portraits (HD)
 
-**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 36, Autor: Badgermilk0)*
+**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 38, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
 statt der Standard-64×64. Bildausschnitt, Neigung und Zoom bleiben unverändert
 – nur die Renderauflösung steigt, die Portraits werden also deutlich schärfer.
@@ -498,7 +509,7 @@ Kopierschleife sonst über die Quelle hinaus liest.
 
 ### Fenster-Benachrichtigung
 
-**FlashWindow und FocusWindow Patch** *(Nr. 35, standardmäßig aus)*
+**FlashWindow und FocusWindow Patch** *(Nr. 37, standardmäßig aus, Autor: Kebabstorm)*
 FlashWindow: Lässt das WoW-Fenster in der Taskleiste blinken, wenn ein
 relevantes Ereignis eintritt und das Spiel im Hintergrund läuft.
 FocusWindow: Holt das WoW-Fenster aktiv in den Vordergrund. Beide Funktionen
@@ -507,28 +518,28 @@ können per Addon angesprochen werden.
 
 ### Occluder
 
-**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 21)*
+**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 23, Autor: St0ny)*
 Entfernt die Obergrenze des CVars `environmentDetail` komplett. Original wird
 der Wert auf den Bereich 0.5 bis 1.5 begrenzt; der Patch hebelt die obere
 Begrenzung aus, sodass beliebig hohe Werte durchgereicht werden.
 Wichtig: Dieses CVar tut nichts anderes, als die GameObject-Sichtweiten zu
 multiplizieren (siehe [GameObject-Sichtweite](#gameobject-sichtweite)) – im
-Original nur die der Kategorien 1 bis 3, mit Patch Nr. 30 alle fünf. Es ist
+Original nur die der Kategorien 1 bis 3, mit Patch Nr. 32 alle fünf. Es ist
 damit der bequemste FPS-Hebel im Objekt-Rendering, weil er ohne Neupatchen im
 Spiel wirkt.
 
-**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 22)*
+**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 24)*
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 32, Autor: OpenAzeroth)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 34, Autor: OpenAzeroth)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
 
 ### Grafikoptionen (UI-Slider)
 
-**Slider-Maxima im Video-Menü erweitern** *(Nr. 23, Autor: St0ny)*
+**Slider-Maxima im Video-Menü erweitern** *(Nr. 25, Autor: St0ny)*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -583,8 +594,8 @@ irgendetwas auffällt.
 
 - Der Regler setzt nur das CVar. Ohne die Unlock-Patches klemmt der Client den
   Wert beim Setzen sofort wieder auf sein Original zurück – die Patches
-  „Farclip unlock“ (Nr. 19), „CVar environmentDetail unlock“ (Nr. 21) und
-  „CVar groundEffectDist unlock“ (Nr. 22) gehören also dazu. Fehlen sie in der
+  „Farclip unlock“ (Nr. 21), „CVar environmentDetail unlock“ (Nr. 23) und
+  „CVar groundEffectDist unlock“ (Nr. 24) gehören also dazu. Fehlen sie in der
   Auswahl, weist der Patcher darauf hin.
 - Bei `groundEffectDensity` wirkt oberhalb von 64 nichts mehr: Der Vertexbuffer
   der Bodendeko ist im Client fest auf Dichte × 64 ≤ 4096 geklemmt. Der Regler
@@ -627,7 +638,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 
 ### DLL-Unterstützung
 
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 33, standardmäßig aus, Autor: FrostAtom)*
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 35, standardmäßig aus, Autor: FrostAtom)*
 Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
 Server.
@@ -635,7 +646,7 @@ Server.
 
 ### Sound-Einstellungen
 
-**Sound-Einstellungen optimieren** *(Nr. 34, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 36, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
