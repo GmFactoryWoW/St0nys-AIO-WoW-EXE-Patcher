@@ -239,7 +239,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 38 | Steer forward/backward while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 39 | Steer sideways while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server; exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Graphics & view distance** |  |  |
 | 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -252,7 +252,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ |
 | 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag, shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 53 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | – |
+| 53 | HD unit frame portraits: 256x256 (live 3D portraits) *(exe grows – ban risk)* | Badgermilk0 | – |
 |    | **Interface & comfort** |  |  |
 | 54 | Auto-sort quest tracker |  | – |
 | 55 | Advanced world map enabled by default |  | – |
@@ -265,7 +265,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 61 | Maximized window by default | St0ny | – |
 | 62 | No black screen when switching to windowed mode | Robinsch | ✅ |
 | 63 | Mouse flicker / camera jump fix | Robinsch | ✅ |
-| 64 | CameraReforged [BETA]: camera height, shoulder offset, zoom limits *(not 100% finished yet)* | Stormhand / St0ny | – |
+| 64 | CameraReforged [BETA]: camera height, shoulder offset, zoom limits *(not 100% finished yet; exe grows – ban risk)* | Stormhand / St0ny | – |
 |    | **Sound** |  |  |
 | 65 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 |    | **Client info: version, build, title, date** |  |  |
@@ -567,6 +567,11 @@ writable); this makes `Wow.exe` slightly larger.
 
 > [!WARNING]
 > Servers with anti-cheat may detect jumps in the air.
+
+> [!WARNING]
+> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
+> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
+> ban.**
 
 ### Graphics & view distance
 
@@ -876,6 +881,11 @@ otherwise read past the source.
 > alpha mask + code caves + detour of the mask builder). The file grows by
 > about 69 KB.
 
+> [!WARNING]
+> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
+> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
+> ban.**
+
 ### Interface & comfort
 
 **Auto-sort quest tracker** *(No. 54, off by default)*
@@ -1014,6 +1024,11 @@ overwrites the table of the slider patch.
 > Like the HD portraits, this patch changes the file size and PE structure
 > because it appends a section. Servers that check the client's size or section
 > layout may notice this.
+
+> [!WARNING]
+> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
+> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
+> ban.**
 
 ### Sound
 

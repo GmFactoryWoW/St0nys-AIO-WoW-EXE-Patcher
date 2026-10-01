@@ -242,7 +242,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 38 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 39 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 40 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 41 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 41 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden; Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Grafik & Sichtweite** |  |  |
 | 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -255,7 +255,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 50 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
 | 51 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
 | 52 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen, teilt Code-Höhle mit Slider-Patch; zusammen wird die Exe größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 53 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
+| 53 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – |
 |    | **Interface & Komfort** |  |  |
 | 54 | Quest-Tracker automatisch sortieren |  | – |
 | 55 | Erweiterte Weltkarte standardmäßig aktiv |  | – |
@@ -268,7 +268,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 61 | Fenstermodus maximiert als Standard setzen | St0ny | – |
 | 62 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ |
 | 63 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
-| 64 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig)* | Stormhand / St0ny | – |
+| 64 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig; Exe wird größer – Bann-Gefahr)* | Stormhand / St0ny | – |
 |    | **Sound** |  |  |
 | 65 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 |    | **Client-Infos: Version, Build, Titel, Datum** |  |  |
@@ -581,6 +581,11 @@ beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 
 > [!WARNING]
 > Server mit Anti-Cheat können Sprünge in der Luft erkennen.
+
+> [!WARNING]
+> Dieser Patch hängt eine eigene Sektion an, die `Wow.exe` wird dadurch größer.
+> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
+> kann zu einem Bann führen.**
 
 ### Grafik & Sichtweite
 
@@ -900,6 +905,11 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > (generierte 256er-Alphamaske + Code-Caves + Detour des Masken-Builders). Die
 > Datei wächst dadurch um ca. 69 KB.
 
+> [!WARNING]
+> Dieser Patch hängt eine eigene Sektion an, die `Wow.exe` wird dadurch größer.
+> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
+> kann zu einem Bann führen.**
+
 ### Interface & Komfort
 
 **Quest-Tracker automatisch sortieren** *(Nr. 54, standardmäßig aus)*
@@ -1039,6 +1049,11 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 > Dieser Patch verändert wie die HD-Portraits die Dateigröße und die
 > PE-Struktur, weil er eine Sektion anhängt. Server, die den Client auf Größe
 > oder Sektionsaufbau prüfen, können das bemerken.
+
+> [!WARNING]
+> Dieser Patch hängt eine eigene Sektion an, die `Wow.exe` wird dadurch größer.
+> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
+> kann zu einem Bann führen.**
 
 ### Sound
 

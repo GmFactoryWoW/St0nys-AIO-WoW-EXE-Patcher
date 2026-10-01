@@ -135,6 +135,8 @@ $TEXT = @{
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         Conflict      = 'nutzt dieselbe Code-Hoehle wie diese Patches und weicht darum auf eine eigene Sektion am Dateiende aus (die Wow.exe wird dadurch etwas groesser):'
         ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
+        GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
+        GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
@@ -213,6 +215,8 @@ $TEXT = @{
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         Conflict      = 'uses the same code cave as these patches and therefore moves to a section of its own at the end of the file (Wow.exe becomes slightly larger):'
         ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
+        GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
+        GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
@@ -1045,6 +1049,8 @@ function Test-JumpValue([string]$v) {
 #    Conflicts - optional: Ids von Patches, die dieselbe Code-Hoehle nutzen;
 #            sind sie gewaehlt, weicht dieser Patch auf eine eigene Sektion aus
 #            (erzeugt einen Hinweis)
+#    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
+#            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -1517,12 +1523,12 @@ $patches = @(
         Patch 0x588F97 @(0x90, 0x90)
     }}
 
-    @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false
+    @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false; GrowsExe = $true
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Doppelsprung (weitere Spruenge in der Luft)'
        En = 'Double jump (more jumps in the air)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden; Exe wird groesser - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server; exe grows - ban risk'
        PromptDe = 'Anzahl zusaetzlicher Spruenge in der Luft, 1 bis 9 (1 = Doppelsprung)'
        PromptEn = 'Number of extra jumps in the air, 1 to 9 (1 = double jump)'
        Default = '1'
@@ -1791,10 +1797,12 @@ $patches = @(
         Add-NoFadeOutFlag
     }}
 
-    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false
+    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true
        Author = 'Badgermilk0'
        De = 'HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)'
        En = 'HD unit frame portraits: 256x256 (live 3D portraits)'
+       NoteDe = 'Exe wird groesser - Bann-Gefahr'
+       NoteEn = 'exe grows - ban risk'
        Code = {
         # Haengt die .hdp-Sektion an und biegt den Model-Render-Pfad auf 256px um.
         Add-HdPortraits 256
@@ -1941,12 +1949,12 @@ $patches = @(
         Patch 0x469183 @(0x83, 0xF8, 0x32, 0x7D, 0x03, 0x83, 0xC0, 0x01, 0x83, 0xF9, 0x32, 0xEB, 0x31)
     }}
 
-    @{ Id = 'camera'; Cat = 'window'; On = $false
+    @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
        Author = 'Stormhand / St0ny'
        De = 'CameraReforged [BETA]: Kamerahoehe, Schulterversatz, Zoom-Grenzen'
        En = 'CameraReforged [BETA]: camera height, shoulder offset, zoom limits'
-       NoteDe = 'noch nicht 100% fertig'
-       NoteEn = 'not 100% finished yet'
+       NoteDe = 'noch nicht 100% fertig; Exe wird groesser - Bann-Gefahr'
+       NoteEn = 'not 100% finished yet; exe grows - ban risk'
        Code = {
         # BETA - funktioniert noch nicht zu 100 Prozent, hier fliesst noch Arbeit rein.
         #
@@ -2732,6 +2740,14 @@ foreach ($p in $chosen) {
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
         Say (T 'ConflictBan') 'Red'
     }
+}
+$grow = @()
+foreach ($p in $chosen) { if ($p.GrowsExe) { $grow += PatchName $p } }
+if ($grow.Count -gt 0) {
+    Write-Host ''
+    Say (T 'GrowHead') 'Yellow'
+    foreach ($m in $grow) { Say "  - $m" 'Yellow' }
+    Say (T 'GrowBan') 'Red'
 }
 Write-Host ''
 
