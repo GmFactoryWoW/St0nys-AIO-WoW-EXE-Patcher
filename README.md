@@ -10,9 +10,6 @@ EXE ein – in einem Durchgang, ohne zusätzliche Tools oder DLL-Injector.
 Beim Start wählst du die **Sprache** (Deutsch / English) und danach in einem
 Menü, **welche Patches** eingespielt werden sollen.
 
-> [!TIP]
-> **Danke an Billy Hoyle und MacWarrior!** – siehe [Danksagung](#danksagung).
-
 > [!IMPORTANT]
 > Dieses Repository enthält **keine** `Wow.exe` und keine anderen Dateien von
 > Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).

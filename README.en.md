@@ -10,9 +10,6 @@ executable – in a single pass, without extra tools or DLL injectors.
 On start you choose the **language** (Deutsch / English) and then pick
 **which patches** to apply from a menu.
 
-> [!TIP]
-> **Thanks to Billy Hoyle and MacWarrior!** – see [Acknowledgements](#acknowledgements).
-
 > [!IMPORTANT]
 > This repository does **not** contain a `Wow.exe` or any other Blizzard files.
 > You need your own unmodified `Wow.exe` 3.3.5a (12340).
