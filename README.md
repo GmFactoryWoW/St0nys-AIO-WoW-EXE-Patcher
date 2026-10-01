@@ -60,9 +60,10 @@ siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
    ist die Sprache gemerkt und lässt sich im Menü mit `L` umschalten.
 3. Begrüßung, ENTER zum Starten.
 4. Prüfung, ob eine `Wow.exe` im Ordner vorhanden ist.
-5. SHA256-Integritätsprüfung: Beim ersten Start muss die `Wow.exe` original und
-   unmodifiziert sein, danach exakt die Datei, die der Patcher zuletzt erzeugt
-   hat. Alles andere führt zum Abbruch.
+5. Prüfung der `Wow.exe`: Beim ersten Start muss sie original und unmodifiziert
+   sein (SHA256). Danach erkennt der Patcher eine von ihm gepatchte `Wow.exe` am
+   Wasserzeichen und ermittelt, welche Patches darin stecken. Alles andere führt
+   zum Abbruch.
 6. **Patch-Auswahl** im Menü (siehe unten). Vorausgewählt ist die Auswahl vom
    letzten Mal bzw. bei einer gepatchten `Wow.exe` die Patches, die gerade
    darin stecken.
@@ -75,7 +76,8 @@ siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
    und die `Wow.exe` danach **einmal** zurückgeschrieben. Tritt dabei ein Fehler
    auf, bleibt die `Wow.exe` unverändert.
 10. Der Patcher merkt sich den Hash der neuen `Wow.exe` samt Original-Bytes in
-    `patcher_state.ini` und zeigt eine Abschlussmeldung.
+    `patcher_state.ini` (für einen schnelleren nächsten Start) und zeigt eine
+    Abschlussmeldung.
 
 ## Patch-Auswahl
 
@@ -138,26 +140,31 @@ Original**.
 So funktioniert es:
 
 - **Erster Start:** Die `Wow.exe` muss original sein (SHA256-Prüfung), sonst
-  bricht der Patcher ab. Beim Patchen wird `Wow.exe.BAK` angelegt.
-- **Nach dem Patchen** merkt sich der Patcher in `patcher_state.ini` den
-  SHA256 der erzeugten `Wow.exe`, die eingespielten Patches mit ihren Werten
-  und die Original-Bytes an allen Stellen, die die Patches verändert haben.
-- **Jeder weitere Start:** Die `Wow.exe` muss exakt die zuletzt erzeugte Datei
-  sein (gleicher Hash), sonst bricht der Patcher ab – etwa wenn sie inzwischen
-  von einem anderen Tool verändert wurde. Passt der Hash, baut der Patcher
-  daraus im Speicher das Original wieder auf, prüft es noch einmal per SHA256
-  gegen das Original und spielt darauf die neue Auswahl ein.
+  bricht der Patcher ab. Beim Patchen wird `Wow.exe.BAK` angelegt, und jede
+  gepatchte `Wow.exe` bekommt ein [Wasserzeichen](#hinweise).
+- **Jeder weitere Start:** Ob die `Wow.exe` mit diesem Patcher gepatcht wurde,
+  erkennt er am Wasserzeichen. Fehlt es (und ist die Datei nicht original),
+  bricht er ab – etwa bei einer Exe, die mit einem anderen Tool gepatcht wurde.
+- **Patchstand ermitteln:** Passt der Hash aus `patcher_state.ini` (dort merkt
+  sich der Patcher nach jedem Lauf Hash, Patches, Werte und Original-Bytes),
+  geht es über diese Datei – das ist der schnelle Weg. Sonst, z. B. wenn die
+  Datei fehlt oder die `Wow.exe` von einem anderen Rechner stammt, prüft der
+  Patcher alle Patch-Stellen in der Exe selbst: Welche Patches sind drin, und
+  mit welchen Werten (Sprunghöhe, Build-Datum usw.)? Dafür enthält das Skript
+  eine kleine Tabelle mit den Original-Bytes an allen Patch-Stellen.
+- **Original wiederherstellen:** Aus der gepatchten Exe baut der Patcher im
+  Speicher das Original wieder auf, prüft es per SHA256 gegen das Original und
+  spielt darauf die neue Auswahl ein. Klappt das nicht exakt – etwa weil die
+  Exe nach dem Patchen noch anderweitig verändert wurde –, bricht er ab.
 - Vor dem Schreiben prüft der Patcher außerdem, dass sich das neue Ergebnis
   wieder sauber zum Original zurücknehmen lässt.
 - Ein vorhandenes `Wow.exe.BAK` wird bei weiteren Läufen nicht angefasst und
   bleibt das Original.
 
-> [!WARNING]
-> `patcher_state.ini` nicht löschen oder von Hand ändern, solange die `Wow.exe`
-> gepatcht ist – ohne diese Datei lassen sich die Patches nicht mehr
-> zurücknehmen. Dann hilft nur noch das Backup: `Wow.exe` löschen und
-> `Wow.exe.BAK` in `Wow.exe` umbenennen. Liegt ein originales `Wow.exe.BAK`
-> im Ordner, weist der Patcher bei einem Abbruch selbst darauf hin.
+> [!NOTE]
+> Ein Patch mit einem Wert, der genau dem Original entspricht (z. B. die
+> Sprunghöhe `-7.9555473`), ändert keine Bytes und wird bei der Prüfung der Exe
+> deshalb nicht als eingespielt erkannt – er ist dann ja auch wirkungslos.
 
 ## Parameter für den unbeaufsichtigten Betrieb
 
@@ -188,7 +195,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | `README.md`         | Diese Datei |
 | `README.en.md`      | Englische Anleitung |
 | `patcher_selection.ini` | Wird angelegt, sobald du eine Auswahl übernimmst, und speichert sie |
-| `patcher_state.ini` | Wird beim Patchen angelegt: Hash der gepatchten `Wow.exe`, eingespielte Patches und Original-Bytes zum Zurücknehmen |
+| `patcher_state.ini` | Wird beim Patchen angelegt: Hash der gepatchten `Wow.exe`, eingespielte Patches, Werte und Original-Bytes – beschleunigt den nächsten Start, ist aber nicht zwingend nötig |
 | `LICENSE`           | MIT-Lizenz |
 
 ---
@@ -1125,10 +1132,11 @@ steht der Vorschlag außerdem hinter dem Originaldatum, z. B.
 
 ## Hinweise
 
-- Vor dem Patchen wird die `Wow.exe` per SHA256-Hash geprüft. Akzeptiert wird
-  nur die originale, unmodifizierte `Wow.exe` oder die Datei, die der Patcher
-  zuletzt selbst erzeugt hat. Eine mit anderen Tools oder älteren
-  Patcher-Versionen gepatchte Datei wird abgelehnt.
+- Vor dem Patchen wird die `Wow.exe` geprüft. Akzeptiert wird nur die
+  originale, unmodifizierte `Wow.exe` (SHA256) oder eine mit diesem Patcher
+  gepatchte (Wasserzeichen), die sich exakt zum Original zurücknehmen lässt.
+  Eine mit anderen Tools oder älteren Patcher-Versionen gepatchte Datei wird
+  abgelehnt.
 - Das Backup `Wow.exe.BAK` wird nur vom Original erstellt, also beim ersten
   Patchen, und erst wenn die Auswahl bestätigt ist. Ein vorhandenes Backup wird
   dabei überschrieben (es ist ja nachweislich wieder das Original).
@@ -1140,10 +1148,15 @@ steht der Vorschlag außerdem hinter dem Originaldatum, z. B.
   So lässt sich jederzeit nachweisen, dass eine `Wow.exe` mit diesem Patcher
   erstellt wurde – z. B. per Hex-Editor oder in der Eingabeaufforderung mit
   `findstr /m "St0nys AIO" Wow.exe` (gibt den Dateinamen aus, wenn er drin ist).
-  Beim Zurücknehmen aller Patches verschwindet er wieder.
-- Zum Wiederherstellen des Originals den Patcher starten und `N` und ENTER drücken. Ohne
-  `patcher_state.ini` geht es nur über das Backup: gepatchte `Wow.exe` löschen
-  und `Wow.exe.BAK` in `Wow.exe` umbenennen.
+  Beim Zurücknehmen aller Patches verschwindet er wieder. Am Wasserzeichen
+  erkennt der Patcher auch selbst, dass eine `Wow.exe` von ihm stammt.
+- Zum Wiederherstellen des Originals den Patcher starten und `N` und ENTER
+  drücken – mit oder ohne `patcher_state.ini`. Alternativ geht es über das
+  Backup: gepatchte `Wow.exe` löschen und `Wow.exe.BAK` in `Wow.exe` umbenennen.
+- **Für Entwickler:** Die Original-Byte-Tabelle im Skript wird mit
+  `apply_patches.ps1 -BuildTable -Path <originale Wow.exe>` neu erzeugt. Das ist
+  nach jeder Änderung an einem Patch nötig; passt sie nicht mehr, weist der
+  Patcher nach dem Patchen darauf hin.
 - Nutzung auf eigene Gefahr. Dieses Projekt steht in keiner Verbindung zu
   Blizzard Entertainment.
 

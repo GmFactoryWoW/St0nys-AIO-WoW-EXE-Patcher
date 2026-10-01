@@ -4,7 +4,8 @@
 #
 #  Interaktiver Ablauf:
 #    1. Sprache waehlen (Deutsch / English)
-#    2. Pruefen: Wow.exe vorhanden und original (SHA256)
+#    2. Pruefen: Wow.exe vorhanden und original (SHA256) bzw. mit diesem
+#       Patcher gepatcht (Wasserzeichen) - dann Patchstand ermitteln
 #    3. Patches auswaehlen (Menue mit Vorauswahl)
 #    4. Bestaetigen, Backup Wow.exe.BAK anlegen, patchen
 #
@@ -21,18 +22,26 @@
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
 #                             gespeicherte Auswahl bzw. das Preset Billy's_Wow.exe
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
+#
+#  Fuer Entwickler:
+#    -BuildTable              Erzeugt die eingebaute Original-Byte-Tabelle
+#                             neu (braucht die originale Wow.exe, siehe
+#                             Invoke-BuildTable). Nach jeder Aenderung an
+#                             einem Patch ausfuehren.
 # ============================================================
 
 param(
     [ValidateSet('de', 'en')][string]$Language,
     [string]$Select,
     [switch]$Unattended,
-    [string]$Path
+    [string]$Path,
+    [switch]$BuildTable
 )
 
 $ErrorActionPreference = 'Stop'
 
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptPath = $MyInvocation.MyCommand.Path
+$scriptDir = Split-Path -Parent $scriptPath
 if (-not $Path) {
     $Path = Join-Path $scriptDir 'Wow.exe'
 } elseif (-not [System.IO.Path]::IsPathRooted($Path)) {
@@ -88,21 +97,21 @@ $TEXT = @{
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
         Checking      = 'Pruefe Wow.exe Integritaet...'
-        HashBad1      = '[FEHLER] Die Wow.exe ist nicht die originale Datei.'
-        HashBad2      = '         Sie wurde bereits gepatcht (anderes Tool, alte Patcher-Version) oder ist eine andere Version.'
+        HashBad1      = '[FEHLER] Die Wow.exe ist weder original noch mit diesem Patcher gepatcht (kein Wasserzeichen).'
+        HashBad2      = '         Sie wurde mit einem anderen Tool oder einer alten Patcher-Version gepatcht oder ist eine andere Version.'
         HashBad3      = 'Beim ersten Start wird eine unmodifizierte Wow.exe benoetigt.'
-        HashBadState1 = '[FEHLER] Die Wow.exe ist weder das Original noch die zuletzt von diesem Patcher erzeugte Datei.'
-        HashBadState2 = '         Sie wurde seitdem veraendert (anderes Tool, Client-Update o.ae.).'
-        HashBadState3 = 'Bitte die zuletzt gepatchte oder eine unmodifizierte Wow.exe verwenden.'
         Expected      = 'Original:  {0}'
-        ExpectedLast  = 'Zuletzt:   {0}'
         Found         = 'Gefunden:  {0}'
         BakHint       = 'Tipp: {0} ist die originale Wow.exe. Zurueck nach Wow.exe kopieren und den Patcher neu starten.'
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
         HashKnown     = '[OK] Wow.exe ist die zuletzt von diesem Patcher erzeugte Datei ({0} Patches aktiv).'
         RevertOk      = '[OK] Original aus patcher_state.ini rekonstruiert und per SHA256 geprueft.'
-        StateBroken1  = '[FEHLER] patcher_state.ini passt zur Wow.exe, das Original laesst sich daraus aber nicht'
-        StateBroken2  = '         wiederherstellen (Datei beschaedigt oder von Hand geaendert?).'
+        Scanning      = 'Wasserzeichen gefunden, ermittle den Patchstand aus der Wow.exe...'
+        WmFound       = '[OK] Wasserzeichen gefunden: Die Wow.exe wurde mit diesem Patcher gepatcht.'
+        WmScanned     = '[OK] Patchstand aus der Exe ermittelt ({0} Patches erkannt), Original per SHA256 geprueft.'
+        WmBroken1     = '[FEHLER] Die Wow.exe traegt das Wasserzeichen dieses Patchers, das Original laesst sich aber'
+        WmBroken2     = '         nicht sicher wiederherstellen (danach veraendert oder mit einer anderen Patcher-Version erstellt).'
+        TableWarn     = 'HINWEIS: Die eingebaute Original-Byte-Tabelle passt nicht zu dieser Auswahl - ohne patcher_state.ini liesse sich diese Wow.exe nicht zuruecknehmen.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    L = English    Q = abbrechen'
@@ -150,7 +159,7 @@ $TEXT = @{
         UndoFail      = '[FEHLER] Selbsttest fehlgeschlagen: Die Patches liessen sich nicht sauber zuruecknehmen.'
         StateFail     = '[FEHLER] Konnte patcher_state.ini nicht schreiben:'
         StateWarn1    = 'WARNUNG: Die Wow.exe ist gepatcht, patcher_state.ini konnte aber nicht gespeichert werden:'
-        StateWarn2    = 'Ohne diese Datei lassen sich die Patches nicht mehr zuruecknehmen - dafuer Wow.exe.BAK verwenden.'
+        StateWarn2    = 'Kein Problem: Beim naechsten Start ermittelt der Patcher den Patchstand ueber das Wasserzeichen (dauert nur etwas laenger).'
         Done1         = '[FERTIG] Wow.exe wurde erfolgreich gepatcht.'
         Done2         = 'Gesamt: {0} Patches eingespielt.'
         Done3         = 'Neu: {0}   Geaendert: {1}   Zurueckgenommen: {2}   Aktiv: {3}'
@@ -168,21 +177,21 @@ $TEXT = @{
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
         Checking      = 'Checking Wow.exe integrity...'
-        HashBad1      = '[ERROR] This Wow.exe is not the original file.'
-        HashBad2      = '        It has already been patched (another tool, old patcher version) or is a different version.'
+        HashBad1      = '[ERROR] This Wow.exe is neither original nor patched with this patcher (no watermark).'
+        HashBad2      = '        It has been patched with another tool or an old patcher version, or is a different version.'
         HashBad3      = 'The first run requires an unmodified Wow.exe.'
-        HashBadState1 = '[ERROR] This Wow.exe is neither the original nor the file last produced by this patcher.'
-        HashBadState2 = '        It has been changed since (another tool, client update or similar).'
-        HashBadState3 = 'Please use the last patched or an unmodified Wow.exe.'
         Expected      = 'Original:  {0}'
-        ExpectedLast  = 'Last run:  {0}'
         Found         = 'Found:     {0}'
         BakHint       = 'Tip: {0} is the original Wow.exe. Copy it back to Wow.exe and start the patcher again.'
         HashOk        = '[OK] Wow.exe is original and unmodified.'
         HashKnown     = '[OK] Wow.exe is the file last produced by this patcher ({0} patches active).'
         RevertOk      = '[OK] Original reconstructed from patcher_state.ini and verified by SHA256.'
-        StateBroken1  = '[ERROR] patcher_state.ini matches Wow.exe, but the original cannot be restored from it'
-        StateBroken2  = '        (file damaged or edited by hand?).'
+        Scanning      = 'Watermark found, determining the patch state from Wow.exe...'
+        WmFound       = '[OK] Watermark found: this Wow.exe was patched with this patcher.'
+        WmScanned     = '[OK] Patch state read from the exe ({0} patches detected), original verified by SHA256.'
+        WmBroken1     = '[ERROR] This Wow.exe carries the watermark of this patcher, but the original cannot be'
+        WmBroken2     = '        restored safely (changed afterwards or made with another patcher version).'
+        TableWarn     = 'NOTE: The built-in original bytes table does not match this selection - without patcher_state.ini this Wow.exe could not be reverted.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    L = Deutsch    Q = quit'
@@ -230,7 +239,7 @@ $TEXT = @{
         UndoFail      = '[ERROR] Self-test failed: the patches could not be removed cleanly.'
         StateFail     = '[ERROR] Could not write patcher_state.ini:'
         StateWarn1    = 'WARNING: Wow.exe is patched, but patcher_state.ini could not be saved:'
-        StateWarn2    = 'Without this file the patches cannot be removed anymore - use Wow.exe.BAK for that.'
+        StateWarn2    = 'No problem: next time the patcher determines the patch state via the watermark (just takes a bit longer).'
         Done1         = '[DONE] Wow.exe has been patched successfully.'
         Done2         = 'Total: {0} patches applied.'
         Done3         = 'New: {0}   Changed: {1}   Removed: {2}   Active: {3}'
@@ -1034,6 +1043,194 @@ function Add-Watermark {
 }
 
 # ============================================================
+#  Patchstand aus der Exe ermitteln (Wasserzeichen + Original-Byte-Tabelle)
+#  Ob eine Wow.exe mit diesem Patcher gepatcht wurde, zeigt das Wasserzeichen.
+#  Passt der Hash aus patcher_state.ini, geht es ueber die Zustandsdatei
+#  (schneller Weg). Sonst ermittelt der Patcher den Patchstand aus der Exe
+#  selbst: Die Tabelle $ORIGINAL_TABLE (am Ende der Patch-Definitionen)
+#  enthaelt fuer jeden Patch die Original-Bytes an allen Stellen, die er
+#  beschreibt. Ein Patch gilt als eingespielt, wenn eine seiner eigenen
+#  Stellen (die kein anderer Patch beschreibt) vom Original abweicht. Werte
+#  (Sprunghoehe, Build-Datum ...) liest Decode des Patches aus der Exe. Fuer
+#  das Original werden alle Stellen zurueckgeschrieben und angehaengte
+#  Sektionen abgeschnitten; das Ergebnis muss exakt den Original-Hash haben.
+# ============================================================
+function Test-Watermark([byte[]]$data) {
+    $b = [System.Text.Encoding]::ASCII.GetBytes($WATERMARK)
+    if ($data.Length -lt $WATERMARK_OFF + $b.Length) { return $false }
+    for ($i = 0; $i -lt $b.Length; $i++) { if ($data[$WATERMARK_OFF + $i] -ne $b[$i]) { return $false } }
+    return $true
+}
+
+# Tabelle einmal einlesen: Zeilen "size;<Laenge>" und "<Id>;<Offset hex>;<Bytes hex>;<1 = nur dieser Patch>"
+function Get-OriginalTable {
+    if ($script:origTable) { return $script:origTable }
+    $t = @{ Size = [int64]0; Entries = (New-Object System.Collections.Generic.List[object]) }
+    foreach ($l in ($ORIGINAL_TABLE -split "`r?`n")) {
+        if ($l -match '^size;(\d+)$') { $t.Size = [int64]$matches[1] }
+        elseif ($l -match '^([a-z0-9]+);([0-9A-F]+);([0-9A-F]+);([01])$') {
+            $t.Entries.Add(@{ Id = $matches[1]; Off = [Convert]::ToInt64($matches[2], 16); Bytes = (ConvertFrom-Hex $matches[3]); Own = ($matches[4] -eq '1') })
+        }
+    }
+    $script:origTable = $t
+    return $t
+}
+
+# Original aus einer gepatchten Exe zurueckgewinnen. $null, wenn das nicht exakt klappt.
+function Restore-FromTable([byte[]]$data) {
+    $t = Get-OriginalTable
+    if ($t.Size -le 0 -or $data.Length -lt $t.Size) { return $null }
+    $o = New-Object byte[] $t.Size
+    [Array]::Copy($data, 0, $o, 0, $t.Size)
+    foreach ($e in $t.Entries) { [Array]::Copy($e.Bytes, 0, $o, $e.Off, $e.Bytes.Length) }
+    if ((Get-Sha256 $o) -ne $EXPECTED_HASH) { return $null }
+    return , $o
+}
+
+# Ids der Patches, deren eigene Stellen vom Original abweichen (in Menue-Reihenfolge).
+function Find-AppliedPatches([byte[]]$data) {
+    $hit = @{}
+    foreach ($e in (Get-OriginalTable).Entries) {
+        if (-not $e.Own -or $hit.ContainsKey($e.Id)) { continue }
+        for ($i = 0; $i -lt $e.Bytes.Length; $i++) {
+            if ($data[$e.Off + $i] -ne $e.Bytes[$i]) { $hit[$e.Id] = $true; break }
+        }
+    }
+    $ids = @()
+    foreach ($p in $patches) { if ($hit.ContainsKey($p.Id)) { $ids += $p.Id } }
+    return , $ids
+}
+
+# Hilfen fuer Decode: Text aus der Exe lesen, VA in Dateioffset umrechnen.
+function Read-AsciiZ([int64]$off, [int]$max) {
+    $s = ''
+    for ($i = 0; $i -lt $max; $i++) { $b = $script:f[$off + $i]; if ($b -eq 0) { break }; $s += [char]$b }
+    return $s
+}
+function Read-Utf16Z([int64]$off, [int]$max) {
+    $s = ''
+    for ($i = 0; $i + 1 -lt $max; $i += 2) { $c = RU16 $script:f ($off + $i); if ($c -eq 0) { break }; $s += [char]$c }
+    return $s
+}
+function ConvertTo-FileOffset([int64]$va) {
+    $e = RU32 $script:f 0x3C
+    $nsec = RU16 $script:f ($e + 6)
+    $IB = RU32 $script:f ($e + 24 + 28)
+    $sectBase = $e + 24 + (RU16 $script:f ($e + 20))
+    for ($i = 0; $i -lt $nsec; $i++) {
+        $so = $sectBase + 40 * $i
+        $rva = RU32 $script:f ($so + 12); $raw = RU32 $script:f ($so + 20); $rs = RU32 $script:f ($so + 16)
+        if ($va -ge $IB + $rva -and $va -lt $IB + $rva + $rs) { return $raw + ($va - $IB - $rva) }
+    }
+    return -1
+}
+function Get-ClientDateFromExe {
+    $t = [System.Text.Encoding]::ASCII.GetString($script:f, 0x5F39F4, 11)
+    if ($t -notmatch '^([A-Za-z]{3}) (\d{2}) (\d{4})$') { return $null }
+    $en = @('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    $fr = @('Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec')
+    $m = [array]::IndexOf($en, $matches[1]); $suffix = ''
+    if ($m -lt 0) { $m = [array]::IndexOf($fr, $matches[1]); $suffix = ' FR' }
+    if ($m -lt 0) { return $null }
+    return ('{0}-{1:00}-{2}{3}' -f $matches[3], ($m + 1), $matches[2], $suffix)
+}
+function Get-DoubleJumpFromExe {
+    $hook = 0x98842A - 0x400C00
+    if ($script:f[$hook] -ne 0xE9) { return $null }
+    $cave = ConvertTo-FileOffset (0x98842A + 5 + [BitConverter]::ToInt32($script:f, $hook + 1))
+    if ($cave -lt 0 -or $script:f[$cave + 11] -ne 0xC6) { return $null }
+    return [string]$script:f[$cave + 17]
+}
+
+# ============================================================
+#  Original-Byte-Tabelle erzeugen (Entwickler, Parameter -BuildTable)
+#  Spielt auf Kopien der originalen Wow.exe alle Patches ein - alle
+#  zusammen, alle ohne Slider-Patch (Code-Hoehle in .text) und jeden
+#  einzeln (Sektionsheader an der ersten freien Stelle) - und merkt sich je
+#  Patch alle Stellen im Original, die er beschreibt. Stellen, die nur ein
+#  Patch beschreibt, bekommen die Markierung 1 (fuer die Erkennung).
+#  Das Ergebnis ersetzt den Block $ORIGINAL_TABLE in diesem Skript.
+# ============================================================
+function Invoke-BuildTable {
+    $orig = [System.IO.File]::ReadAllBytes($file)
+    if ((Get-Sha256 $orig) -ne $EXPECTED_HASH) { Write-Host 'BuildTable: braucht die originale Wow.exe (-Path).'; exit 1 }
+    $ranges = @{}
+    $allIds = @($patches | ForEach-Object { $_.Id })
+    $configs = New-Object System.Collections.Generic.List[object]
+    $configs.Add($allIds)
+    $configs.Add(@($allIds | Where-Object { $_ -ne 'sliders' }))
+    foreach ($id in $allIds) { $configs.Add(@($id)) }
+    $n = 0
+    foreach ($cfg in $configs) {
+        $n++
+        Write-Host ("  Konfiguration {0}/{1}" -f $n, $configs.Count)
+        $script:f = [byte[]]$orig.Clone()
+        $script:chosenIds = $cfg
+        $script:VALUES = @{}
+        foreach ($p in $patches) { if ($p.Check) { $script:VALUES[$p.Id] = $p.Default } }
+        $script:writes.Clear()
+        foreach ($p in $patches) {
+            if ($cfg -notcontains $p.Id) { continue }
+            $start = $script:writes.Count
+            & $p.Code
+            Add-BuildRanges $ranges $p.Id $start $orig.Length
+        }
+        $start = $script:writes.Count
+        Add-Watermark
+        Add-BuildRanges $ranges 'watermark' $start $orig.Length
+    }
+    # je Patch sortieren und zusammenfassen
+    $merged = @{}
+    foreach ($id in $ranges.Keys) {
+        $list = @($ranges[$id] | Sort-Object { $_[0] })
+        $out = New-Object System.Collections.Generic.List[object]
+        foreach ($r in $list) {
+            if ($out.Count -gt 0 -and $r[0] -le $out[$out.Count - 1][1]) {
+                if ($r[1] -gt $out[$out.Count - 1][1]) { $out[$out.Count - 1][1] = $r[1] }
+            } else { $out.Add(@($r[0], $r[1])) }
+        }
+        $merged[$id] = $out
+    }
+    $lines = New-Object System.Collections.Generic.List[string]
+    $lines.Add("size;$($orig.Length)")
+    foreach ($id in (@($allIds) + 'watermark')) {
+        if (-not $merged.ContainsKey($id)) { continue }
+        $own = 0
+        foreach ($r in $merged[$id]) {
+            $shared = $false
+            foreach ($other in $merged.Keys) {
+                if ($other -eq $id) { continue }
+                foreach ($q in $merged[$other]) { if ($q[0] -lt $r[1] -and $r[0] -lt $q[1]) { $shared = $true; break } }
+                if ($shared) { break }
+            }
+            $b = New-Object byte[] ($r[1] - $r[0])
+            [Array]::Copy($orig, $r[0], $b, 0, $b.Length)
+            $flag = 1; if ($shared) { $flag = 0 } else { $own++ }
+            $lines.Add(('{0};{1:X};{2};{3}' -f $id, $r[0], ([BitConverter]::ToString($b)).Replace('-', ''), $flag))
+        }
+        if ($own -eq 0) { Write-Host "  WARNUNG: $id hat keine eigene Stelle und ist nicht erkennbar." }
+    }
+    $block = "# BEGIN ORIGINAL-BYTES`r`n`$ORIGINAL_TABLE = @'`r`n" + ($lines -join "`r`n") + "`r`n'@`r`n# END ORIGINAL-BYTES"
+    $src = [System.IO.File]::ReadAllText($scriptPath)
+    $a = $src.IndexOf('# BEGIN ORIGINAL-BYTES' + "`r`n")
+    $z = $src.IndexOf('# END ORIGINAL-BYTES', $a)
+    if ($a -lt 0 -or $z -lt 0) { Write-Host 'BuildTable: Markierungen nicht gefunden.'; exit 1 }
+    $src = $src.Substring(0, $a) + $block + $src.Substring($z + '# END ORIGINAL-BYTES'.Length)
+    [System.IO.File]::WriteAllText($scriptPath, $src, (New-Object System.Text.ASCIIEncoding))
+    Write-Host ("  {0} Eintraege geschrieben." -f ($lines.Count - 1))
+}
+
+function Add-BuildRanges($ranges, [string]$id, [int]$start, [int64]$origLen) {
+    if (-not $ranges.ContainsKey($id)) { $ranges[$id] = New-Object System.Collections.Generic.List[object] }
+    for ($i = $start; $i -lt $script:writes.Count; $i += 2) {
+        $off = $script:writes[$i]; $end = $off + $script:writes[$i + 1]
+        if ($off -ge $origLen) { continue }
+        if ($end -gt $origLen) { $end = $origLen }
+        $ranges[$id].Add(@($off, $end))
+    }
+}
+
+# ============================================================
 #  Helfer fuer den Sprunghoehen-Patch
 #  Der Wert ist die Anfangsgeschwindigkeit des Sprungs (float, im Original
 #  -7.9555473). Negativ heisst nach oben; die Sprunghoehe waechst mit dem
@@ -1077,6 +1274,8 @@ function Test-JumpValue([string]$v) {
 #            Wert: der Patcher fragt ihn nach der Auswahl ab (Vorschlag =
 #            gemerkter Wert oder Default), prueft ihn mit Check (liefert $null
 #            oder eine Fehlermeldung) und legt ihn in $VALUES[Id] ab
+#    Decode - optional: Scriptblock, der den eingespielten Wert aus der Exe
+#            ($script:f) liest - fuer die Erkennung ueber das Wasserzeichen
 #    Suggest - optional: Scriptblock, der den Vorschlag im Dialog aus dem
 #            gemerkten Wert berechnet (z.B. heutiges Datum)
 #    Code  - Scriptblock mit den Patch-Aufrufen
@@ -1487,6 +1686,7 @@ $patches = @(
        PromptEn = 'New value, negative - the lower, the higher (e.g. -11.25 = double height)'
        Default = '-7.9555473'
        Check = { param($v) Test-JumpValue $v }
+       Decode = { ([BitConverter]::ToSingle($script:f, 0x6A1BDC)).ToString('R', [System.Globalization.CultureInfo]::InvariantCulture) }
        Code = {
         # Aus der 12th Generation EXE (Alastor StrixEfuartus). VA 0xAA33DC ist
         # die Anfangsgeschwindigkeit des Sprungs (float, einzige Lesestelle
@@ -1555,6 +1755,7 @@ $patches = @(
        PromptEn = 'Number of extra jumps in the air, 1 to 9 (1 = double jump)'
        Default = '1'
        Check = { param($v) Test-DoubleJump $v }
+       Decode = { Get-DoubleJumpFromExe }
        Code = {
         # Eigene beschreibbare Sektion (.djump), siehe Add-DoubleJump.
         Add-DoubleJump ([int]$script:VALUES['doublejump'])
@@ -2057,6 +2258,7 @@ $patches = @(
        PromptEn = 'New client version, format x.y.z, max. 7 characters'
        Default = '3.3.5'
        Check = { param($v) Test-ClientVersion $v }
+       Decode = { Read-AsciiZ 0x5F3A08 8 }
        Code = {
         # Portierung von edit_version.py (MacWarrior): Version im Spiel, die
         # Versionsressource (FileVersion/ProductVersion) und VS_FIXEDFILEINFO.
@@ -2072,6 +2274,7 @@ $patches = @(
        PromptEn = 'New build number, 0 to 65535'
        Default = '12340'
        Check = { param($v) Test-ClientBuild $v }
+       Decode = { [string](RU16 $script:f 0x4C99F0) }
        Code = {
         # Portierung von edit_revision.py (MacWarrior): interne und sichtbare
         # Build-Nummer sowie der vierte Teil der FileVersion.
@@ -2086,6 +2289,7 @@ $patches = @(
        PromptEn = 'New title, max. 17 characters, ASCII only'
        Default = 'World of Warcraft'
        Check = { param($v) Test-ClientTitle $v }
+       Decode = { Read-Utf16Z 0x7577C0 50 }
        Code = {
         # Portierung von edit_title.py (MacWarrior): FileDescription,
         # InternalName und ProductName der Versionsressource.
@@ -2101,12 +2305,176 @@ $patches = @(
        Default = '2010-06-24'
        Suggest = { param($saved) Get-ClientDateSuggestion $saved }
        Check = { param($v) Test-ClientDate $v }
+       Decode = { Get-ClientDateFromExe }
        Code = {
         # Portierung von edit_date.py (MacWarrior): die drei Datumsfelder
         # ("Jun 24 2010") und das Jahr im LegalCopyright.
         Set-ClientDate $script:VALUES['clientdate']
     }}
 )
+
+# ============================================================
+#  Original-Bytes je Patch - erzeugt mit -BuildTable, nicht von Hand aendern
+# ============================================================
+# BEGIN ORIGINAL-BYTES
+$ORIGINAL_TABLE = @'
+size;7704216
+laa;126;03;1
+cache;61BE58;4361;1
+itemcache;2689FD;3075;1
+worldcrash;116;0600;0
+worldcrash;160;00D09F00;0
+worldcrash;210;B3D35D00;0
+worldcrash;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+worldcrash;41C91B;0F834D010000;1
+worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;0
+rce;2A7;E0;1
+rce;3D9D7C;750A;1
+wardenoff;3D9C5B;7406;1
+scandll;5F4D56;5363;1
+scandll;5F4D62;5363;1
+noserverpatch;DA2A8;85C075;1
+nosurvey;DA2BD;68FFFFFF7F;1
+skipbnet;2B1F48;74;1
+skiprdp;36AE40;74;1
+nohttp;46F28F;85C07507;1
+afk;12A3AF;0F85A4030000;1
+afk;12A64C;E8CFFB3300;1
+afk;54AD02;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
+glue;1F41BF;74;1
+glue;415A25;75;1
+glue;415A3F;01;1
+glue;415A95;01;1
+glue;415B46;7F;1
+glue;415B5F;83C0035E8BE55D;1
+mpqsig;21350;558BEC8B451C8B4D188B55145368984F9E00508B4510;1
+mpqnames;5E0F09;3F;1
+mpqnames;5E0F16;3F;1
+localdata;1F2A;E821EC01006A00;1
+luaunlock;1185E7;33C05050E840A3FFFF83C40833C0;1
+awesome;ABD0;558BECE898B5FFFF;1
+awesome;DC0F0;558BEC568B75;1
+awesome;E50B0;558BEC5633F639356CB4B6000F85DB010000393568B4B6000F85CF01000033C0B968B4B6008701566A5468F8659F006A18E85A8828006860659F00A380B4B600E81BBEF7;1
+voicedll;406;91AA0000;1
+voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
+keyprop;8EFD9;01;1
+areatrigger;2DB241;64;1
+swing;2E1C67;6AFF6A408BCEE8BE830500;1
+npcanim;33D7C9;74;1
+spellanim;33E0D6;6AFF6A008BCEE84FBFFFFF8D8D58FDFFFFE884FEEAFF;1
+ghostattack;355BF;E8;1
+naked;1DDC5D;00;1
+forcereaction;12811E;E89D970A00;1
+mail;16D899;0560EA0000;1
+deadchat;10CA41;74;1
+follow;32A92C;75;1
+level101;3F5DC2;034508;1
+raceclass;E0355;28;1
+raceclass;E038E;D8;1
+raceclass;E03A3;D8;1
+raceclass;E03C3;D8;1
+namecheck;2B0390;558BEC8B4508;1
+maxchars;6404F;0A;1
+climb;63670C;BB8D243F;1
+jump;6A1BDC;D893FEC0;1
+airforward;5872FD;74;1
+airforward;587E3D;74;1
+airforward;587ED2;74;1
+airlateral;587F25;74;1
+airlateral;587F81;74;1
+airlateral;587FEF;0F85AC010000;1
+airturn;588F97;7512;1
+doublejump;116;0600;0
+doublejump;160;00D09F00;0
+doublejump;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+doublejump;58782A;8B7E44F7C7001800027544;1
+farclip;63CF0C;ABEA4544ABEAC544;1
+horizon;38CBDF;F88C9E00;1
+envdetail;38D08E;D9;1
+grounddist;5E74FC;00000C43;1
+sliders;DD446;68FFFFFF7F68A0579F0056E82A07290085C07520DD05D8579F00;1
+sliders;1142EA;68FFFFFF7F68A0579F0056E88698250085C07520DD05D8579F00;1
+sliders;5DD7B8;000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+sliders;6B3E80;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+goscale;38E973;D90550F3AD00D91D78F3AD00D90564F3AD00D915A0F3AD00;1
+goscale;38EA64;D90560F3AD00D91D88F3AD00D90574F3AD00D915B0F3AD00;1
+cat0;6DD364;0000F041;1
+cat0;6DD3A0;0000F041;1
+cat0;6DD3B4;00006144;1
+cat0;6DD3C8;0000C841;1
+cat0;6DD3DC;00401C44;1
+occluder;6EE040;00000000;1
+bluemoon;5CFBC0;C3CCCCCCCCCCCCCCCCCCCC;1
+notransparency;336841;8896CB000000;1
+nofade;116;0600;0
+nofade;160;00D09F00;0
+nofade;210;B3D35D00;0
+nofade;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+nofade;3431A3;8B068B5040;1
+nofade;5DD7D9;00000000000000000000000000000000000000000000000000000000000000000000000000;0
+hdportraits;116;0600;0
+hdportraits;160;00D09F00;0
+hdportraits;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+hdportraits;370;00000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+hdportraits;21620A;40000000;1
+hdportraits;216AA0;558BEC81EC04050000;1
+hdportraits;2174E9;930BEAFF;1
+hdportraits;218F73;89F6E9FF;1
+hdportraits;2193AF;40000000;1
+tracker;11D4C5;A0149E00;1
+worldmap;11D462;A0149E00;1
+castbars;123676;8BCEE8A3181F00;1
+emblems;613108;AA;1
+flash;1342D5;0C56E8B4BA17008BF085F60F84860000008B068B90C80000008BCEFFD283F80175758B068B90AC000000;1
+flash;606EE4;424E52656D6F7665467269656E64;1
+charrandom;E087B;74;1
+window;369A7D;A0149E;1
+maximize;369AB2;A0149E;1
+windowfix;E94;74;1
+mouse;469183;CCCCCCCCCCCCCCCCCCCCCCCCCC;1
+mouse;4691B1;8BEC83EC108D45F0506A00E8DF28000083C40450FF150CF69D008B45F8992BC28BC88B45FC992BC2D1F8D1F95051890DEC13D400A3F013D400E881EEFFFF83C4088BE55DC3CCCCCCCCCCCCCCCCCCCC;1
+mouse;469A2C;8B45F08B15EC13D4008B1DF0;1
+mouse;528AA2;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
+camera;116;0600;0
+camera;160;00D09F00;0
+camera;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+camera;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+camera;398;00000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+camera;11CDB0;558BEC81EC80000000;1
+camera;1FCE36;68E0E7A100;1
+camera;1FD5B2;6840139E00;1
+camera;2064CB;D90570169F00;1
+camera;568792;D981E4020000;1
+camera;56884F;D987E4020000;1
+camera;569EE1;D987E4020000;1
+camera;572DD8;D980E4020000;1
+sound;C77C2;85C074068B40308945F8;1
+sound;D0604;6864149E00;1
+sound;D0624;68DC219E00;1
+sound;D064A;68A0149E00;1
+sound;D077F;68A0149E00;1
+sound;6B3F80;000000;1
+sound;6B3F84;0000;1
+clientversion;5F3A08;332E332E35000000;1
+clientversion;7576C8;03000300;1
+clientversion;7576CE;05000300030000000000;1
+clientversion;7577F6;0F00;1
+clientversion;757814;33002C00200033002C00200035002C002000310032003300340030000000;1
+clientversion;757986;0C00;1
+clientversion;7579A8;560065007200730069006F006E00200033002E0033000000;1
+clientbuild;4C99F0;3430;1
+clientbuild;5F3A00;313233343000;1
+clientbuild;7576CC;3430;1
+clienttitle;7577C0;57006F0072006C00640020006F0066002000570061007200630072006100660074002000520065007400610069006C000000;1
+clienttitle;757854;57006F0072006C00640020006F0066002000570061007200630072006100660074000000;1
+clienttitle;757960;57006F0072006C00640020006F0066002000570061007200630072006100660074000000;1
+clientdate;5F39F4;4A756E2032342032303130;1
+clientdate;62F3F3;4A756E2032342032303130;1
+clientdate;636F5F;4A756E2032342032303130;1
+clientdate;7578B4;3200300030003400;1
+watermark;72DE20;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+'@
+# END ORIGINAL-BYTES
 
 # ============================================================
 #  Auswahl-Logik
@@ -2289,8 +2657,8 @@ function Get-UndoEntries([byte[]]$orig) {
 function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, $undo) {
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add('# St0nys-AIO-WoW-EXE-Patcher - Zustand der gepatchten Wow.exe / state of the patched Wow.exe')
-    $lines.Add('# Nicht von Hand aendern! Ohne diese Datei lassen sich die Patches nicht mehr zuruecknehmen.')
-    $lines.Add('# Do not edit! Without this file the patches can no longer be removed.')
+    $lines.Add('# Nicht von Hand aendern! Nur zur Beschleunigung - ohne diese Datei ermittelt der Patcher den Patchstand ueber das Wasserzeichen.')
+    $lines.Add('# Do not edit! Only speeds things up - without this file the patcher determines the patch state via the watermark.')
     $lines.Add("hash=$hash")
     $lines.Add("size=$size")
     $lines.Add("patches=$($ids -join ',')")
@@ -2497,6 +2865,11 @@ function Show-Banner {
 #  ABLAUF
 # ============================================================
 
+if ($BuildTable) {
+    Invoke-BuildTable
+    exit 0
+}
+
 Write-Host ''
 Show-Banner
 Write-Host ''
@@ -2543,10 +2916,12 @@ if (-not $Unattended) {
     Write-Host ''
 }
 
-# --- 2. Wow.exe vorhanden und original oder zuletzt von hier gepatcht? ---
-# Beim ersten Start muss die Wow.exe original sein. Danach muss sie exakt die
-# Datei sein, die der letzte Lauf erzeugt hat (Hash in patcher_state.ini);
-# aus ihr wird dann das Original im Speicher rekonstruiert.
+# --- 2. Wow.exe vorhanden und original oder mit diesem Patcher gepatcht? ---
+# Beim ersten Start muss die Wow.exe original sein. Danach erkennt der
+# Patcher eine von ihm gepatchte Exe am Wasserzeichen. Passt der Hash aus
+# patcher_state.ini, wird das Original schnell aus der Zustandsdatei
+# rekonstruiert, sonst ueber die Original-Byte-Tabelle (mit Erkennung der
+# eingespielten Patches und ihrer Werte).
 if (-not (Test-Path -LiteralPath $file -PathType Leaf)) {
     Say (T 'NotFound' $file) 'Red'
     Exit-Patcher 1
@@ -2560,37 +2935,50 @@ if ($hash -eq $EXPECTED_HASH) {
     Say (T 'HashOk') 'Green'
 } else {
     $state = Read-State
-    if ($null -eq $state -or $state.Hash -ne $hash) {
-        Write-Host ''
-        if ($null -eq $state) {
-            Say (T 'HashBad1') 'Red'
-            Say (T 'HashBad2') 'Red'
-        } else {
-            Say (T 'HashBadState1') 'Red'
-            Say (T 'HashBadState2') 'Red'
+    $orig = $null
+    if ($null -ne $state -and $state.Hash -eq $hash) { $orig = Restore-Original $f $state }
+    if ($null -ne $orig) {
+        # schneller Weg ueber patcher_state.ini
+        Say (T 'HashKnown' @($state.Ids).Count) 'Green'
+        Say (T 'RevertOk') 'Green'
+    } elseif (Test-Watermark $f) {
+        # Patchstand aus der Exe selbst ermitteln
+        Say (T 'Scanning')
+        $ids = Find-AppliedPatches $f
+        $vals = @{}
+        foreach ($id in $ids) {
+            $p = Get-PatchById $id
+            if (-not $p.Decode) { continue }
+            $v = $null
+            try { $v = & $p.Decode } catch { }
+            if ($v -and -not (& $p.Check $v)) { $vals[$id] = [string]$v }
         }
+        $orig = Restore-FromTable $f
+        if ($null -eq $orig) {
+            Write-Host ''
+            Say (T 'WmBroken1') 'Red'
+            Say (T 'WmBroken2') 'Red'
+            Show-BakHint
+            Exit-Patcher 1
+        }
+        $state = @{ Hash = $hash; Ids = $ids; Values = $vals }
+        Say (T 'WmFound') 'Green'
+        Say (T 'WmScanned' $ids.Count) 'Green'
+    } else {
+        Write-Host ''
+        Say (T 'HashBad1') 'Red'
+        Say (T 'HashBad2') 'Red'
         Write-Host ''
         Say (T 'Expected' $EXPECTED_HASH)
-        if ($null -ne $state) { Say (T 'ExpectedLast' $state.Hash) }
         Say (T 'Found' $hash)
         Write-Host ''
-        if ($null -eq $state) { Say (T 'HashBad3') } else { Say (T 'HashBadState3') }
-        Show-BakHint
-        Exit-Patcher 1
-    }
-    $orig = Restore-Original $f $state
-    if ($null -eq $orig) {
-        Write-Host ''
-        Say (T 'StateBroken1') 'Red'
-        Say (T 'StateBroken2') 'Red'
+        Say (T 'HashBad3')
         Show-BakHint
         Exit-Patcher 1
     }
     $f = $orig
     $patchedMode = $true
     $appliedIds = @($state.Ids)
-    Say (T 'HashKnown' $appliedIds.Count) 'Green'
-    Say (T 'RevertOk') 'Green'
 }
 Write-Host ''
 
@@ -2837,6 +3225,7 @@ if ($total -gt 0) {
         Say (T 'NotWritten') 'Red'
         Exit-Patcher 1
     }
+    if ($null -eq (Restore-FromTable $f)) { Write-Host ''; Say (T 'TableWarn') 'Yellow' }
     $stateError = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo
     if ($stateError) {
         Write-Host ''

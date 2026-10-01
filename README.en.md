@@ -59,9 +59,9 @@ To **change or remove** patches just run `patcher.bat` again, see
    that the language is remembered and can be switched with `L` in the menu.
 3. Welcome message, press ENTER to start.
 4. Check that a `Wow.exe` exists in the folder.
-5. SHA256 integrity check: on the first start `Wow.exe` must be original and
-   unmodified, after that exactly the file the patcher produced last time.
-   Anything else aborts.
+5. Checking `Wow.exe`: on the first start it must be original and unmodified
+   (SHA256). After that the patcher recognizes a `Wow.exe` patched by itself by
+   the watermark and determines which patches are in it. Anything else aborts.
 6. **Patch selection** menu (see below). Your selection from last time is
    preselected, or for a patched `Wow.exe` the patches currently in it.
 7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
@@ -73,7 +73,8 @@ To **change or remove** patches just run `patcher.bat` again, see
    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
    untouched.
 10. The patcher remembers the hash of the new `Wow.exe` together with the
-    original bytes in `patcher_state.ini` and shows a final message.
+    original bytes in `patcher_state.ini` (for a faster next start) and shows a
+    final message.
 
 ## Patch selection
 
@@ -135,26 +136,31 @@ is **byte-for-byte the original** again.
 How it works:
 
 - **First start:** `Wow.exe` must be original (SHA256 check), otherwise the
-  patcher aborts. Patching creates `Wow.exe.BAK`.
-- **After patching** the patcher stores in `patcher_state.ini` the SHA256 of
-  the produced `Wow.exe`, the applied patches with their values and the
-  original bytes at every location the patches changed.
-- **Every later start:** `Wow.exe` must be exactly the file produced last time
-  (same hash), otherwise the patcher aborts – e.g. when another tool has
-  modified it in the meantime. If the hash matches, the patcher rebuilds the
-  original from it in memory, verifies it once more against the original's
-  SHA256 and applies the new selection on top.
+  patcher aborts. Patching creates `Wow.exe.BAK`, and every patched `Wow.exe`
+  gets a [watermark](#notes).
+- **Every later start:** the patcher recognizes a `Wow.exe` patched by itself
+  by the watermark. If it is missing (and the file is not original), it aborts
+  – e.g. for an exe patched with another tool.
+- **Determining the patch state:** if the hash in `patcher_state.ini` matches
+  (the patcher stores hash, patches, values and original bytes there after
+  every run), it uses that file – the fast way. Otherwise, e.g. if the file is
+  missing or the `Wow.exe` comes from another computer, the patcher checks all
+  patch locations in the exe itself: which patches are in it, and with which
+  values (jump height, build date etc.)? For this the script contains a small
+  table with the original bytes at all patch locations.
+- **Restoring the original:** from the patched exe the patcher rebuilds the
+  original in memory, verifies it against the original's SHA256 and applies the
+  new selection on top. If that does not work exactly – e.g. because the exe
+  was changed in some other way after patching – it aborts.
 - Before writing, the patcher also checks that the new result can be reverted
   cleanly to the original.
 - An existing `Wow.exe.BAK` is not touched on later runs and stays the
   original.
 
-> [!WARNING]
-> Do not delete or edit `patcher_state.ini` while `Wow.exe` is patched –
-> without this file the patches can no longer be removed. Then only the backup
-> helps: delete `Wow.exe` and rename `Wow.exe.BAK` to `Wow.exe`. If an original
-> `Wow.exe.BAK` is in the folder, the patcher points this out itself when it
-> aborts.
+> [!NOTE]
+> A patch with a value exactly matching the original (e.g. the jump height
+> `-7.9555473`) changes no bytes and is therefore not detected as applied when
+> the exe is checked – it has no effect then anyway.
 
 ## Parameters for unattended use
 
@@ -185,7 +191,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | `README.md`         | German documentation |
 | `README.en.md`      | This file |
 | `patcher_selection.ini` | Created when you accept a selection, stores your patch selection |
-| `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches and original bytes for removing them |
+| `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches, values and original bytes – speeds up the next start, but is not strictly required |
 | `LICENSE`           | MIT license |
 
 ---
@@ -1099,10 +1105,10 @@ the patcher also shows the suggestion after the original date, e.g.
 
 ## Notes
 
-- Before patching, `Wow.exe` is verified by its SHA256 hash. Only the original,
-  unmodified `Wow.exe` or the file the patcher produced itself last time is
-  accepted. A file patched with other tools or older patcher versions is
-  rejected.
+- Before patching, `Wow.exe` is checked. Only the original, unmodified
+  `Wow.exe` (SHA256) or one patched with this patcher (watermark) that can be
+  reverted exactly to the original is accepted. A file patched with other tools
+  or older patcher versions is rejected.
 - The backup `Wow.exe.BAK` is only created from the original, i.e. on the first
   patch run, and only after the selection has been confirmed. An existing
   backup is overwritten (the input has just been verified to be the original).
@@ -1114,10 +1120,15 @@ the patcher also shows the suggestion after the original date, e.g.
   This way you can always prove that a `Wow.exe` was made with this patcher –
   e.g. with a hex editor or in the command prompt with
   `findstr /m "St0nys AIO" Wow.exe` (prints the file name if it is there).
-  Removing all patches removes it again.
-- To restore the original, run the patcher and press `N` and ENTER. Without
-  `patcher_state.ini` only the backup helps: delete the patched `Wow.exe` and
-  rename `Wow.exe.BAK` to `Wow.exe`.
+  Removing all patches removes it again. The patcher itself also uses the
+  watermark to recognize that a `Wow.exe` comes from it.
+- To restore the original, run the patcher and press `N` and ENTER – with or
+  without `patcher_state.ini`. Alternatively use the backup: delete the patched
+  `Wow.exe` and rename `Wow.exe.BAK` to `Wow.exe`.
+- **For developers:** the original bytes table in the script is regenerated
+  with `apply_patches.ps1 -BuildTable -Path <original Wow.exe>`. This is needed
+  after every change to a patch; if it no longer matches, the patcher points it
+  out after patching.
 - Use at your own risk. This project is not affiliated with Blizzard
   Entertainment.
 
