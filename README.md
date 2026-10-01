@@ -898,7 +898,7 @@ abgefragt, und alle Werte werden geprüft, bevor irgendetwas geschrieben wird.
 Die Werte merkt sich der Patcher in `patcher_selection.ini` (`value.<Id>=…`);
 mit `-Unattended` werden die gemerkten Werte bzw. die Originalwerte genommen.
 Steckt ein Patch schon in der `Wow.exe`, ist sein aktueller Wert der Vorschlag.
-Weicht der Vorschlag vom Original ab, steht er im Auswahlmenü hinter dem Namen.
+Bei der Abfrage steht der Vorschlag hinter dem Patchnamen mit dem Originalwert.
 
 > [!NOTE]
 > Server können die Client-Version bzw. Build-Nummer prüfen. Ein geänderter Wert
@@ -926,8 +926,8 @@ und das Jahr im Copyright-Vermerk. Eingabe als `JJJJ-MM-TT`, optional mit `FR`
 dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`).
 Als Vorschlag steht das **heutige Datum** in den Klammern (mit `FR`, wenn du das
 zuletzt gewählt hast); mit `-Unattended` gilt der gemerkte Wert. Ist der Patch
-schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`. Den Vorschlag
-zeigt schon das Auswahlmenü hinter dem Originaldatum an, z. B.
+schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`. Bei der Abfrage
+steht der Vorschlag außerdem hinter dem Originaldatum, z. B.
 `Build-Datum aendern (Original Jun 24 2010) -> Vorschlag: 2026-10-01` bzw.
 `-> aktuell: …`, wenn der Patch bereits eingespielt ist.
 
