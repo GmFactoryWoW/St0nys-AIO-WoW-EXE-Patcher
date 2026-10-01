@@ -227,7 +227,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 16 | Allow extended MPQ names |  | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ |
 | 18 | LUA unlock (allow protected functions) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – |
-| 19 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk) – ban risk)* | FrostAtom | ✅ |
+| 19 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ |
 | 20 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – |
 | 21 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – |
 |    | **Gameplay fixes** |  |  |
@@ -417,10 +417,11 @@ Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
 **Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
 
-> [!WARNING]
-> The client loads a third-party DLL with this. Servers with anti-cheat may
-> treat that as an unauthorized modification – this can lead to a ban. Only
-> use it on servers that allow awesome_wotlk.
+> [!NOTE]
+> The patch itself is harmless, it only loads a DLL that is not included here.
+> Only the loaded `AwesomeWotlkLib.dll` may be noticed by servers with
+> anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
+> a yellow note for this.
 
 **Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 20, off by default, Author: St0ny)*
 Loads `voice.dll` from the WoW folder at startup – the client part of
@@ -1119,9 +1120,8 @@ applied, the current date of `Wow.exe` is suggested.
 
 - **Ban risk:** two groups of patches can lead to a ban on many servers. First,
   patches that servers with anti-cheat may treat as cheating or botting: LUA
-  unlock (No. 18), AwesomeWotlkLib.dll (19), climb angle (36), jump height
-  (37), the air steering (38–40) and the double jump (41). Second, patches that
-  append a section to `Wow.exe`
+  unlock (No. 18), climb angle (36), jump height (37), the air steering (38–40)
+  and the double jump (41). Second, patches that append a section to `Wow.exe`
   and thus make the file larger: No. 41, 53 and 64 always, No. 4 and 52
   together with No. 46 – many servers do not tolerate a changed file size.
   Both groups are marked "ban risk" in the overview, and the patcher shows a

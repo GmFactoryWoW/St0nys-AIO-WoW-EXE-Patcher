@@ -149,7 +149,8 @@ $TEXT = @{
         ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
-        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat, Botting oder unerlaubte DLL gewertet werden:'
+        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
+        DllHint       = 'HINWEIS: Der Patch selbst ist unkritisch. Erst die geladene DLL kann auf Servern mit Anti-Cheat auffallen - nur dort einsetzen, wo awesome_wotlk erlaubt ist.'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
@@ -232,7 +233,8 @@ $TEXT = @{
         ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
-        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating, botting or an unauthorized DLL:'
+        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
+        DllHint       = 'NOTE: The patch itself is harmless. Only the loaded DLL may be noticed by servers with anti-cheat - use it only where awesome_wotlk is allowed.'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
@@ -1302,7 +1304,9 @@ function Test-JumpValue([string]$v) {
 #    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
 #    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
-#            oder Botting werten koennen (erzeugt einen Bann-Hinweis)
+#            oder Botting werten koennen (erzeugt einen roten Bann-Hinweis)
+#    DllHint - optional: $true fuer den DLL-Loader - dezenter gelber Hinweis,
+#            dass erst die geladene DLL auffallen kann
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -1520,12 +1524,12 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa'); BanRisk = $true
+    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa'); DllHint = $true
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
-       NoteDe = 'benoetigt awesome_wotlk - Bann-Gefahr'
-       NoteEn = 'requires awesome_wotlk - ban risk'
+       NoteDe = 'benoetigt awesome_wotlk'
+       NoteEn = 'requires awesome_wotlk'
        Url = 'https://github.com/noname08662/awesome_wotlk'
        Code = {
         Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
@@ -3196,6 +3200,13 @@ foreach ($p in $chosen) {
         Say (T 'Conflict') 'Yellow'
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
         Say (T 'ConflictBan') 'Red'
+    }
+}
+foreach ($p in $chosen) {
+    if ($p.DllHint) {
+        Write-Host ''
+        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'DllHint') 'Yellow'
     }
 }
 $cheat = @()
