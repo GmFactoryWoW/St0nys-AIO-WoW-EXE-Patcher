@@ -99,7 +99,7 @@ dem Namen, der Link dazu steht direkt darunter.
 | `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
 | `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
-| `S`                | Preset „Billy's_Wow.exe (modded by St0ny)“ laden |
+| `S`                | Preset „Billy's_Wow.exe (modded by St0ny)“ laden – **noch ungetestet** |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -135,7 +135,8 @@ Das zweite Preset „Billy's_Wow.exe (modded by St0ny)“ (Taste `S`) ist Billys
 Patch-Set plus RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signaturprüfung
 aus, `/follow`-Fix, Level 101, Objektgröße, Tracker, Weltkarte und
 Fenstermodus. Die Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`,
-in der Übersicht ist es die Spalte „St0ny“.
+in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch
+ungetestet.** Der Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
 
 ## Patches ändern oder zurücknehmen
 

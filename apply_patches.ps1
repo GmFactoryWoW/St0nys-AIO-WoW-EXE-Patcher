@@ -119,7 +119,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (modded by St0ny)'
+        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (modded by St0ny) - noch ungetestet'
+        StonyUntested = 'Achtung: Das Preset Billy''s_Wow.exe (modded by St0ny) ist noch ungetestet.'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
@@ -204,7 +205,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (modded by St0ny)'
+        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (modded by St0ny) - not tested yet'
+        StonyUntested = 'Warning: the preset Billy''s_Wow.exe (modded by St0ny) has not been tested yet.'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
@@ -2855,7 +2857,7 @@ function Select-Patches([bool[]]$sel, [string]$message) {
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
             '^[bB]$'   { $sel = Get-DefaultSelection; break }
-            '^[sS]$'   { $sel = Get-StonySelection; break }
+            '^[sS]$'   { $sel = Get-StonySelection; $message = T 'StonyUntested'; break }
             '^[lL]$'   {
                 if ($script:lang -eq 'de') { $script:lang = 'en' } else { $script:lang = 'de' }
                 Save-Language $script:lang

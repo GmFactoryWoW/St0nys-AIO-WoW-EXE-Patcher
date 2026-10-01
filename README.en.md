@@ -96,7 +96,7 @@ their name, with the link right below.
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
-| `S`                | load preset "Billy's_Wow.exe (modded by St0ny)" |
+| `S`                | load preset "Billy's_Wow.exe (modded by St0ny)" – **not tested yet** |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -131,7 +131,8 @@ The second preset "Billy's_Wow.exe (modded by St0ny)" (key `S`) is Billy's
 patch set plus the RCE fix, the security and login patches, MPQ signature
 check off, the `/follow` fix, level 101, object scale, tracker, world map and
 windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
-the overview it is the "St0ny" column.
+the overview it is the "St0ny" column. **Warning: this preset has not been
+tested yet.** The patcher shows this as a yellow note when you load it with `S`.
 
 ## Changing or removing patches
 
