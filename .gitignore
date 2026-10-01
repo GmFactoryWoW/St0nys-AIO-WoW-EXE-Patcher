@@ -6,8 +6,10 @@
 *.MPQ
 *.mpq
 
-# Personal patch selection (created by the patcher)
+# Personal patch selection and state of the patched Wow.exe (created by the patcher)
 patcher_selection.ini
+patcher_state.ini
+patcher_state.ini.tmp
 
 # Local work files
 *.bak

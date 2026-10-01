@@ -49,6 +49,7 @@ if ($Unattended) {
 $file = $Path
 $backup = $file + '.BAK'
 $settingsFile = Join-Path $scriptDir 'patcher_selection.ini'
+$stateFile = Join-Path $scriptDir 'patcher_state.ini'
 
 # SHA256 der originalen Wow.exe 3.3.5a (Build 12340)
 $EXPECTED_HASH = 'AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8'
@@ -56,8 +57,21 @@ $EXPECTED_HASH = 'AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88C
 # Datei-Inhalt, wird einmal gelesen, im Speicher gepatcht und einmal geschrieben
 $f = $null
 
+# Gepatchte Wow.exe aus einem frueheren Lauf? Dann die dort aktiven Patch-Ids.
+$patchedMode = $false
+$appliedIds = @()
+
+# Jeder Schreibzugriff ins Original geht ueber Patch() und wird als
+# Offset/Laenge-Paar mitgeschrieben. Daraus entsteht nach dem Patchen die
+# Liste der Original-Bytes, mit der sich die Patches wieder zuruecknehmen
+# lassen (siehe patcher_state.ini). Angehaengte Sektionen liegen hinter dem
+# Ende des Originals und fallen beim Zuruecknehmen einfach weg.
+$writes = New-Object System.Collections.Generic.List[int64]
+
 function Patch([int64]$offset, [byte[]]$bytes) {
     [System.Array]::Copy($bytes, 0, $script:f, $offset, $bytes.Length)
+    $script:writes.Add($offset)
+    $script:writes.Add($bytes.Length)
 }
 
 # ============================================================
@@ -68,23 +82,37 @@ $TEXT = @{
         Welcome1      = 'Willkommen. Dieses Tool patcht deine Wow.exe mit'
         Welcome2      = 'Verbesserungen: Bugfixes, Performance-Optimierungen,'
         Welcome3      = 'erweiterte Sichtweiten und verbesserte Sound-Einstellungen.'
-        Welcome4      = 'Ein Backup wird automatisch als Wow.exe.BAK erstellt.'
+        Welcome4      = 'Beim ersten Patchen wird ein Backup als Wow.exe.BAK erstellt.'
+        Welcome5      = 'Eingespielte Patches lassen sich spaeter wieder abwaehlen - bis zurueck zum Original.'
         Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
         Checking      = 'Pruefe Wow.exe Integritaet...'
         HashBad1      = '[FEHLER] Die Wow.exe ist nicht die originale Datei.'
-        HashBad2      = '         Sie wurde bereits gepatcht oder ist eine andere Version.'
-        Expected      = 'Erwartet:  {0}'
+        HashBad2      = '         Sie wurde bereits gepatcht (anderes Tool, alte Patcher-Version) oder ist eine andere Version.'
+        HashBad3      = 'Beim ersten Start wird eine unmodifizierte Wow.exe benoetigt.'
+        HashBadState1 = '[FEHLER] Die Wow.exe ist weder das Original noch die zuletzt von diesem Patcher erzeugte Datei.'
+        HashBadState2 = '         Sie wurde seitdem veraendert (anderes Tool, Client-Update o.ae.).'
+        HashBadState3 = 'Bitte die zuletzt gepatchte oder eine unmodifizierte Wow.exe verwenden.'
+        Expected      = 'Original:  {0}'
+        ExpectedLast  = 'Zuletzt:   {0}'
         Found         = 'Gefunden:  {0}'
-        HashBad3      = 'Bitte eine unmodifizierte Wow.exe verwenden.'
+        BakHint       = 'Tipp: {0} ist die originale Wow.exe. Zurueck nach Wow.exe kopieren und den Patcher neu starten.'
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
+        HashKnown     = '[OK] Wow.exe ist die zuletzt von diesem Patcher erzeugte Datei ({0} Patches aktiv).'
+        RevertOk      = '[OK] Original aus patcher_state.ini rekonstruiert und per SHA256 geprueft.'
+        StateBroken1  = '[FEHLER] patcher_state.ini passt zur Wow.exe, das Original laesst sich daraus aber nicht'
+        StateBroken2  = '         wiederherstellen (Datei beschaedigt oder von Hand geaendert?).'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    L = English    Q = abbrechen'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
+        MenuHelp4     = 'O = Original wiederherstellen (alle Patches zuruecknehmen)'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
+        AppliedLoaded = 'Ausgewaehlt sind die Patches, die gerade in der Wow.exe stecken. Abwaehlen nimmt einen Patch zurueck.'
+        MarkNew       = '(neu)'
+        MarkRemove    = '(wird zurueckgenommen)'
         Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
         SaveFail      = 'HINWEIS: Auswahl konnte nicht gespeichert werden: {0}'
         Prompt        = 'Eingabe'
@@ -92,6 +120,13 @@ $TEXT = @{
         NoneSelected  = 'Es ist kein Patch ausgewaehlt.'
         BadSelect     = '[FEHLER] Ungueltiger Wert fuer -Select: {0}'
         Summary       = 'Folgende {0} Patches werden eingespielt:'
+        SumAdd        = 'Neu einspielen ({0}):'
+        SumChange     = 'Wert aendern ({0}):'
+        SumRemove     = 'Zuruecknehmen ({0}):'
+        SumKeep       = 'Bleiben unveraendert aktiv: {0}'
+        SumOriginal   = 'Danach ist die Wow.exe wieder die originale Datei.'
+        NoChange      = 'Keine Aenderung gegenueber der aktuellen Wow.exe - es gibt nichts zu tun.'
+        AlreadyOrig   = 'Die Wow.exe ist bereits original - es gibt nichts zurueckzunehmen.'
         InputHead     = 'Werte fuer die gewaehlten Patches (ENTER = Vorschlag in Klammern):'
         BadValue      = '[FEHLER] Ungueltiger gemerkter Wert fuer "{0}": {1}'
         HintHead      = 'HINWEIS zu "{0}":'
@@ -102,35 +137,57 @@ $TEXT = @{
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
         BackupFail    = '[FEHLER] Konnte Wow.exe nicht sichern. Abbruch.'
         BackupOk      = 'Backup der Wow.exe erfolgreich erstellt: {0}'
+        BackupSkip    = 'Kein neues Backup: Die Wow.exe ist bereits gepatcht, die Original-Bytes stehen in patcher_state.ini.'
         Starting      = 'Starte Patch-Vorgang...'
         PatchFail     = '[FEHLER] Beim Patchen ist ein Fehler aufgetreten:'
         NotWritten    = 'Die Wow.exe wurde nicht veraendert.'
         WriteFail     = '[FEHLER] Konnte die Wow.exe nicht schreiben (laeuft WoW noch?):'
+        UndoFail      = '[FEHLER] Selbsttest fehlgeschlagen: Die Patches liessen sich nicht sauber zuruecknehmen.'
+        StateFail     = '[FEHLER] Konnte patcher_state.ini nicht schreiben:'
+        StateWarn1    = 'WARNUNG: Die Wow.exe ist gepatcht, patcher_state.ini konnte aber nicht gespeichert werden:'
+        StateWarn2    = 'Ohne diese Datei lassen sich die Patches nicht mehr zuruecknehmen - dafuer Wow.exe.BAK verwenden.'
         Done1         = '[FERTIG] Wow.exe wurde erfolgreich gepatcht.'
         Done2         = 'Gesamt: {0} Patches eingespielt.'
+        Done3         = 'Neu: {0}   Geaendert: {1}   Zurueckgenommen: {2}   Aktiv: {3}'
+        DoneOrig      = '[FERTIG] Alle Patches zurueckgenommen, die Wow.exe ist wieder original.'
+        StateSaved    = 'Zustand in patcher_state.ini gemerkt - beim naechsten Start kannst du Patches dazu- oder abwaehlen.'
         PressEnter    = 'ENTER druecken zum Beenden'
     }
     en = @{
         Welcome1      = 'Welcome. This tool patches your Wow.exe with'
         Welcome2      = 'improvements: bug fixes, performance optimizations,'
         Welcome3      = 'extended view distances and improved sound settings.'
-        Welcome4      = 'A backup is created automatically as Wow.exe.BAK.'
+        Welcome4      = 'The first patch run creates a backup as Wow.exe.BAK.'
+        Welcome5      = 'Applied patches can be deselected later - all the way back to the original.'
         Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
         Checking      = 'Checking Wow.exe integrity...'
         HashBad1      = '[ERROR] This Wow.exe is not the original file.'
-        HashBad2      = '        It has already been patched or is a different version.'
-        Expected      = 'Expected:  {0}'
+        HashBad2      = '        It has already been patched (another tool, old patcher version) or is a different version.'
+        HashBad3      = 'The first run requires an unmodified Wow.exe.'
+        HashBadState1 = '[ERROR] This Wow.exe is neither the original nor the file last produced by this patcher.'
+        HashBadState2 = '        It has been changed since (another tool, client update or similar).'
+        HashBadState3 = 'Please use the last patched or an unmodified Wow.exe.'
+        Expected      = 'Original:  {0}'
+        ExpectedLast  = 'Last run:  {0}'
         Found         = 'Found:     {0}'
-        HashBad3      = 'Please use an unmodified Wow.exe.'
+        BakHint       = 'Tip: {0} is the original Wow.exe. Copy it back to Wow.exe and start the patcher again.'
         HashOk        = '[OK] Wow.exe is original and unmodified.'
+        HashKnown     = '[OK] Wow.exe is the file last produced by this patcher ({0} patches active).'
+        RevertOk      = '[OK] Original reconstructed from patcher_state.ini and verified by SHA256.'
+        StateBroken1  = '[ERROR] patcher_state.ini matches Wow.exe, but the original cannot be restored from it'
+        StateBroken2  = '        (file damaged or edited by hand?).'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    L = Deutsch    Q = quit'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
+        MenuHelp4     = 'O = restore original (remove all patches)'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
+        AppliedLoaded = 'Selected are the patches currently in Wow.exe. Deselecting a patch removes it.'
+        MarkNew       = '(new)'
+        MarkRemove    = '(will be removed)'
         Saved         = 'Selection saved for next time.'
         SaveFail      = 'NOTE: Could not save the selection: {0}'
         Prompt        = 'Input'
@@ -138,6 +195,13 @@ $TEXT = @{
         NoneSelected  = 'No patch is selected.'
         BadSelect     = '[ERROR] Invalid value for -Select: {0}'
         Summary       = 'The following {0} patches will be applied:'
+        SumAdd        = 'Apply ({0}):'
+        SumChange     = 'Change value ({0}):'
+        SumRemove     = 'Remove ({0}):'
+        SumKeep       = 'Stay active unchanged: {0}'
+        SumOriginal   = 'Afterwards Wow.exe is the original file again.'
+        NoChange      = 'No change compared to the current Wow.exe - nothing to do.'
+        AlreadyOrig   = 'Wow.exe is already original - nothing to remove.'
         InputHead     = 'Values for the selected patches (ENTER = suggestion in brackets):'
         BadValue      = '[ERROR] Invalid saved value for "{0}": {1}'
         HintHead      = 'NOTE on "{0}":'
@@ -148,12 +212,20 @@ $TEXT = @{
         Aborted       = 'Aborted. Wow.exe has not been modified.'
         BackupFail    = '[ERROR] Could not back up Wow.exe. Aborting.'
         BackupOk      = 'Backup of Wow.exe created successfully: {0}'
+        BackupSkip    = 'No new backup: Wow.exe is already patched, the original bytes are stored in patcher_state.ini.'
         Starting      = 'Starting patch process...'
         PatchFail     = '[ERROR] An error occurred while patching:'
         NotWritten    = 'Wow.exe has not been modified.'
         WriteFail     = '[ERROR] Could not write Wow.exe (is WoW still running?):'
+        UndoFail      = '[ERROR] Self-test failed: the patches could not be removed cleanly.'
+        StateFail     = '[ERROR] Could not write patcher_state.ini:'
+        StateWarn1    = 'WARNING: Wow.exe is patched, but patcher_state.ini could not be saved:'
+        StateWarn2    = 'Without this file the patches cannot be removed anymore - use Wow.exe.BAK for that.'
         Done1         = '[DONE] Wow.exe has been patched successfully.'
         Done2         = 'Total: {0} patches applied.'
+        Done3         = 'New: {0}   Changed: {1}   Removed: {2}   Active: {3}'
+        DoneOrig      = '[DONE] All patches removed, Wow.exe is original again.'
+        StateSaved    = 'State remembered in patcher_state.ini - next time you can add or deselect patches.'
         PressEnter    = 'Press ENTER to exit'
     }
 }
@@ -301,8 +373,8 @@ function Add-HdPortraits([int]$SIZE) {
     $script:f = $nf
 
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
-    [Array]::Copy([BitConverter]::GetBytes([uint16]($nsec + 1)), 0, $script:f, ($e + 6), 2)
-    [Array]::Copy([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $vsize) $SA)), 0, $script:f, ($e + 24 + 56), 4)
+    Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
+    Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $vsize) $SA)))
     $hoff = $sectBase + 40 * $nsec
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.hdp'), 0, $sh, 0, 4)
@@ -311,20 +383,20 @@ function Add-HdPortraits([int]$SIZE) {
     [Array]::Copy([BitConverter]::GetBytes([uint32]$raw_size), 0, $sh, 16, 4)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$new_raw), 0, $sh, 20, 4)
     [Array]::Copy([byte[]](0x60, 0x00, 0x00, 0xE0), 0, $sh, 36, 4)                    # chars = 0xE0000060 (RWX | init data)
-    [Array]::Copy($sh, 0, $script:f, $hoff, 40)
+    Patch $hoff $sh
 
     # --- In-Place-Edits: Aufruf-Sites auf die Caves umbiegen, Groessen auf SIZE ---
     $toRT = $TRO + ($S_RT - $TVA); $toTEX = $TRO + ($S_TEX - $TVA)
     $toRD = $TRO + ($S_READ - $TVA); $toMK = $TRO + ($S_MASK - $TVA); $toMF = $TRO + ($MASKFN - $TVA)
-    [Array]::Copy([BitConverter]::GetBytes([int32]($cA - ($S_RT + 5))), 0, $script:f, ($toRT + 1), 4)
-    [Array]::Copy([BitConverter]::GetBytes([int32]($cB - ($S_TEX + 5))), 0, $script:f, ($toTEX + 1), 4)
-    [Array]::Copy([BitConverter]::GetBytes([int32]$SIZE), 0, $script:f, ($toRD + 1), 4)
-    [Array]::Copy([BitConverter]::GetBytes([int32]$SIZE), 0, $script:f, ($toMK + 1), 4)
+    Patch ($toRT + 1) ([BitConverter]::GetBytes([int32]($cA - ($S_RT + 5))))
+    Patch ($toTEX + 1) ([BitConverter]::GetBytes([int32]($cB - ($S_TEX + 5))))
+    Patch ($toRD + 1) ([BitConverter]::GetBytes([int32]$SIZE))
+    Patch ($toMK + 1) ([BitConverter]::GetBytes([int32]$SIZE))
     $hook = New-Object byte[] 9
     $hook[0] = 0xE9
     [Array]::Copy([BitConverter]::GetBytes([int32]($det_va - ($MASKFN + 5))), 0, $hook, 1, 4)
     $hook[5] = 0x90; $hook[6] = 0x90; $hook[7] = 0x90; $hook[8] = 0x90
-    [Array]::Copy($hook, 0, $script:f, $toMF, 9)
+    Patch $toMF $hook
 }
 
 # ============================================================
@@ -502,8 +574,8 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     $script:f = $nf
 
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
-    [Array]::Copy([BitConverter]::GetBytes([uint16]($nsec + 1)), 0, $script:f, ($e + 6), 2)
-    [Array]::Copy([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $SEC_SIZE) $SA)), 0, $script:f, ($e + 24 + 56), 4)
+    Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
+    Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $SEC_SIZE) $SA)))
     $hoff = $sectBase + 40 * $nsec
     if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'CameraReforged: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
     $sh = New-Object byte[] 40
@@ -513,7 +585,7 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     [Array]::Copy([BitConverter]::GetBytes([uint32]$raw_size), 0, $sh, 16, 4)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$new_raw), 0, $sh, 20, 4)
     [Array]::Copy([byte[]](0x40, 0x00, 0x00, 0xE0), 0, $sh, 36, 4)     # 0xE0000040 = init data | RWX
-    [Array]::Copy($sh, 0, $script:f, $hoff, 40)
+    Patch $hoff $sh
 
     # --- Detour auf CVars_Initialize (VA 0x51D9B0 -> Datei 0x11CDB0) ---
     $j = New-Object byte[] 9
@@ -1726,6 +1798,121 @@ function Save-Selection($sel, $values) {
     }
 }
 
+# ============================================================
+#  Zustand der gepatchten Wow.exe (patcher_state.ini)
+#  Nach jedem Patchen merkt sich der Patcher den SHA256 der erzeugten Datei,
+#  die eingespielten Patches samt Werten, die Groesse des Originals und die
+#  Original-Bytes an allen Stellen, die die Patches beschrieben haben. Passt
+#  die Wow.exe beim naechsten Start zu diesem Hash, wird daraus das Original
+#  rekonstruiert (und per SHA256 geprueft) und die neue Auswahl darauf
+#  eingespielt. So lassen sich Patches beliebig dazu- und abwaehlen.
+# ============================================================
+function Get-Sha256([byte[]]$data) {
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash($data))).Replace('-', '') } finally { $sha.Dispose() }
+}
+
+function ConvertFrom-Hex([string]$hex) {
+    $b = New-Object byte[] ($hex.Length / 2)
+    for ($i = 0; $i -lt $b.Length; $i++) { $b[$i] = [Convert]::ToByte($hex.Substring(2 * $i, 2), 16) }
+    return , $b
+}
+
+# Liefert $null, wenn es keine lesbare Zustandsdatei gibt. Undo-Eintraege
+# sind Paare @(Offset, Original-Bytes).
+function Read-State {
+    if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) { return $null }
+    try { $lines = [System.IO.File]::ReadAllLines($stateFile) } catch { return $null }
+    $st = @{ Hash = $null; Size = [int64]-1; Ids = @(); Values = @{}; Undo = New-Object System.Collections.Generic.List[object] }
+    foreach ($l in $lines) {
+        if ($l -match '^hash=([0-9A-Fa-f]{64})$') { $st.Hash = $matches[1].ToUpperInvariant() }
+        elseif ($l -match '^size=(\d+)$') { $st.Size = [int64]$matches[1] }
+        elseif ($l -match '^patches=(.*)$') { $st.Ids = @($matches[1] -split ',' | Where-Object { $_ -ne '' }) }
+        elseif ($l -match '^value\.([A-Za-z0-9_]+)=(.*)$') { $st.Values[$matches[1]] = $matches[2] }
+        elseif ($l -match '^undo=0x([0-9A-Fa-f]+):((?:[0-9A-Fa-f]{2})+)$') {
+            $st.Undo.Add(@([Convert]::ToInt64($matches[1], 16), (ConvertFrom-Hex $matches[2])))
+        }
+    }
+    if (-not $st.Hash -or $st.Size -le 0) { return $null }
+    return $st
+}
+
+# Rekonstruiert aus einer gepatchten Datei das Original: auf die alte Groesse
+# kuerzen (angehaengte Sektionen fallen weg), Original-Bytes zurueckschreiben.
+# Liefert $null, wenn das Ergebnis nicht exakt die originale Wow.exe ist.
+function Restore-Original([byte[]]$data, $st) {
+    if ($st.Size -gt $data.Length) { return $null }
+    $o = New-Object byte[] $st.Size
+    [Array]::Copy($data, 0, $o, 0, $st.Size)
+    foreach ($u in $st.Undo) {
+        if ($u[0] + $u[1].Length -gt $o.Length) { return $null }
+        [Array]::Copy($u[1], 0, $o, $u[0], $u[1].Length)
+    }
+    if ((Get-Sha256 $o) -ne $EXPECTED_HASH) { return $null }
+    return , $o
+}
+
+# Original-Bytes zu allen Schreibzugriffen von Patch(), die im Original liegen.
+function Get-UndoEntries([byte[]]$orig) {
+    $undo = New-Object System.Collections.Generic.List[object]
+    $seen = @{}
+    for ($i = 0; $i -lt $script:writes.Count; $i += 2) {
+        $off = $script:writes[$i]
+        $end = $off + $script:writes[$i + 1]
+        if ($off -ge $orig.Length) { continue }
+        if ($end -gt $orig.Length) { $end = $orig.Length }
+        if ($seen.ContainsKey("$off/$end")) { continue }
+        $seen["$off/$end"] = $true
+        $b = New-Object byte[] ($end - $off)
+        [Array]::Copy($orig, $off, $b, 0, $b.Length)
+        $undo.Add(@($off, $b))
+    }
+    return , $undo
+}
+
+# Zustandsdatei schreiben. Liefert $null oder die Fehlermeldung.
+function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, $undo) {
+    $lines = New-Object System.Collections.Generic.List[string]
+    $lines.Add('# St0nys-AIO-WoW-EXE-Patcher - Zustand der gepatchten Wow.exe / state of the patched Wow.exe')
+    $lines.Add('# Nicht von Hand aendern! Ohne diese Datei lassen sich die Patches nicht mehr zuruecknehmen.')
+    $lines.Add('# Do not edit! Without this file the patches can no longer be removed.')
+    $lines.Add("hash=$hash")
+    $lines.Add("size=$size")
+    $lines.Add("patches=$($ids -join ',')")
+    foreach ($k in ($values.Keys | Sort-Object)) { $lines.Add("value.$k=$($values[$k])") }
+    foreach ($u in $undo) {
+        $lines.Add(('undo=0x{0:X}:{1}' -f $u[0], ([BitConverter]::ToString($u[1])).Replace('-', '')))
+    }
+    try {
+        [System.IO.File]::WriteAllLines($path, $lines.ToArray())
+        return $null
+    } catch {
+        return $_.Exception.Message
+    }
+}
+
+# Hinweis auf Wow.exe.BAK, wenn sie das Original enthaelt.
+function Show-BakHint {
+    try {
+        if (-not (Test-Path -LiteralPath $backup -PathType Leaf)) { return }
+        if ((Get-Sha256 ([System.IO.File]::ReadAllBytes($backup))) -ne $EXPECTED_HASH) { return }
+        Write-Host ''
+        Say (T 'BakHint' $backup) 'Yellow'
+    } catch { }
+}
+
+function Get-PatchById([string]$id) {
+    foreach ($q in $patches) { if ($q.Id -eq $id) { return $q } }
+    return $null
+}
+
+# Anzeigename auch fuer Ids, die es in dieser Version nicht mehr gibt.
+function Get-NameById([string]$id) {
+    $q = Get-PatchById $id
+    if ($q) { return PatchName $q }
+    return $id
+}
+
 function Get-SelectedCount($sel) {
     $n = 0
     foreach ($s in $sel) { if ($s) { $n++ } }
@@ -1748,8 +1935,12 @@ function Show-Menu($sel, [string]$message) {
             Write-Host "   -- $title --" -ForegroundColor Yellow
         }
         $nr = ([string]($i + 1)).PadLeft($width)
+        $was = $script:patchedMode -and ($script:appliedIds -contains $patches[$i].Id)
         if ($sel[$i]) {
-            Write-Host "   $nr  [X]  $(PatchName $patches[$i])" -ForegroundColor Green
+            $mark = ''; if ($script:patchedMode -and -not $was) { $mark = ' ' + (T 'MarkNew') }
+            Write-Host "   $nr  [X]  $(PatchName $patches[$i])$mark" -ForegroundColor Green
+        } elseif ($was) {
+            Write-Host "   $nr  [ ]  $(PatchName $patches[$i]) $(T 'MarkRemove')" -ForegroundColor Yellow
         } else {
             Write-Host "   $nr  [ ]  $(PatchName $patches[$i])" -ForegroundColor DarkGray
         }
@@ -1761,6 +1952,7 @@ function Show-Menu($sel, [string]$message) {
     Say (T 'MenuHelp1')
     Say (T 'MenuHelp2')
     Say (T 'MenuHelp3')
+    if ($script:patchedMode) { Say (T 'MenuHelp4') }
     if ($message) {
         Write-Host ''
         Say $message 'Yellow'
@@ -1768,18 +1960,22 @@ function Show-Menu($sel, [string]$message) {
     Write-Host ''
 }
 
-# Interaktive Auswahl. Liefert das bool-Array oder $null bei Abbruch.
-function Select-Patches {
-    $sel = Get-SavedSelection
-    $message = ''
-    if ($null -eq $sel) { $sel = Get-DefaultSelection } else { $message = T 'SavedLoaded' }
+# Interaktive Auswahl, beginnend mit $sel. Liefert das bool-Array oder $null
+# bei Abbruch. Eine leere Auswahl gibt es nur fuer eine gepatchte Wow.exe -
+# sie bedeutet: alle Patches zuruecknehmen.
+function Select-Patches([bool[]]$sel, [string]$message) {
     while ($true) {
         Show-Menu $sel $message
         $message = ''
         $in = Ask "  $(T 'Prompt')"
         switch -regex ($in) {
             '^$' {
-                if ((Get-SelectedCount $sel) -eq 0) { $message = T 'NoneSelected'; break }
+                if ((Get-SelectedCount $sel) -eq 0 -and -not $script:patchedMode) { $message = T 'NoneSelected'; break }
+                return , $sel
+            }
+            '^[oO]$' {
+                if (-not $script:patchedMode) { $message = T 'BadInput' $in; break }
+                for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }
                 return , $sel
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
@@ -1810,6 +2006,7 @@ function Get-SelectionFromParam([string]$value) {
         return , $sel
     }
     $sel = New-Object bool[] $patches.Count
+    if ($v -eq 'none' -or $v -eq 'keine' -or $v -eq 'original') { return , $sel }
     if ($v -eq 'all' -or $v -eq 'alle') {
         for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true }
         return , $sel
@@ -1909,6 +2106,7 @@ Say (T 'Welcome2')
 Say (T 'Welcome3')
 Write-Host ''
 Say (T 'Welcome4')
+Say (T 'Welcome5')
 Write-Host ''
 Say (T 'Thanks') 'Magenta'
 Write-Host ''
@@ -1917,7 +2115,10 @@ if (-not $Unattended) {
     Write-Host ''
 }
 
-# --- 2. Wow.exe vorhanden und original? ---
+# --- 2. Wow.exe vorhanden und original oder zuletzt von hier gepatcht? ---
+# Beim ersten Start muss die Wow.exe original sein. Danach muss sie exakt die
+# Datei sein, die der letzte Lauf erzeugt hat (Hash in patcher_state.ini);
+# aus ihr wird dann das Original im Speicher rekonstruiert.
 if (-not (Test-Path -LiteralPath $file -PathType Leaf)) {
     Say (T 'NotFound' $file) 'Red'
     Exit-Patcher 1
@@ -1925,20 +2126,44 @@ if (-not (Test-Path -LiteralPath $file -PathType Leaf)) {
 
 Say (T 'Checking')
 $f = [System.IO.File]::ReadAllBytes($file)
-$sha = [System.Security.Cryptography.SHA256]::Create()
-$hash = ([BitConverter]::ToString($sha.ComputeHash($f))).Replace('-', '')
-if ($hash -ne $EXPECTED_HASH) {
-    Write-Host ''
-    Say (T 'HashBad1') 'Red'
-    Say (T 'HashBad2') 'Red'
-    Write-Host ''
-    Say (T 'Expected' $EXPECTED_HASH)
-    Say (T 'Found' $hash)
-    Write-Host ''
-    Say (T 'HashBad3')
-    Exit-Patcher 1
+$hash = Get-Sha256 $f
+$state = $null
+if ($hash -eq $EXPECTED_HASH) {
+    Say (T 'HashOk') 'Green'
+} else {
+    $state = Read-State
+    if ($null -eq $state -or $state.Hash -ne $hash) {
+        Write-Host ''
+        if ($null -eq $state) {
+            Say (T 'HashBad1') 'Red'
+            Say (T 'HashBad2') 'Red'
+        } else {
+            Say (T 'HashBadState1') 'Red'
+            Say (T 'HashBadState2') 'Red'
+        }
+        Write-Host ''
+        Say (T 'Expected' $EXPECTED_HASH)
+        if ($null -ne $state) { Say (T 'ExpectedLast' $state.Hash) }
+        Say (T 'Found' $hash)
+        Write-Host ''
+        if ($null -eq $state) { Say (T 'HashBad3') } else { Say (T 'HashBadState3') }
+        Show-BakHint
+        Exit-Patcher 1
+    }
+    $orig = Restore-Original $f $state
+    if ($null -eq $orig) {
+        Write-Host ''
+        Say (T 'StateBroken1') 'Red'
+        Say (T 'StateBroken2') 'Red'
+        Show-BakHint
+        Exit-Patcher 1
+    }
+    $f = $orig
+    $patchedMode = $true
+    $appliedIds = @($state.Ids)
+    Say (T 'HashKnown' $appliedIds.Count) 'Green'
+    Say (T 'RevertOk') 'Green'
 }
-Say (T 'HashOk') 'Green'
 Write-Host ''
 
 # --- 3. Patches auswaehlen ---
@@ -1950,7 +2175,16 @@ if ($Select) {
         Exit-Patcher 1
     }
 } else {
-    $selection = Select-Patches
+    $message = ''
+    if ($patchedMode) {
+        $initial = New-Object bool[] $patches.Count
+        for ($i = 0; $i -lt $patches.Count; $i++) { $initial[$i] = $appliedIds -contains $patches[$i].Id }
+        $message = T 'AppliedLoaded'
+    } else {
+        $initial = Get-SavedSelection
+        if ($null -eq $initial) { $initial = Get-DefaultSelection } else { $message = T 'SavedLoaded' }
+    }
+    $selection = Select-Patches $initial $message
     if ($null -eq $selection) {
         Write-Host ''
         Say (T 'Aborted') 'Yellow'
@@ -1965,20 +2199,27 @@ $chosenIds = @()
 for ($i = 0; $i -lt $patches.Count; $i++) {
     if ($selection[$i]) { $chosen += , $patches[$i]; $chosenIds += $patches[$i].Id }
 }
+if ($chosen.Count -eq 0 -and -not $patchedMode) {
+    Say (T 'AlreadyOrig') 'Green'
+    Exit-Patcher 0
+}
 
 # --- 3b. Werte fuer Patches mit eigener Eingabe ---
 # Vorschlag ist der gemerkte Wert, sonst der Default; Patches mit Suggest
 # berechnen ihren Vorschlag selbst (Build-Datum: heute). Ohne Rueckfragen
-# (-Unattended) gilt der gemerkte Wert, sonst der Vorschlag.
+# (-Unattended) gilt der gemerkte Wert, sonst der Vorschlag. Ist der Patch
+# schon in der Wow.exe, ist sein aktueller Wert der Vorschlag.
 $VALUES = @{}
 $savedValues = Get-SavedValues
 $asked = $false
 foreach ($p in $chosen) {
     if (-not $p.Check) { continue }
+    $active = $patchedMode -and ($appliedIds -contains $p.Id) -and $state.Values.ContainsKey($p.Id)
     $saved = $savedValues[$p.Id]
+    if ($active) { $saved = $state.Values[$p.Id] }
     $def = $saved
     if (-not $def) { $def = $p.Default }
-    if ($p.Suggest -and -not ($Unattended -and $saved)) { $def = & $p.Suggest $saved }
+    if ($p.Suggest -and -not $active -and -not ($Unattended -and $saved)) { $def = & $p.Suggest $saved }
     if ($Unattended) {
         $err = & $p.Check $def
         if ($err) {
@@ -2017,10 +2258,44 @@ if ($fromMenu) {
 
 # --- 4. Zusammenfassung, Hinweise, Bestaetigung ---
 Write-Host ''
-Say (T 'Summary' $chosen.Count) 'Cyan'
-foreach ($p in $chosen) {
-    if ($VALUES.ContainsKey($p.Id)) { Say "  - $(PatchName $p): $($VALUES[$p.Id])" } else { Say "  - $(PatchName $p)" }
-    if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
+$added = @(); $changed = @(); $removed = @(); $kept = 0
+if (-not $patchedMode) {
+    Say (T 'Summary' $chosen.Count) 'Cyan'
+    foreach ($p in $chosen) {
+        if ($VALUES.ContainsKey($p.Id)) { Say "  - $(PatchName $p): $($VALUES[$p.Id])" } else { Say "  - $(PatchName $p)" }
+        if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
+    }
+} else {
+    foreach ($p in $chosen) {
+        if ($appliedIds -notcontains $p.Id) { $added += , $p }
+        elseif ($VALUES.ContainsKey($p.Id) -and $VALUES[$p.Id] -cne $state.Values[$p.Id]) { $changed += , $p }
+        else { $kept++ }
+    }
+    foreach ($id in $appliedIds) { if ($chosenIds -notcontains $id) { $removed += $id } }
+    if ($added.Count + $changed.Count + $removed.Count -eq 0) {
+        Say (T 'NoChange') 'Green'
+        Exit-Patcher 0
+    }
+    if ($added.Count -gt 0) {
+        Say (T 'SumAdd' $added.Count) 'Cyan'
+        foreach ($p in $added) {
+            if ($VALUES.ContainsKey($p.Id)) { Say "  + $(PatchName $p): $($VALUES[$p.Id])" 'Green' } else { Say "  + $(PatchName $p)" 'Green' }
+            if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
+        }
+    }
+    if ($changed.Count -gt 0) {
+        Say (T 'SumChange' $changed.Count) 'Cyan'
+        foreach ($p in $changed) { Say "  ~ $(PatchName $p): $($state.Values[$p.Id]) -> $($VALUES[$p.Id])" 'Green' }
+    }
+    if ($removed.Count -gt 0) {
+        Say (T 'SumRemove' $removed.Count) 'Cyan'
+        foreach ($id in $removed) { Say "  - $(Get-NameById $id)" 'Yellow' }
+    }
+    Say (T 'SumKeep' $kept)
+    if ($chosen.Count -eq 0) {
+        Write-Host ''
+        Say (T 'SumOriginal') 'Yellow'
+    }
 }
 
 foreach ($p in $chosen) {
@@ -2065,20 +2340,29 @@ if (-not $Unattended) {
     Write-Host ''
 }
 
-# --- 5. Backup ---
-try {
-    Copy-Item -LiteralPath $file -Destination $backup -Force
-} catch {
-    Say (T 'BackupFail') 'Red'
-    Say $_.Exception.Message 'Red'
-    Exit-Patcher 1
+# --- 5. Backup (nur vom Original, eine vorhandene Sicherung bleibt sonst stehen) ---
+if ($patchedMode) {
+    Say (T 'BackupSkip')
+} else {
+    try {
+        Copy-Item -LiteralPath $file -Destination $backup -Force
+    } catch {
+        Say (T 'BackupFail') 'Red'
+        Say $_.Exception.Message 'Red'
+        Exit-Patcher 1
+    }
+    Say (T 'BackupOk' $backup)
 }
-Say (T 'BackupOk' $backup)
 Write-Host ''
 Say (T 'Starting')
 Write-Host ''
 
 # --- 6. Patchen (im Speicher) ---
+# $f ist hier immer das Original (gelesen oder rekonstruiert); abgewaehlte
+# Patches sind damit schon zurueckgenommen, die Auswahl wird neu eingespielt.
+$origBytes = [byte[]]$f.Clone()
+$writes.Clear()
+foreach ($id in $removed) { Say "[-] $(Get-NameById $id)" 'Yellow' }
 $total = $chosen.Count
 $width = ([string]$total).Length
 $cur = 0
@@ -2096,19 +2380,73 @@ try {
     Exit-Patcher 1
 }
 
-# --- 7. Datei einmal zurueckschreiben ---
+# --- 7. Zustand vorbereiten ---
+# Erst die Original-Bytes sammeln und pruefen, dass sich das Ergebnis damit
+# exakt zum Original zuruecknehmen laesst. Der neue Zustand geht zuerst in
+# eine .tmp-Datei und ersetzt den alten erst, wenn die Wow.exe geschrieben ist.
+$stateTmp = $stateFile + '.tmp'
+if ($total -gt 0) {
+    $undo = Get-UndoEntries $origBytes
+    if ($null -eq (Restore-Original $f @{ Size = [int64]$origBytes.Length; Undo = $undo })) {
+        Write-Host ''
+        Say (T 'UndoFail') 'Red'
+        Say (T 'NotWritten') 'Red'
+        Exit-Patcher 1
+    }
+    $stateError = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo
+    if ($stateError) {
+        Write-Host ''
+        Say (T 'StateFail') 'Red'
+        Say $stateError 'Red'
+        Say (T 'NotWritten') 'Red'
+        Exit-Patcher 1
+    }
+}
+
+# --- 8. Datei einmal zurueckschreiben ---
 try {
     [System.IO.File]::WriteAllBytes($file, $f)
 } catch {
     Write-Host ''
     Say (T 'WriteFail') 'Red'
     Say $_.Exception.Message 'Red'
+    try { Remove-Item -LiteralPath $stateTmp -Force -ErrorAction SilentlyContinue } catch { }
     Exit-Patcher 1
+}
+
+# --- 9. Zustand uebernehmen (ohne Patches ist die Wow.exe original, dann weg damit) ---
+$stateWarn = $null
+try {
+    if ($total -gt 0) {
+        [System.IO.File]::Copy($stateTmp, $stateFile, $true)
+        [System.IO.File]::Delete($stateTmp)
+    } elseif (Test-Path -LiteralPath $stateFile -PathType Leaf) {
+        [System.IO.File]::Delete($stateFile)
+    }
+} catch {
+    $stateWarn = $_.Exception.Message
 }
 
 Write-Host ''
 Say '============================================' 'Green'
-Say (T 'Done1') 'Green'
-Say (T 'Done2' $total) 'Green'
+if ($total -eq 0) {
+    Say (T 'DoneOrig') 'Green'
+} else {
+    Say (T 'Done1') 'Green'
+    if ($patchedMode) {
+        Say (T 'Done3' $added.Count $changed.Count $removed.Count $total) 'Green'
+    } else {
+        Say (T 'Done2' $total) 'Green'
+    }
+}
 Say '============================================' 'Green'
+if ($stateWarn -and $total -gt 0) {
+    Write-Host ''
+    Say (T 'StateWarn1') 'Yellow'
+    Say $stateWarn 'Yellow'
+    Say (T 'StateWarn2') 'Yellow'
+} elseif ($total -gt 0) {
+    Write-Host ''
+    Say (T 'StateSaved') 'DarkGray'
+}
 Exit-Patcher 0

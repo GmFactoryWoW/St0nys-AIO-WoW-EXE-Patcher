@@ -8,7 +8,8 @@ improved sound settings and a few quality-of-life features directly to the
 executable – in a single pass, without extra tools or DLL injectors.
 
 On start you choose the **language** (Deutsch / English) and then pick
-**which patches** to apply from a menu.
+**which patches** to apply from a menu. Applied patches can be **deselected or
+extended** at any time later – all the way back to the original `Wow.exe`.
 
 > [!IMPORTANT]
 > This repository does **not** contain a `Wow.exe` or any other Blizzard files.
@@ -22,6 +23,7 @@ On start you choose the **language** (Deutsch / English) and then pick
 - [Usage](#usage)
 - [Workflow](#workflow)
 - [Patch selection](#patch-selection)
+- [Changing or removing patches](#changing-or-removing-patches)
 - [Parameters for unattended use](#parameters-for-unattended-use)
 - [Files](#files)
 - [Patch overview](#patch-overview)
@@ -37,6 +39,7 @@ On start you choose the **language** (Deutsch / English) and then pick
 - Windows with PowerShell (Windows PowerShell 5.1 ships with Windows 10 and later)
 - An **original, unmodified** `Wow.exe` 3.3.5a, build 12340 with
   SHA256 `AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8`
+  (on the first start; after that the `Wow.exe` last produced by the patcher)
 
 ## Usage
 
@@ -46,8 +49,8 @@ On start you choose the **language** (Deutsch / English) and then pick
 3. Double-click `patcher.bat`.
 4. Choose the language (first start only), select patches, confirm – done.
 
-To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
-`Wow.exe`.
+To **change or remove** patches just run `patcher.bat` again, see
+[Changing or removing patches](#changing-or-removing-patches).
 
 ## Workflow
 
@@ -56,16 +59,21 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
    that the language is remembered and can be switched with `L` in the menu.
 3. Welcome message, press ENTER to start.
 4. Check that a `Wow.exe` exists in the folder.
-5. SHA256 integrity check that the `Wow.exe` is original/unmodified.
+5. SHA256 integrity check: on the first start `Wow.exe` must be original and
+   unmodified, after that exactly the file the patcher produced last time.
+   Anything else aborts.
 6. **Patch selection** menu (see below). Your selection from last time is
-   already preselected.
-7. Summary of the selected patches, notes about missing or redundant companion
-   patches and a confirmation prompt (Y/N).
-8. Automatic backup as `Wow.exe.BAK`.
+   preselected, or for a patched `Wow.exe` the patches currently in it.
+7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
+   what is removed), notes about missing or redundant companion patches and a
+   confirmation prompt (Y/N).
+8. Automatic backup as `Wow.exe.BAK` – of the original only, i.e. on the first
+   patch run.
 9. All selected patches are applied in memory (with progress output) and
    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
    untouched.
-10. Final message with the number of applied patches.
+10. The patcher remembers the hash of the new `Wow.exe` together with the
+    original bytes in `patcher_state.ini` and shows a final message.
 
 ## Patch selection
 
@@ -85,6 +93,7 @@ the link right below.
 | `N`                | all patches off                            |
 | `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
+| `O`                | restore original, remove all patches (patched `Wow.exe` only) |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -115,6 +124,39 @@ The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
+## Changing or removing patches
+
+Applied patches are not final. Just run `patcher.bat` again: the menu then has
+exactly the patches checked that are currently in `Wow.exe`. Newly checked
+patches are marked **(new)**, deselected ones **(will be removed)**. This way
+you can add patches, deselect them or change the values of the client info
+patches as you like. `O` (or all patches deselected and ENTER) removes every
+patch – afterwards `Wow.exe` is **byte-for-byte the original** again.
+
+How it works:
+
+- **First start:** `Wow.exe` must be original (SHA256 check), otherwise the
+  patcher aborts. Patching creates `Wow.exe.BAK`.
+- **After patching** the patcher stores in `patcher_state.ini` the SHA256 of
+  the produced `Wow.exe`, the applied patches with their values and the
+  original bytes at every location the patches changed.
+- **Every later start:** `Wow.exe` must be exactly the file produced last time
+  (same hash), otherwise the patcher aborts – e.g. when another tool has
+  modified it in the meantime. If the hash matches, the patcher rebuilds the
+  original from it in memory, verifies it once more against the original's
+  SHA256 and applies the new selection on top.
+- Before writing, the patcher also checks that the new result can be reverted
+  cleanly to the original.
+- An existing `Wow.exe.BAK` is not touched on later runs and stays the
+  original.
+
+> [!WARNING]
+> Do not delete or edit `patcher_state.ini` while `Wow.exe` is patched –
+> without this file the patches can no longer be removed. Then only the backup
+> helps: delete `Wow.exe` and rename `Wow.exe.BAK` to `Wow.exe`. If an original
+> `Wow.exe.BAK` is in the folder, the patcher points this out itself when it
+> aborts.
+
 ## Parameters for unattended use
 
 All parameters are optional and are passed through from `patcher.bat` to
@@ -123,7 +165,7 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | set the language for this run (does not change the remembered language)   |
-| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `all` or numbers/ranges like `"1,3,5-8"`. Using `-Select` does not change the saved selection. |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
 | `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
@@ -133,7 +175,7 @@ Example:
 patcher.bat -Language en -Select saved -Unattended
 ```
 
-Exit codes: `0` = success, `1` = error, `2` = cancelled (by the user or because no more input is possible).
+Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by the user or because no more input is possible).
 
 ## Files
 
@@ -144,6 +186,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled (by the user or because 
 | `README.md`         | German documentation |
 | `README.en.md`      | This file |
 | `patcher_selection.ini` | Created when you accept a selection, stores your patch selection |
+| `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches and original bytes for removing them |
 | `LICENSE`           | MIT license |
 
 ---
@@ -833,7 +876,8 @@ the desired values after the selection**. A suggestion is shown in square
 brackets, ENTER accepts it. Invalid input is asked again with a message, and all
 values are checked before anything is written. The patcher remembers the values
 in `patcher_selection.ini` (`value.<Id>=…`); with `-Unattended` the remembered
-values or the original values are used.
+values or the original values are used. If a patch is already in `Wow.exe`,
+its current value is the suggestion.
 
 > [!NOTE]
 > Servers may check the client version or build number, so a changed value has
@@ -859,23 +903,25 @@ characters, ASCII only.
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
 `FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
-suggestion in brackets is always **today's date** (with `FR` if you chose it
-last time); with `-Unattended` the remembered value is used.
+suggestion in brackets is **today's date** (with `FR` if you chose it last
+time); with `-Unattended` the remembered value is used. If the patch is already
+applied, the current date of `Wow.exe` is suggested.
 
 ---
 
 ## Notes
 
-- Before patching, `Wow.exe` is verified by its SHA256 hash. Only an original,
-  unmodified `Wow.exe` is accepted – an already patched file is rejected.
-- The backup `Wow.exe.BAK` is only created after the integrity check has passed
-  and the selection has been confirmed. An existing backup is overwritten (the
-  input has just been verified to be the original).
+- Before patching, `Wow.exe` is verified by its SHA256 hash. Only the original,
+  unmodified `Wow.exe` or the file the patcher produced itself last time is
+  accepted. A file patched with other tools or older patcher versions is
+  rejected.
+- The backup `Wow.exe.BAK` is only created from the original, i.e. on the first
+  patch run, and only after the selection has been confirmed. An existing
+  backup is overwritten (the input has just been verified to be the original).
 - If there is no `Wow.exe` in the folder, the patcher aborts.
-- To restore, delete the patched `Wow.exe` and rename `Wow.exe.BAK` to
-  `Wow.exe`.
-- To apply a different selection, restore the original first and run the
-  patcher again.
+- To restore the original, run the patcher and press `O`. Without
+  `patcher_state.ini` only the backup helps: delete the patched `Wow.exe` and
+  rename `Wow.exe.BAK` to `Wow.exe`.
 - Use at your own risk. This project is not affiliated with Blizzard
   Entertainment.
 
