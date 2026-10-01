@@ -236,9 +236,9 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 35 | Max characters per realm raised to 255 | St0ny | ✅ |
 | 36 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server)* | Alastor StrixEfuartus | – |
 | 37 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server)* | Alastor StrixEfuartus | – |
-| 38 | Steer forward/backward while jumping [TEST] *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 39 | Steer sideways while jumping [TEST] *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 40 | Turning while jumping changes the flight direction [TEST] *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 38 | Steer forward/backward while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 39 | Steer sideways while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Graphics & view distance** |  |  |
 | 41 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 42 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -513,7 +513,7 @@ remembered like those of the client info patches.
 > [!WARNING]
 > Servers with anti-cheat may detect this as a jump hack.
 
-**Steer forward/backward while jumping [TEST]** *(No. 38, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer forward/backward while jumping** *(No. 38, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
 well, even to the opposite direction. 0x539wowmod replaces the client's forward
@@ -523,27 +523,24 @@ in the EXE here – without DLL and without a code cave. On top comes the byte
 patch from 0x539wowmod that updates the movement in the air.
 
 > [!WARNING]
-> **TEST:** Not confirmed in game yet. Servers with anti-cheat may detect changed
-> movement in the air.
+> Servers with anti-cheat may detect changed movement in the air.
 
-**Steer sideways while jumping [TEST]** *(No. 39, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer sideways while jumping** *(No. 39, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
 the movement early while the falling flag is set.
 
 > [!WARNING]
-> **TEST:** Not confirmed in game yet. Servers with anti-cheat may detect changed
-> movement in the air.
+> Servers with anti-cheat may detect changed movement in the air.
 
-**Turning while jumping changes the flight direction [TEST]** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Turning while jumping changes the flight direction** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
 in the air as well, like the 0x539wowmod DLL does. Works best together with the
 two previous patches.
 
 > [!WARNING]
-> **TEST:** Not confirmed in game yet. Servers with anti-cheat may detect changed
-> movement in the air.
+> Servers with anti-cheat may detect changed movement in the air.
 
 ### Graphics & view distance
 

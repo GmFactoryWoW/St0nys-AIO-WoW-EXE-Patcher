@@ -1417,12 +1417,12 @@ $patches = @(
 
     @{ Id = 'airforward'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
-       De = 'Im Sprung vorwaerts/rueckwaerts steuern [TEST]'
-       En = 'Steer forward/backward while jumping [TEST]'
+       De = 'Im Sprung vorwaerts/rueckwaerts steuern'
+       En = 'Steer forward/backward while jumping'
        NoteDe = 'kann vom Server als Cheat erkannt werden'
        NoteEn = 'may be detected as cheating by the server'
        Code = {
-        # TEST - nach 0x539wowmod. Dort ersetzt die DLL die Vorwaerts-Eingabe
+        # Nach 0x539wowmod. Dort ersetzt die DLL die Vorwaerts-Eingabe
         # (VA 0x988A20) durch eine eigene Funktion; die unterscheidet sich vom
         # Original nur in zwei Spruengen, die hier direkt geaendert werden:
         #  - VA 0x988A3D je -> jmp: in der Luft (Fall-Flag 0x1000) nicht mehr
@@ -1437,12 +1437,12 @@ $patches = @(
 
     @{ Id = 'airlateral'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
-       De = 'Im Sprung seitwaerts steuern [TEST]'
-       En = 'Steer sideways while jumping [TEST]'
+       De = 'Im Sprung seitwaerts steuern'
+       En = 'Steer sideways while jumping'
        NoteDe = 'kann vom Server als Cheat erkannt werden'
        NoteEn = 'may be detected as cheating by the server'
        Code = {
-        # TEST - nach 0x539wowmod, wie oben fuer die Seitwaerts-Eingabe
+        # Nach 0x539wowmod, wie oben fuer die Seitwaerts-Eingabe
         # (VA 0x988B00):
         #  - VA 0x988B25 je -> jmp: in der Luft nicht mehr abbrechen
         #  - VA 0x988B81 je -> jmp: Geschwindigkeit auch in der Luft neu berechnen
@@ -1455,12 +1455,12 @@ $patches = @(
 
     @{ Id = 'airturn'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
-       De = 'Im Sprung drehen aendert die Flugrichtung [TEST]'
-       En = 'Turning while jumping changes the flight direction [TEST]'
+       De = 'Im Sprung drehen aendert die Flugrichtung'
+       En = 'Turning while jumping changes the flight direction'
        NoteDe = 'kann vom Server als Cheat erkannt werden'
        NoteEn = 'may be detected as cheating by the server'
        Code = {
-        # TEST - nach 0x539wowmod. Beim Drehen (VA 0x989B70) setzt der Client
+        # Nach 0x539wowmod. Beim Drehen (VA 0x989B70) setzt der Client
         # die Bewegungsrichtung nur am Boden neu; in der Luft springt er bei
         # VA 0x989B97 (jne) daran vorbei. 2x NOP: auch in der Luft.
         Patch 0x588F97 @(0x90, 0x90)

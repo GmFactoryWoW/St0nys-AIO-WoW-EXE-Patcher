@@ -239,9 +239,9 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 35 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ |
 | 36 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden)* | Alastor StrixEfuartus | – |
 | 37 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden)* | Alastor StrixEfuartus | – |
-| 38 | Im Sprung vorwärts/rückwärts steuern [TEST] *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 39 | Im Sprung seitwärts steuern [TEST] *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 40 | Im Sprung drehen ändert die Flugrichtung [TEST] *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 38 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 39 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 40 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Grafik & Sichtweite** |  |  |
 | 41 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 42 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -525,7 +525,7 @@ Wert wird wie bei den Client-Info-Patches gemerkt.
 > [!WARNING]
 > Server mit Anti-Cheat können das als Jump-Hack erkennen.
 
-**Im Sprung vorwärts/rückwärts steuern [TEST]** *(Nr. 38, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung vorwärts/rückwärts steuern** *(Nr. 38, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Normalerweise ignoriert der Client Vorwärts- und Rückwärts-Eingaben, solange der
 Charakter springt oder fällt. Mit dem Patch lässt sich die Richtung auch in der
 Luft ändern, bis hin zur Gegenrichtung. 0x539wowmod ersetzt dafür per DLL die
@@ -535,27 +535,24 @@ hier direkt in der EXE geändert werden – ohne DLL und ohne Code-Höhle. Dazu 
 der Byte-Patch aus 0x539wowmod, der die Bewegung in der Luft aktualisiert.
 
 > [!WARNING]
-> **TEST:** Noch nicht im Spiel bestätigt. Server mit Anti-Cheat können veränderte
-> Bewegung in der Luft erkennen.
+> Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen.
 
-**Im Sprung seitwärts steuern [TEST]** *(Nr. 39, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung seitwärts steuern** *(Nr. 39, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Wie der vorige Patch, nur für seitliche Bewegung (Strafen): zwei Sprünge in der
 Seitwärts-Eingabe des Clients plus der Byte-Patch aus 0x539wowmod, der die
 Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
 
 > [!WARNING]
-> **TEST:** Noch nicht im Spiel bestätigt. Server mit Anti-Cheat können veränderte
-> Bewegung in der Luft erkennen.
+> Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen.
 
-**Im Sprung drehen ändert die Flugrichtung [TEST]** *(Nr. 40, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung drehen ändert die Flugrichtung** *(Nr. 40, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Dreht man sich im Sprung (Maus oder Tasten), behält der Charakter im Original
 seine Flugrichtung. Mit dem Patch setzt der Client die Bewegungsrichtung auch in
 der Luft neu, wie es die DLL von 0x539wowmod tut. Passt am besten zusammen mit
 den beiden vorigen Patches.
 
 > [!WARNING]
-> **TEST:** Noch nicht im Spiel bestätigt. Server mit Anti-Cheat können veränderte
-> Bewegung in der Luft erkennen.
+> Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen.
 
 ### Grafik & Sichtweite
 
