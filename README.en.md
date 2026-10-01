@@ -357,7 +357,7 @@ Slash commands also work while the character is dead.
 
 **Allow /follow on NPCs** *(No. 28, off by default, Author: MacWarrior / St0ny)*
 `/follow` also works on NPCs, not just players. Based on MacWarrior's
-`patch-007-allow_follow.bat`, ported and adjusted by St0ny: the original redirects the check into a code cave
+/follow patch, ported and adjusted by St0ny: the original redirects the check into a code cave
 that ignores its result. That cave, however, sits exactly where the slider
 patch (No. 36) puts its code. Here the conditional jump after the check
 is made unconditional instead – a single byte, same effect, and both patches

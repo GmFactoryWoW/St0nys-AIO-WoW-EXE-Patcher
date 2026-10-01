@@ -364,7 +364,7 @@ Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
 **/follow auch bei NPCs erlauben** *(Nr. 28, standardmäßig aus, Autor: MacWarrior / St0ny)*
 Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
-MacWarriors `patch-007-allow_follow.bat`, Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
+MacWarriors /follow-Patch, Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
 eine Code-Höhle um, die ihr Ergebnis ignoriert. Diese Höhle läge aber genau
 dort, wo der Slider-Patch (Nr. 36) seinen Code ablegt. Hier wird
 stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
