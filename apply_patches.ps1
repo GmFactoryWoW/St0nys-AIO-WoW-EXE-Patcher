@@ -149,7 +149,7 @@ $TEXT = @{
         ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
-        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
+        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat, Botting oder unerlaubte DLL gewertet werden:'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
@@ -232,7 +232,7 @@ $TEXT = @{
         ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
-        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
+        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating, botting or an unauthorized DLL:'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
@@ -1520,12 +1520,12 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa')
+    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa'); BanRisk = $true
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
-       NoteDe = 'benoetigt awesome_wotlk'
-       NoteEn = 'requires awesome_wotlk'
+       NoteDe = 'benoetigt awesome_wotlk - Bann-Gefahr'
+       NoteEn = 'requires awesome_wotlk - ban risk'
        Url = 'https://github.com/noname08662/awesome_wotlk'
        Code = {
         Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)

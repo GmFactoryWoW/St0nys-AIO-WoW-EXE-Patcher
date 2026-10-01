@@ -232,7 +232,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 16 | Erweiterte MPQ-Namen erlauben |  | ✅ |
 | 17 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | ✅ |
 | 18 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden – Bann-Gefahr)* | Alastor StrixEfuartus | – |
-| 19 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ |
+| 19 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk) – Bann-Gefahr)* | FrostAtom | ✅ |
 | 20 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul ungetestet und unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – |
 | 21 | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – |
 |    | **Gameplay-Fixes** |  |  |
@@ -427,6 +427,11 @@ Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
 Server.
 **Benötigt** die `AwesomeWotlkLib.dll` aus [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
+
+> [!WARNING]
+> Der Client lädt damit eine fremde DLL. Server mit Anti-Cheat können das als
+> unerlaubte Modifikation werten – das kann zu einem Bann führen. Nur auf
+> Servern nutzen, die awesome_wotlk erlauben.
 
 **voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 20, standardmäßig aus, Autor: St0ny)*
 Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
@@ -1140,8 +1145,9 @@ schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`.
 
 - **Bann-Gefahr:** Zwei Gruppen von Patches können auf vielen Servern zu einem
   Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder Botting
-  werten können: LUA Unlock (Nr. 18), Steigwinkel (36), Sprunghöhe (37), die
-  Sprungsteuerung (38–40) und der Doppelsprung (41). Zweitens Patches, die eine
+  werten können: LUA Unlock (Nr. 18), AwesomeWotlkLib.dll (19), Steigwinkel
+  (36), Sprunghöhe (37), die Sprungsteuerung (38–40) und der Doppelsprung (41).
+  Zweitens Patches, die eine
   Sektion an die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 41,
   53 und 64 immer, Nr. 4 und 52 zusammen mit Nr. 46 – viele Server tolerieren
   eine veränderte Dateigröße nicht. Beide Gruppen sind in der Übersicht mit
