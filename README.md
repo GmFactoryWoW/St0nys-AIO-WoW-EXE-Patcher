@@ -181,7 +181,7 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = abgebrochen (vom Benutzer ode
 | 25 | Force-Reaction bei /reload erhalten | Robinsch | ✅ |
 | 26 | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | ✅ |
 | 27 | Chat-Befehle auch im Tod erlauben | Robinsch | ✅ |
-| 28 | /follow auch bei NPCs erlauben | MacWarrior | – |
+| 28 | /follow auch bei NPCs erlauben | MacWarrior / St0ny | – |
 | 29 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | Alastor StrixEfuartus | – |
 | 30 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – |
 | 31 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ |
@@ -362,9 +362,9 @@ Relog, um neue Post zu bekommen.
 **Chat-Befehle auch im Tod erlauben** *(Nr. 27, Autor: Robinsch)*
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
-**/follow auch bei NPCs erlauben** *(Nr. 28, standardmäßig aus, Autor: MacWarrior)*
+**/follow auch bei NPCs erlauben** *(Nr. 28, standardmäßig aus, Autor: MacWarrior / St0ny)*
 Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Portierung von
-MacWarriors `patch-007-allow_follow.bat`: Das Original leitet die Prüfung in
+MacWarriors `patch-007-allow_follow.bat`, Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
 eine Code-Höhle um, die ihr Ergebnis ignoriert. Diese Höhle läge aber genau
 dort, wo der Slider-Patch (Nr. 36) seinen Code ablegt. Hier wird
 stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein

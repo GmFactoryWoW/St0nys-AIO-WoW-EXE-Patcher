@@ -181,7 +181,7 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled (by the user or because 
 | 25 | Keep force reaction on /reload | Robinsch | ✅ |
 | 26 | New mail without the 60-second wait | Robinsch | ✅ |
 | 27 | Allow chat commands while dead | Robinsch | ✅ |
-| 28 | Allow /follow on NPCs | MacWarrior | – |
+| 28 | Allow /follow on NPCs | MacWarrior / St0ny | – |
 | 29 | Level 101+ fix (druid base stats and barber chair) | Alastor StrixEfuartus | – |
 | 30 | Unlimited race/class combinations *(server must support it)* | Alastor StrixEfuartus / Robinsch | – |
 | 31 | Max characters per realm raised to 255 | St0ny | ✅ |
@@ -355,9 +355,9 @@ relog needed to receive new mail.
 **Allow chat commands while dead** *(No. 27, Author: Robinsch)*
 Slash commands also work while the character is dead.
 
-**Allow /follow on NPCs** *(No. 28, off by default, Author: MacWarrior)*
+**Allow /follow on NPCs** *(No. 28, off by default, Author: MacWarrior / St0ny)*
 `/follow` also works on NPCs, not just players. Port of MacWarrior's
-`patch-007-allow_follow.bat`: the original redirects the check into a code cave
+`patch-007-allow_follow.bat`, ported and adjusted by St0ny: the original redirects the check into a code cave
 that ignores its result. That cave, however, sits exactly where the slider
 patch (No. 36) puts its code. Here the conditional jump after the check
 is made unconditional instead – a single byte, same effect, and both patches
