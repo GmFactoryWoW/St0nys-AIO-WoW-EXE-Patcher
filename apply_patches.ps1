@@ -710,7 +710,12 @@ function Set-ClientVersion([string]$v) {
 }
 
 function Test-ClientBuild([string]$v) {
-    if ($v -notmatch '^\d{1,5}$' -or [int]$v -gt 65535) { return (L 'Eine Zahl von 0 bis 65535.' 'A number from 0 to 65535.') }
+    # Server (AzerothCore, TrinityCore) behandeln Builds bis 6141 als Classic-
+    # Client (Pre-BC) mit anderem Login-Protokoll - damit kaeme ein 3.3.5-Client
+    # nicht mehr auf den Server. Darum erst ab 6142.
+    if ($v -notmatch '^\d{1,5}$' -or [int]$v -lt 6142 -or [int]$v -gt 65535) {
+        return (L 'Eine Zahl von 6142 bis 65535 (bis 6141 halten Server den Client fuer einen Classic-Client).' 'A number from 6142 to 65535 (up to 6141 servers treat the client as a Classic client).')
+    }
     return $null
 }
 
@@ -2270,8 +2275,8 @@ $patches = @(
        Author = 'MacWarrior'
        De = 'Build-Nummer aendern (Original 12340)'
        En = 'Change build number (original 12340)'
-       PromptDe = 'Neue Build-Nummer, 0 bis 65535'
-       PromptEn = 'New build number, 0 to 65535'
+       PromptDe = 'Neue Build-Nummer, 6142 bis 65535'
+       PromptEn = 'New build number, 6142 to 65535'
        Default = '12340'
        Check = { param($v) Test-ClientBuild $v }
        Decode = { [string](RU16 $script:f 0x4C99F0) }

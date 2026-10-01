@@ -1082,8 +1082,28 @@ The build number is kept. Major and minor version together must fit into the
 ProductVersion field (e.g. `3.3`).
 
 **Change build number** *(No. 67, off by default, Author: MacWarrior)*
-Sets a new build number (0 to 65535, original `12340`): the internal build
-number, the visible build number and the fourth part of the FileVersion.
+Sets a new build number (6142 to 65535, original `12340`): the internal build
+number, the visible build number and the fourth part of the FileVersion. The
+patcher does not allow builds up to 6141: servers like AzerothCore or
+TrinityCore then treat the client as a Classic client (pre-BC) and use a
+different login protocol – a 3.3.5 client can no longer get onto the server.
+
+> [!TIP]
+> **AzerothCore:** the authserver only accepts builds listed in the `build_info`
+> table of the auth database. For a build of your own, e.g. `12341`:
+>
+> ```sql
+> INSERT INTO build_info (majorVersion, minorVersion, bugfixVersion, hotfixVersion, build, winChecksumSeed, macChecksumSeed)
+> VALUES (3, 3, 5, 'a', 12341, NULL, NULL);
+> UPDATE realmlist SET gamebuild = 12341 WHERE id = 1;
+> ```
+>
+> Leave `winChecksumSeed` empty (it is only checked with `StrictVersionCheck = 1`
+> in `authserver.conf` and would not match a patched exe anyway).
+> Major/minor/bugfix are only displayed in the realm list. Restart the
+> authserver afterwards – it reads `build_info` only at startup. A realm only
+> accepts the build in `realmlist.gamebuild`; players with an older client see
+> it as offline.
 
 **Change program title in the file properties** *(No. 68, off by default, Author: MacWarrior)*
 Sets FileDescription, InternalName and ProductName of the version resource,
