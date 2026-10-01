@@ -1123,11 +1123,12 @@ $patches = @(
     }}
 
     @{ Id = 'follow'; Cat = 'gameplay'; On = $false
-       Author = 'MacWarrior / St0ny'
+       Author = 'Alastor StrixEfuartus / St0ny'
        De = '/follow auch bei NPCs erlauben'
        En = 'Allow /follow on NPCs'
        Code = {
-        # Portierung von patch-007-allow_follow.bat (MacWarrior), angepasst von St0ny.
+        # Portierung des /follow-Patches aus der 12th Generation EXE (Alastor
+        # StrixEfuartus, hier aus patch-007-allow_follow.bat), angepasst von St0ny.
         # Vor dem Folgen ruft der Client eine Pruefung auf (call 0x729BD0 bei VA
         # 0x72B525) und bricht bei "nein" ab. Das Original lenkt den Aufruf in eine
         # Code-Hoehle um, die die Pruefung zwar ausfuehrt, ihr Ergebnis aber
