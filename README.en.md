@@ -198,7 +198,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 1  | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ |
 | 2  | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – |
 | 3  | Refresh item cache immediately | Robinsch | ✅ |
-| 4  | WorldFrame crash fix (invalid triangle indices) *(shares code cave with the slider patch)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 4  | WorldFrame crash fix (invalid triangle indices) *(shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Security & privacy** |  |  |
 | 5  | Remote code execution exploit fix | Robinsch | – |
 | 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – |
@@ -251,7 +251,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 49 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – |
 | 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ |
-| 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag, shares code cave with the slider patch)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag, shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 53 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | – |
 |    | **Interface & comfort** |  |  |
 | 54 | Auto-sort quest tracker |  | – |
@@ -313,6 +313,11 @@ original, the three jump distances have been corrected and the code is shorter.
 > slightly larger: each moved cave gets a 512-byte section, plus padding of the
 > end of the file – about 1.4 KB for No. 4 and 49 together. Removing the patches
 > takes this away again.
+
+> [!WARNING]
+> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
+> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
+> changed file size of `Wow.exe` – this can lead to a ban.**
 
 > [!NOTE]
 > A heuristic fix, as the author calls it too: only the first triangle of each
@@ -696,6 +701,11 @@ see above).
 > selected together with this patch, they automatically move to small sections
 > of their own at the end of the file – this makes `Wow.exe` slightly larger.
 
+> [!WARNING]
+> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
+> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
+> changed file size of `Wow.exe` – this can lead to a ban.**
+
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 47, off by default, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
@@ -848,6 +858,11 @@ before.
 > with the slider patch, the patch automatically moves to a small section
 > `.nofade` of its own at the end of the file. Here too `Wow.exe` becomes slightly
 > larger (see No. 4).
+
+> [!WARNING]
+> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
+> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
+> changed file size of `Wow.exe` – this can lead to a ban.**
 
 **HD unit frame portraits: 256x256 instead of 64x64** *(No. 53, off by default, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
