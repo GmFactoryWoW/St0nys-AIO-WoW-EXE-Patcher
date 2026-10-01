@@ -39,7 +39,7 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 - Windows with PowerShell (Windows PowerShell 5.1 ships with Windows 10 and later)
 - An **original, unmodified** `Wow.exe` 3.3.5a, build 12340 with
   SHA256 `AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8`
-  (on the first start; after that the `Wow.exe` last produced by the patcher)
+  (on the first start; after that a `Wow.exe` patched with this patcher)
 
 ## Usage
 
@@ -67,8 +67,9 @@ To **change or remove** patches just run `patcher.bat` again, see
 7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
    what is removed), notes about missing or redundant companion patches and a
    confirmation prompt (Y/N).
-8. Automatic backup as `Wow.exe.BAK` – of the original only, i.e. on the first
-   patch run.
+8. Backup as `Wow.exe.BAK` – a copy of the original on the first patch run. If
+   it is missing on a later run, it is recreated from the reconstructed
+   original.
 9. All selected patches are applied in memory (with progress output) and
    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
    untouched.
@@ -80,10 +81,11 @@ To **change or remove** patches just run `patcher.bat` again, see
 
 The menu lists every patch with a number. `[X]` = will be applied,
 `[ ]` = will be skipped. The menu is grouped into the same categories as the
-[patch overview](#patch-overview). The default selection is preselected:
-the **preset "Billy's_Wow.exe"** (see the "Default" column in the overview). Patches
-that need something additional say so in parentheses after their name, with
-the link right below.
+[patch overview](#patch-overview). On the first start the
+**preset "Billy's_Wow.exe"** is preselected (see the "Default" column in the
+overview), after that the saved selection or the patches currently in
+`Wow.exe`. Patches that need something additional say so in parentheses after
+their name, with the link right below.
 
 | Input              | Effect                                     |
 |--------------------|--------------------------------------------|
@@ -97,11 +99,11 @@ the link right below.
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
-Some patches only take full effect together with others (e.g. the extended
-slider maximums need the CVar unlocks). If such a companion patch is missing
-from the selection, the patcher shows a **note** before the confirmation
-prompt – nothing is blocked. It also points out when one patch makes another
-unnecessary (disabling Warden completely replaces the RCE fix).
+Before the confirmation prompt the patcher shows **notes**, nothing is blocked:
+when a companion patch is missing (e.g. the extended slider maximums need the
+CVar unlocks), when one patch makes another unnecessary (disabling Warden
+completely replaces the RCE fix) and when the selected patches make `Wow.exe`
+larger (ban risk, see [Notes](#notes)).
 
 ### The selection is remembered
 
@@ -129,9 +131,9 @@ selection. It is defined in `apply_patches.ps1`: every patch has an entry
 Applied patches are not final. Just run `patcher.bat` again: the menu then has
 exactly the patches checked that are currently in `Wow.exe`. Newly checked
 patches are marked **(new)**, deselected ones **(will be removed)**. This way
-you can add patches, deselect them or change the values of the client info
-patches as you like. `N` and ENTER removes every patch – afterwards `Wow.exe`
-is **byte-for-byte the original** again.
+you can add patches, deselect them or change values (jump height, double
+jump, client info) as you like. `N` and ENTER removes every patch – afterwards
+`Wow.exe` is **byte-for-byte the original** again.
 
 How it works:
 
@@ -155,6 +157,7 @@ How it works:
 - Before writing, the patcher also checks that the new result can be reverted
   cleanly to the original.
 - An existing `Wow.exe.BAK` is not touched on later runs and stays the
+  original. If it is missing, the patcher recreates it from the reconstructed
   original.
 
 > [!NOTE]
@@ -311,19 +314,15 @@ first triangle beforehand and skips the function in that case. Compared to the
 original, the three jump distances have been corrected and the code is shorter.
 
 > [!IMPORTANT]
-> **Shares the code cave with the slider patch (No. 46).** The code lives in the free gap at the end of `.text`, which No. 52
-> uses as well. No. 4 and No. 52 fit in there together,
-> but not next to the slider patch: if No. 46 is selected, the patch automatically
-> moves to a small section `.wfcfix` of its own at the end of the file, and the
-> patcher points this out before the confirmation prompt. This makes `Wow.exe`
-> slightly larger: each moved cave gets a 512-byte section, plus padding of the
-> end of the file – about 1.4 KB for No. 4 and 49 together. Removing the patches
-> takes this away again.
-
-> [!WARNING]
-> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
-> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
-> changed file size of `Wow.exe` – this can lead to a ban.**
+> **Shares the code cave with the slider patch (No. 46).** The code lives in the
+> free gap at the end of `.text`, which No. 52 uses as well. No. 4 and 52 fit in
+> there together, but not next to the slider patch: if No. 46 is selected, the
+> patch automatically moves to a small section `.wfcfix` of its own at the end
+> of the file, and the patcher points this out before the confirmation prompt.
+> This makes `Wow.exe` slightly larger (a 512-byte section plus padding of the
+> end of the file, about 1.4 KB for No. 4 and 52 together; removing the patches
+> takes this away again). **Many servers do not tolerate a changed file size of
+> `Wow.exe` – this can lead to a ban.**
 
 > [!NOTE]
 > A heuristic fix, as the author calls it too: only the first triangle of each
@@ -443,7 +442,7 @@ all key presses without blocking the normal controls.
 
 ### Gameplay fixes
 
-**Area trigger timer accuracy** *(No. 22, Author: Robinsch)*
+**More precise area trigger timer (50 ms instead of 250 ms)** *(No. 22, Author: Robinsch)*
 Increases the area trigger check frequency from 250 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
@@ -455,7 +454,7 @@ a target.
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
 
-**Fix spell preparation animation after cancelling channelled spells** *(No. 25, Author: Robinsch)*
+**Fix spell animation after cancelled channel** *(No. 25, Author: Robinsch)*
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
@@ -479,13 +478,14 @@ Slash commands also work while the character is dead.
 
 **Allow /follow on NPCs** *(No. 31, off by default, Author: Alastor StrixEfuartus / St0ny)*
 `/follow` also works on NPCs, not just players. Based on the /follow patch
-from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny: the original redirects the check into a code cave
-that ignores its result. That cave, however, sits exactly where the slider
+from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
+the original redirects the check into a code cave that ignores its result.
+That cave, however, sits exactly where the slider
 patch (No. 46) puts its code. Here the conditional jump after the check
 is made unconditional instead – a single byte, same effect, and both patches
 work together.
 
-**Level 101+ fix for druid base stats and barber chair** *(No. 32, off by default, Author: Alastor StrixEfuartus)*
+**Level 101+ fix (druid base stats and barber chair)** *(No. 32, off by default, Author: Alastor StrixEfuartus)*
 Druids at level 101 and above can view their base stats again, and the
 barber chair works for all characters at level 101 and above.
 **Requires** the patch "Allow custom GlueXML" (No. 14). In the source it is
@@ -519,7 +519,7 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > [!WARNING]
 > Servers with anti-cheat may detect this as a climb hack.
 
-**Change jump height** *(No. 37, off by default, Author: Alastor StrixEfuartus)*
+**Change jump height (original -7.9555473)** *(No. 37, off by default, Author: Alastor StrixEfuartus)*
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
 `-100` to just below `0`, with comma or dot as decimal separator. The lower the
@@ -578,15 +578,14 @@ writable); this makes `Wow.exe` slightly larger.
 
 > [!WARNING]
 > Servers with anti-cheat may detect jumps in the air.
-
-> [!WARNING]
-> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
-> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
-> ban.**
+>
+> This patch appends a section of its own, which makes `Wow.exe` larger.
+> **Many servers do not tolerate a changed file size of `Wow.exe` – this can lead
+> to a ban.**
 
 ### Graphics & view distance
 
-**Farclip unlock to max 10000** *(No. 42, Author: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(No. 42, Author: Alastor StrixEfuartus)*
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
 upper limits for it: 1583 yards normally and 791 yards as a fallback. The 791
@@ -597,9 +596,9 @@ The lower limit of 183 yards stays untouched, and there is no separate input
 limit for the CVar – this clamp is the limit.
 Not to be confused with the 1277 from the video menu: that is the maximum of
 the view distance slider and a completely different location in the EXE (see
-patch No. 46 "Extend slider maximums in the video menu").
+patch No. 46 "Graphics options: extend slider maximums").
 
-**CVar horizonFarclipScale unlocked to max 12** *(No. 43, Author: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(No. 43, Author: St0ny)*
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
@@ -608,8 +607,8 @@ Removes the upper limit of the CVar `environmentDetail` entirely. Originally
 the value is clamped to the range 0.5 to 1.5; the patch disables the upper
 clamp so arbitrarily high values are passed through.
 Important: this CVar does nothing but multiply the GameObject view distances
-(see patches No. 47 and 46) – in the original
-only for categories 1 to 3, with patch No. 47 for all five. That makes it the
+(see patch No. 47) – in the original only for categories 1 to 3, with patch
+No. 47 for all five. That makes it the
 most convenient FPS lever for object rendering, since it works in-game without
 re-patching.
 
@@ -617,7 +616,7 @@ re-patching.
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
-**Extend slider maximums in the video menu** *(No. 46, off by default, Author: St0ny)*
+**Graphics options: extend slider maximums** *(No. 46, off by default, Author: St0ny)*
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
 sliders stayed at Blizzard's values because they don't take their maximum
@@ -711,15 +710,11 @@ there is nothing to raise. The value can still only be set via `Config.wtf`,
 `/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
 see above).
 
-> [!NOTE]
-> No. 4 and No. 52 use the code cave at the end of `.text` as well. If they are
-> selected together with this patch, they automatically move to small sections
-> of their own at the end of the file – this makes `Wow.exe` slightly larger.
-
 > [!WARNING]
-> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
-> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
-> changed file size of `Wow.exe` – this can lead to a ban.**
+> No. 4 and No. 52 use the code cave at the end of `.text` as well. Together with
+> this patch they automatically move to small sections of their own at the end
+> of the file – this makes `Wow.exe` slightly larger. **Many servers do not
+> tolerate a changed file size of `Wow.exe` – this can lead to a ban.**
 
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 47, off by default, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
@@ -871,15 +866,11 @@ before.
 >
 > **Shares the code cave with the slider patch (No. 46).** As with No. 4: together
 > with the slider patch, the patch automatically moves to a small section
-> `.nofade` of its own at the end of the file. Here too `Wow.exe` becomes slightly
-> larger (see No. 4).
+> `.nofade` of its own at the end of the file, which makes `Wow.exe` slightly
+> larger. **Many servers do not tolerate a changed file size of `Wow.exe` – this
+> can lead to a ban.**
 
-> [!WARNING]
-> All three patches (No. 4, the NPC fade-out and the slider patch) can be applied
-> together, but then `Wow.exe` becomes larger. **Many servers do not tolerate a
-> changed file size of `Wow.exe` – this can lead to a ban.**
-
-**HD unit frame portraits: 256x256 instead of 64x64** *(No. 53, off by default, Author: Badgermilk0)*
+**HD unit frame portraits: 256x256 (live 3D portraits)** *(No. 53, off by default, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
 instead of the default 64×64. Framing, tilt and zoom stay the same – only the
 render resolution increases, so the portraits become much sharper.
@@ -887,15 +878,11 @@ Only the 3D model path is raised; the icon/file path (fixed 64×64 images for
 item/spell icons) deliberately stays at 64, because its copy loop would
 otherwise read past the source.
 
-> [!NOTE]
-> This patch appends a new PE section (`.hdp`) to `Wow.exe` (generated 256px
-> alpha mask + code caves + detour of the mask builder). The file grows by
-> about 69 KB.
-
 > [!WARNING]
-> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
-> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
-> ban.**
+> This patch appends a new PE section `.hdp` to `Wow.exe` (generated 256px alpha
+> mask + code caves + detour of the mask builder), the file grows by about
+> 69 KB. **Many servers do not tolerate a changed file size of `Wow.exe` – this
+> can lead to a ban.**
 
 ### Interface & comfort
 
@@ -907,7 +894,7 @@ sorted automatically.
 Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
 enabled from the start.
 
-**Cast bars on all frames (like Cataclysm)** *(No. 56, Author: Kebabstorm)*
+**Cast bars on all frames** *(No. 56, Author: Kebabstorm)*
 Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
@@ -952,8 +939,8 @@ addons.
 **Character creation: do not randomize the appearance automatically** *(No. 59, off by default, Author: Alyst3r (0x539wowmod))*
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
-etc. automatically; you start with the default appearance. The randomize button keeps working – it uses a separate path in
-the client.
+etc. automatically; you start with the default appearance. The randomize button
+keeps working – it uses a separate path in the client.
 
 ### Window, mouse & camera
 
@@ -968,7 +955,7 @@ Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 Switching to windowed mode while in-game no longer results in a black
 screen.
 
-**Fix mouse flicker and camera jumps** *(No. 63, Author: Robinsch)*
+**Mouse flicker / camera jump fix** *(No. 63, Author: Robinsch)*
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
@@ -1031,15 +1018,10 @@ overwrites the table of the slider patch.
 
 </details>
 
-> [!NOTE]
-> Like the HD portraits, this patch changes the file size and PE structure
-> because it appends a section. Servers that check the client's size or section
-> layout may notice this.
-
 > [!WARNING]
-> This patch appends a section of its own, which makes `Wow.exe` larger. **Many
-> servers do not tolerate a changed file size of `Wow.exe` – this can lead to a
-> ban.**
+> Like the HD portraits, this patch appends a section of its own (about +1 KB),
+> which makes `Wow.exe` larger. **Many servers do not tolerate a changed file
+> size of `Wow.exe` – this can lead to a ban.**
 
 ### Sound
 
@@ -1056,7 +1038,6 @@ Includes the following changes:
 > **OpenAL** is required for these settings to take effect at all, e.g.
 > [OpenAL Soft](https://github.com/kcat/openal-soft).
 
-
 ### Client info: version, build, title, date
 
 These four patches by MacWarrior (ported from his Python scripts
@@ -1067,21 +1048,21 @@ brackets, ENTER accepts it. Invalid input is asked again with a message, and all
 values are checked before anything is written. The patcher remembers the values
 in `patcher_selection.ini` (`value.<Id>=…`); with `-Unattended` the remembered
 values or the original values are used. If a patch is already in `Wow.exe`,
-its current value is the suggestion. When asking, the patcher shows the
-suggestion after the patch name with the original value.
+its current value is the suggestion. When asking, it is also shown after the
+patch name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 
 > [!NOTE]
 > Servers may check the client version or build number, so a changed value has
 > to match the server.
 
-**Change client version** *(No. 66, off by default, Author: MacWarrior)*
+**Change client version (original 3.3.5)** *(No. 66, off by default, Author: MacWarrior)*
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
 ProductVersion (`Version x.y`) of the version resource and `VS_FIXEDFILEINFO`.
 The build number is kept. Major and minor version together must fit into the
 ProductVersion field (e.g. `3.3`).
 
-**Change build number** *(No. 67, off by default, Author: MacWarrior)*
+**Change build number (original 12340)** *(No. 67, off by default, Author: MacWarrior)*
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion. The
 patcher does not allow builds up to 6141: servers like AzerothCore or
@@ -1110,29 +1091,23 @@ Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
 
-**Change build date** *(No. 69, off by default, Author: MacWarrior)*
+**Change build date (original Jun 24 2010)** *(No. 69, off by default, Author: MacWarrior)*
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
 `FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
 suggestion in brackets is **today's date** (with `FR` if you chose it last
 time); with `-Unattended` the remembered value is used. If the patch is already
-applied, the current date of `Wow.exe` is suggested. When asking for the value,
-the patcher also shows the suggestion after the original date, e.g.
-`Change build date (original Jun 24 2010) -> suggestion: 2026-10-01`, or
-`-> current: …` if the patch is already applied.
+applied, the current date of `Wow.exe` is suggested.
 
 ---
 
 ## Notes
 
-- Before patching, `Wow.exe` is checked. Only the original, unmodified
-  `Wow.exe` (SHA256) or one patched with this patcher (watermark) that can be
-  reverted exactly to the original is accepted. A file patched with other tools
-  or older patcher versions is rejected.
-- The backup `Wow.exe.BAK` is only created from the original, i.e. on the first
-  patch run, and only after the selection has been confirmed. An existing
-  backup is overwritten (the input has just been verified to be the original).
-- If there is no `Wow.exe` in the folder, the patcher aborts.
+- **File size and bans:** patches that append a section to `Wow.exe` (No. 41,
+  53 and 64 always, No. 4 and 52 together with No. 46) make the file larger.
+  Many servers do not tolerate a changed file size – this can lead to a ban.
+  These patches are marked in the overview, and the patcher warns before the
+  confirmation prompt. All other patches do not change the file size.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   It sits in the unused padding behind the `.tls` section (file offset
@@ -1142,9 +1117,9 @@ the patcher also shows the suggestion after the original date, e.g.
   `findstr /m "St0nys AIO" Wow.exe` (prints the file name if it is there).
   Removing all patches removes it again. The patcher itself also uses the
   watermark to recognize that a `Wow.exe` comes from it.
-- To restore the original, run the patcher and press `N` and ENTER – with or
-  without `patcher_state.ini`. Alternatively use the backup: delete the patched
-  `Wow.exe` and rename `Wow.exe.BAK` to `Wow.exe`.
+- **Restoring the original:** run the patcher, press `N` and ENTER – with or
+  without `patcher_state.ini`. Alternatively delete the patched `Wow.exe` and
+  rename `Wow.exe.BAK` to `Wow.exe`.
 - **For developers:** the original bytes table in the script is regenerated
   with `apply_patches.ps1 -BuildTable -Path <original Wow.exe>`. This is needed
   after every change to a patch; if it no longer matches, the patcher points it

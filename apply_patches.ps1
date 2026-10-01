@@ -16,8 +16,9 @@
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "billy" (Preset
-#                             Billy's_Wow.exe = Standard), "all" oder
-#                             Nummern/Bereiche wie "1,3,5-8"
+#                             Billy's_Wow.exe = Standard), "all", "none" (alle
+#                             Patches zuruecknehmen) oder Nummern/Bereiche
+#                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
 #                             gespeicherte Auswahl bzw. das Preset Billy's_Wow.exe
@@ -151,13 +152,13 @@ $TEXT = @{
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
         BackupFail    = '[FEHLER] Konnte Wow.exe nicht sichern. Abbruch.'
         BackupOk      = 'Backup der Wow.exe erfolgreich erstellt: {0}'
-        BackupSkip    = 'Kein neues Backup: Die Wow.exe ist bereits gepatcht, die Original-Bytes stehen in patcher_state.ini.'
+        BackupSkip    = 'Kein neues Backup noetig: Wow.exe.BAK ist vorhanden und bleibt unveraendert.'
+        BackupRedo    = 'Wow.exe.BAK fehlte und wurde aus dem rekonstruierten Original neu angelegt: {0}'
         Starting      = 'Starte Patch-Vorgang...'
         PatchFail     = '[FEHLER] Beim Patchen ist ein Fehler aufgetreten:'
         NotWritten    = 'Die Wow.exe wurde nicht veraendert.'
         WriteFail     = '[FEHLER] Konnte die Wow.exe nicht schreiben (laeuft WoW noch?):'
         UndoFail      = '[FEHLER] Selbsttest fehlgeschlagen: Die Patches liessen sich nicht sauber zuruecknehmen.'
-        StateFail     = '[FEHLER] Konnte patcher_state.ini nicht schreiben:'
         StateWarn1    = 'WARNUNG: Die Wow.exe ist gepatcht, patcher_state.ini konnte aber nicht gespeichert werden:'
         StateWarn2    = 'Kein Problem: Beim naechsten Start ermittelt der Patcher den Patchstand ueber das Wasserzeichen (dauert nur etwas laenger).'
         Done1         = '[FERTIG] Wow.exe wurde erfolgreich gepatcht.'
@@ -231,13 +232,13 @@ $TEXT = @{
         Aborted       = 'Aborted. Wow.exe has not been modified.'
         BackupFail    = '[ERROR] Could not back up Wow.exe. Aborting.'
         BackupOk      = 'Backup of Wow.exe created successfully: {0}'
-        BackupSkip    = 'No new backup: Wow.exe is already patched, the original bytes are stored in patcher_state.ini.'
+        BackupSkip    = 'No new backup needed: Wow.exe.BAK exists and stays untouched.'
+        BackupRedo    = 'Wow.exe.BAK was missing and has been recreated from the reconstructed original: {0}'
         Starting      = 'Starting patch process...'
         PatchFail     = '[ERROR] An error occurred while patching:'
         NotWritten    = 'Wow.exe has not been modified.'
         WriteFail     = '[ERROR] Could not write Wow.exe (is WoW still running?):'
         UndoFail      = '[ERROR] Self-test failed: the patches could not be removed cleanly.'
-        StateFail     = '[ERROR] Could not write patcher_state.ini:'
         StateWarn1    = 'WARNING: Wow.exe is patched, but patcher_state.ini could not be saved:'
         StateWarn2    = 'No problem: next time the patcher determines the patch state via the watermark (just takes a bit longer).'
         Done1         = '[DONE] Wow.exe has been patched successfully.'
@@ -395,6 +396,7 @@ function Add-HdPortraits([int]$SIZE) {
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $vsize) $SA)))
     $hoff = $sectBase + 40 * $nsec
+    if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'HD-Portraits: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.hdp'), 0, $sh, 0, 4)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$vsize), 0, $sh, 8, 4)
@@ -830,11 +832,12 @@ function Add-VoiceLoader([string]$DllName) {
 
 # ============================================================
 #  Eigene Code-Sektion fuer kleine Code-Hoehlen
-#  In .text gibt es keine freie Luecke mehr, die gross genug und nicht schon
-#  von einem anderen Patch belegt ist. Patches mit Code-Hoehle bekommen darum
-#  wie HD-Portraits und CameraReforged eine eigene Sektion am Dateiende:
-#  Padding bis FileAlignment, Sektion anhaengen, PE-Header anpassen
-#  (NumberOfSections, SizeOfImage, neuer Sektionsheader, ausfuehrbar).
+#  Wie HD-Portraits und CameraReforged: Padding bis FileAlignment, Sektion
+#  am Dateiende anhaengen, PE-Header anpassen (NumberOfSections, SizeOfImage,
+#  neuer Sektionsheader, ausfuehrbar, mit -Writable auch beschreibbar).
+#  Genutzt vom Doppelsprung (braucht beschreibbaren Speicher) und als
+#  Ausweichmodus von WorldFrame-Absturzfix und NPC-Ausblenden, wenn der
+#  Slider-Patch die Luecke in .text belegt (siehe Get-CodeCave).
 #  Liefert @(VA der Sektion, Dateioffset der Sektion).
 # ============================================================
 function Add-CodeSection([string]$Name, [int]$Size, [switch]$Writable) {
@@ -1038,6 +1041,8 @@ function Test-DoubleJump([string]$v) {
 # ============================================================
 $WATERMARK_OFF = 0x72DE20
 $WATERMARK = 'Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher'
+# Erkannt wird nur dieser Anfang - der Rest (Link) darf sich zwischen Versionen aendern.
+$WATERMARK_MARK = 'Patched with St0nys AIO WoW.exe Patcher'
 
 function Add-Watermark {
     $b = [System.Text.Encoding]::ASCII.GetBytes($WATERMARK)
@@ -1061,7 +1066,7 @@ function Add-Watermark {
 #  Sektionen abgeschnitten; das Ergebnis muss exakt den Original-Hash haben.
 # ============================================================
 function Test-Watermark([byte[]]$data) {
-    $b = [System.Text.Encoding]::ASCII.GetBytes($WATERMARK)
+    $b = [System.Text.Encoding]::ASCII.GetBytes($WATERMARK_MARK)
     if ($data.Length -lt $WATERMARK_OFF + $b.Length) { return $false }
     for ($i = 0; $i -lt $b.Length; $i++) { if ($data[$WATERMARK_OFF + $i] -ne $b[$i]) { return $false } }
     return $true
@@ -1154,6 +1159,10 @@ function Get-DoubleJumpFromExe {
 #  einzeln (Sektionsheader an der ersten freien Stelle) - und merkt sich je
 #  Patch alle Stellen im Original, die er beschreibt. Stellen, die nur ein
 #  Patch beschreibt, bekommen die Markierung 1 (fuer die Erkennung).
+#  Dazu kommt der Pseudo-Eintrag "pe": NumberOfSections, SizeOfImage und die
+#  freien Sektionsheader-Slots. Welcher Patch seine Sektion in welchem Slot
+#  anlegt, haengt von der Kombination ab - so werden alle Slots unabhaengig
+#  davon zurueckgesetzt und gelten fuer keinen Patch als eigene Stelle.
 #  Das Ergebnis ersetzt den Block $ORIGINAL_TABLE in diesem Skript.
 # ============================================================
 function Invoke-BuildTable {
@@ -1184,6 +1193,16 @@ function Invoke-BuildTable {
         Add-Watermark
         Add-BuildRanges $ranges 'watermark' $start $orig.Length
     }
+    # PE-Header: NumberOfSections, SizeOfImage, freie Sektionsheader-Slots bis zu den ersten Rohdaten
+    $e = RU32 $orig 0x3C
+    $nsec = RU16 $orig ($e + 6)
+    $sectBase = $e + 24 + (RU16 $orig ($e + 20))
+    $firstRaw = RU32 $orig ($sectBase + 20)
+    for ($i = 1; $i -lt $nsec; $i++) { $r = RU32 $orig ($sectBase + 40 * $i + 20); if ($r -lt $firstRaw) { $firstRaw = $r } }
+    $ranges['pe'] = New-Object System.Collections.Generic.List[object]
+    $ranges['pe'].Add(@(($e + 6), ($e + 8)))
+    $ranges['pe'].Add(@(($e + 24 + 56), ($e + 24 + 60)))
+    $ranges['pe'].Add(@(($sectBase + 40 * $nsec), $firstRaw))
     # je Patch sortieren und zusammenfassen
     $merged = @{}
     foreach ($id in $ranges.Keys) {
@@ -1198,7 +1217,7 @@ function Invoke-BuildTable {
     }
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add("size;$($orig.Length)")
-    foreach ($id in (@($allIds) + 'watermark')) {
+    foreach ($id in (@($allIds) + 'watermark' + 'pe')) {
         if (-not $merged.ContainsKey($id)) { continue }
         $own = 0
         foreach ($r in $merged[$id]) {
@@ -1213,10 +1232,11 @@ function Invoke-BuildTable {
             $flag = 1; if ($shared) { $flag = 0 } else { $own++ }
             $lines.Add(('{0};{1:X};{2};{3}' -f $id, $r[0], ([BitConverter]::ToString($b)).Replace('-', ''), $flag))
         }
-        if ($own -eq 0) { Write-Host "  WARNUNG: $id hat keine eigene Stelle und ist nicht erkennbar." }
+        if ($own -eq 0 -and $id -ne 'pe') { Write-Host "  WARNUNG: $id hat keine eigene Stelle und ist nicht erkennbar." }
     }
     $block = "# BEGIN ORIGINAL-BYTES`r`n`$ORIGINAL_TABLE = @'`r`n" + ($lines -join "`r`n") + "`r`n'@`r`n# END ORIGINAL-BYTES"
     $src = [System.IO.File]::ReadAllText($scriptPath)
+    if ($src -match '[^\x00-\x7F]') { Write-Host 'BuildTable: Skript enthaelt Nicht-ASCII-Zeichen, Abbruch (es wird als ASCII zurueckgeschrieben).'; exit 1 }
     $a = $src.IndexOf('# BEGIN ORIGINAL-BYTES' + "`r`n")
     $z = $src.IndexOf('# END ORIGINAL-BYTES', $a)
     if ($a -lt 0 -or $z -lt 0) { Write-Host 'BuildTable: Markierungen nicht gefunden.'; exit 1 }
@@ -2140,7 +2160,7 @@ $patches = @(
         Patch 0xE087B @(0xEB)
     }}
 
-    # --- Fenster & Maus ---
+    # --- Fenster, Maus & Kamera ---
 
     @{ Id = 'window'; Cat = 'window'; On = $false
        Author = 'St0ny'
@@ -2420,7 +2440,7 @@ nofade;5DD7D9;000000000000000000000000000000000000000000000000000000000000000000
 hdportraits;116;0600;0
 hdportraits;160;00D09F00;0
 hdportraits;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-hdportraits;370;00000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+hdportraits;370;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 hdportraits;21620A;40000000;1
 hdportraits;216AA0;558BEC81EC04050000;1
 hdportraits;2174E9;930BEAFF;1
@@ -2444,7 +2464,7 @@ camera;116;0600;0
 camera;160;00D09F00;0
 camera;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-camera;398;00000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+camera;398;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;11CDB0;558BEC81EC80000000;1
 camera;1FCE36;68E0E7A100;1
 camera;1FD5B2;6840139E00;1
@@ -2478,6 +2498,9 @@ clientdate;62F3F3;4A756E2032342032303130;1
 clientdate;636F5F;4A756E2032342032303130;1
 clientdate;7578B4;3200300030003400;1
 watermark;72DE20;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+pe;116;0600;0
+pe;160;00D09F00;0
+pe;2F8;000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 '@
 # END ORIGINAL-BYTES
 
@@ -3086,7 +3109,7 @@ if (-not $patchedMode) {
         else { $kept++ }
     }
     foreach ($id in $appliedIds) { if ($chosenIds -notcontains $id) { $removed += $id } }
-    if ($added.Count + $changed.Count + $removed.Count -eq 0) {
+    if ($added.Count + $changed.Count + $removed.Count -eq 0 -and $chosen.Count -gt 0) {
         Say (T 'NoChange') 'Green'
         Exit-Patcher 0
     }
@@ -3099,7 +3122,10 @@ if (-not $patchedMode) {
     }
     if ($changed.Count -gt 0) {
         Say (T 'SumChange' $changed.Count) 'Cyan'
-        foreach ($p in $changed) { Say "  ~ $(PatchName $p): $($state.Values[$p.Id]) -> $($VALUES[$p.Id])" 'Green' }
+        foreach ($p in $changed) {
+            $old = $state.Values[$p.Id]; if (-not $old) { $old = '?' }
+            Say "  ~ $(PatchName $p): $old -> $($VALUES[$p.Id])" 'Green'
+        }
     }
     if ($removed.Count -gt 0) {
         Say (T 'SumRemove' $removed.Count) 'Cyan'
@@ -3176,18 +3202,23 @@ if (-not $Unattended) {
     Write-Host ''
 }
 
-# --- 5. Backup (nur vom Original, eine vorhandene Sicherung bleibt sonst stehen) ---
-if ($patchedMode) {
+# --- 5. Backup ---
+# Wow.exe.BAK ist immer das Original: beim ersten Patchen eine Kopie der
+# Datei, bei einer gepatchten Wow.exe bleibt eine vorhandene Sicherung stehen;
+# fehlt sie (z.B. Exe von einem anderen Rechner), wird sie aus dem
+# rekonstruierten Original ($f, per SHA256 geprueft) neu angelegt.
+$bakExists = Test-Path -LiteralPath $backup -PathType Leaf
+if ($patchedMode -and $bakExists) {
     Say (T 'BackupSkip')
 } else {
     try {
-        Copy-Item -LiteralPath $file -Destination $backup -Force
+        if ($patchedMode) { [System.IO.File]::WriteAllBytes($backup, $f) } else { Copy-Item -LiteralPath $file -Destination $backup -Force }
     } catch {
         Say (T 'BackupFail') 'Red'
         Say $_.Exception.Message 'Red'
         Exit-Patcher 1
     }
-    Say (T 'BackupOk' $backup)
+    if ($patchedMode) { Say (T 'BackupRedo' $backup) } else { Say (T 'BackupOk' $backup) }
 }
 Write-Host ''
 Say (T 'Starting')
@@ -3222,6 +3253,7 @@ try {
 # exakt zum Original zuruecknehmen laesst. Der neue Zustand geht zuerst in
 # eine .tmp-Datei und ersetzt den alten erst, wenn die Wow.exe geschrieben ist.
 $stateTmp = $stateFile + '.tmp'
+$stateWarn = $null
 if ($total -gt 0) {
     $undo = Get-UndoEntries $origBytes
     if ($null -eq (Restore-Original $f @{ Size = [int64]$origBytes.Length; Undo = $undo })) {
@@ -3231,14 +3263,9 @@ if ($total -gt 0) {
         Exit-Patcher 1
     }
     if ($null -eq (Restore-FromTable $f)) { Write-Host ''; Say (T 'TableWarn') 'Yellow' }
-    $stateError = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo
-    if ($stateError) {
-        Write-Host ''
-        Say (T 'StateFail') 'Red'
-        Say $stateError 'Red'
-        Say (T 'NotWritten') 'Red'
-        Exit-Patcher 1
-    }
+    # Die Zustandsdatei ist nur eine Beschleunigung - ein Schreibfehler
+    # verhindert das Patchen nicht (Hinweis am Ende).
+    $stateWarn = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo
 }
 
 # --- 8. Datei einmal zurueckschreiben ---
@@ -3253,9 +3280,11 @@ try {
 }
 
 # --- 9. Zustand uebernehmen (ohne Patches ist die Wow.exe original, dann weg damit) ---
-$stateWarn = $null
 try {
-    if ($total -gt 0) {
+    if ($total -gt 0 -and $stateWarn) {
+        # .tmp konnte nicht geschrieben werden - alten Zustand nicht stehen lassen
+        if (Test-Path -LiteralPath $stateFile -PathType Leaf) { [System.IO.File]::Delete($stateFile) }
+    } elseif ($total -gt 0) {
         [System.IO.File]::Copy($stateTmp, $stateFile, $true)
         [System.IO.File]::Delete($stateTmp)
     } elseif (Test-Path -LiteralPath $stateFile -PathType Leaf) {
