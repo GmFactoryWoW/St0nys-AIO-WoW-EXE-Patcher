@@ -676,6 +676,55 @@ function Set-ClientDate([string]$v) {
 }
 
 # ============================================================
+#  Helfer fuer den voice.dll-Loader (mod-voicechat, ALPHA)
+#  Uebernommen aus Add-VoiceLoader.ps1 aus https://github.com/Raz0r1337/mod-voicechat
+#  Dateigroesse und PE-Header bleiben unveraendert. Genutzt wird eine
+#  27-Byte-int3-Luecke zwischen zwei Funktionen (VA 0x944B45, Datei 0x543F45);
+#  der Sprung am Einstiegspunkt (VA 0x401005: jmp 0x40BA9B, direkt vor
+#  __security_init_cookie/__tmainCRTStartup) wird dorthin umgebogen:
+#      push "voice.dll" / call [LoadLibraryA] / jmp 0x40BA9B
+#  eax/ecx/edx/Flags sind an dieser Stelle tot, ebx/esi/edi/ebp sichert
+#  LoadLibraryA selbst. Fehlt die DLL, startet WoW ganz normal.
+# ============================================================
+function Add-VoiceLoader([string]$DllName) {
+    $IB        = 0x400000
+    $TEXT_DIFF = 0x400C00          # VA - Dateioffset in .text
+    $RDATA_DIFF = 0x401800         # VA - Dateioffset in .rdata
+    $JMP_VA    = 0x401005          # jmp in die __tmainCRTStartup-Kette
+    $CRT_VA    = 0x40BA9B          # urspruengliches Sprungziel
+    $CAVE_VA   = 0x944B45          # int3-Luecke
+    $CAVE_LEN  = 27
+    $IAT_LLA   = 0x9DF248          # KERNEL32!LoadLibraryA (IAT)
+    $jmpOff  = $JMP_VA - $TEXT_DIFF
+    $caveOff = $CAVE_VA - $TEXT_DIFF
+
+    # --- Pruefen: Einstiegspunkt, Einstiegscode, freie Luecke, Import ---
+    $e = RU32 $script:f 0x3C
+    if ((RU32 $script:f ($e + 24 + 16)) -ne ($JMP_VA - 5 - $IB)) { throw 'voice.dll-Loader: unerwarteter Einstiegspunkt.' }
+    if ($script:f[$jmpOff - 5] -ne 0xE8 -or $script:f[$jmpOff] -ne 0xE9) { throw 'voice.dll-Loader: Einstiegscode unbekannt.' }
+    $target = $JMP_VA + 5 + [BitConverter]::ToInt32($script:f, $jmpOff + 1)
+    if ($target -ne $CRT_VA) { throw ('voice.dll-Loader: Einstiegssprung ist bereits umgebogen (0x{0:X}).' -f $target) }
+    for ($i = 0; $i -lt $CAVE_LEN; $i++) {
+        if ($script:f[$caveOff + $i] -ne 0xCC) { throw 'voice.dll-Loader: Luecke bei 0x944B45 ist belegt.' }
+    }
+    $thunk = RU32 $script:f ($IAT_LLA - $RDATA_DIFF)
+    if ($thunk -ge 2147483648 -or [System.Text.Encoding]::ASCII.GetString($script:f, ($thunk + $IB - $RDATA_DIFF + 2), 12) -cne 'LoadLibraryA') {
+        throw 'voice.dll-Loader: IAT-Eintrag LoadLibraryA nicht gefunden.'
+    }
+
+    # --- Payload: push str / call [LoadLibraryA] / jmp CRT / "voice.dll\0" ---
+    $nameBytes = [System.Text.Encoding]::ASCII.GetBytes($DllName)
+    if ($nameBytes.Length -lt 1 -or $nameBytes.Length -gt ($CAVE_LEN - 17)) { throw 'voice.dll-Loader: DLL-Name max. 10 Zeichen.' }
+    $p = New-Object System.Collections.Generic.List[byte]
+    AddRaw $p @(0x68);       AddLE32 $p ($CAVE_VA + 16)              # push offset Name
+    AddRaw $p @(0xFF, 0x15); AddLE32 $p $IAT_LLA                     # call [LoadLibraryA]
+    AddRaw $p @(0xE9);       AddLE32 $p ($CRT_VA - ($CAVE_VA + 16))  # jmp urspruengliches Ziel
+    AddRaw $p $nameBytes;    AddRaw $p @(0x00)                       # "voice.dll\0"
+    Patch $caveOff $p.ToArray()
+    Patch ($jmpOff + 1) ([BitConverter]::GetBytes([int32]($CAVE_VA - ($JMP_VA + 5))))
+}
+
+# ============================================================
 #  PATCH-DEFINITIONEN
 #  Jeder Patch ist eine Hashtable:
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
@@ -718,7 +767,7 @@ $patches = @(
     # --- System & Leistung ---
 
     @{ Id = 'laa'; Cat = 'system'; On = $true
-       Author = 'Alastor StrixEfuartus / Kebabstorm'
+       Author = 'Alastor StrixEfuartus / Kebabstorm / Robinsch'
        De = '4GB-Patch (Large Address Aware)'
        En = '4GB patch (Large Address Aware)'
        Code = {
@@ -899,6 +948,20 @@ $patches = @(
         Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
         Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
         Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
+    }}
+
+    @{ Id = 'voicedll'; Cat = 'modding'; On = $false
+       Author = 'St0ny'
+       De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
+       En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
+       NoteDe = 'Modul ungetestet und unfertig'
+       NoteEn = 'module untested and unfinished'
+       Url = 'https://github.com/Raz0r1337/mod-voicechat'
+       Code = {
+        # ALPHA - das Modul mod-voicechat ist noch komplett ungetestet und nicht
+        # fertig. Laedt beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
+        # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
+        Add-VoiceLoader 'voice.dll'
     }}
 
     # --- Gameplay-Fixes ---
