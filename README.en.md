@@ -198,7 +198,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 1  | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ |
 | 2  | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – |
 | 3  | Refresh item cache immediately | Robinsch | ✅ |
-| 4  | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) / St0ny | – |
+| 4  | WorldFrame crash fix (invalid triangle indices) *(shares code cave with the slider patch)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Security & privacy** |  |  |
 | 5  | Remote code execution exploit fix | Robinsch | – |
 | 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – |
@@ -247,7 +247,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 45 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – |
 | 46 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 47 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ |
-| 48 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 48 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag, shares code cave with the slider patch)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 49 | HD unit frame portraits: 256x256 (live 3D portraits) | Badgermilk0 | – |
 |    | **Interface & comfort** |  |  |
 | 50 | Auto-sort quest tracker |  | – |
@@ -297,10 +297,15 @@ Prevents a crash in a world rendering function (VA `0x81D510`). It walks over
 triangles made of three vertex indices each and turns "index minus base" into a
 memory address. If an index is smaller than the base, the address points before
 the buffer and the client crashes. The patch checks the three indices of the
-first triangle beforehand and skips the function in that case. The code lives in
-a small section `.wfcfix` of its own at the end of the file and does not use a
-gap that another patch uses. Compared to the original, the three jump distances
-have been corrected.
+first triangle beforehand and skips the function in that case. Compared to the
+original, the three jump distances have been corrected and the code is shorter.
+
+> [!IMPORTANT]
+> **Shares the code cave with the slider patch (No. 42).** The code lives in the free gap at the end of `.text`, which No. 48
+> uses as well. No. 4 and No. 48 fit in there together,
+> but not next to the slider patch: if No. 42 is selected, the patch automatically
+> moves to a small section `.wfcfix` of its own at the end of the file, and the
+> patcher points this out before the confirmation prompt.
 
 > [!NOTE]
 > A heuristic fix, as the author calls it too: only the first triangle of each
@@ -629,6 +634,11 @@ there is nothing to raise. The value can still only be set via `Config.wtf`,
 `/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
 see above).
 
+> [!NOTE]
+> No. 4 and No. 48 use the code cave at the end of `.text` as well. If they are
+> selected together with this patch, they automatically move to small sections
+> of their own at the end of the file.
+
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 43, off by default, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
@@ -771,12 +781,15 @@ When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
 `UNIT_FLAG2_DO_NOT_FADE_IN` (`0x20`) in `UNIT_FIELD_FLAGS_2` disappear instantly –
 matching the missing fade-in. Players and NPCs without the flag behave as
-before. The code lives in a small section `.nofade` of its own at the end of the
-file and does not use a gap that another patch uses.
+before.
 
 > [!IMPORTANT]
 > Only takes effect if the server sets the flag. Without server support nothing
 > changes.
+>
+> **Shares the code cave with the slider patch (No. 42).** As with No. 4: together
+> with the slider patch, the patch automatically moves to a small section
+> `.nofade` of its own at the end of the file.
 
 **HD unit frame portraits: 256x256 instead of 64x64** *(No. 49, off by default, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
@@ -844,9 +857,9 @@ addons.
 **Requires** the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk.
 
 **Character creation: do not randomize the appearance automatically** *(No. 55, off by default, Author: Alyst3r (0x539wowmod))*
-When opening character creation (and, depending on the selection, when changing
-race or class), the client no longer randomizes face, skin, hair style etc.
-automatically. The randomize button keeps working – it uses a separate path in
+When opening character creation (clicking "Create New Character") and when
+changing race or gender, the client no longer randomizes face, skin, hair style
+etc. automatically; you start with the default appearance. The randomize button keeps working – it uses a separate path in
 the client.
 
 ### Window, mouse & camera

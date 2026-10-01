@@ -201,7 +201,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 1  | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ |
 | 2  | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – |
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ |
-| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – |
+| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) *(teilt Code-Höhle mit Slider-Patch)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Sicherheit & Datenschutz** |  |  |
 | 5  | Remote Code Execution Exploit Fix | Robinsch | – |
 | 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – |
@@ -250,7 +250,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 45 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – |
 | 46 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
 | 47 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
-| 48 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 48 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen, teilt Code-Höhle mit Slider-Patch)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 49 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
 |    | **Interface & Komfort** |  |  |
 | 50 | Quest-Tracker automatisch sortieren |  | – |
@@ -300,10 +300,15 @@ Verhindert einen Absturz in einer Funktion der Weltdarstellung (VA `0x81D510`). 
 läuft über Dreiecke aus je drei Vertex-Indizes und rechnet „Index minus Basis“ in
 eine Speicheradresse um. Ist ein Index kleiner als die Basis, zeigt die Adresse
 vor den Puffer und der Client stürzt ab. Der Patch prüft vorher die drei Indizes
-des ersten Dreiecks und überspringt die Funktion in diesem Fall. Der Code liegt
-in einer eigenen kleinen Sektion `.wfcfix` am Dateiende und belegt keine Lücke,
-die ein anderer Patch nutzt. Gegenüber dem Original sind die drei Sprungweiten
-korrigiert.
+des ersten Dreiecks und überspringt die Funktion in diesem Fall. Gegenüber dem
+Original sind die drei Sprungweiten korrigiert und der Code ist kürzer.
+
+> [!IMPORTANT]
+> **Teilt sich die Code-Höhle mit dem Slider-Patch (Nr. 42).** Der Code liegt in der freien Lücke am Ende von `.text`, die
+> auch Nr. 48 nutzt. Nr. 4 und Nr. 48 passen
+> zusammen hinein, nicht aber neben den Slider-Patch: Ist Nr. 42 gewählt, weicht der
+> Patch automatisch auf eine eigene kleine Sektion `.wfcfix` am Dateiende aus, und
+> der Patcher weist vor der Sicherheitsabfrage darauf hin.
 
 > [!NOTE]
 > Ein heuristischer Fix, wie ihn auch der Autor nennt: Geprüft wird nur das erste
@@ -645,6 +650,11 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 `Config.wtf`, `/console horizonFarclipScale 12` oder ein CVar-Addon setzen
 (entsperrt ist er bis 12, siehe oben).
 
+> [!NOTE]
+> Die Code-Höhle am Ende von `.text` nutzen auch Nr. 4 und Nr. 48. Sind sie
+> zusammen mit diesem Patch gewählt, weichen sie automatisch auf eigene kleine
+> Sektionen am Dateiende aus.
+
 **GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 43, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
@@ -791,12 +801,15 @@ Beim Entfernen eines NPCs (z. B. Despawn) blendet der Client das Modell
 normalerweise langsam aus. Mit dem Patch verschwinden NPCs sofort, bei denen der
 Server in `UNIT_FIELD_FLAGS_2` das Flag `UNIT_FLAG2_DO_NOT_FADE_IN` (`0x20`) setzt –
 passend zum fehlenden Einblenden. Spieler und NPCs ohne das Flag verhalten sich
-wie bisher. Der Code liegt in einer eigenen kleinen Sektion `.nofade` am
-Dateiende und belegt keine Lücke, die ein anderer Patch nutzt.
+wie bisher.
 
 > [!IMPORTANT]
 > Wirkt nur, wenn der Server das Flag setzt. Ohne Unterstützung durch den Server
 > ändert sich nichts.
+>
+> **Teilt sich die Code-Höhle mit dem Slider-Patch (Nr. 42).** Wie bei Nr. 4: Mit
+> dem Slider-Patch weicht der Patch automatisch auf eine eigene kleine Sektion
+> `.nofade` am Dateiende aus.
 
 **HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 49, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
@@ -864,9 +877,9 @@ Die Funktion kann per Addon angesprochen werden.
 **Benötigt** das [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) aus awesome_wotlk.
 
 **Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 55, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
-Beim Öffnen der Charaktererstellung (und je nach Auswahl beim Wechsel von Volk
-oder Klasse) würfelt der Client Gesicht, Haut, Frisur usw. nicht mehr
-automatisch aus. Der Zufall-Knopf funktioniert weiter – er nutzt im Client einen
+Beim Öffnen der Charaktererstellung (Klick auf „Neuer Charakter“) und beim
+Wechsel von Volk oder Geschlecht würfelt der Client Gesicht, Haut, Frisur usw.
+nicht mehr automatisch aus, man startet mit dem Standard-Aussehen. Der Zufall-Knopf funktioniert weiter – er nutzt im Client einen
 eigenen Weg.
 
 ### Fenster, Maus & Kamera
