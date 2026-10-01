@@ -234,37 +234,39 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 30 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | Alastor StrixEfuartus | – |
 | 31 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – |
 | 32 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ |
+| 33 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden)* | Alastor StrixEfuartus | – |
+| 34 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden)* | Alastor StrixEfuartus | – |
 |    | **Grafik & Sichtweite** |  |  |
-| 33 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
-| 34 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
-| 35 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ |
-| 36 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
-| 37 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – |
-| 38 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – |
-| 39 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | – |
-| 40 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – |
-| 41 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
-| 42 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
-| 43 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
+| 35 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
+| 36 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
+| 37 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ |
+| 38 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
+| 39 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – |
+| 40 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – |
+| 41 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | – |
+| 42 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – |
+| 43 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
+| 44 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
+| 45 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
 |    | **Interface & Komfort** |  |  |
-| 44 | Quest-Tracker automatisch sortieren |  | – |
-| 45 | Erweiterte Weltkarte standardmäßig aktiv |  | – |
-| 46 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
-| 47 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
-| 48 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ |
+| 46 | Quest-Tracker automatisch sortieren |  | – |
+| 47 | Erweiterte Weltkarte standardmäßig aktiv |  | – |
+| 48 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
+| 49 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
+| 50 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ |
 |    | **Fenster, Maus & Kamera** |  |  |
-| 49 | Fenstermodus als Standard setzen | St0ny | – |
-| 50 | Fenstermodus maximiert als Standard setzen | St0ny | – |
-| 51 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ |
-| 52 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
-| 53 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig)* | Stormhand / St0ny | – |
+| 51 | Fenstermodus als Standard setzen | St0ny | – |
+| 52 | Fenstermodus maximiert als Standard setzen | St0ny | – |
+| 53 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ |
+| 54 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
+| 55 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig)* | Stormhand / St0ny | – |
 |    | **Sound** |  |  |
-| 54 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
+| 56 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 |    | **Client-Infos: Version, Build, Titel, Datum** |  |  |
-| 55 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – |
-| 56 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – |
-| 57 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – |
-| 58 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – |
+| 57 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – |
+| 58 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – |
+| 59 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – |
+| 60 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -432,7 +434,7 @@ Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem /follow-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
 Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
 eine Code-Höhle um, die ihr Ergebnis ignoriert. Diese Höhle läge aber genau
-dort, wo der Slider-Patch (Nr. 37) seinen Code ablegt. Hier wird
+dort, wo der Slider-Patch (Nr. 39) seinen Code ablegt. Hier wird
 stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und beide Patches vertragen sich.
 
@@ -452,9 +454,28 @@ Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
+**Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)** *(Nr. 33, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+Der Charakter kommt jeden Hang hoch, egal wie steil. Im Original ist bei 50°
+Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
+(`0.6427876` bei VA `0xA37F0C`). Der Patch setzt ihn auf `0.0` = cos 90°.
+
+> [!WARNING]
+> Server mit Anti-Cheat können das als Climb-Hack erkennen.
+
+**Sprunghöhe ändern** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+Ändert die Anfangsgeschwindigkeit des Sprungs (VA `0xAA33DC`, Original
+`-7.9555473`). Der Patcher fragt den Wert nach der Auswahl ab: eine negative
+Zahl von `-100` bis knapp unter `0`, Komma oder Punkt als Dezimaltrenner. Je
+kleiner der Wert, desto höher der Sprung; die Höhe wächst mit dem Quadrat, d. h.
+`-11.25` ergibt etwa die doppelte, `-15.91` etwa die vierfache Sprunghöhe. Der
+Wert wird wie bei den Client-Info-Patches gemerkt.
+
+> [!WARNING]
+> Server mit Anti-Cheat können das als Jump-Hack erkennen.
+
 ### Grafik & Sichtweite
 
-**Farclip unlock auf max 10000** *(Nr. 33, Autor: Alastor StrixEfuartus)*
+**Farclip unlock auf max 10000** *(Nr. 35, Autor: Alastor StrixEfuartus)*
 Entsperrt die maximale Sichtweite (Farclip) auf 10000 Yards. Der Client klemmt
 den Wert beim Setzen in einer einzigen Funktion (VA `0x780770`) nach oben ab
 und hält dafür zwei Grenzen bereit: 1583 Yards im Normalfall und 791 Yards als
@@ -466,27 +487,27 @@ Die Untergrenze von 183 Yards bleibt unangetastet, und ein davon getrenntes
 Eingabelimit für das CVar gibt es nicht – diese Klemme ist das Limit.
 Nicht zu verwechseln mit der 1277 aus dem Video-Menü: Das ist die Obergrenze
 des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
-Patch Nr. 37 „Slider-Maxima im Video-Menü erweitern“).
+Patch Nr. 39 „Slider-Maxima im Video-Menü erweitern“).
 
-**CVar horizonFarclipScale auf max. Wert 12 entsperrt** *(Nr. 34, Autor: St0ny)*
+**CVar horizonFarclipScale auf max. Wert 12 entsperrt** *(Nr. 36, Autor: St0ny)*
 Entsperrt den CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
-**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 35, Autor: St0ny)*
+**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 37, Autor: St0ny)*
 Entfernt die Obergrenze des CVars `environmentDetail` komplett. Original wird
 der Wert auf den Bereich 0.5 bis 1.5 begrenzt; der Patch hebelt die obere
 Begrenzung aus, sodass beliebig hohe Werte durchgereicht werden.
 Wichtig: Dieses CVar tut nichts anderes, als die GameObject-Sichtweiten zu
-multiplizieren (siehe Patch Nr. 38 und 37) – im
-Original nur die der Kategorien 1 bis 3, mit Patch Nr. 38 alle fünf. Es ist
+multiplizieren (siehe Patch Nr. 40 und 39) – im
+Original nur die der Kategorien 1 bis 3, mit Patch Nr. 40 alle fünf. Es ist
 damit der bequemste FPS-Hebel im Objekt-Rendering, weil er ohne Neupatchen im
 Spiel wirkt.
 
-**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 36)*
+**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 38)*
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Slider-Maxima im Video-Menü erweitern** *(Nr. 37, standardmäßig aus, Autor: St0ny)*
+**Slider-Maxima im Video-Menü erweitern** *(Nr. 39, standardmäßig aus, Autor: St0ny)*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -541,8 +562,8 @@ irgendetwas auffällt.
 
 - Der Regler setzt nur das CVar. Ohne die Unlock-Patches klemmt der Client den
   Wert beim Setzen sofort wieder auf sein Original zurück – die Patches
-  „Farclip unlock“ (Nr. 33), „CVar environmentDetail unlock“ (Nr. 35) und
-  „CVar groundEffectDist unlock“ (Nr. 36) gehören also dazu. Fehlen sie in der
+  „Farclip unlock“ (Nr. 35), „CVar environmentDetail unlock“ (Nr. 37) und
+  „CVar groundEffectDist unlock“ (Nr. 38) gehören also dazu. Fehlen sie in der
   Auswahl, weist der Patcher darauf hin.
 - Bei `groundEffectDensity` wirkt oberhalb von 64 nichts mehr: Der Vertexbuffer
   der Bodendeko ist im Client fest auf Dichte × 64 ≤ 4096 geklemmt. Der Regler
@@ -583,7 +604,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 `Config.wtf`, `/console horizonFarclipScale 12` oder ein CVar-Addon setzen
 (entsperrt ist er bis 12, siehe oben).
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 38, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 40, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -601,11 +622,11 @@ geregelt wird über das CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10                | 300   | 1000  | 2000  | 7500  | 12500 |
 
-Mit Patch Nr. 39 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
+Mit Patch Nr. 41 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
-unlock“ (Nr. 35) voraus.
+unlock“ (Nr. 37) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 39, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 41, standardmäßig aus, Autor: St0ny)*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab.
 Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
@@ -711,20 +732,20 @@ sie unabhängig von den Distanzen verbreitern.
 
 </details>
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 40, standardmäßig aus, Autor: Robinsch)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 42, standardmäßig aus, Autor: Robinsch)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
 
-**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 41, Autor: Robinsch)*
+**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 43, Autor: Robinsch)*
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Keine Transparenz beim Heranzoomen** *(Nr. 42, Autor: Alastor StrixEfuartus)*
+**Keine Transparenz beim Heranzoomen** *(Nr. 44, Autor: Alastor StrixEfuartus)*
 Der eigene Charakter wird nicht mehr durchsichtig, wenn die Kamera nah
 herangezoomt wird.
 
-**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 43, standardmäßig aus, Autor: Badgermilk0)*
+**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 45, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
 statt der Standard-64×64. Bildausschnitt, Neigung und Zoom bleiben unverändert
 – nur die Renderauflösung steigt, die Portraits werden also deutlich schärfer.
@@ -739,20 +760,20 @@ Kopierschleife sonst über die Quelle hinaus liest.
 
 ### Interface & Komfort
 
-**Quest-Tracker automatisch sortieren** *(Nr. 44, standardmäßig aus)*
+**Quest-Tracker automatisch sortieren** *(Nr. 46, standardmäßig aus)*
 Setzt den CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 45, standardmäßig aus)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 47, standardmäßig aus)*
 Setzt den CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
 
-**Cast Bars auf allen Frames (wie Cataclysm)** *(Nr. 46, Autor: Kebabstorm)*
+**Cast Bars auf allen Frames (wie Cataclysm)** *(Nr. 48, Autor: Kebabstorm)*
 Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 47, standardmäßig aus, Autor: MacWarrior)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 49, standardmäßig aus, Autor: MacWarrior)*
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
 6 Bordüren, 17 Bordürenfarben, 51 Hintergrundfarben. Der Tabard-Designer
@@ -783,7 +804,7 @@ Hälften = 34 Dateien, für alle 26 neuen Wappen zusammen 884. Der Archivname
 ist frei wählbar (`patch-*.MPQ`), dafür sorgt der Patch
 „Erweiterte MPQ-Namen erlauben“ (Nr. 15).
 
-**FlashWindow Patch** *(Nr. 48, Autor: Kebabstorm)*
+**FlashWindow Patch** *(Nr. 50, Autor: Kebabstorm)*
 FlashWindow: Lässt das WoW-Fenster in der Taskleiste blinken, wenn ein
 relevantes Ereignis eintritt und das Spiel im Hintergrund läuft.
 Die Funktion kann per Addon angesprochen werden.
@@ -791,24 +812,24 @@ Die Funktion kann per Addon angesprochen werden.
 
 ### Fenster, Maus & Kamera
 
-**Fenstermodus als Standard setzen** *(Nr. 49, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 51, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 50, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 52, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 51, Autor: Robinsch)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 53, Autor: Robinsch)*
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr.
 
-**Behebung des Mausflackerns und der Kamerasprünge** *(Nr. 52, Autor: Robinsch)*
+**Behebung des Mausflackerns und der Kamerasprünge** *(Nr. 54, Autor: Robinsch)*
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
-**CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen** *(Nr. 53, standardmäßig aus, Autor: Stormhand / St0ny)*
+**CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen** *(Nr. 55, standardmäßig aus, Autor: Stormhand / St0ny)*
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged) von **Stormhand** in diesen Patcher, damit
 alles in einem Durchgang läuft – eingebaut mit seiner ausdrücklichen Erlaubnis
 („Of course! Take whatever you need. I appreciate your work.“). Die Portierung
@@ -873,7 +894,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 
 ### Sound
 
-**Sound-Einstellungen optimieren** *(Nr. 54, standardmäßig aus, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 56, standardmäßig aus, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
@@ -904,23 +925,23 @@ Bei der Abfrage steht der Vorschlag hinter dem Patchnamen mit dem Originalwert.
 > Server können die Client-Version bzw. Build-Nummer prüfen. Ein geänderter Wert
 > muss also zum Server passen.
 
-**Client-Version ändern** *(Nr. 55, standardmäßig aus, Autor: MacWarrior)*
+**Client-Version ändern** *(Nr. 57, standardmäßig aus, Autor: MacWarrior)*
 Setzt eine neue Version im Format `x.y.z` (z. B. `3.3.6` oder `3.3.123`, höchstens
 7 Zeichen). Geändert werden die Version, die der Client im Spiel anzeigt, die
 FileVersion und die ProductVersion (`Version x.y`) der Versionsressource sowie
 `VS_FIXEDFILEINFO`. Die Build-Nummer bleibt erhalten. Haupt- und Nebenversion
 müssen zusammen in das ProductVersion-Feld passen (z. B. `3.3`).
 
-**Build-Nummer ändern** *(Nr. 56, standardmäßig aus, Autor: MacWarrior)*
+**Build-Nummer ändern** *(Nr. 58, standardmäßig aus, Autor: MacWarrior)*
 Setzt eine neue Build-Nummer (0 bis 65535, Original `12340`): die interne
 Build-Nummer, die sichtbare Build-Nummer und den vierten Teil der FileVersion.
 
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 57, standardmäßig aus, Autor: MacWarrior)*
+**Programmtitel in den Dateieigenschaften ändern** *(Nr. 59, standardmäßig aus, Autor: MacWarrior)*
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
 Höchstens 17 Zeichen, nur ASCII.
 
-**Build-Datum ändern** *(Nr. 58, standardmäßig aus, Autor: MacWarrior)*
+**Build-Datum ändern** *(Nr. 60, standardmäßig aus, Autor: MacWarrior)*
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk. Eingabe als `JJJJ-MM-TT`, optional mit `FR`
 dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`).
