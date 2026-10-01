@@ -67,9 +67,8 @@ To **change or remove** patches just run `patcher.bat` again, see
 7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
    what is removed), notes about missing or redundant companion patches and a
    confirmation prompt (Y/N).
-8. Backup as `Wow.exe.BAK` – a copy of the original on the first patch run. If
-   it is missing on a later run, it is recreated from the reconstructed
-   original.
+8. Backup: on the first patch run the original is saved as `Wow.exe.ORI`, on
+   every later run the previous `Wow.exe` is saved as `Wow.exe.BAK`.
 9. All selected patches are applied in memory (with progress output) and
    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
    untouched.
@@ -102,8 +101,8 @@ their name, with the link right below.
 Before the confirmation prompt the patcher shows **notes**, nothing is blocked:
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
-completely replaces the RCE fix) and when the selected patches make `Wow.exe`
-larger (ban risk, see [Notes](#notes)).
+completely replaces the RCE fix) and – as a red line – when selected patches
+can lead to a ban (anti-cheat or changed file size, see [Notes](#notes)).
 
 ### The selection is remembered
 
@@ -138,8 +137,8 @@ jump, client info) as you like. `N` and ENTER removes every patch – afterwards
 How it works:
 
 - **First start:** `Wow.exe` must be original (SHA256 check), otherwise the
-  patcher aborts. Patching creates `Wow.exe.BAK`, and every patched `Wow.exe`
-  gets a [watermark](#notes).
+  patcher aborts. Patching saves the original as `Wow.exe.ORI`, and every
+  patched `Wow.exe` gets a [watermark](#notes).
 - **Every later start:** the patcher recognizes a `Wow.exe` patched by itself
   by the watermark. If it is missing (and the file is not original), it aborts
   – e.g. for an exe patched with another tool.
@@ -156,9 +155,10 @@ How it works:
   was changed in some other way after patching – it aborts.
 - Before writing, the patcher also checks that the new result can be reverted
   cleanly to the original.
-- An existing `Wow.exe.BAK` is not touched on later runs and stays the
-  original. If it is missing, the patcher recreates it from the reconstructed
-  original.
+- `Wow.exe.ORI` is not touched on later runs and is always the original. If
+  it is missing, the patcher recreates it from the reconstructed original. In
+  addition, every later run saves the previous `Wow.exe` as `Wow.exe.BAK`, so
+  one step back is always possible.
 
 > [!NOTE]
 > A patch with a value exactly matching the original (e.g. the jump height
@@ -195,6 +195,8 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | `README.en.md`      | This file |
 | `patcher_selection.ini` | Created when you accept a selection, stores your patch selection |
 | `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches, values and original bytes – speeds up the next start, but is not strictly required |
+| `Wow.exe.ORI`       | Backup of the original `Wow.exe`, created on the first patch run |
+| `Wow.exe.BAK`       | Backup of the previous `Wow.exe` from before the last run |
 | `LICENSE`           | MIT license |
 
 ---
@@ -224,7 +226,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 15 | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – |
 | 16 | Allow extended MPQ names |  | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ |
-| 18 | LUA unlock (allow protected functions) *(may be treated as botting)* | Alastor StrixEfuartus | – |
+| 18 | LUA unlock (allow protected functions) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – |
 | 19 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ |
 | 20 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – |
 | 21 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – |
@@ -243,12 +245,12 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 33 | Unlimited race/class combinations *(server must support it)* | Alastor StrixEfuartus / Robinsch | – |
 | 34 | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 35 | Max characters per realm raised to 255 | St0ny | ✅ |
-| 36 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server)* | Alastor StrixEfuartus | – |
-| 37 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server)* | Alastor StrixEfuartus | – |
-| 38 | Steer forward/backward while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 39 | Steer sideways while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server; exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 36 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – |
+| 37 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – |
+| 38 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 39 | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Graphics & view distance** |  |  |
 | 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -256,7 +258,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 45 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ |
 | 46 | Graphics options: extend slider maximums | St0ny | – |
 | 47 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – |
-| 48 | GameObject view distance: Cat 0 from 30 to 50 yards | St0ny | – |
+| 48 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – |
 | 49 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – |
 | 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ |
 | 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ |
@@ -407,7 +409,8 @@ Addons and macros may call protected functions, e.g. `CastSpellByName`,
 or `ReloadUI`. `AttackTarget` still prints an error.
 
 > [!WARNING]
-> This enables automation. Servers with anti-cheat may treat it as botting.
+> This enables automation. Servers with anti-cheat may treat it as botting –
+> this can lead to a ban.
 
 **Enable AwesomeWotlkLib.dll support** *(No. 19, Author: FrostAtom)*
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
@@ -517,7 +520,8 @@ The character can walk up any slope, no matter how steep. The original stops at
 at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 
 > [!WARNING]
-> Servers with anti-cheat may detect this as a climb hack.
+> Servers with anti-cheat may detect this as a climb hack – this can lead to a
+> ban.
 
 **Change jump height (original -7.9555473)** *(No. 37, off by default, Author: Alastor StrixEfuartus)*
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
@@ -528,7 +532,8 @@ gives about double and `-15.91` about four times the jump height. The value is
 remembered like those of the client info patches.
 
 > [!WARNING]
-> Servers with anti-cheat may detect this as a jump hack.
+> Servers with anti-cheat may detect this as a jump hack – this can lead to a
+> ban.
 
 **Steer forward/backward while jumping** *(No. 38, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Normally the client ignores forward and backward input while the character is
@@ -540,7 +545,8 @@ in the EXE here – without DLL and without a code cave. On top comes the byte
 patch from 0x539wowmod that updates the movement in the air.
 
 > [!WARNING]
-> Servers with anti-cheat may detect changed movement in the air.
+> Servers with anti-cheat may detect changed movement in the air – this can
+> lead to a ban.
 
 **Steer sideways while jumping** *(No. 39, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Like the previous patch, but for sideways movement (strafing): two jumps in the
@@ -548,7 +554,8 @@ client's sideways input plus the byte patch from 0x539wowmod that no longer stop
 the movement early while the falling flag is set.
 
 > [!WARNING]
-> Servers with anti-cheat may detect changed movement in the air.
+> Servers with anti-cheat may detect changed movement in the air – this can
+> lead to a ban.
 
 **Turning while jumping changes the flight direction** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 If you turn while jumping (mouse or keys), the character keeps its flight
@@ -557,7 +564,8 @@ in the air as well, like the 0x539wowmod DLL does. Works best together with the
 two previous patches.
 
 > [!WARNING]
-> Servers with anti-cheat may detect changed movement in the air.
+> Servers with anti-cheat may detect changed movement in the air – this can
+> lead to a ban.
 
 **Double jump (more jumps in the air)** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Allows more jumps while the character is in the air. After the selection the
@@ -577,7 +585,7 @@ section `.djump` of its own at the end of the file (the gap in `.text` is not
 writable); this makes `Wow.exe` slightly larger.
 
 > [!WARNING]
-> Servers with anti-cheat may detect jumps in the air.
+> Servers with anti-cheat may detect jumps in the air – this can lead to a ban.
 >
 > This patch appends a section of its own, which makes `Wow.exe` larger.
 > **Many servers do not tolerate a changed file size of `Wow.exe` – this can lead
@@ -739,7 +747,8 @@ unlock" (No. 44).
 
 **GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 48, off by default, Author: St0ny)*
 If you want to keep view distances entirely at Blizzard's values, deselect
-this patch.
+this patch. It costs performance: noticeably more small clutter is visible at
+the same time, and the number of drawn objects is the performance lever.
 The patch only raises the smallest object category: candles, books, sacks,
 tools. In the original, Cat 0 is so tight at 30 yards that small clutter
 disappears much earlier than everything else; 50 improves the ratio to Cat 1
@@ -1103,11 +1112,15 @@ applied, the current date of `Wow.exe` is suggested.
 
 ## Notes
 
-- **File size and bans:** patches that append a section to `Wow.exe` (No. 41,
-  53 and 64 always, No. 4 and 52 together with No. 46) make the file larger.
-  Many servers do not tolerate a changed file size – this can lead to a ban.
-  These patches are marked in the overview, and the patcher warns before the
-  confirmation prompt. All other patches do not change the file size.
+- **Ban risk:** two groups of patches can lead to a ban on many servers. First,
+  patches that servers with anti-cheat may treat as cheating or botting: LUA
+  unlock (No. 18), climb angle (36), jump height (37), the air steering (38–40)
+  and the double jump (41). Second, patches that append a section to `Wow.exe`
+  and thus make the file larger: No. 41, 53 and 64 always, No. 4 and 52
+  together with No. 46 – many servers do not tolerate a changed file size.
+  Both groups are marked "ban risk" in the overview, and the patcher shows a
+  red warning before the confirmation prompt. All other patches do not change
+  the file size.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   It sits in the unused padding behind the `.tls` section (file offset
@@ -1119,7 +1132,8 @@ applied, the current date of `Wow.exe` is suggested.
   watermark to recognize that a `Wow.exe` comes from it.
 - **Restoring the original:** run the patcher, press `N` and ENTER – with or
   without `patcher_state.ini`. Alternatively delete the patched `Wow.exe` and
-  rename `Wow.exe.BAK` to `Wow.exe`.
+  rename `Wow.exe.ORI` to `Wow.exe`. `Wow.exe.BAK`, on the other hand, is the
+  `Wow.exe` from before the last run.
 - **For developers:** the original bytes table in the script is regenerated
   with `apply_patches.ps1 -BuildTable -Path <original Wow.exe>`. This is needed
   after every change to a patch; if it no longer matches, the patcher points it

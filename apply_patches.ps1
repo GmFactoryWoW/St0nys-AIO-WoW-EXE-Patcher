@@ -7,7 +7,8 @@
 #    2. Pruefen: Wow.exe vorhanden und original (SHA256) bzw. mit diesem
 #       Patcher gepatcht (Wasserzeichen) - dann Patchstand ermitteln
 #    3. Patches auswaehlen (Menue mit Vorauswahl)
-#    4. Bestaetigen, Backup Wow.exe.BAK anlegen, patchen
+#    4. Bestaetigen, Backup anlegen (Wow.exe.ORI = Original beim ersten
+#       Patchen, danach Wow.exe.BAK = vorherige Wow.exe), patchen
 #
 #  Die Auswahl aus dem Menue wird in patcher_selection.ini neben dem Skript
 #  gespeichert und beim naechsten Start wieder vorausgewaehlt.
@@ -57,7 +58,8 @@ if ($Unattended) {
     if (-not $Select) { $Select = 'saved' }
 }
 $file = $Path
-$backup = $file + '.BAK'
+$backup = $file + '.ORI'       # Original, wird beim ersten Patchen angelegt
+$backupPrev = $file + '.BAK'   # vorherige (gepatchte) Wow.exe bei jedem weiteren Lauf
 $settingsFile = Join-Path $scriptDir 'patcher_selection.ini'
 $stateFile = Join-Path $scriptDir 'patcher_state.ini'
 
@@ -92,7 +94,7 @@ $TEXT = @{
         Welcome1      = 'Willkommen. Dieses Tool patcht deine Wow.exe mit'
         Welcome2      = 'Verbesserungen: Bugfixes, Performance-Optimierungen,'
         Welcome3      = 'erweiterte Sichtweiten und verbesserte Sound-Einstellungen.'
-        Welcome4      = 'Beim ersten Patchen wird ein Backup als Wow.exe.BAK erstellt.'
+        Welcome4      = 'Beim ersten Patchen wird das Original als Wow.exe.ORI gesichert, danach die vorherige Wow.exe als Wow.exe.BAK.'
         Welcome5      = 'Eingespielte Patches lassen sich spaeter wieder abwaehlen - bis zurueck zum Original.'
         Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
         PressStart    = 'ENTER druecken um zu starten'
@@ -147,13 +149,16 @@ $TEXT = @{
         ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
+        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
+        CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
         BackupFail    = '[FEHLER] Konnte Wow.exe nicht sichern. Abbruch.'
-        BackupOk      = 'Backup der Wow.exe erfolgreich erstellt: {0}'
-        BackupSkip    = 'Kein neues Backup noetig: Wow.exe.BAK ist vorhanden und bleibt unveraendert.'
-        BackupRedo    = 'Wow.exe.BAK fehlte und wurde aus dem rekonstruierten Original neu angelegt: {0}'
+        BackupOk      = 'Original gesichert als: {0}'
+        BackupSkip    = 'Wow.exe.ORI (Original) ist vorhanden und bleibt unveraendert.'
+        BackupRedo    = 'Wow.exe.ORI fehlte und wurde aus dem rekonstruierten Original neu angelegt: {0}'
+        BackupPrev    = 'Bisherige Wow.exe gesichert als: {0}'
         Starting      = 'Starte Patch-Vorgang...'
         PatchFail     = '[FEHLER] Beim Patchen ist ein Fehler aufgetreten:'
         NotWritten    = 'Die Wow.exe wurde nicht veraendert.'
@@ -172,7 +177,7 @@ $TEXT = @{
         Welcome1      = 'Welcome. This tool patches your Wow.exe with'
         Welcome2      = 'improvements: bug fixes, performance optimizations,'
         Welcome3      = 'extended view distances and improved sound settings.'
-        Welcome4      = 'The first patch run creates a backup as Wow.exe.BAK.'
+        Welcome4      = 'The first patch run saves the original as Wow.exe.ORI, later runs save the previous Wow.exe as Wow.exe.BAK.'
         Welcome5      = 'Applied patches can be deselected later - all the way back to the original.'
         Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
         PressStart    = 'Press ENTER to start'
@@ -227,13 +232,16 @@ $TEXT = @{
         ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
+        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
+        CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
         BackupFail    = '[ERROR] Could not back up Wow.exe. Aborting.'
-        BackupOk      = 'Backup of Wow.exe created successfully: {0}'
-        BackupSkip    = 'No new backup needed: Wow.exe.BAK exists and stays untouched.'
-        BackupRedo    = 'Wow.exe.BAK was missing and has been recreated from the reconstructed original: {0}'
+        BackupOk      = 'Original saved as: {0}'
+        BackupSkip    = 'Wow.exe.ORI (original) exists and stays untouched.'
+        BackupRedo    = 'Wow.exe.ORI was missing and has been recreated from the reconstructed original: {0}'
+        BackupPrev    = 'Previous Wow.exe saved as: {0}'
         Starting      = 'Starting patch process...'
         PatchFail     = '[ERROR] An error occurred while patching:'
         NotWritten    = 'Wow.exe has not been modified.'
@@ -1293,6 +1301,8 @@ function Test-JumpValue([string]$v) {
 #            (erzeugt einen Hinweis)
 #    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
+#    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
+#            oder Botting werten koennen (erzeugt einen Bann-Hinweis)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -1497,12 +1507,12 @@ $patches = @(
         Patch 0x1F2A @(0x90, 0x90, 0x90, 0x90, 0x90, 0x6A, 0xFF)
     }}
 
-    @{ Id = 'luaunlock'; Cat = 'modding'; On = $false
+    @{ Id = 'luaunlock'; Cat = 'modding'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus'
        De = 'LUA Unlock (geschuetzte Funktionen freigeben)'
        En = 'LUA unlock (allow protected functions)'
-       NoteDe = 'kann als Botting gewertet werden'
-       NoteEn = 'may be treated as botting'
+       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
+       NoteEn = 'may be treated as botting - ban risk'
        Code = {
         # Gibt geschuetzte Lua-Funktionen fuer Addons/Makros frei, z.B.
         # CastSpellByName, CastSpellByID, TargetUnit, FocusUnit, InteractUnit,
@@ -1687,12 +1697,12 @@ $patches = @(
         Patch 0x6404F @(0xFF)
     }}
 
-    @{ Id = 'climb'; Cat = 'gameplay'; On = $false
+    @{ Id = 'climb'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus'
        De = 'Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)'
        En = 'Remove the climb angle limit (walk up any slope)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Aus der 12th Generation EXE (Alastor StrixEfuartus). VA 0xA37F0C ist
         # der Kosinus des steilsten begehbaren Hangs, im Original 0.6427876 =
@@ -1701,12 +1711,12 @@ $patches = @(
         Patch 0x63670C @(0x00, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'jump'; Cat = 'gameplay'; On = $false
+    @{ Id = 'jump'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus'
        De = 'Sprunghoehe aendern (Original -7.9555473)'
        En = 'Change jump height (original -7.9555473)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server - ban risk'
        PromptDe = 'Neuer Wert, negativ - je kleiner, desto hoeher (z.B. -11.25 = doppelte Hoehe)'
        PromptEn = 'New value, negative - the lower, the higher (e.g. -11.25 = double height)'
        Default = '-7.9555473'
@@ -1719,12 +1729,12 @@ $patches = @(
         Patch 0x6A1BDC ([BitConverter]::GetBytes([float](ConvertTo-JumpValue $script:VALUES['jump'])))
     }}
 
-    @{ Id = 'airforward'; Cat = 'gameplay'; On = $false
+    @{ Id = 'airforward'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Im Sprung vorwaerts/rueckwaerts steuern'
        En = 'Steer forward/backward while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Dort ersetzt die DLL die Vorwaerts-Eingabe
         # (VA 0x988A20) durch eine eigene Funktion; die unterscheidet sich vom
@@ -1739,12 +1749,12 @@ $patches = @(
         Patch 0x5872FD @(0xEB)
     }}
 
-    @{ Id = 'airlateral'; Cat = 'gameplay'; On = $false
+    @{ Id = 'airlateral'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Im Sprung seitwaerts steuern'
        En = 'Steer sideways while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod, wie oben fuer die Seitwaerts-Eingabe
         # (VA 0x988B00):
@@ -1757,12 +1767,12 @@ $patches = @(
         Patch 0x587FEF @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'airturn'; Cat = 'gameplay'; On = $false
+    @{ Id = 'airturn'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Im Sprung drehen aendert die Flugrichtung'
        En = 'Turning while jumping changes the flight direction'
-       NoteDe = 'kann vom Server als Cheat erkannt werden'
-       NoteEn = 'may be detected as cheating by the server'
+       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Beim Drehen (VA 0x989B70) setzt der Client
         # die Bewegungsrichtung nur am Boden neu; in der Luft springt er bei
@@ -1770,12 +1780,12 @@ $patches = @(
         Patch 0x588F97 @(0x90, 0x90)
     }}
 
-    @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false; GrowsExe = $true
+    @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false; GrowsExe = $true; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Doppelsprung (weitere Spruenge in der Luft)'
        En = 'Double jump (more jumps in the air)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden; Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server; exe grows - ban risk'
+       NoteDe = 'kann vom Server als Cheat erkannt werden, Exe wird groesser - Bann-Gefahr'
+       NoteEn = 'may be detected as cheating by the server, exe grows - ban risk'
        PromptDe = 'Anzahl zusaetzlicher Spruenge in der Luft, 1 bis 9 (1 = Doppelsprung)'
        PromptEn = 'Number of extra jumps in the air, 1 to 9 (1 = double jump)'
        Default = '1'
@@ -1976,6 +1986,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'GameObject Sichtweite: Cat 0 von 30 auf 50 Yards'
        En = 'GameObject view distance: Cat 0 from 30 to 50 yards'
+       NoteDe = 'kostet Leistung, mehr Kleinkram sichtbar'
+       NoteEn = 'costs performance, more small objects visible'
        Code = {
         # Hebt ausschliesslich die kleinste Objektkategorie an (Kerzen, Buecher, Saecke,
         # Werkzeug). Cat 1 bis 4 werden von diesem Patcher ohnehin nicht angefasst,
@@ -2702,14 +2714,18 @@ function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, 
     }
 }
 
-# Hinweis auf Wow.exe.BAK, wenn sie das Original enthaelt.
+# Hinweis auf Wow.exe.ORI bzw. Wow.exe.BAK, wenn eine davon das Original enthaelt
+# (.BAK war in aelteren Versionen das Original).
 function Show-BakHint {
-    try {
-        if (-not (Test-Path -LiteralPath $backup -PathType Leaf)) { return }
-        if ((Get-Sha256 ([System.IO.File]::ReadAllBytes($backup))) -ne $EXPECTED_HASH) { return }
-        Write-Host ''
-        Say (T 'BakHint' $backup) 'Yellow'
-    } catch { }
+    foreach ($b in @($backup, $backupPrev)) {
+        try {
+            if (-not (Test-Path -LiteralPath $b -PathType Leaf)) { continue }
+            if ((Get-Sha256 ([System.IO.File]::ReadAllBytes($b))) -ne $EXPECTED_HASH) { continue }
+            Write-Host ''
+            Say (T 'BakHint' $b) 'Yellow'
+            return
+        } catch { }
+    }
 }
 
 function Get-PatchById([string]$id) {
@@ -3182,6 +3198,14 @@ foreach ($p in $chosen) {
         Say (T 'ConflictBan') 'Red'
     }
 }
+$cheat = @()
+foreach ($p in $chosen) { if ($p.BanRisk) { $cheat += PatchName $p } }
+if ($cheat.Count -gt 0) {
+    Write-Host ''
+    Say (T 'CheatHead') 'Yellow'
+    foreach ($m in $cheat) { Say "  - $m" 'Yellow' }
+    Say (T 'CheatBan') 'Red'
+}
 $grow = @()
 foreach ($p in $chosen) { if ($p.GrowsExe) { $grow += PatchName $p } }
 if ($grow.Count -gt 0) {
@@ -3203,22 +3227,31 @@ if (-not $Unattended) {
 }
 
 # --- 5. Backup ---
-# Wow.exe.BAK ist immer das Original: beim ersten Patchen eine Kopie der
-# Datei, bei einer gepatchten Wow.exe bleibt eine vorhandene Sicherung stehen;
-# fehlt sie (z.B. Exe von einem anderen Rechner), wird sie aus dem
-# rekonstruierten Original ($f, per SHA256 geprueft) neu angelegt.
-$bakExists = Test-Path -LiteralPath $backup -PathType Leaf
-if ($patchedMode -and $bakExists) {
-    Say (T 'BackupSkip')
-} else {
-    try {
-        if ($patchedMode) { [System.IO.File]::WriteAllBytes($backup, $f) } else { Copy-Item -LiteralPath $file -Destination $backup -Force }
-    } catch {
-        Say (T 'BackupFail') 'Red'
-        Say $_.Exception.Message 'Red'
-        Exit-Patcher 1
+# Wow.exe.ORI ist immer das Original: beim ersten Patchen eine Kopie der
+# Datei. Bei einer gepatchten Wow.exe bleibt es stehen; fehlt es (z.B. Exe von
+# einem anderen Rechner), wird es aus dem rekonstruierten Original ($f, per
+# SHA256 geprueft) neu angelegt - VOR dem .BAK, falls dort noch ein Original
+# aus einer aelteren Patcher-Version liegt. Danach wird die bisherige
+# (gepatchte) Wow.exe als Wow.exe.BAK gesichert, man kann also immer einen
+# Schritt zurueck.
+try {
+    if (-not $patchedMode) {
+        Copy-Item -LiteralPath $file -Destination $backup -Force
+        Say (T 'BackupOk' $backup)
+    } else {
+        if (Test-Path -LiteralPath $backup -PathType Leaf) {
+            Say (T 'BackupSkip')
+        } else {
+            [System.IO.File]::WriteAllBytes($backup, $f)
+            Say (T 'BackupRedo' $backup)
+        }
+        Copy-Item -LiteralPath $file -Destination $backupPrev -Force
+        Say (T 'BackupPrev' $backupPrev)
     }
-    if ($patchedMode) { Say (T 'BackupRedo' $backup) } else { Say (T 'BackupOk' $backup) }
+} catch {
+    Say (T 'BackupFail') 'Red'
+    Say $_.Exception.Message 'Red'
+    Exit-Patcher 1
 }
 Write-Host ''
 Say (T 'Starting')
