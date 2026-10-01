@@ -308,7 +308,10 @@ original, the three jump distances have been corrected and the code is shorter.
 > uses as well. No. 4 and No. 51 fit in there together,
 > but not next to the slider patch: if No. 45 is selected, the patch automatically
 > moves to a small section `.wfcfix` of its own at the end of the file, and the
-> patcher points this out before the confirmation prompt.
+> patcher points this out before the confirmation prompt. This makes `Wow.exe`
+> slightly larger: each moved cave gets a 512-byte section, plus padding of the
+> end of the file – about 1.4 KB for No. 4 and 48 together. Removing the patches
+> takes this away again.
 
 > [!NOTE]
 > A heuristic fix, as the author calls it too: only the first triangle of each
@@ -672,7 +675,7 @@ see above).
 > [!NOTE]
 > No. 4 and No. 51 use the code cave at the end of `.text` as well. If they are
 > selected together with this patch, they automatically move to small sections
-> of their own at the end of the file.
+> of their own at the end of the file – this makes `Wow.exe` slightly larger.
 
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 46, off by default, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
@@ -824,7 +827,8 @@ before.
 >
 > **Shares the code cave with the slider patch (No. 45).** As with No. 4: together
 > with the slider patch, the patch automatically moves to a small section
-> `.nofade` of its own at the end of the file.
+> `.nofade` of its own at the end of the file. Here too `Wow.exe` becomes slightly
+> larger (see No. 4).
 
 **HD unit frame portraits: 256x256 instead of 64x64** *(No. 52, off by default, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256

@@ -311,7 +311,10 @@ Original sind die drei Sprungweiten korrigiert und der Code ist kürzer.
 > auch Nr. 51 nutzt. Nr. 4 und Nr. 51 passen
 > zusammen hinein, nicht aber neben den Slider-Patch: Ist Nr. 45 gewählt, weicht der
 > Patch automatisch auf eine eigene kleine Sektion `.wfcfix` am Dateiende aus, und
-> der Patcher weist vor der Sicherheitsabfrage darauf hin.
+> der Patcher weist vor der Sicherheitsabfrage darauf hin. Die `Wow.exe` wird
+> dadurch etwas größer: Jede ausgelagerte Höhle bekommt eine 512-Byte-Sektion,
+> dazu kommt das Auffüllen des Dateiendes – mit Nr. 4 und 48 zusammen rund 1,4 KB.
+> Beim Zurücknehmen fällt das wieder weg.
 
 > [!NOTE]
 > Ein heuristischer Fix, wie ihn auch der Autor nennt: Geprüft wird nur das erste
@@ -688,7 +691,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 > [!NOTE]
 > Die Code-Höhle am Ende von `.text` nutzen auch Nr. 4 und Nr. 51. Sind sie
 > zusammen mit diesem Patch gewählt, weichen sie automatisch auf eigene kleine
-> Sektionen am Dateiende aus.
+> Sektionen am Dateiende aus – die `Wow.exe` wird dadurch etwas größer.
 
 **GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 46, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
@@ -844,7 +847,8 @@ wie bisher.
 >
 > **Teilt sich die Code-Höhle mit dem Slider-Patch (Nr. 45).** Wie bei Nr. 4: Mit
 > dem Slider-Patch weicht der Patch automatisch auf eine eigene kleine Sektion
-> `.nofade` am Dateiende aus.
+> `.nofade` am Dateiende aus. Auch hier wird die `Wow.exe` dadurch etwas größer
+> (siehe Nr. 4).
 
 **HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 52, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
