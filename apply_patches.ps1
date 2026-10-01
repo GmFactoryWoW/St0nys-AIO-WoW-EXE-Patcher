@@ -1123,6 +1123,8 @@ $patches = @(
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
+       NoteDe = 'nur einen der beiden RCE-Patches aktivieren'
+       NoteEn = 'enable only one of the two RCE patches'
        Code = {
         Patch 0x2A7 @(0xC0)
         Patch 0x3D9D7C @(0x90, 0x90)
@@ -1132,8 +1134,8 @@ $patches = @(
        Author = 'Robinsch'
        De = 'Warden komplett abschalten, RCE-Fix'
        En = 'Disable Warden completely, RCE fix'
-       NoteDe = 'Kick-Gefahr bei aktivem Warden'
-       NoteEn = 'may get you kicked if Warden is active'
+       NoteDe = 'Kick-Gefahr bei aktivem Warden; nur einen der beiden RCE-Patches aktivieren'
+       NoteEn = 'may get you kicked if Warden is active; enable only one of the two RCE patches'
        Code = {
         # Verwirft SMSG_WARDEN_DATA (Opcode 0x2E6) direkt am Eingang des
         # Paket-Handlers (VA 0x7DA850): je -> nop, der Handler kehrt sofort mit 0

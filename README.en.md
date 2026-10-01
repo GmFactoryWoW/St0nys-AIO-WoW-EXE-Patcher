@@ -200,8 +200,8 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 3  | Refresh item cache immediately | Robinsch | ✅ |
 | 4  | WorldFrame crash fix (invalid triangle indices) *(shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Security & privacy** |  |  |
-| 5  | Remote code execution exploit fix | Robinsch | – |
-| 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – |
+| 5  | Remote code execution exploit fix *(enable only one of the two RCE patches)* | Robinsch | – |
+| 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active; enable only one of the two RCE patches)* | Robinsch | – |
 | 7  | Disable Scan.dll | Alastor StrixEfuartus | – |
 | 8  | Disallow client patches from the server | Kebabstorm | – |
 | 9  | Disallow hardware surveys from the server | Kebabstorm | – |
@@ -332,12 +332,17 @@ packets: the `.zdata` section loses its execute permission and Warden modules
 are no longer loaded from the local cache. Warden itself keeps working, so
 servers with active Warden are not a problem.
 
+> [!NOTE]
+> Enable only one of the two RCE patches: either this one (Warden keeps running)
+> or "Disable Warden completely" (No. 6), which closes the hole as well. Both
+> together add nothing.
+
 **Disable Warden completely, RCE fix** *(No. 6, off by default, Author: Robinsch)*
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
-(No. 5) unnecessary; both together do no harm, the patcher just points it
-out.
+(No. 5) unnecessary, so it only makes sense to enable one of the two. Both
+together do no harm, the patcher just points it out.
 
 > [!WARNING]
 > The client no longer answers Warden. Servers with active Warden (e.g.
