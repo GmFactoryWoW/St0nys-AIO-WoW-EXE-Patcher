@@ -92,10 +92,9 @@ dazu steht direkt darunter.
 | `3 7 12` / `3,7,12`| mehrere Patches an-/abwählen                |
 | `10-15`            | einen Bereich an-/abwählen                  |
 | `A`                | alle Patches an                             |
-| `N`                | alle Patches aus                            |
+| `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
 | `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
-| `O`                | Original wiederherstellen, alle Patches zurücknehmen (nur bei gepatchter `Wow.exe`) |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -132,9 +131,9 @@ Eingespielte Patches sind nicht endgültig. Starte `patcher.bat` einfach erneut:
 Im Menü sind dann genau die Patches angehakt, die gerade in der `Wow.exe`
 stecken. Neu angehakte Patches sind mit **(neu)** markiert, abgewählte mit
 **(wird zurückgenommen)**. So kannst du beliebig Patches dazunehmen, abwählen
-oder bei den Client-Info-Patches die Werte ändern. Mit `O` (oder allen Patches
-abgewählt und ENTER) nimmst du alle Patches zurück – danach ist die `Wow.exe`
-wieder **byte-genau das Original**.
+oder bei den Client-Info-Patches die Werte ändern. Mit `N` und ENTER nimmst du
+alle Patches zurück – danach ist die `Wow.exe` wieder **byte-genau das
+Original**.
 
 So funktioniert es:
 
@@ -943,7 +942,7 @@ steht der Vorschlag außerdem hinter dem Originaldatum, z. B.
   Patchen, und erst wenn die Auswahl bestätigt ist. Ein vorhandenes Backup wird
   dabei überschrieben (es ist ja nachweislich wieder das Original).
 - Falls keine `Wow.exe` im Ordner liegt, bricht der Patcher ab.
-- Zum Wiederherstellen des Originals den Patcher starten und `O` drücken. Ohne
+- Zum Wiederherstellen des Originals den Patcher starten `N` und ENTER drücken. Ohne
   `patcher_state.ini` geht es nur über das Backup: gepatchte `Wow.exe` löschen
   und `Wow.exe.BAK` in `Wow.exe` umbenennen.
 - Nutzung auf eigene Gefahr. Dieses Projekt steht in keiner Verbindung zu

@@ -108,7 +108,6 @@ $TEXT = @{
         MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    L = English    Q = abbrechen'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
-        MenuHelp4     = 'O = Original wiederherstellen (alle Patches zuruecknehmen)'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
         AppliedLoaded = 'Ausgewaehlt sind die Patches, die gerade in der Wow.exe stecken. Abwaehlen nimmt einen Patch zurueck.'
         MarkNew       = '(neu)'
@@ -185,7 +184,6 @@ $TEXT = @{
         MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    L = Deutsch    Q = quit'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
-        MenuHelp4     = 'O = restore original (remove all patches)'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
         AppliedLoaded = 'Selected are the patches currently in Wow.exe. Deselecting a patch removes it.'
         MarkNew       = '(new)'
@@ -1975,7 +1973,6 @@ function Show-Menu($sel, [string]$message) {
     Say (T 'MenuHelp1')
     Say (T 'MenuHelp2')
     Say (T 'MenuHelp3')
-    if ($script:patchedMode) { Say (T 'MenuHelp4') }
     if ($message) {
         Write-Host ''
         Say $message 'Yellow'
@@ -1994,11 +1991,6 @@ function Select-Patches([bool[]]$sel, [string]$message) {
         switch -regex ($in) {
             '^$' {
                 if ((Get-SelectedCount $sel) -eq 0 -and -not $script:patchedMode) { $message = T 'NoneSelected'; break }
-                return , $sel
-            }
-            '^[oO]$' {
-                if (-not $script:patchedMode) { $message = T 'BadInput' $in; break }
-                for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }
                 return , $sel
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }

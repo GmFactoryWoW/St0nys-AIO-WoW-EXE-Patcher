@@ -90,10 +90,9 @@ the link right below.
 | `3 7 12` / `3,7,12`| toggle several patches                     |
 | `10-15`            | toggle a range                             |
 | `A`                | all patches on                             |
-| `N`                | all patches off                            |
+| `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
-| `O`                | restore original, remove all patches (patched `Wow.exe` only) |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -130,8 +129,8 @@ Applied patches are not final. Just run `patcher.bat` again: the menu then has
 exactly the patches checked that are currently in `Wow.exe`. Newly checked
 patches are marked **(new)**, deselected ones **(will be removed)**. This way
 you can add patches, deselect them or change the values of the client info
-patches as you like. `O` (or all patches deselected and ENTER) removes every
-patch – afterwards `Wow.exe` is **byte-for-byte the original** again.
+patches as you like. `N` and ENTER removes every patch – afterwards `Wow.exe`
+is **byte-for-byte the original** again.
 
 How it works:
 
@@ -923,7 +922,7 @@ the patcher also shows the suggestion after the original date, e.g.
   patch run, and only after the selection has been confirmed. An existing
   backup is overwritten (the input has just been verified to be the original).
 - If there is no `Wow.exe` in the folder, the patcher aborts.
-- To restore the original, run the patcher and press `O`. Without
+- To restore the original, run the patcher and press `N` and ENTER. Without
   `patcher_state.ini` only the backup helps: delete the patched `Wow.exe` and
   rename `Wow.exe.BAK` to `Wow.exe`.
 - Use at your own risk. This project is not affiliated with Blizzard
