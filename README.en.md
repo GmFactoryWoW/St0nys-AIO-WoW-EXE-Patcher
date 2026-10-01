@@ -877,7 +877,8 @@ brackets, ENTER accepts it. Invalid input is asked again with a message, and all
 values are checked before anything is written. The patcher remembers the values
 in `patcher_selection.ini` (`value.<Id>=…`); with `-Unattended` the remembered
 values or the original values are used. If a patch is already in `Wow.exe`,
-its current value is the suggestion.
+its current value is the suggestion. If the suggestion differs from the
+original, the selection menu shows it after the name.
 
 > [!NOTE]
 > Servers may check the client version or build number, so a changed value has
@@ -905,7 +906,10 @@ the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
 `FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
 suggestion in brackets is **today's date** (with `FR` if you chose it last
 time); with `-Unattended` the remembered value is used. If the patch is already
-applied, the current date of `Wow.exe` is suggested.
+applied, the current date of `Wow.exe` is suggested. The selection menu already
+shows the suggestion after the original date, e.g.
+`Change build date (original Jun 24 2010) -> suggestion: 2026-10-01`, or
+`-> current: …` if the patch is already applied.
 
 ---
 
