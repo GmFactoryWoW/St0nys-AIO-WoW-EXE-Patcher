@@ -18,7 +18,7 @@
 #                             Billy's_Wow.exe = Standard), "all" oder
 #                             Nummern/Bereiche wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
-#                             -Language gilt Deutsch, ohne -Select die
+#                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
 #                             gespeicherte Auswahl bzw. das Preset Billy's_Wow.exe
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 # ============================================================
@@ -44,7 +44,6 @@ if (-not $Path) {
 # -Unattended stellt keine Rueckfragen: ohne -Language Deutsch, ohne -Select
 # die gespeicherte Auswahl (bzw. die Standard-Auswahl, wenn es keine gibt).
 if ($Unattended) {
-    if (-not $Language) { $Language = 'de' }
     if (-not $Select) { $Select = 'saved' }
 }
 $file = $Path
@@ -82,7 +81,8 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
-        MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    Q = abbrechen'
+        MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    L = English    Q = abbrechen'
+        LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
         Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
@@ -127,7 +127,8 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe is original and unmodified.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
-        MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    Q = quit'
+        MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    L = Deutsch    Q = quit'
+        LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
         Saved         = 'Selection saved for next time.'
@@ -1669,6 +1670,31 @@ function Get-SavedSelection {
     return , $sel
 }
 
+# Gemerkte Sprache (Zeile "language=de|en") aus patcher_selection.ini lesen.
+function Get-SavedLanguage {
+    if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $null }
+    try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $null }
+    foreach ($l in $lines) {
+        if ($l -match '^\s*language\s*=\s*(de|en)\s*$') { return $matches[1].ToLowerInvariant() }
+    }
+    return $null
+}
+
+# Nur die Sprache in patcher_selection.ini setzen, alles andere bleibt stehen.
+# Fehler beim Schreiben sind hier unkritisch und werden ignoriert.
+function Save-Language([string]$language) {
+    try {
+        $lines = New-Object System.Collections.Generic.List[string]
+        if (Test-Path -LiteralPath $settingsFile -PathType Leaf) {
+            foreach ($l in [System.IO.File]::ReadAllLines($settingsFile)) {
+                if ($l -notmatch '^\s*language\s*=') { $lines.Add($l) }
+            }
+        }
+        $lines.Add("language=$language")
+        [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
+    } catch { }
+}
+
 # Gemerkte Werte (Zeilen "value.<Id>=<Wert>") aus patcher_selection.ini lesen.
 function Get-SavedValues {
     $vals = @{}
@@ -1691,6 +1717,7 @@ function Save-Selection($sel, $values) {
         $lines.Add("$($patches[$i].Id)=$v")
     }
     foreach ($k in ($values.Keys | Sort-Object)) { $lines.Add("value.$k=$($values[$k])") }
+    $lines.Add("language=$script:lang")
     try {
         [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
         return $null
@@ -1758,6 +1785,11 @@ function Select-Patches {
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
             '^[bB]$'   { $sel = Get-DefaultSelection; break }
+            '^[lL]$'   {
+                if ($script:lang -eq 'de') { $script:lang = 'en' } else { $script:lang = 'de' }
+                Save-Language $script:lang
+                break
+            }
             '^[qQxX]$' { return $null }
             default {
                 $idx = ConvertTo-Indices $in $sel.Length
@@ -1845,7 +1877,16 @@ Show-Banner
 Write-Host ''
 
 # --- 1. Sprache ---
+# -Language geht vor, sonst die gemerkte Sprache; nur ohne beides wird gefragt
+# (bei -Unattended gilt dann Deutsch). Die Wahl wird gemerkt.
 $lang = $Language
+$langFromSettings = $false
+if (-not $lang) {
+    $lang = Get-SavedLanguage
+    if ($lang) { $langFromSettings = $true }
+}
+if (-not $lang -and $Unattended) { $lang = 'de' }
+$askedLanguage = -not $lang
 while (-not $lang) {
     Say 'Sprache waehlen / Choose language:'
     Say '  1 = Deutsch'
@@ -1857,7 +1898,12 @@ while (-not $lang) {
     }
     Write-Host ''
 }
+if ($askedLanguage) { Save-Language $lang }
 
+if ($langFromSettings) {
+    Say (T 'LangInfo') 'DarkGray'
+    Write-Host ''
+}
 Say (T 'Welcome1')
 Say (T 'Welcome2')
 Say (T 'Welcome3')

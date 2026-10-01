@@ -44,7 +44,7 @@ On start you choose the **language** (Deutsch / English) and then pick
    (next to `Wow.exe`).
 2. Close WoW if it is still running.
 3. Double-click `patcher.bat`.
-4. Choose the language, select patches, confirm – done.
+4. Choose the language (first start only), select patches, confirm – done.
 
 To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 `Wow.exe`.
@@ -52,7 +52,8 @@ To **restore** the original, delete `Wow.exe` and rename `Wow.exe.BAK` to
 ## Workflow
 
 1. The ASCII banner is shown.
-2. **Language selection:** `1` = Deutsch, `2` = English.
+2. **Language selection:** `1` = Deutsch, `2` = English. First start only – after
+   that the language is remembered and can be switched with `L` in the menu.
 3. Welcome message, press ENTER to start.
 4. Check that a `Wow.exe` exists in the folder.
 5. SHA256 integrity check that the `Wow.exe` is original/unmodified.
@@ -82,6 +83,7 @@ the link right below.
 | `10-15`            | toggle a range                             |
 | `A`                | all patches on                             |
 | `N`                | all patches off                            |
+| `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
@@ -105,6 +107,7 @@ prompt.
 - The file is plain text (`laa=1`, `cache=0`, …) and can also be edited by
   hand. It also holds the entered values of the client info patches
   (`value.clientversion=3.3.6` etc.).
+- The language is remembered there as well (`language=de` or `en`).
 - **Reset:** press `B` in the menu or delete `patcher_selection.ini` – then
   the preset "Billy's_Wow.exe" applies again.
 
@@ -119,9 +122,9 @@ All parameters are optional and are passed through from `patcher.bat` to
 
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
-| `-Language de\|en`     | skip the language prompt                                                   |
+| `-Language de\|en`     | set the language for this run (does not change the remembered language)   |
 | `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `all` or numbers/ranges like `"1,3,5-8"`. Using `-Select` does not change the saved selection. |
-| `-Unattended`          | no prompts and no pauses. Without `-Language` German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
+| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
 Example:

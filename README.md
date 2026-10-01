@@ -44,7 +44,7 @@ Menü, **welche Patches** eingespielt werden sollen.
    (dorthin, wo die `Wow.exe` liegt).
 2. WoW beenden, falls es noch läuft.
 3. `patcher.bat` per Doppelklick starten.
-4. Sprache wählen, Patches auswählen, bestätigen – fertig.
+4. Sprache wählen (nur beim ersten Start), Patches auswählen, bestätigen – fertig.
 
 Zum **Wiederherstellen** einfach `Wow.exe` löschen und `Wow.exe.BAK` in
 `Wow.exe` umbenennen.
@@ -52,7 +52,8 @@ Zum **Wiederherstellen** einfach `Wow.exe` löschen und `Wow.exe.BAK` in
 ## Ablauf
 
 1. ASCII-Banner wird angezeigt.
-2. **Sprachauswahl:** `1` = Deutsch, `2` = English.
+2. **Sprachauswahl:** `1` = Deutsch, `2` = English. Nur beim ersten Start – danach
+   ist die Sprache gemerkt und lässt sich im Menü mit `L` umschalten.
 3. Begrüßung, ENTER zum Starten.
 4. Prüfung, ob eine `Wow.exe` im Ordner vorhanden ist.
 5. SHA256-Integritätsprüfung, ob die `Wow.exe` original/unmodifiziert ist.
@@ -82,6 +83,7 @@ dazu steht direkt darunter.
 | `10-15`            | einen Bereich an-/abwählen                  |
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus                            |
+| `L`                | Sprache umschalten (Deutsch ↔ English)      |
 | `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
@@ -105,6 +107,7 @@ Sicherheitsabfrage abgebrochen hast.
 - Die Datei ist eine einfache Textdatei (`laa=1`, `cache=0`, …) und kann auch
   von Hand bearbeitet werden. Dort stehen auch die eingegebenen Werte der
   Client-Info-Patches (`value.clientversion=3.3.6` usw.).
+- Auch die Sprache wird dort gemerkt (`language=de` bzw. `en`).
 - **Zurücksetzen:** im Menü `B` drücken oder `patcher_selection.ini` löschen –
   dann gilt wieder das Preset „Billy's_Wow.exe“.
 
@@ -119,9 +122,9 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
-| `-Language de\|en`     | Sprachabfrage überspringen                                                  |
+| `-Language de\|en`     | Sprache für diesen Lauf festlegen (ändert die gemerkte Sprache nicht)       |
 | `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `all` oder Nummern/Bereiche wie `"1,3,5-8"`. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
-| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Billy's_Wow.exe“. |
+| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Billy's_Wow.exe“. |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
 Beispiel:
