@@ -1107,6 +1107,14 @@ the patcher also shows the suggestion after the original date, e.g.
   patch run, and only after the selection has been confirmed. An existing
   backup is overwritten (the input has just been verified to be the original).
 - If there is no `Wow.exe` in the folder, the patcher aborts.
+- **Watermark:** every patched `Wow.exe` contains the text
+  `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
+  It sits in the unused padding behind the `.tls` section (file offset
+  `0x72DE20`), is never loaded into memory and does not change the file size.
+  This way you can always prove that a `Wow.exe` was made with this patcher –
+  e.g. with a hex editor or in the command prompt with
+  `findstr /m "St0nys AIO" Wow.exe` (prints the file name if it is there).
+  Removing all patches removes it again.
 - To restore the original, run the patcher and press `N` and ENTER. Without
   `patcher_state.ini` only the backup helps: delete the patched `Wow.exe` and
   rename `Wow.exe.BAK` to `Wow.exe`.
