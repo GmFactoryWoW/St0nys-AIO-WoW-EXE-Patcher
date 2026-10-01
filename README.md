@@ -242,7 +242,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 38 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 39 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 40 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 41 | Doppelsprung (weitere Sprünge in der Luft) [TEST] *(fragt den Wert ab, kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 41 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Grafik & Sichtweite** |  |  |
 | 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -561,7 +561,7 @@ den beiden vorigen Patches.
 > [!WARNING]
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen.
 
-**Doppelsprung (weitere Sprünge in der Luft) [TEST]** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Erlaubt weitere Sprünge, während der Charakter in der Luft ist. Der Patcher fragt
 nach der Auswahl, wie viele zusätzliche Sprünge es sein sollen (1 bis 9, `1` =
 Doppelsprung); der Wert wird wie bei den Client-Info-Patches gemerkt.
@@ -580,8 +580,7 @@ eine eigene kleine Sektion `.djump` am Dateiende (die Lücke in `.text` ist nich
 beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 
 > [!WARNING]
-> **TEST:** Noch nicht im Spiel bestätigt. Server mit Anti-Cheat können Sprünge
-> in der Luft erkennen.
+> Server mit Anti-Cheat können Sprünge in der Luft erkennen.
 
 ### Grafik & Sichtweite
 

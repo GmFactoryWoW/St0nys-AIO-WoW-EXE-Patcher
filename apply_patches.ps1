@@ -1519,8 +1519,8 @@ $patches = @(
 
     @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
-       De = 'Doppelsprung (weitere Spruenge in der Luft) [TEST]'
-       En = 'Double jump (more jumps in the air) [TEST]'
+       De = 'Doppelsprung (weitere Spruenge in der Luft)'
+       En = 'Double jump (more jumps in the air)'
        NoteDe = 'kann vom Server als Cheat erkannt werden'
        NoteEn = 'may be detected as cheating by the server'
        PromptDe = 'Anzahl zusaetzlicher Spruenge in der Luft, 1 bis 9 (1 = Doppelsprung)'

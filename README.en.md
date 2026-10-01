@@ -239,7 +239,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 38 | Steer forward/backward while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 39 | Steer sideways while jumping *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
-| 41 | Double jump (more jumps in the air) [TEST] *(asks for the value, may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Graphics & view distance** |  |  |
 | 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
@@ -548,7 +548,7 @@ two previous patches.
 > [!WARNING]
 > Servers with anti-cheat may detect changed movement in the air.
 
-**Double jump (more jumps in the air) [TEST]** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Double jump (more jumps in the air)** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
 the value is remembered like those of the client info patches.
@@ -566,8 +566,7 @@ section `.djump` of its own at the end of the file (the gap in `.text` is not
 writable); this makes `Wow.exe` slightly larger.
 
 > [!WARNING]
-> **TEST:** Not confirmed in game yet. Servers with anti-cheat may detect jumps
-> in the air.
+> Servers with anti-cheat may detect jumps in the air.
 
 ### Graphics & view distance
 
