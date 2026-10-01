@@ -204,13 +204,14 @@ Exit codes: `0` = success, `1` = error, `2` = cancelled (by the user or because 
 | 44 | Cast bars on all frames | Kebabstorm | ✅ |
 | 45 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
 | 46 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ |
-|    | **Window & mouse** |  |  |
+|    | **Window, mouse & camera** |  |  |
 | 47 | Windowed mode by default | St0ny | – |
 | 48 | Maximized window by default | St0ny | – |
 | 49 | No black screen when switching to windowed mode | Robinsch | ✅ |
 | 50 | Mouse flicker / camera jump fix | Robinsch | ✅ |
+| 51 | CameraReforged [BETA]: camera height, shoulder offset, zoom limits *(not 100% finished yet)* | Stormhand / St0ny | – |
 |    | **Sound** |  |  |
-| 51 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
+| 52 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 
 > [!NOTE]
 > **Authors wanted:** For patches without an entry in the "Author" column, the
@@ -694,7 +695,7 @@ occurs while the game is in the background. The function can be called from
 addons.
 **Requires** the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk.
 
-### Window & mouse
+### Window, mouse & camera
 
 **Windowed mode by default** *(No. 47, off by default, Author: St0ny)*
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
@@ -711,9 +712,73 @@ screen.
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
+**CameraReforged [BETA]: camera height, shoulder offset, zoom limits** *(No. 51, off by default, Author: Stormhand / St0ny)*
+Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by **Stormhand** into this patcher, so everything
+runs in one pass – included with his explicit permission ("Of course! Take
+whatever you need. I appreciate your work."). The port and its adjustments were
+made by St0ny. The client gets two brand-new CVars and new default values for
+two existing ones.
+
+> [!WARNING]
+> **BETA** – this patch does not work 100% yet, more work is going into it.
+> That is why it is deselected by default.
+
+| CVar                      | Blizzard  | here  | Range         |
+|---------------------------|-----------|-------|---------------|
+| `test_cameraHeight`       | (missing) | 0.50  | 0.0 to 3.0    |
+| `test_cameraOverShoulder` | (missing) | 0.00  | -2.0 to 2.0   |
+| `cameraDistanceMaxFactor` | 1.0       | 2.60  | 1.0 to 5.0    |
+| `cameraDistanceMoveSpeed` | 8.33      | 20.00 | 1.0 to 100.0  |
+
+- `test_cameraHeight` raises the point the camera aims at. The client puts it
+  at chest height; 0.5 yards brings it to head height.
+- `test_cameraOverShoulder` shifts the camera sideways, negative values to the
+  left. 0 keeps it centered, anything else gives an over-the-shoulder view.
+- `cameraDistanceMaxFactor` is the factor by which you can zoom out beyond the
+  normal limit, `cameraDistanceMoveSpeed` the zoom speed.
+
+In 3.3.5a both new CVars were previously only available through
+`ConsoleXP.dll` plus an injector – the patch registers them directly in the
+EXE. All four are reachable via the console in-game and take effect
+immediately, so they also work from macros and addons such as DynamicCam, e.g.
+`/console test_cameraHeight 0.8`. They are registered with flag `0x10` and
+saved to `Config.wtf`, so changes survive a restart. The default values can be
+changed in the call
+`Add-CameraReforged -Height 0.5 -Shoulder 0.0 -MaxFactor 2.6 -ZoomSpeed 20.0`
+in `apply_patches.ps1`; values outside the ranges are rejected.
+
+<details>
+<summary><b>Background: how the patch is wired in</b></summary>
+
+The patch appends its own section `.camr` to the EXE (about +1 KB,
+read/write/execute) with code and data. It is wired up via a detour on
+`CVars_Initialize` (where the new CVars are registered), a detour on the camera
+focus path (where the height is added), two redirected default-value pointers
+and four redirected read sites for the shoulder offset.
+
+Two deviations from the original tool, both necessary:
+
+1. *Own section instead of `.rdata` padding.* The original puts code and data
+   into the `.rdata` padding and makes that section executable – exactly that
+   makes this client abort on start with runtime error R6002.
+2. *Pointer instead of callback.* The original's callback is a validation
+   callback that runs before the new value is stored, so the value lags behind
+   every change. Here the init hook stores the pointer to the CVar object and
+   the camera hook reads the value fresh every frame.
+
+Do not run `CameraReforged.exe` in addition: it brings back the R6002 crash and
+overwrites the table of the slider patch.
+
+</details>
+
+> [!NOTE]
+> Like the HD portraits, this patch changes the file size and PE structure
+> because it appends a section. Servers that check the client's size or section
+> layout may notice this.
+
 ### Sound
 
-**Optimize sound settings** *(No. 51, off by default, Author: St0ny)*
+**Optimize sound settings** *(No. 52, off by default, Author: St0ny)*
 Includes the following changes:
 
 - Sound channel hardware limit raised to 126
@@ -750,6 +815,9 @@ over the past months and for helping to collect the patches. His patch set is
 included as the preset "Billy's_Wow.exe" and is the default selection.
 
 **MacWarrior** also helped collecting the patches – thank you as well!
+
+Thanks also to **Stormhand** for the permission to include his CameraReforged
+patch.
 
 And of course thanks to all patch authors named in the
 [patch overview](#patch-overview).

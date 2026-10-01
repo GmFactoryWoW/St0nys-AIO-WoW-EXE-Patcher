@@ -204,13 +204,14 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = abgebrochen (vom Benutzer ode
 | 44 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
 | 45 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
 | 46 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ |
-|    | **Fenster & Maus** |  |  |
+|    | **Fenster, Maus & Kamera** |  |  |
 | 47 | Fenstermodus als Standard setzen | St0ny | – |
 | 48 | Fenstermodus maximiert als Standard setzen | St0ny | – |
 | 49 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ |
 | 50 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
+| 51 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig)* | Stormhand / St0ny | – |
 |    | **Sound** |  |  |
-| 51 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
+| 52 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -710,7 +711,7 @@ relevantes Ereignis eintritt und das Spiel im Hintergrund läuft.
 Die Funktion kann per Addon angesprochen werden.
 **Benötigt** das [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) aus awesome_wotlk.
 
-### Fenster & Maus
+### Fenster, Maus & Kamera
 
 **Fenstermodus als Standard setzen** *(Nr. 47, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
@@ -729,9 +730,72 @@ Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
+**CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen** *(Nr. 51, standardmäßig aus, Autor: Stormhand / St0ny)*
+Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged) von **Stormhand** in diesen Patcher, damit
+alles in einem Durchgang läuft – eingebaut mit seiner ausdrücklichen Erlaubnis
+(„Of course! Take whatever you need. I appreciate your work.“). Die Portierung
+und ihre Anpassungen stammen von St0ny. Der Client bekommt zwei komplett neue
+CVars eingebaut und zwei vorhandene neue Startwerte.
+
+> [!WARNING]
+> **BETA** – dieser Patch funktioniert noch nicht zu 100 %, hier fließt noch
+> Arbeit hinein. Deshalb ist er standardmäßig abgewählt.
+
+| CVar                      | Blizzard | hier  | Bereich       |
+|---------------------------|----------|-------|---------------|
+| `test_cameraHeight`       | (fehlt)  | 0.50  | 0.0 bis 3.0   |
+| `test_cameraOverShoulder` | (fehlt)  | 0.00  | -2.0 bis 2.0  |
+| `cameraDistanceMaxFactor` | 1.0      | 2.60  | 1.0 bis 5.0   |
+| `cameraDistanceMoveSpeed` | 8.33     | 20.00 | 1.0 bis 100.0 |
+
+- `test_cameraHeight` hebt den Punkt an, auf den die Kamera zielt. Der Client
+  legt ihn auf Brusthöhe; 0.5 Yards bringen ihn auf Kopfhöhe.
+- `test_cameraOverShoulder` verschiebt die Kamera seitlich, negative Werte nach
+  links. 0 lässt sie mittig, alles andere ergibt eine Schulterperspektive.
+- `cameraDistanceMaxFactor` ist der Faktor, um den man über die normale
+  Zoomgrenze hinaus herausfahren kann, `cameraDistanceMoveSpeed` das Zoom-Tempo.
+
+Beide neuen CVars gab es in 3.3.5a bisher nur über `ConsoleXP.dll` samt
+Injector – der Patch registriert sie direkt in der EXE. Alle vier sind im Spiel
+über die Konsole erreichbar und wirken sofort, also auch aus Makros und Addons
+wie DynamicCam, z. B. `/console test_cameraHeight 0.8`. Sie werden mit Flag
+`0x10` registriert und landen in der `Config.wtf`, eine Änderung überlebt also
+den Neustart. Die Startwerte lassen sich im Aufruf
+`Add-CameraReforged -Height 0.5 -Shoulder 0.0 -MaxFactor 2.6 -ZoomSpeed 20.0`
+in `apply_patches.ps1` ändern; Werte außerhalb der Bereiche lehnt der Patcher ab.
+
+<details>
+<summary><b>Hintergrund: Wie der Patch eingebaut ist</b></summary>
+
+Der Patch hängt eine eigene Sektion `.camr` an die EXE an (etwa +1 KB,
+lesen/schreiben/ausführen) mit Code und Daten. Angebunden wird das über einen
+Detour auf `CVars_Initialize` (dort werden die neuen CVars angemeldet), einen
+Detour auf den Kamera-Fokuspfad (dort kommt die Höhe drauf), zwei umgebogene
+Vorgabewert-Zeiger und vier umgebogene Lesestellen für den Schulterversatz.
+
+Zwei Abweichungen vom Original-Tool, beide notwendig:
+
+1. *Eigene Sektion statt `.rdata`-Padding.* Das Original legt Code und Daten
+   ins Padding der `.rdata`-Sektion und macht diese ausführbar – genau das lässt
+   diesen Client beim Start mit dem Runtimefehler R6002 abbrechen.
+2. *Zeiger statt Callback.* Der Callback des Originals ist ein Prüf-Callback und
+   läuft, bevor der neue Wert gespeichert ist; der Wert hinkt dadurch jeder
+   Änderung hinterher. Hier merkt sich der Init-Hook den Zeiger auf das
+   CVar-Objekt, und der Kamera-Hook liest den Wert bei jedem Bild frisch.
+
+Nicht zusätzlich `CameraReforged.exe` laufen lassen: Das holt den
+R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
+
+</details>
+
+> [!NOTE]
+> Dieser Patch verändert wie die HD-Portraits die Dateigröße und die
+> PE-Struktur, weil er eine Sektion anhängt. Server, die den Client auf Größe
+> oder Sektionsaufbau prüfen, können das bemerken.
+
 ### Sound
 
-**Sound-Einstellungen optimieren** *(Nr. 51, standardmäßig aus, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 52, standardmäßig aus, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
@@ -771,6 +835,9 @@ und ist die Standard-Auswahl.
 
 Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen – vielen Dank
 auch dafür!
+
+Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
+einzubauen.
 
 Und natürlich danke an alle Autoren der Patches, die in der
 [Patch-Übersicht](#patch-übersicht) genannt sind.
