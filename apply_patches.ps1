@@ -92,6 +92,8 @@ $TEXT = @{
         NoneSelected  = 'Es ist kein Patch ausgewaehlt.'
         BadSelect     = '[FEHLER] Ungueltiger Wert fuer -Select: {0}'
         Summary       = 'Folgende {0} Patches werden eingespielt:'
+        InputHead     = 'Werte fuer die gewaehlten Patches (ENTER = Vorschlag in Klammern):'
+        BadValue      = '[FEHLER] Ungueltiger gemerkter Wert fuer "{0}": {1}'
         HintHead      = 'HINWEIS zu "{0}":'
         Hint          = 'wirkt nur vollstaendig zusammen mit:'
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
@@ -135,6 +137,8 @@ $TEXT = @{
         NoneSelected  = 'No patch is selected.'
         BadSelect     = '[ERROR] Invalid value for -Select: {0}'
         Summary       = 'The following {0} patches will be applied:'
+        InputHead     = 'Values for the selected patches (ENTER = suggestion in brackets):'
+        BadValue      = '[ERROR] Invalid saved value for "{0}": {1}'
         HintHead      = 'NOTE on "{0}":'
         Hint          = 'only takes full effect together with:'
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
@@ -550,6 +554,128 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
 }
 
 # ============================================================
+#  Helfer fuer die Client-Info-Patches von MacWarrior
+#  Portierung von edit_version.py, edit_revision.py, edit_title.py und
+#  edit_date.py. Die Werte fragt der Patcher nach der Auswahl ab (Felder
+#  PromptDe/PromptEn/Default/Check bei den Patches) und merkt sie sich in
+#  patcher_selection.ini. Alle Felder werden vor dem Schreiben komplett
+#  geprueft, damit die EXE nie halb geaendert wird.
+# ============================================================
+function L([string]$de, [string]$en) { if ($script:lang -eq 'en') { return $en } else { return $de } }
+
+function PatchU16([int64]$offset, [int64]$value) { Patch $offset ([BitConverter]::GetBytes([uint16]$value)) }
+function PatchU32([int64]$offset, [int64]$value) { Patch $offset ([BitConverter]::GetBytes([uint32]$value)) }
+
+# Text in ein Feld fester Groesse schreiben, Rest mit Nullbytes auffuellen.
+function PatchText([int64]$offset, [int]$size, [string]$text, [System.Text.Encoding]$enc) {
+    $t = $enc.GetBytes($text)
+    if ($t.Length -gt $size) { throw ('"{0}" passt nicht in das Feld bei 0x{1:X} ({2} Byte).' -f $text, $offset, $size) }
+    $b = New-Object byte[] $size
+    [Array]::Copy($t, 0, $b, 0, $t.Length)
+    Patch $offset $b
+}
+function PatchAscii([int64]$offset, [int]$size, [string]$text) { PatchText $offset $size $text ([System.Text.Encoding]::ASCII) }
+function PatchUtf16([int64]$offset, [int]$size, [string]$text) {
+    # Inklusive UTF-16-Nullterminator, daher muessen 2 Byte frei bleiben.
+    if (($text.Length + 1) * 2 -gt $size) { throw ('"{0}" passt nicht in das Feld bei 0x{1:X}.' -f $text, $offset) }
+    PatchText $offset $size $text ([System.Text.Encoding]::Unicode)
+}
+
+# VS_FIXEDFILEINFO der Versionsressource (Datei 0x7576C0):
+#   +0x00 Signatur 0xFEEF04BD   +0x08 FileVersionMS    +0x0C FileVersionLS
+#   +0x10 ProductVersionMS      +0x14 ProductVersionLS
+#   FileVersionLS: unteres Wort = Build (12340), oberes Wort = Patch (5)
+$VSFFI = 0x7576C0
+function Assert-VersionInfo {
+    if ((RU32 $script:f $VSFFI) -ne 4277077181) { throw 'VS_FIXEDFILEINFO nicht an der erwarteten Stelle gefunden.' }
+}
+
+function Test-ClientVersion([string]$v) {
+    if ($v -notmatch '^\d{1,5}\.\d{1,5}\.\d{1,5}$') { return (L 'Format: drei Zahlen mit Punkten, z.B. 3.3.6' 'Format: three numbers with dots, e.g. 3.3.6') }
+    if ($v.Length -gt 7) { return (L 'Hoechstens 7 Zeichen (z.B. 3.3.123).' 'At most 7 characters (e.g. 3.3.123).') }
+    $p = $v.Split('.')
+    foreach ($x in $p) { if ([int]$x -gt 65535) { return (L 'Jede Zahl darf hoechstens 65535 sein.' 'Each number must be at most 65535.') } }
+    if (('Version {0}.{1}' -f [int]$p[0], [int]$p[1]).Length -gt 11) {
+        return (L 'Haupt- und Nebenversion passen so nicht in das ProductVersion-Feld (max. z.B. 3.3).' 'Major and minor version do not fit into the ProductVersion field (max. e.g. 3.3).')
+    }
+    return $null
+}
+
+function Set-ClientVersion([string]$v) {
+    Assert-VersionInfo
+    $p = $v.Split('.')
+    $maj = [int]$p[0]; $min = [int]$p[1]; $pat = [int]$p[2]
+    $pv = 'Version {0}.{1}' -f $maj, $min
+    PatchAscii 0x5F3A08 8 $v                          # Version im Spiel ("3.3.5")
+    PatchU32 ($VSFFI + 0x08) ($maj * 65536 + $min)    # FileVersionMS
+    PatchU16 ($VSFFI + 0x0E) $pat                     # FileVersionLS oben, Build bleibt
+    PatchU32 ($VSFFI + 0x10) ($maj * 65536 + $min)    # ProductVersionMS
+    PatchU32 ($VSFFI + 0x14) 0                        # ProductVersionLS
+    PatchU16 0x7577F6 ($v.Length + 1)                 # FileVersion: wValueLength (wLength bleibt)
+    PatchUtf16 0x757814 30 $v                         # FileVersion-Text
+    PatchU16 0x757986 ($pv.Length + 1)                # ProductVersion: wValueLength
+    PatchUtf16 0x7579A8 24 $pv                        # ProductVersion-Text ("Version 3.3")
+}
+
+function Test-ClientBuild([string]$v) {
+    if ($v -notmatch '^\d{1,5}$' -or [int]$v -gt 65535) { return (L 'Eine Zahl von 0 bis 65535.' 'A number from 0 to 65535.') }
+    return $null
+}
+
+function Set-ClientBuild([string]$v) {
+    Assert-VersionInfo
+    $r = [int]$v
+    PatchU16 0x4C99F0 $r                              # interne Build-Nummer
+    PatchAscii 0x5F3A00 6 ([string]$r)                # sichtbare Build-Nummer ("12340")
+    PatchU16 ($VSFFI + 0x0C) $r                       # FileVersionLS unten
+}
+
+function Test-ClientTitle([string]$v) {
+    if ($v -eq '') { return (L 'Der Titel darf nicht leer sein.' 'The title must not be empty.') }
+    if ($v -notmatch '^[\x20-\x7E]+$') { return (L 'Nur ASCII-Zeichen (keine Umlaute).' 'ASCII characters only.') }
+    if ($v.Length -gt 17) { return (L 'Hoechstens 17 Zeichen.' 'At most 17 characters.') }
+    return $null
+}
+
+function Set-ClientTitle([string]$v) {
+    PatchUtf16 0x7577C0 50 $v                         # FileDescription
+    PatchUtf16 0x757854 36 $v                         # InternalName
+    PatchUtf16 0x757960 36 $v                         # ProductName
+}
+
+# Wert: "JJJJ-MM-TT", optional mit " FR" fuer franzoesische Monatsnamen.
+function Get-ClientDateParts([string]$v) {
+    if ($v -notmatch '^\s*(\d{4}-\d{2}-\d{2})(?:\s+(EN|FR))?\s*$') { return $null }
+    $d = [datetime]::MinValue
+    $ok = [datetime]::TryParseExact($matches[1], 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::None, [ref]$d)
+    if (-not $ok -or $d.Year -lt 1000) { return $null }
+    $lng = 'EN'; if ($matches[2]) { $lng = $matches[2].ToUpperInvariant() }
+    return @($d, $lng)
+}
+
+function Test-ClientDate([string]$v) {
+    if ($null -eq (Get-ClientDateParts $v)) { return (L 'Format: JJJJ-MM-TT, optional mit FR dahinter (z.B. 2026-09-28 FR).' 'Format: YYYY-MM-DD, optionally followed by FR (e.g. 2026-09-28 FR).') }
+    return $null
+}
+
+function Set-ClientDate([string]$v) {
+    $parts = Get-ClientDateParts $v
+    $d = $parts[0]
+    if ($parts[1] -eq 'FR') {
+        $months = @('Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec')
+    } else {
+        $months = @('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    }
+    $text = '{0} {1:00} {2:0000}' -f $months[$d.Month - 1], $d.Day, $d.Year   # immer 11 Zeichen
+    foreach ($o in @(0x5F39F4, 0x62F3F3, 0x636F5F)) {
+        $old = [System.Text.Encoding]::ASCII.GetString($script:f, $o, 11)
+        if ($old -notmatch '^[A-Za-z]{3} \d{2} \d{4}$') { throw ('Unerwartetes Datumsfeld bei 0x{0:X}: {1}' -f $o, $old) }
+        PatchAscii $o 11 $text
+    }
+    Patch 0x7578B4 ([System.Text.Encoding]::Unicode.GetBytes(('{0:0000}' -f $d.Year)))   # Jahr im LegalCopyright
+}
+
+# ============================================================
 #  PATCH-DEFINITIONEN
 #  Jeder Patch ist eine Hashtable:
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
@@ -565,6 +691,10 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
 #            (erzeugt nur einen Hinweis, wenn beide ausgewaehlt sind)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
+#    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
+#            Wert: der Patcher fragt ihn nach der Auswahl ab (Vorschlag =
+#            gemerkter Wert oder Default), prueft ihn mit Check (liefert $null
+#            oder eine Fehlermeldung) und legt ihn in $VALUES[Id] ab
 #    Code  - Scriptblock mit den Patch-Aufrufen
 #  Die Reihenfolge hier ist die Reihenfolge im Menue und beim Einspielen,
 #  Patches einer Kategorie stehen zusammen.
@@ -580,6 +710,7 @@ $CATEGORIES = @{
     ui       = @{ De = 'Interface & Komfort';               En = 'Interface & comfort' }
     window   = @{ De = 'Fenster, Maus & Kamera';            En = 'Window, mouse & camera' }
     sound    = @{ De = 'Sound';                             En = 'Sound' }
+    client   = @{ De = 'Client-Infos: Version, Build, Titel, Datum'; En = 'Client info: version, build, title, date' }
 }
 
 $patches = @(
@@ -842,6 +973,24 @@ $patches = @(
        En = 'Allow chat commands while dead'
        Code = {
         Patch 0x10CA41 @(0xEB)
+    }}
+
+    @{ Id = 'follow'; Cat = 'gameplay'; On = $false
+       Author = 'MacWarrior'
+       De = '/follow auch bei NPCs erlauben'
+       En = 'Allow /follow on NPCs'
+       Code = {
+        # Portierung von patch-007-allow_follow.bat (MacWarrior).
+        # Vor dem Folgen ruft der Client eine Pruefung auf (call 0x729BD0 bei VA
+        # 0x72B525) und bricht bei "nein" ab. Das Original lenkt den Aufruf in eine
+        # Code-Hoehle um, die die Pruefung zwar ausfuehrt, ihr Ergebnis aber
+        # ignoriert und immer zum Erfolgsweg 0x72B546 springt. Diese Hoehle liegt
+        # im .text-Padding bei 0x9DE3B8 - genau dort, wo der Slider-Patch seine
+        # Such-Routine ablegt; beide zusammen waeren nicht moeglich.
+        # Gleiche Wirkung ohne Hoehle: den bedingten Sprung direkt hinter der
+        # Pruefung (jne 0x72B546 bei VA 0x72B52C) unbedingt machen. Der Code am
+        # Ziel setzt die Flags selbst neu, haengt also nicht davon ab.
+        Patch 0x32A92C @(0xEB)
     }}
 
     @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
@@ -1337,6 +1486,65 @@ $patches = @(
         Patch 0x0D077F @(0x68, 0x64, 0x14, 0x9E, 0x00)
     }}
 
+
+    # --- Client-Infos ---
+
+    @{ Id = 'clientversion'; Cat = 'client'; On = $false
+       Author = 'MacWarrior'
+       De = 'Client-Version aendern (Original 3.3.5)'
+       En = 'Change client version (original 3.3.5)'
+       PromptDe = 'Neue Client-Version, Format x.y.z, max. 7 Zeichen'
+       PromptEn = 'New client version, format x.y.z, max. 7 characters'
+       Default = '3.3.5'
+       Check = { param($v) Test-ClientVersion $v }
+       Code = {
+        # Portierung von edit_version.py (MacWarrior): Version im Spiel, die
+        # Versionsressource (FileVersion/ProductVersion) und VS_FIXEDFILEINFO.
+        # Die Build-Nummer bleibt erhalten.
+        Set-ClientVersion $script:VALUES['clientversion']
+    }}
+
+    @{ Id = 'clientbuild'; Cat = 'client'; On = $false
+       Author = 'MacWarrior'
+       De = 'Build-Nummer aendern (Original 12340)'
+       En = 'Change build number (original 12340)'
+       PromptDe = 'Neue Build-Nummer, 0 bis 65535'
+       PromptEn = 'New build number, 0 to 65535'
+       Default = '12340'
+       Check = { param($v) Test-ClientBuild $v }
+       Code = {
+        # Portierung von edit_revision.py (MacWarrior): interne und sichtbare
+        # Build-Nummer sowie der vierte Teil der FileVersion.
+        Set-ClientBuild $script:VALUES['clientbuild']
+    }}
+
+    @{ Id = 'clienttitle'; Cat = 'client'; On = $false
+       Author = 'MacWarrior'
+       De = 'Programmtitel in den Dateieigenschaften aendern'
+       En = 'Change program title in the file properties'
+       PromptDe = 'Neuer Titel, max. 17 Zeichen, nur ASCII'
+       PromptEn = 'New title, max. 17 characters, ASCII only'
+       Default = 'World of Warcraft'
+       Check = { param($v) Test-ClientTitle $v }
+       Code = {
+        # Portierung von edit_title.py (MacWarrior): FileDescription,
+        # InternalName und ProductName der Versionsressource.
+        Set-ClientTitle $script:VALUES['clienttitle']
+    }}
+
+    @{ Id = 'clientdate'; Cat = 'client'; On = $false
+       Author = 'MacWarrior'
+       De = 'Build-Datum aendern (Original Jun 24 2010)'
+       En = 'Change build date (original Jun 24 2010)'
+       PromptDe = 'Neues Build-Datum JJJJ-MM-TT, optional mit FR fuer franzoesische Monatsnamen'
+       PromptEn = 'New build date YYYY-MM-DD, optionally followed by FR for French month names'
+       Default = '2010-06-24'
+       Check = { param($v) Test-ClientDate $v }
+       Code = {
+        # Portierung von edit_date.py (MacWarrior): die drei Datumsfelder
+        # ("Jun 24 2010") und das Jahr im LegalCopyright.
+        Set-ClientDate $script:VALUES['clientdate']
+    }}
 )
 
 # ============================================================
@@ -1388,8 +1596,19 @@ function Get-SavedSelection {
     return , $sel
 }
 
-# Auswahl in patcher_selection.ini schreiben. Liefert $null oder die Fehlermeldung.
-function Save-Selection($sel) {
+# Gemerkte Werte (Zeilen "value.<Id>=<Wert>") aus patcher_selection.ini lesen.
+function Get-SavedValues {
+    $vals = @{}
+    if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $vals }
+    try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $vals }
+    foreach ($l in $lines) {
+        if ($l -match '^\s*value\.([A-Za-z0-9_]+)\s*=\s*(.*?)\s*$') { $vals[$matches[1]] = $matches[2] }
+    }
+    return $vals
+}
+
+# Auswahl und Werte in patcher_selection.ini schreiben. Liefert $null oder die Fehlermeldung.
+function Save-Selection($sel, $values) {
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add("# St0nys-AIO-WoW-EXE-Patcher - gespeicherte Patch-Auswahl / saved patch selection")
     $lines.Add('# 1 = an / on, 0 = aus / off')
@@ -1398,6 +1617,7 @@ function Save-Selection($sel) {
         $v = 0; if ($sel[$i]) { $v = 1 }
         $lines.Add("$($patches[$i].Id)=$v")
     }
+    foreach ($k in ($values.Keys | Sort-Object)) { $lines.Add("value.$k=$($values[$k])") }
     try {
         [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
         return $null
@@ -1603,6 +1823,7 @@ Say (T 'HashOk') 'Green'
 Write-Host ''
 
 # --- 3. Patches auswaehlen ---
+$fromMenu = $false
 if ($Select) {
     $selection = Get-SelectionFromParam $Select
     if ($null -eq $selection) {
@@ -1617,9 +1838,7 @@ if ($Select) {
         Exit-Patcher 2
     }
     Clear-Host
-    Write-Host ''
-    $saveError = Save-Selection $selection
-    if ($saveError) { Say (T 'SaveFail' $saveError) 'Yellow' } else { Say (T 'Saved') 'DarkGray' }
+    $fromMenu = $true
 }
 
 $chosen = @()
@@ -1628,11 +1847,57 @@ for ($i = 0; $i -lt $patches.Count; $i++) {
     if ($selection[$i]) { $chosen += , $patches[$i]; $chosenIds += $patches[$i].Id }
 }
 
+# --- 3b. Werte fuer Patches mit eigener Eingabe ---
+# Vorschlag ist der gemerkte Wert, sonst der Default. Ohne Rueckfragen
+# (-Unattended) wird der Vorschlag genommen.
+$VALUES = @{}
+$savedValues = Get-SavedValues
+$asked = $false
+foreach ($p in $chosen) {
+    if (-not $p.Check) { continue }
+    $def = $savedValues[$p.Id]
+    if (-not $def) { $def = $p.Default }
+    if ($Unattended) {
+        $err = & $p.Check $def
+        if ($err) {
+            Say (T 'BadValue' (PatchName $p) $def) 'Red'
+            Say $err 'Red'
+            Exit-Patcher 1
+        }
+        $VALUES[$p.Id] = $def
+        continue
+    }
+    if (-not $asked) {
+        Write-Host ''
+        Say (T 'InputHead') 'Cyan'
+        $asked = $true
+    }
+    Write-Host ''
+    Say (PatchName $p)
+    while ($true) {
+        $v = Ask "  $(L $p.PromptDe $p.PromptEn) [$def]"
+        if ($v -eq '') { $v = $def }
+        $err = & $p.Check $v
+        if (-not $err) { break }
+        Say $err 'Yellow'
+    }
+    $VALUES[$p.Id] = $v
+}
+
+if ($fromMenu) {
+    $allValues = @{}
+    foreach ($k in $savedValues.Keys) { $allValues[$k] = $savedValues[$k] }
+    foreach ($k in $VALUES.Keys) { $allValues[$k] = $VALUES[$k] }
+    Write-Host ''
+    $saveError = Save-Selection $selection $allValues
+    if ($saveError) { Say (T 'SaveFail' $saveError) 'Yellow' } else { Say (T 'Saved') 'DarkGray' }
+}
+
 # --- 4. Zusammenfassung, Hinweise, Bestaetigung ---
 Write-Host ''
 Say (T 'Summary' $chosen.Count) 'Cyan'
 foreach ($p in $chosen) {
-    Say "  - $(PatchName $p)"
+    if ($VALUES.ContainsKey($p.Id)) { Say "  - $(PatchName $p): $($VALUES[$p.Id])" } else { Say "  - $(PatchName $p)" }
     if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
 }
 
