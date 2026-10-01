@@ -17,8 +17,9 @@
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "billy" (Preset
-#                             Billy's_Wow.exe = Standard), "all", "none" (alle
-#                             Patches zuruecknehmen) oder Nummern/Bereiche
+#                             Billy's_Wow.exe = Standard), "stony" (Preset
+#                             Billy's_Wow.exe (modded by St0ny)), "all", "none"
+#                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
@@ -117,7 +118,8 @@ $TEXT = @{
         TableWarn     = 'HINWEIS: Die eingebaute Original-Byte-Tabelle passt nicht zu dieser Auswahl - ohne patcher_state.ini liesse sich diese Wow.exe nicht zuruecknehmen.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
-        MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    L = English    Q = abbrechen'
+        MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
+        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (modded by St0ny)'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
@@ -201,7 +203,8 @@ $TEXT = @{
         TableWarn     = 'NOTE: The built-in original bytes table does not match this selection - without patcher_state.ini this Wow.exe could not be reverted.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
-        MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    L = Deutsch    Q = quit'
+        MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
+        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (modded by St0ny)'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
@@ -1291,7 +1294,9 @@ function Test-JumpValue([string]$v) {
 #    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
 #    On    - Teil des Presets "Billy's_Wow.exe", das zugleich die Standard-
-#            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false)
+#            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false). Das
+#            zweite Preset "Billy's_Wow.exe (modded by St0ny)" steht als
+#            Id-Liste in $PRESET_STONY hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
 #    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
@@ -2354,6 +2359,23 @@ $patches = @(
     }}
 )
 
+# Zweites Preset "Billy's_Wow.exe (modded by St0ny)" - Billys Patch-Set plus
+# RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
+# Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue mit S, ueber
+# -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
+$PRESET_STONY = @(
+    'laa', 'itemcache',
+    'rce', 'scandll', 'noserverpatch', 'nosurvey',
+    'skipbnet', 'skiprdp', 'nohttp',
+    'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
+    'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
+    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'goscale',
+    'bluemoon', 'notransparency',
+    'tracker', 'worldmap', 'castbars', 'flash',
+    'window', 'maximize', 'windowfix', 'mouse'
+)
+
 # ============================================================
 #  Original-Bytes je Patch - erzeugt mit -BuildTable, nicht von Hand aendern
 # ============================================================
@@ -2547,6 +2569,13 @@ function ConvertTo-Indices([string]$text, [int]$max) {
 function Get-DefaultSelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = [bool]$patches[$i].On }
+    return , $sel
+}
+
+# Preset "Billy's_Wow.exe (modded by St0ny)" aus der Id-Liste $PRESET_STONY
+function Get-StonySelection {
+    $sel = New-Object bool[] $patches.Count
+    for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_STONY -contains $patches[$i].Id }
     return , $sel
 }
 
@@ -2801,6 +2830,7 @@ function Show-Menu($sel, [string]$message) {
     Say ('=' * 70) 'Cyan'
     Say (T 'MenuHelp1')
     Say (T 'MenuHelp2')
+    Say (T 'MenuPresets')
     Say (T 'MenuHelp3')
     if ($message) {
         Write-Host ''
@@ -2825,6 +2855,7 @@ function Select-Patches([bool[]]$sel, [string]$message) {
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
             '^[bB]$'   { $sel = Get-DefaultSelection; break }
+            '^[sS]$'   { $sel = Get-StonySelection; break }
             '^[lL]$'   {
                 if ($script:lang -eq 'de') { $script:lang = 'en' } else { $script:lang = 'de' }
                 Save-Language $script:lang
@@ -2844,6 +2875,7 @@ function Select-Patches([bool[]]$sel, [string]$message) {
 function Get-SelectionFromParam([string]$value) {
     $v = $value.Trim().ToLowerInvariant()
     if ($v -eq 'billy' -or $v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
+    if ($v -eq 'stony' -or $v -eq 'st0ny') { return , (Get-StonySelection) }
     if ($v -eq 'saved' -or $v -eq 'gespeichert') {
         $sel = Get-SavedSelection
         if ($null -eq $sel) { $sel = Get-DefaultSelection }
