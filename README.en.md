@@ -855,7 +855,9 @@ characters, ASCII only.
 **Change build date** *(No. 58, off by default, Author: MacWarrior)*
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
-`FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`).
+`FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
+suggestion in brackets is always **today's date** (with `FR` if you chose it
+last time); with `-Unattended` the remembered value is used.
 
 ---
 

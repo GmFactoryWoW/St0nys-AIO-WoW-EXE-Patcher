@@ -873,6 +873,8 @@ Höchstens 17 Zeichen, nur ASCII.
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk. Eingabe als `JJJJ-MM-TT`, optional mit `FR`
 dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`).
+Als Vorschlag steht immer das **heutige Datum** in den Klammern (mit `FR`, wenn
+du das zuletzt gewählt hast); mit `-Unattended` gilt der gemerkte Wert.
 
 ---
 

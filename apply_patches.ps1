@@ -653,6 +653,13 @@ function Get-ClientDateParts([string]$v) {
     return @($d, $lng)
 }
 
+# Vorschlag im Dialog: immer das heutige Datum, die Sprache (FR) vom gemerkten Wert.
+function Get-ClientDateSuggestion([string]$saved) {
+    $today = (Get-Date).ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+    if ($saved -match '\sFR\s*$') { return "$today FR" }
+    return $today
+}
+
 function Test-ClientDate([string]$v) {
     if ($null -eq (Get-ClientDateParts $v)) { return (L 'Format: JJJJ-MM-TT, optional mit FR dahinter (z.B. 2026-09-28 FR).' 'Format: YYYY-MM-DD, optionally followed by FR (e.g. 2026-09-28 FR).') }
     return $null
@@ -744,6 +751,8 @@ function Add-VoiceLoader([string]$DllName) {
 #            Wert: der Patcher fragt ihn nach der Auswahl ab (Vorschlag =
 #            gemerkter Wert oder Default), prueft ihn mit Check (liefert $null
 #            oder eine Fehlermeldung) und legt ihn in $VALUES[Id] ab
+#    Suggest - optional: Scriptblock, der den Vorschlag im Dialog aus dem
+#            gemerkten Wert berechnet (z.B. heutiges Datum)
 #    Code  - Scriptblock mit den Patch-Aufrufen
 #  Die Reihenfolge hier ist die Reihenfolge im Menue und beim Einspielen,
 #  Patches einer Kategorie stehen zusammen.
@@ -1602,6 +1611,7 @@ $patches = @(
        PromptDe = 'Neues Build-Datum JJJJ-MM-TT, optional mit FR fuer franzoesische Monatsnamen'
        PromptEn = 'New build date YYYY-MM-DD, optionally followed by FR for French month names'
        Default = '2010-06-24'
+       Suggest = { param($saved) Get-ClientDateSuggestion $saved }
        Check = { param($v) Test-ClientDate $v }
        Code = {
         # Portierung von edit_date.py (MacWarrior): die drei Datumsfelder
@@ -1911,15 +1921,18 @@ for ($i = 0; $i -lt $patches.Count; $i++) {
 }
 
 # --- 3b. Werte fuer Patches mit eigener Eingabe ---
-# Vorschlag ist der gemerkte Wert, sonst der Default. Ohne Rueckfragen
-# (-Unattended) wird der Vorschlag genommen.
+# Vorschlag ist der gemerkte Wert, sonst der Default; Patches mit Suggest
+# berechnen ihren Vorschlag selbst (Build-Datum: heute). Ohne Rueckfragen
+# (-Unattended) gilt der gemerkte Wert, sonst der Vorschlag.
 $VALUES = @{}
 $savedValues = Get-SavedValues
 $asked = $false
 foreach ($p in $chosen) {
     if (-not $p.Check) { continue }
-    $def = $savedValues[$p.Id]
+    $saved = $savedValues[$p.Id]
+    $def = $saved
     if (-not $def) { $def = $p.Default }
+    if ($p.Suggest -and -not ($Unattended -and $saved)) { $def = & $p.Suggest $saved }
     if ($Unattended) {
         $err = & $p.Check $def
         if ($err) {
