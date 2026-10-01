@@ -14,11 +14,12 @@
 #  Optionale Parameter fuer den unbeaufsichtigten Betrieb:
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
-#                             "saved" (gespeicherte Auswahl), "default",
-#                             "all" oder Nummern/Bereiche wie "1,3,5-8"
+#                             "saved" (gespeicherte Auswahl), "billy" (Preset
+#                             Billy's_Wow.exe = Standard), "all" oder
+#                             Nummern/Bereiche wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language gilt Deutsch, ohne -Select die
-#                             gespeicherte bzw. die Standard-Auswahl
+#                             gespeicherte Auswahl bzw. das Preset Billy's_Wow.exe
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 # ============================================================
 
@@ -69,6 +70,7 @@ $TEXT = @{
         Welcome2      = 'Verbesserungen: Bugfixes, Performance-Optimierungen,'
         Welcome3      = 'erweiterte Sichtweiten und verbesserte Sound-Einstellungen.'
         Welcome4      = 'Ein Backup wird automatisch als Wow.exe.BAK erstellt.'
+        Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
         Checking      = 'Pruefe Wow.exe Integritaet...'
@@ -80,7 +82,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe ist original und unmodifiziert.'
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
-        MenuHelp2     = 'A = alle an    N = alle aus    S = Standard-Auswahl    Q = abbrechen'
+        MenuHelp2     = 'A = alle an    N = alle aus    B = Preset Billy''s_Wow.exe    Q = abbrechen'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
         Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
@@ -111,6 +113,7 @@ $TEXT = @{
         Welcome2      = 'improvements: bug fixes, performance optimizations,'
         Welcome3      = 'extended view distances and improved sound settings.'
         Welcome4      = 'A backup is created automatically as Wow.exe.BAK.'
+        Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
         Checking      = 'Checking Wow.exe integrity...'
@@ -122,7 +125,7 @@ $TEXT = @{
         HashOk        = '[OK] Wow.exe is original and unmodified.'
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
-        MenuHelp2     = 'A = all on    N = all off    D = default selection    Q = quit'
+        MenuHelp2     = 'A = all on    N = all off    B = preset Billy''s_Wow.exe    Q = quit'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
         Saved         = 'Selection saved for next time.'
@@ -325,7 +328,8 @@ function Add-HdPortraits([int]$SIZE) {
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
 #    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
-#    On    - Standard-Auswahl: vorausgewaehlt ($true) oder nicht ($false)
+#    On    - Teil des Presets "Billy's_Wow.exe", das zugleich die Standard-
+#            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false)
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
 #    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
@@ -356,7 +360,7 @@ $patches = @(
     # --- System & Leistung ---
 
     @{ Id = 'laa'; Cat = 'system'; On = $true
-       Author = 'Kebabstorm'
+       Author = 'Alastor StrixEfuartus / Kebabstorm'
        De = '4GB-Patch (Large Address Aware)'
        En = '4GB patch (Large Address Aware)'
        Code = {
@@ -364,7 +368,7 @@ $patches = @(
     }}
 
     @{ Id = 'cache'; Cat = 'system'; On = $false
-       Author = 'Kebabstorm'
+       Author = 'Alastor StrixEfuartus / Kebabstorm'
        De = 'CACHE-Ordner-Erstellung deaktivieren'
        En = 'Disable CACHE folder creation'
        Code = {
@@ -390,7 +394,7 @@ $patches = @(
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; Cat = 'security'; On = $true; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; Obsoletes = @('rce')
        Author = 'Robinsch'
        De = 'Warden komplett abschalten, RCE-Fix'
        En = 'Disable Warden completely, RCE fix'
@@ -406,8 +410,8 @@ $patches = @(
         Patch 0x3D9C5B @(0x90, 0x90)
     }}
 
-    @{ Id = 'scandll'; Cat = 'security'; On = $true
-       Author = '12th Gen exe'
+    @{ Id = 'scandll'; Cat = 'security'; On = $false
+       Author = 'Alastor StrixEfuartus'
        De = 'Scan.dll deaktivieren'
        En = 'Disable Scan.dll'
        Code = {
@@ -435,7 +439,7 @@ $patches = @(
 
     # --- Login & Verbindung ---
 
-    @{ Id = 'skipbnet'; Cat = 'login'; On = $true
+    @{ Id = 'skipbnet'; Cat = 'login'; On = $false
        Author = 'Kebabstorm'
        De = 'Battle.net-Login ueberspringen'
        En = 'Skip Battle.net login'
@@ -443,7 +447,7 @@ $patches = @(
         Patch 0x2B1F48 @(0xEB)
     }}
 
-    @{ Id = 'skiprdp'; Cat = 'login'; On = $true
+    @{ Id = 'skiprdp'; Cat = 'login'; On = $false
        Author = 'Kebabstorm'
        De = 'Remote-Desktop-Pruefung ueberspringen'
        En = 'Skip Remote Desktop check'
@@ -451,7 +455,7 @@ $patches = @(
         Patch 0x36AE40 @(0xEB)
     }}
 
-    @{ Id = 'nohttp'; Cat = 'login'; On = $true
+    @{ Id = 'nohttp'; Cat = 'login'; On = $false
        Author = 'Kebabstorm'
        De = 'HTTP-Anfragen an Battle.net deaktivieren'
        En = 'Disable HTTP requests to Battle.net'
@@ -476,7 +480,7 @@ $patches = @(
     # --- Modding: Interface, MPQs & Addons ---
 
     @{ Id = 'glue'; Cat = 'modding'; On = $true
-       Author = 'Kebabstorm'
+       Author = 'Alastor StrixEfuartus / Kebabstorm'
        De = 'Custom Glue-XML erlauben'
        En = 'Allow custom GlueXML'
        Code = {
@@ -488,8 +492,8 @@ $patches = @(
         Patch 0x415B5F @(0xB8, 0x03, 0x00, 0x00, 0x00, 0xEB, 0xED)
     }}
 
-    @{ Id = 'mpqsig'; Cat = 'modding'; On = $true
-       Author = '12th Gen exe'
+    @{ Id = 'mpqsig'; Cat = 'modding'; On = $false
+       Author = 'Alastor StrixEfuartus'
        De = 'Falsch/Nicht signierte MPQs zulassen'
        En = 'Allow unsigned / incorrectly signed MPQs'
        Code = {
@@ -504,8 +508,8 @@ $patches = @(
         Patch 0x5E0F16 @(0x2A)
     }}
 
-    @{ Id = 'localdata'; Cat = 'modding'; On = $false
-       Author = '12th Gen exe'
+    @{ Id = 'localdata'; Cat = 'modding'; On = $true
+       Author = 'Alastor StrixEfuartus'
        De = 'Daten direkt aus dem Data-Ordner laden (ohne MPQ)'
        En = 'Load data directly from the Data folder (no MPQ)'
        Code = {
@@ -514,7 +518,7 @@ $patches = @(
     }}
 
     @{ Id = 'luaunlock'; Cat = 'modding'; On = $false
-       Author = '12th Gen exe'
+       Author = 'Alastor StrixEfuartus'
        De = 'LUA Unlock (geschuetzte Funktionen freigeben)'
        En = 'LUA unlock (allow protected functions)'
        NoteDe = 'kann als Botting gewertet werden'
@@ -526,7 +530,7 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'awesome'; Cat = 'modding'; On = $false; Needs = @('laa')
+    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa')
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
@@ -597,7 +601,7 @@ $patches = @(
         Patch 0x12811E @(0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'mail'; Cat = 'gameplay'; On = $false
+    @{ Id = 'mail'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Neue Post ohne 60 Sekunden Wartezeit'
        En = 'New mail without the 60-second wait'
@@ -605,7 +609,7 @@ $patches = @(
         Patch 0x16D899 @(0x05, 0x01, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'deadchat'; Cat = 'gameplay'; On = $false
+    @{ Id = 'deadchat'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Chat-Befehle auch im Tod erlauben'
        En = 'Allow chat commands while dead'
@@ -614,7 +618,7 @@ $patches = @(
     }}
 
     @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
-       Author = '12th Gen exe'
+       Author = 'Alastor StrixEfuartus'
        De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
        En = 'Level 101+ fix (druid base stats and barber chair)'
        Code = {
@@ -626,7 +630,7 @@ $patches = @(
     }}
 
     @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false
-       Author = 'Robinsch'
+       Author = 'Alastor StrixEfuartus / Robinsch'
        De = 'Unbegrenzte Rasse/Klasse-Kombinationen'
        En = 'Unlimited race/class combinations'
        NoteDe = 'Server muss es unterstuetzen'
@@ -638,7 +642,7 @@ $patches = @(
         Patch 0xE03C3 @(0x88)
     }}
 
-    @{ Id = 'maxchars'; Cat = 'gameplay'; On = $false
+    @{ Id = 'maxchars'; Cat = 'gameplay'; On = $true
        Author = 'St0ny'
        De = 'Max. Charaktere pro Server auf 255 erhoeht'
        En = 'Max characters per realm raised to 255'
@@ -649,7 +653,7 @@ $patches = @(
     # --- Grafik & Sichtweite ---
 
     @{ Id = 'farclip'; Cat = 'graphics'; On = $true
-       Author = '12th Gen exe'
+       Author = 'Alastor StrixEfuartus'
        De = 'CVar farclip unlock (max 10000)'
        En = 'CVar farclip unlock (max 10000)'
        Code = {
@@ -687,7 +691,7 @@ $patches = @(
         Patch 0x5E74FC @(0xAB, 0xEA, 0x45, 0x45)
     }}
 
-    @{ Id = 'sliders'; Cat = 'graphics'; On = $true; Needs = @('farclip', 'envdetail', 'grounddist')
+    @{ Id = 'sliders'; Cat = 'graphics'; On = $false; Needs = @('farclip', 'envdetail', 'grounddist')
        Author = 'St0ny'
        De = 'Grafikoptionen: Slider-Maxima erweitern'
        En = 'Graphics options: extend slider maximums'
@@ -785,7 +789,7 @@ $patches = @(
         Patch 0x6B3E80 @(0xA0, 0x57, 0x9F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5A, 0xA3, 0x40, 0xBC, 0xF3, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x40, 0x38, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x6F, 0x40, 0x60, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x40, 0x00, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'goscale'; Cat = 'graphics'; On = $true; Needs = @('envdetail')
+    @{ Id = 'goscale'; Cat = 'graphics'; On = $false; Needs = @('envdetail')
        Author = 'St0ny'
        De = 'GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen'
        En = 'GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail'
@@ -832,7 +836,7 @@ $patches = @(
         Patch 0x38EA64 @(0xD9, 0x45, 0x08, 0xD8, 0x0D, 0x74, 0xF3, 0xAD, 0x00, 0xD9, 0x15, 0xB0, 0xF3, 0xAD, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'cat0'; Cat = 'graphics'; On = $true
+    @{ Id = 'cat0'; Cat = 'graphics'; On = $false
        Author = 'St0ny'
        De = 'GameObject Sichtweite: Cat 0 von 30 auf 50 Yards'
        En = 'GameObject view distance: Cat 0 from 30 to 50 yards'
@@ -869,7 +873,7 @@ $patches = @(
         Patch 0x6DD3DC @(0x00, 0x20, 0xFD, 0x44)
     }}
 
-    @{ Id = 'occluder'; Cat = 'graphics'; On = $true
+    @{ Id = 'occluder'; Cat = 'graphics'; On = $false
        Author = 'Robinsch'
        De = 'Occluder Fix fuer Stormwind (Open Azeroth)'
        En = 'Occluder fix for Stormwind (Open Azeroth)'
@@ -885,15 +889,15 @@ $patches = @(
         Patch 0x5CFBC0 @(0xC7, 0x05, 0x74, 0x8E, 0xD3, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xC3)
     }}
 
-    @{ Id = 'notransparency'; Cat = 'graphics'; On = $false
-       Author = '12th Gen exe'
+    @{ Id = 'notransparency'; Cat = 'graphics'; On = $true
+       Author = 'Alastor StrixEfuartus'
        De = 'Keine Transparenz beim Heranzoomen'
        En = 'No character transparency when zooming in'
        Code = {
         Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $true
+    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false
        Author = 'Badgermilk0'
        De = 'HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)'
        En = 'HD unit frame portraits: 256x256 (live 3D portraits)'
@@ -904,14 +908,14 @@ $patches = @(
 
     # --- Interface & Komfort ---
 
-    @{ Id = 'tracker'; Cat = 'ui'; On = $true
+    @{ Id = 'tracker'; Cat = 'ui'; On = $false
        De = 'Quest-Tracker automatisch sortieren'
        En = 'Auto-sort quest tracker'
        Code = {
         Patch 0x11D4C5 @(0x64, 0x14, 0x9E, 0x00)
     }}
 
-    @{ Id = 'worldmap'; Cat = 'ui'; On = $true
+    @{ Id = 'worldmap'; Cat = 'ui'; On = $false
        De = 'Erweiterte Weltkarte standardmaessig aktiv'
        En = 'Advanced world map enabled by default'
        Code = {
@@ -981,7 +985,7 @@ $patches = @(
         Patch 0x613108 @(0xC4)
     }}
 
-    @{ Id = 'flash'; Cat = 'ui'; On = $false
+    @{ Id = 'flash'; Cat = 'ui'; On = $true
        Author = 'Kebabstorm'
        De = 'FlashWindow Patch'
        En = 'FlashWindow patch'
@@ -996,7 +1000,7 @@ $patches = @(
 
     # --- Fenster & Maus ---
 
-    @{ Id = 'window'; Cat = 'window'; On = $true
+    @{ Id = 'window'; Cat = 'window'; On = $false
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
@@ -1004,7 +1008,7 @@ $patches = @(
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
 
-    @{ Id = 'maximize'; Cat = 'window'; On = $true
+    @{ Id = 'maximize'; Cat = 'window'; On = $false
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
@@ -1012,7 +1016,7 @@ $patches = @(
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
 
-    @{ Id = 'windowfix'; Cat = 'window'; On = $false
+    @{ Id = 'windowfix'; Cat = 'window'; On = $true
        Author = 'Robinsch'
        De = 'Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus'
        En = 'No black screen when switching to windowed mode'
@@ -1033,10 +1037,13 @@ $patches = @(
 
     # --- Sound ---
 
-    @{ Id = 'sound'; Cat = 'sound'; On = $true
+    @{ Id = 'sound'; Cat = 'sound'; On = $false
        Author = 'St0ny'
        De = 'Sound-Einstellungen optimieren'
        En = 'Optimize sound settings'
+       NoteDe = 'benoetigt OpenAL, sonst wirken die Einstellungen nicht'
+       NoteEn = 'requires OpenAL, otherwise the settings have no effect'
+       Url = 'https://github.com/kcat/openal-soft'
        Code = {
         Patch 0x0C77C2 @(0xC7, 0x45, 0xF8, 0x7E, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90)
         Patch 0x6B3F80 @(0x36, 0x34, 0x00)
@@ -1174,7 +1181,7 @@ function Select-Patches {
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
-            '^[sSdD]$' { $sel = Get-DefaultSelection; break }
+            '^[bB]$'   { $sel = Get-DefaultSelection; break }
             '^[qQxX]$' { return $null }
             default {
                 $idx = ConvertTo-Indices $in $sel.Length
@@ -1188,7 +1195,7 @@ function Select-Patches {
 # Nicht-interaktive Auswahl ueber -Select. Liefert $null bei ungueltigem Wert.
 function Get-SelectionFromParam([string]$value) {
     $v = $value.Trim().ToLowerInvariant()
-    if ($v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
+    if ($v -eq 'billy' -or $v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
     if ($v -eq 'saved' -or $v -eq 'gespeichert') {
         $sel = Get-SavedSelection
         if ($null -eq $sel) { $sel = Get-DefaultSelection }
@@ -1280,6 +1287,8 @@ Say (T 'Welcome2')
 Say (T 'Welcome3')
 Write-Host ''
 Say (T 'Welcome4')
+Write-Host ''
+Say (T 'Thanks') 'Magenta'
 Write-Host ''
 if (-not $Unattended) {
     [void](Read-Host "  $(T 'PressStart')")

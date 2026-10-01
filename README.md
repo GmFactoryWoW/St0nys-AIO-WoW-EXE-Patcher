@@ -10,6 +10,9 @@ EXE ein – in einem Durchgang, ohne zusätzliche Tools oder DLL-Injector.
 Beim Start wählst du die **Sprache** (Deutsch / English) und danach in einem
 Menü, **welche Patches** eingespielt werden sollen.
 
+> [!TIP]
+> **Danke an Billy Hoyle und MacWarrior!** – siehe [Danksagung](#danksagung).
+
 > [!IMPORTANT]
 > Dieses Repository enthält **keine** `Wow.exe` und keine anderen Dateien von
 > Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).
@@ -27,6 +30,7 @@ Menü, **welche Patches** eingespielt werden sollen.
 - [Patch-Übersicht](#patch-übersicht)
 - [Patch-Beschreibungen](#patch-beschreibungen)
 - [Hinweise](#hinweise)
+- [Danksagung](#danksagung)
 - [Lizenz](#lizenz)
 
 ---
@@ -69,8 +73,8 @@ Zum **Wiederherstellen** einfach `Wow.exe` löschen und `Wow.exe.BAK` in
 
 Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
 `[ ]` = wird übersprungen. Das Menü ist in dieselben Kategorien gegliedert wie
-die [Patch-Übersicht](#patch-übersicht). Vorausgewählt ist die empfohlene
-Standard-Auswahl (Spalte „Standard“ in der Übersicht). Patches, die
+die [Patch-Übersicht](#patch-übersicht). Vorausgewählt ist die Standard-Auswahl,
+das **Preset „Billy's_Wow.exe“** (Spalte „Standard“ in der Übersicht). Patches, die
 zusätzlich etwas benötigen, zeigen das in Klammern hinter dem Namen, der Link
 dazu steht direkt darunter.
 
@@ -81,7 +85,7 @@ dazu steht direkt darunter.
 | `10-15`            | einen Bereich an-/abwählen                  |
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus                            |
-| `S` (oder `D`)     | zurück zur Standard-Auswahl                 |
+| `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -103,11 +107,12 @@ Sicherheitsabfrage abgebrochen hast.
   und die neuen Patches starten mit ihrer Standard-Einstellung.
 - Die Datei ist eine einfache Textdatei (`laa=1`, `cache=0`, …) und kann auch
   von Hand bearbeitet werden.
-- **Zurücksetzen:** im Menü `S` drücken oder `patcher_selection.ini` löschen –
-  dann gilt wieder die Standard-Auswahl.
+- **Zurücksetzen:** im Menü `B` drücken oder `patcher_selection.ini` löschen –
+  dann gilt wieder das Preset „Billy's_Wow.exe“.
 
-Die Standard-Auswahl ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
-einen Eintrag `On = $true` (vorausgewählt) bzw. `On = $false` (abgewählt).
+Das Preset „Billy's_Wow.exe“ ist das Patch-Set von Billy Hoyle und zugleich die
+Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
+einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
 ## Parameter für den unbeaufsichtigten Betrieb
 
@@ -117,8 +122,8 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
 | `-Language de\|en`     | Sprachabfrage überspringen                                                  |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `default`, `all` oder Nummern/Bereiche wie `"1,3,5-8"`. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
-| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt Deutsch, ohne `-Select` die gespeicherte bzw. die Standard-Auswahl. |
+| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `all` oder Nummern/Bereiche wie `"1,3,5-8"`. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
+| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Billy's_Wow.exe“. |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
 Beispiel:
@@ -147,27 +152,27 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = abgebrochen (vom Benutzer ode
 | Nr. | Patch | Autor | Standard |
 |----:|-------|-------|:--------:|
 |    | **System & Leistung** |  |  |
-| 1  | 4GB-Patch (Large Address Aware) | Kebabstorm | ✅ |
-| 2  | CACHE-Ordner-Erstellung deaktivieren | Kebabstorm | – |
+| 1  | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm | ✅ |
+| 2  | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – |
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ |
 |    | **Sicherheit & Datenschutz** |  |  |
 | 4  | Remote Code Execution Exploit Fix | Robinsch | – |
-| 5  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | ✅ |
-| 6  | Scan.dll deaktivieren | 12th Gen exe | ✅ |
+| 5  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – |
+| 6  | Scan.dll deaktivieren | Alastor StrixEfuartus | – |
 | 7  | Client-Patches vom Server verbieten | Kebabstorm | – |
 | 8  | Hardware-Umfragen vom Server verbieten | Kebabstorm | – |
 |    | **Login & Verbindung** |  |  |
-| 9  | Battle.net-Login überspringen | Kebabstorm | ✅ |
-| 10 | Remote-Desktop-Prüfung überspringen | Kebabstorm | ✅ |
-| 11 | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | ✅ |
+| 9  | Battle.net-Login überspringen | Kebabstorm | – |
+| 10 | Remote-Desktop-Prüfung überspringen | Kebabstorm | – |
+| 11 | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – |
 | 12 | AFK-Timer / IDLE-Check deaktivieren *(wird für Character-Autologin benötigt, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – |
 |    | **Modding: Interface, MPQs & Addons** |  |  |
-| 13 | Custom Glue-XML erlauben | Kebabstorm | ✅ |
-| 14 | Falsch/Nicht signierte MPQs zulassen | 12th Gen exe | ✅ |
+| 13 | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm | ✅ |
+| 14 | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – |
 | 15 | Erweiterte MPQ-Namen erlauben |  | ✅ |
-| 16 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | 12th Gen exe | – |
-| 17 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden)* | 12th Gen exe | – |
-| 18 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – |
+| 16 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | ✅ |
+| 17 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden)* | Alastor StrixEfuartus | – |
+| 18 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ |
 |    | **Gameplay-Fixes** |  |  |
 | 19 | Area-Trigger-Timer genauer (50 ms statt 250 ms) | Robinsch | ✅ |
 | 20 | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ |
@@ -176,36 +181,36 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = abgebrochen (vom Benutzer ode
 | 23 | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch | ✅ |
 | 24 | Nackter-Charakter-Bug behoben | Robinsch | ✅ |
 | 25 | Force-Reaction bei /reload erhalten | Robinsch | ✅ |
-| 26 | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | – |
-| 27 | Chat-Befehle auch im Tod erlauben | Robinsch | – |
-| 28 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | 12th Gen exe | – |
-| 29 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Robinsch | – |
-| 30 | Max. Charaktere pro Server auf 255 erhöht | St0ny | – |
+| 26 | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | ✅ |
+| 27 | Chat-Befehle auch im Tod erlauben | Robinsch | ✅ |
+| 28 | Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl) | Alastor StrixEfuartus | – |
+| 29 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – |
+| 30 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ |
 |    | **Grafik & Sichtweite** |  |  |
-| 31 | CVar farclip unlock (max 10000) | 12th Gen exe | ✅ |
+| 31 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ |
 | 32 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ |
 | 33 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ |
 | 34 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ |
-| 35 | Grafikoptionen: Slider-Maxima erweitern | St0ny | ✅ |
-| 36 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | ✅ |
-| 37 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | ✅ |
-| 38 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | ✅ |
+| 35 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – |
+| 36 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – |
+| 37 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards | St0ny | – |
+| 38 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – |
 | 39 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
-| 40 | Keine Transparenz beim Heranzoomen | 12th Gen exe | – |
-| 41 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | ✅ |
+| 40 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
+| 41 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
 |    | **Interface & Komfort** |  |  |
-| 42 | Quest-Tracker automatisch sortieren |  | ✅ |
-| 43 | Erweiterte Weltkarte standardmäßig aktiv |  | ✅ |
+| 42 | Quest-Tracker automatisch sortieren |  | – |
+| 43 | Erweiterte Weltkarte standardmäßig aktiv |  | – |
 | 44 | Cast Bars auf allen Frames | Kebabstorm | ✅ |
 | 45 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – |
-| 46 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – |
+| 46 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ |
 |    | **Fenster & Maus** |  |  |
-| 47 | Fenstermodus als Standard setzen | St0ny | ✅ |
-| 48 | Fenstermodus maximiert als Standard setzen | St0ny | ✅ |
-| 49 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | – |
+| 47 | Fenstermodus als Standard setzen | St0ny | – |
+| 48 | Fenstermodus maximiert als Standard setzen | St0ny | – |
+| 49 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ |
 | 50 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ |
 |    | **Sound** |  |  |
-| 51 | Sound-Einstellungen optimieren | St0ny | ✅ |
+| 51 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -218,11 +223,11 @@ Exit-Codes: `0` = erfolgreich, `1` = Fehler, `2` = abgebrochen (vom Benutzer ode
 
 ### System & Leistung
 
-**4GB-Patch (Large Address Aware)** *(Nr. 1, Autor: Kebabstorm)*
+**4GB-Patch (Large Address Aware)** *(Nr. 1, Autor: Alastor StrixEfuartus / Kebabstorm)*
 Ermöglicht der `Wow.exe`, bis zu 4 GB RAM zu nutzen statt der
 standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 
-**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, standardmäßig aus, Autor: Kebabstorm)*
+**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, standardmäßig aus, Autor: Alastor StrixEfuartus / Kebabstorm)*
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
 **Item-Cache sofort aktualisieren** *(Nr. 3, Autor: Robinsch)*
@@ -237,7 +242,7 @@ Pakete ermöglichen konnte: Die Sektion `.zdata` verliert ihr Ausführungsrecht,
 und Warden-Module werden nicht mehr aus dem lokalen Cache geladen. Warden selbst
 läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 
-**Warden komplett abschalten, RCE-Fix** *(Nr. 5, Autor: Robinsch)*
+**Warden komplett abschalten, RCE-Fix** *(Nr. 5, standardmäßig aus, Autor: Robinsch)*
 Der Client verwirft alle Warden-Pakete des Servers (`SMSG_WARDEN_DATA`).
 Warden-Module sind Code, den der Server im Client ausführen lässt – mit diesem
 Patch ist das überhaupt nicht mehr möglich, auch nicht über künftige Tricks.
@@ -249,7 +254,7 @@ der Patcher weist dann nur darauf hin.
 > (z. B. AzerothCore oder TrinityCore in der Standardeinstellung) können dich
 > deshalb kicken.
 
-**Scan.dll deaktivieren** *(Nr. 6, Autor: 12th Gen exe)*
+**Scan.dll deaktivieren** *(Nr. 6, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Deaktiviert den Warden-Scan-DLL-Mechanismus im Client.
 
 **Client-Patches vom Server verbieten** *(Nr. 7, standardmäßig aus, Autor: Kebabstorm)*
@@ -262,15 +267,15 @@ Client anfordern.
 
 ### Login & Verbindung
 
-**Battle.net-Login überspringen** *(Nr. 9, Autor: Kebabstorm)*
+**Battle.net-Login überspringen** *(Nr. 9, standardmäßig aus, Autor: Kebabstorm)*
 Der Client überspringt den Battle.net-Login-Schritt und nutzt direkt den
 klassischen Login.
 
-**Remote-Desktop-Prüfung überspringen** *(Nr. 10, Autor: Kebabstorm)*
+**Remote-Desktop-Prüfung überspringen** *(Nr. 10, standardmäßig aus, Autor: Kebabstorm)*
 Der Client prüft nicht mehr, ob er über eine Remote-Desktop-Verbindung läuft –
 WoW lässt sich damit z. B. per RDP spielen.
 
-**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 11, Autor: Kebabstorm)*
+**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 11, standardmäßig aus, Autor: Kebabstorm)*
 Der Client ruft keine News, Hilfe-Artikel und Nutzungsbedingungen mehr von
 Blizzards Servern ab – die gibt es für 3.3.5 ohnehin nicht mehr.
 
@@ -282,11 +287,11 @@ CharAutoLogin-Bug.
 
 ### Modding: Interface, MPQs & Addons
 
-**Custom Glue-XML erlauben** *(Nr. 13, Autor: Kebabstorm)*
+**Custom Glue-XML erlauben** *(Nr. 13, Autor: Alastor StrixEfuartus / Kebabstorm)*
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding).
 
-**Falsch/Nicht signierte MPQs zulassen** *(Nr. 14, Autor: 12th Gen exe)*
+**Falsch/Nicht signierte MPQs zulassen** *(Nr. 14, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Erlaubt das Laden von MPQ-Archiven ohne gültige Signatur. Notwendig für
 Custom-Content auf privaten Servern.
 
@@ -294,12 +299,12 @@ Custom-Content auf privaten Servern.
 Ermöglicht die Nutzung von Wildcard-Namen für MPQ-Archive
 (`patch-*.MPQ` und `patch-locale-*.MPQ`).
 
-**Daten direkt aus dem Data-Ordner laden (ohne MPQ)** *(Nr. 16, standardmäßig aus, Autor: 12th Gen exe)*
+**Daten direkt aus dem Data-Ordner laden (ohne MPQ)** *(Nr. 16, Autor: Alastor StrixEfuartus)*
 Der Client liest Dateien direkt aus dem Data-Ordner, ohne dass sie in ein MPQ
 gepackt werden müssen – z. B. `Data\DBFilesClient\ItemDisplayInfo.dbc`.
 Praktisch für Modder.
 
-**LUA Unlock (geschützte Funktionen freigeben)** *(Nr. 17, standardmäßig aus, Autor: 12th Gen exe)*
+**LUA Unlock (geschützte Funktionen freigeben)** *(Nr. 17, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Addons und Makros dürfen geschützte Funktionen aufrufen, z. B.
 `CastSpellByName`, `CastSpellByID`, `TargetUnit`, `FocusUnit`, `InteractUnit`,
 Bewegungsfunktionen oder `ReloadUI`. `AttackTarget` meldet weiterhin einen
@@ -309,7 +314,7 @@ Fehler.
 > Das ermöglicht Automatisierung. Server mit Anti-Cheat können das als Botting
 > werten.
 
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 18, standardmäßig aus, Autor: FrostAtom)*
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 18, Autor: FrostAtom)*
 Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
 Server.
@@ -345,24 +350,24 @@ Charaktere ohne Ausrüstung dargestellt wurden.
 Verhindert, dass Force-Reaction-Werte (z. B. Fraktionsstatus) beim Neuladen
 der UI zurückgesetzt werden. Wichtig für Custom-Server.
 
-**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 26, standardmäßig aus, Autor: Robinsch)*
+**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 26, Autor: Robinsch)*
 Der Client fragt neue Post sofort ab – kein Warten mehr von 60 Sekunden und kein
 Relog, um neue Post zu bekommen.
 
-**Chat-Befehle auch im Tod erlauben** *(Nr. 27, standardmäßig aus, Autor: Robinsch)*
+**Chat-Befehle auch im Tod erlauben** *(Nr. 27, Autor: Robinsch)*
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
-**Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 28, standardmäßig aus, Autor: 12th Gen exe)*
+**Level 101+ Fix für Druiden-Grundwerte und Barbierstuhl** *(Nr. 28, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Druiden ab Level 101 können ihre Grundwerte wieder ansehen, und der
 Barbierstuhl funktioniert für alle Charaktere ab Level 101.
 **Benötigt** den Patch „Custom Glue-XML erlauben“ (Nr. 13). In der Quelle
 heißt er „Disable XML SIG MD5“, daher der dortige Hinweis „Use XML MD5“.
 
-**Unbegrenzte Rasse/Klasse-Kombinationen** *(Nr. 29, standardmäßig aus, Autor: Robinsch)*
+**Unbegrenzte Rasse/Klasse-Kombinationen** *(Nr. 29, standardmäßig aus, Autor: Alastor StrixEfuartus / Robinsch)*
 Die Charaktererstellung lässt jede Rasse mit jeder Klasse zu. Der Server muss
 das ebenfalls unterstützen.
 
-**Max. Charaktere pro Server auf 255 erhöht** *(Nr. 30, standardmäßig aus, Autor: St0ny)*
+**Max. Charaktere pro Server auf 255 erhöht** *(Nr. 30, Autor: St0ny)*
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
@@ -370,7 +375,7 @@ Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 ### Grafik & Sichtweite
 
-**Farclip unlock auf max 10000** *(Nr. 31, Autor: 12th Gen exe)*
+**Farclip unlock auf max 10000** *(Nr. 31, Autor: Alastor StrixEfuartus)*
 Entsperrt die maximale Sichtweite (Farclip) auf 10000 Yards. Der Client klemmt
 den Wert beim Setzen in einer einzigen Funktion (VA `0x780770`) nach oben ab
 und hält dafür zwei Grenzen bereit: 1583 Yards im Normalfall und 791 Yards als
@@ -402,7 +407,7 @@ Spiel wirkt.
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Slider-Maxima im Video-Menü erweitern** *(Nr. 35, Autor: St0ny)*
+**Slider-Maxima im Video-Menü erweitern** *(Nr. 35, standardmäßig aus, Autor: St0ny)*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -499,7 +504,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 `Config.wtf`, `/console horizonFarclipScale 12` oder ein CVar-Addon setzen
 (entsperrt ist er bis 12, siehe oben).
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 36, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 36, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -521,7 +526,7 @@ Mit Patch Nr. 37 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
 unlock“ (Nr. 33) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 37, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 37, standardmäßig aus, Autor: St0ny)*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab.
 Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
@@ -627,7 +632,7 @@ sie unabhängig von den Distanzen verbreitern.
 
 </details>
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 38, Autor: Robinsch)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 38, standardmäßig aus, Autor: Robinsch)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
@@ -636,11 +641,11 @@ Custom-Servern mit umgebautem Stormwind.
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Keine Transparenz beim Heranzoomen** *(Nr. 40, standardmäßig aus, Autor: 12th Gen exe)*
+**Keine Transparenz beim Heranzoomen** *(Nr. 40, Autor: Alastor StrixEfuartus)*
 Der eigene Charakter wird nicht mehr durchsichtig, wenn die Kamera nah
 herangezoomt wird.
 
-**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 41, Autor: Badgermilk0)*
+**HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 41, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
 statt der Standard-64×64. Bildausschnitt, Neigung und Zoom bleiben unverändert
 – nur die Renderauflösung steigt, die Portraits werden also deutlich schärfer.
@@ -655,11 +660,11 @@ Kopierschleife sonst über die Quelle hinaus liest.
 
 ### Interface & Komfort
 
-**Quest-Tracker automatisch sortieren** *(Nr. 42)*
+**Quest-Tracker automatisch sortieren** *(Nr. 42, standardmäßig aus)*
 Setzt den CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 43)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 43, standardmäßig aus)*
 Setzt den CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
 
@@ -699,7 +704,7 @@ Hälften = 34 Dateien, für alle 26 neuen Wappen zusammen 884. Der Archivname
 ist frei wählbar (`patch-*.MPQ`), dafür sorgt der Patch
 „Erweiterte MPQ-Namen erlauben“ (Nr. 15).
 
-**FlashWindow Patch** *(Nr. 46, standardmäßig aus, Autor: Kebabstorm)*
+**FlashWindow Patch** *(Nr. 46, Autor: Kebabstorm)*
 FlashWindow: Lässt das WoW-Fenster in der Taskleiste blinken, wenn ein
 relevantes Ereignis eintritt und das Spiel im Hintergrund läuft.
 Die Funktion kann per Addon angesprochen werden.
@@ -707,15 +712,15 @@ Die Funktion kann per Addon angesprochen werden.
 
 ### Fenster & Maus
 
-**Fenstermodus als Standard setzen** *(Nr. 47, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 47, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 48, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 48, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 49, standardmäßig aus, Autor: Robinsch)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 49, Autor: Robinsch)*
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr.
 
@@ -726,7 +731,7 @@ und unkontrollierte Kamerabewegungen.
 
 ### Sound
 
-**Sound-Einstellungen optimieren** *(Nr. 51, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 51, standardmäßig aus, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
@@ -734,6 +739,10 @@ Umfasst folgende Änderungen:
 - `Sound_NumChannels` von 32 auf 64 erhöht
 - `Sound_EnableReverb` aktiviert (Hall-Effekt)
 - `Sound_EnableHardware` aktiviert (Hardware-Audiobeschleunigung)
+
+> [!IMPORTANT]
+> Damit diese Einstellungen überhaupt greifen, wird **OpenAL** benötigt, z. B.
+> [OpenAL Soft](https://github.com/kcat/openal-soft).
 
 ---
 
@@ -752,6 +761,19 @@ Umfasst folgende Änderungen:
   den Patcher erneut starten.
 - Nutzung auf eigene Gefahr. Dieses Projekt steht in keiner Verbindung zu
   Blizzard Entertainment.
+
+## Danksagung
+
+Ein ganz besonderer Dank geht an **Billy Hoyle** – für seine viele Hilfe und
+seine Tipps in den letzten Monaten und für die Hilfe beim Zusammentragen der
+Patches. Sein Patch-Set steckt als Preset „Billy's_Wow.exe“ in diesem Patcher
+und ist die Standard-Auswahl.
+
+Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen – vielen Dank
+auch dafür!
+
+Und natürlich danke an alle Autoren der Patches, die in der
+[Patch-Übersicht](#patch-übersicht) genannt sind.
 
 ## Lizenz
 
