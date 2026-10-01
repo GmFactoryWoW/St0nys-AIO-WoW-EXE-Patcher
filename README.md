@@ -201,7 +201,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 1  | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ |
 | 2  | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – |
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ |
-| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) *(teilt Code-Höhle mit Slider-Patch)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) *(teilt Code-Höhle mit Slider-Patch; zusammen wird die Exe größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – |
 |    | **Sicherheit & Datenschutz** |  |  |
 | 5  | Remote Code Execution Exploit Fix | Robinsch | – |
 | 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – |
@@ -253,7 +253,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 48 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – |
 | 49 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ |
 | 50 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ |
-| 51 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen, teilt Code-Höhle mit Slider-Patch)* | Alyst3r (0x539wowmod) / St0ny | – |
+| 51 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen, teilt Code-Höhle mit Slider-Patch; zusammen wird die Exe größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – |
 | 52 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) | Badgermilk0 | – |
 |    | **Interface & Komfort** |  |  |
 | 53 | Quest-Tracker automatisch sortieren |  | – |
@@ -315,6 +315,12 @@ Original sind die drei Sprungweiten korrigiert und der Code ist kürzer.
 > dadurch etwas größer: Jede ausgelagerte Höhle bekommt eine 512-Byte-Sektion,
 > dazu kommt das Auffüllen des Dateiendes – mit Nr. 4 und 48 zusammen rund 1,4 KB.
 > Beim Zurücknehmen fällt das wieder weg.
+
+> [!WARNING]
+> Alle drei Patches (Nr. 4, die NPC-Ausblendung und der Slider-Patch) lassen sich
+> zusammen einspielen, die `Wow.exe` wird dann aber größer. **Viele Server
+> tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das kann zu einem
+> Bann führen.**
 
 > [!NOTE]
 > Ein heuristischer Fix, wie ihn auch der Autor nennt: Geprüft wird nur das erste
@@ -690,6 +696,12 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 > zusammen mit diesem Patch gewählt, weichen sie automatisch auf eigene kleine
 > Sektionen am Dateiende aus – die `Wow.exe` wird dadurch etwas größer.
 
+> [!WARNING]
+> Alle drei Patches (Nr. 4, die NPC-Ausblendung und der Slider-Patch) lassen sich
+> zusammen einspielen, die `Wow.exe` wird dann aber größer. **Viele Server
+> tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das kann zu einem
+> Bann führen.**
+
 **GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 46, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
@@ -846,6 +858,12 @@ wie bisher.
 > dem Slider-Patch weicht der Patch automatisch auf eine eigene kleine Sektion
 > `.nofade` am Dateiende aus. Auch hier wird die `Wow.exe` dadurch etwas größer
 > (siehe Nr. 4).
+
+> [!WARNING]
+> Alle drei Patches (Nr. 4, die NPC-Ausblendung und der Slider-Patch) lassen sich
+> zusammen einspielen, die `Wow.exe` wird dann aber größer. **Viele Server
+> tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das kann zu einem
+> Bann führen.**
 
 **HD Unit-Frame Portraits: 256x256 statt 64x64** *(Nr. 52, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256

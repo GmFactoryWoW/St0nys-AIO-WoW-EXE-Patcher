@@ -134,6 +134,7 @@ $TEXT = @{
         Hint          = 'wirkt nur vollstaendig zusammen mit:'
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         Conflict      = 'nutzt dieselbe Code-Hoehle wie diese Patches und weicht darum auf eine eigene Sektion am Dateiende aus (die Wow.exe wird dadurch etwas groesser):'
+        ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
@@ -211,6 +212,7 @@ $TEXT = @{
         Hint          = 'only takes full effect together with:'
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         Conflict      = 'uses the same code cave as these patches and therefore moves to a section of its own at the end of the file (Wow.exe becomes slightly larger):'
+        ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
@@ -1052,8 +1054,8 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
        En = 'WorldFrame crash fix (invalid triangle indices)'
-       NoteDe = 'teilt Code-Hoehle mit Slider-Patch'
-       NoteEn = 'shares code cave with the slider patch'
+       NoteDe = 'teilt Code-Hoehle mit Slider-Patch; zusammen wird die Exe groesser - Bann-Gefahr'
+       NoteEn = 'shares code cave with the slider patch; together the exe grows - ban risk'
        Code = {
         # Code-Hoehle am Ende von .text, mit Slider-Patch eigene Sektion
         # (.wfcfix), siehe Get-CodeCave / Add-WorldFrameCrashFix.
@@ -1717,8 +1719,8 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Kein Ausblenden fuer NPCs mit Flag DO_NOT_FADE_IN'
        En = 'No fade-out for NPCs with flag DO_NOT_FADE_IN'
-       NoteDe = 'Server muss das Flag setzen, teilt Code-Hoehle mit Slider-Patch'
-       NoteEn = 'server must set the flag, shares code cave with the slider patch'
+       NoteDe = 'Server muss das Flag setzen, teilt Code-Hoehle mit Slider-Patch; zusammen wird die Exe groesser - Bann-Gefahr'
+       NoteEn = 'server must set the flag, shares code cave with the slider patch; together the exe grows - ban risk'
        Code = {
         # Code-Hoehle am Ende von .text, mit Slider-Patch eigene Sektion
         # (.nofade), siehe Get-CodeCave / Add-NoFadeOutFlag.
@@ -2664,6 +2666,7 @@ foreach ($p in $chosen) {
         Say (T 'HintHead' (PatchName $p)) 'Yellow'
         Say (T 'Conflict') 'Yellow'
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
+        Say (T 'ConflictBan') 'Red'
     }
 }
 Write-Host ''
