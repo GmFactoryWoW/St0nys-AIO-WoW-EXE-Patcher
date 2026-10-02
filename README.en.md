@@ -134,9 +134,9 @@ selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
 The second preset "Billy's_Wow.exe (edited by St0ny)" (key `S`) is Billy's
-patch set plus the RCE fix, the security and login patches, MPQ signature
-check off, the `/follow` fix, level 101, object scale, tracker, world map and
-windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
+patch set plus the security and login patches, MPQ signature check off, the
+`/follow` fix, level 101, slider maximums, object scale, tracker, world map
+and windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
 the overview it is the "St0ny" column. **Warning: this preset has not been
 tested yet.** The patcher shows this as a yellow note when you load it with `S`.
 
@@ -226,7 +226,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 3  | Refresh item cache immediately | Robinsch | ✅ | ✅ |
 | 4  | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Security & privacy** |  |  |  |
-| 5  | Remote code execution exploit fix *(enable only one of the two RCE patches)* | Robinsch | – | ✅ |
+| 5  | Remote code execution exploit fix *(enable only one of the two RCE patches)* | Robinsch | – | – |
 | 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active; enable only one of the two RCE patches)* | Robinsch | – | – |
 | 7  | Disable Scan.dll | Alastor StrixEfuartus | – | ✅ |
 | 8  | Disallow client patches from the server | Kebabstorm | – | ✅ |
@@ -271,7 +271,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
 | 44 | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ | ✅ |
 | 45 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ | ✅ |
-| 46 | Graphics options: extend slider maximums | St0ny | – | – |
+| 46 | Graphics options: extend slider maximums | St0ny | – | ✅ |
 | 47 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | ✅ |
 | 48 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – |
 | 49 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – |

@@ -139,8 +139,8 @@ Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
 einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
 Das zweite Preset „Billy's_Wow.exe (edited by St0ny)“ (Taste `S`) ist Billys
-Patch-Set plus RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signaturprüfung
-aus, `/follow`-Fix, Level 101, Objektgröße, Tracker, Weltkarte und
+Patch-Set plus Sicherheits- und Login-Patches, MPQ-Signaturprüfung aus,
+`/follow`-Fix, Level 101, Slider-Maxima, Objektgröße, Tracker, Weltkarte und
 Fenstermodus. Die Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`,
 in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch
 ungetestet.** Der Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
@@ -232,7 +232,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ |
 | 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Sicherheit & Datenschutz** |  |  |  |
-| 5  | Remote Code Execution Exploit Fix *(nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | ✅ |
+| 5  | Remote Code Execution Exploit Fix *(nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | – |
 | 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden; nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | – |
 | 7  | Scan.dll deaktivieren | Alastor StrixEfuartus | – | ✅ |
 | 8  | Client-Patches vom Server verbieten | Kebabstorm | – | ✅ |
@@ -277,7 +277,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
 | 44 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ | ✅ |
 | 45 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ | ✅ |
-| 46 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | – |
+| 46 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | ✅ |
 | 47 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – | ✅ |
 | 48 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | – |
 | 49 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – |

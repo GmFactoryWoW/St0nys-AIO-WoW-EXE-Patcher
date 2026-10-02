@@ -2356,17 +2356,17 @@ $patches = @(
 )
 
 # Zweites Preset "Billy's_Wow.exe (edited by St0ny)" - Billys Patch-Set plus
-# RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
-# Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue mit S, ueber
-# -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
+# Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
+# Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
+# mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
 $PRESET_STONY = @(
     'laa', 'itemcache',
-    'rce', 'scandll', 'noserverpatch', 'nosurvey',
+    'scandll', 'noserverpatch', 'nosurvey',
     'skipbnet', 'skiprdp', 'nohttp',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
     'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
     'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars',
-    'farclip', 'horizon', 'envdetail', 'grounddist', 'goscale',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
     'bluemoon', 'notransparency',
     'tracker', 'worldmap', 'castbars', 'flash',
     'window', 'maximize', 'windowfix', 'mouse'
