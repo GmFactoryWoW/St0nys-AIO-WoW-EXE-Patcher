@@ -297,11 +297,12 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 64 | CameraReforged [BETA]: camera height, shoulder offset, zoom limits *(not 100% finished yet; exe grows – ban risk)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
 | 65 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – | – |
-|    | **Client info: version, build, title, date** |  |  |  |
+|    | **Client info: version, build, title, date, icon** |  |  |  |
 | 66 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
 | 67 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
 | 68 | Change program title in the file properties *(asks for the value)* | MacWarrior | – | – |
 | 69 | Change build date (original Jun 24 2010) *(asks for the value)* | MacWarrior | – | – |
+| 70 | Change program icon (icon of Wow.exe) *(asks for the value)* | MacWarrior / St0ny | – | – |
 
 > [!NOTE]
 > **Authors wanted:** For patches without an entry in the "Author" column, the
@@ -1066,11 +1067,11 @@ Includes the following changes:
 > **OpenAL** is required for these settings to take effect at all, e.g.
 > [OpenAL Soft](https://github.com/kcat/openal-soft).
 
-### Client info: version, build, title, date
+### Client info: version, build, title, date, icon
 
-These four patches by MacWarrior (ported from his Python scripts
-`edit_version.py`, `edit_revision.py`, `edit_title.py` and `edit_date.py`)
-change how the client identifies itself. When selected, **the patcher asks for
+These five patches by MacWarrior (ported from his Python scripts
+`edit_version.py`, `edit_revision.py`, `edit_title.py`, `edit_date.py` and
+`edit_icon.py`) change how the client identifies itself. When selected, **the patcher asks for
 the desired values after the selection**. A suggestion is shown in square
 brackets, ENTER accepts it. Invalid input is asked again with a message, and all
 values are checked before anything is written. The patcher remembers the values
@@ -1126,6 +1127,31 @@ the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
 suggestion in brackets is **today's date** (with `FR` if you chose it last
 time); with `-Unattended` the remembered value is used. If the patch is already
 applied, the current date of `Wow.exe` is suggested.
+
+**Change program icon (icon of Wow.exe)** *(No. 70, off by default, Author: MacWarrior / St0ny)*
+Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
+The patcher asks for the path of an `.ico` or `.png` file, absolute or
+relative to the WoW folder. From that file it builds the four sizes stored in
+`Wow.exe` (48, 32, 24 and 16 pixels, each 32-bit with alpha channel): if a size
+is present in the ICO it is used as is, otherwise the next larger image is
+downscaled by area averaging (or, as a last resort, the largest one is
+upscaled). A PNG provides all four sizes by scaling. Transparency is kept.
+
+MacWarrior's `edit_icon.py` swaps the resources via the Windows API, which
+rewrites the `.rsrc` section. Here only the image data of the eight existing
+icon bitmaps (four sizes in two language variants) is overwritten in place –
+same size, same bit depth, same space. Resource directory, offsets and file
+size stay unchanged, and the patch can be removed like any other. The patcher
+reads ICO images in BMP form (1, 4, 8, 16, 24 or 32 bit) and PNG (not
+interlaced) by itself, without extra modules. The path is remembered in
+`patcher_selection.ini`; with `-Unattended` it has to be there, otherwise the
+patcher aborts with a message.
+
+> [!NOTE]
+> If Explorer still shows the old icon afterwards, that is the Windows icon
+> cache: rename `Wow.exe` briefly or copy it to another folder, recreate
+> shortcuts or restart Explorer. The icon in the game itself (window title)
+> comes from these resources as well.
 
 ---
 

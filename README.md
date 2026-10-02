@@ -304,11 +304,12 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 64 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig; Exe wird größer – Bann-Gefahr)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
 | 65 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – | – |
-|    | **Client-Infos: Version, Build, Titel, Datum** |  |  |  |
+|    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |
 | 66 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – |
 | 67 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – |
 | 68 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – | – |
 | 69 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – | – |
+| 70 | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -1093,11 +1094,11 @@ Umfasst folgende Änderungen:
 > Damit diese Einstellungen überhaupt greifen, wird **OpenAL** benötigt, z. B.
 > [OpenAL Soft](https://github.com/kcat/openal-soft).
 
-### Client-Infos: Version, Build, Titel, Datum
+### Client-Infos: Version, Build, Titel, Datum, Icon
 
-Diese vier Patches von MacWarrior (portiert aus seinen Python-Scripten
-`edit_version.py`, `edit_revision.py`, `edit_title.py` und `edit_date.py`)
-ändern, wie sich der Client ausweist. Sind sie ausgewählt, **fragt der Patcher
+Diese fünf Patches von MacWarrior (portiert aus seinen Python-Scripten
+`edit_version.py`, `edit_revision.py`, `edit_title.py`, `edit_date.py` und
+`edit_icon.py`) ändern, wie sich der Client ausweist. Sind sie ausgewählt, **fragt der Patcher
 nach der Auswahl die gewünschten Werte ab**. In eckigen Klammern steht ein
 Vorschlag, ENTER übernimmt ihn. Ungültige Eingaben werden mit einer Meldung neu
 abgefragt, und alle Werte werden geprüft, bevor irgendetwas geschrieben wird.
@@ -1155,6 +1156,33 @@ dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`
 Als Vorschlag steht das **heutige Datum** in den Klammern (mit `FR`, wenn du das
 zuletzt gewählt hast); mit `-Unattended` gilt der gemerkte Wert. Ist der Patch
 schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`.
+
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 70, standardmäßig aus, Autor: MacWarrior / St0ny)*
+Tauscht das Icon aus, das Windows für die `Wow.exe` anzeigt (Explorer,
+Taskleiste, Verknüpfungen). Der Patcher fragt nach dem Pfad einer `.ico`-
+oder `.png`-Datei, absolut oder relativ zum WoW-Ordner. Aus der Datei baut er
+die vier Größen, die in der `Wow.exe` stecken (48, 32, 24 und 16 Pixel, je
+32 Bit mit Alphakanal): Ist eine Größe in der ICO enthalten, wird sie direkt
+übernommen, sonst wird das nächstgrößere Bild per Flächenmittelung
+herunterskaliert (zur Not das größte hochskaliert). Eine PNG liefert alle vier
+Größen durch Skalieren. Transparenz bleibt erhalten.
+
+MacWarriors `edit_icon.py` tauscht die Ressourcen über die Windows-API aus, was
+die `.rsrc`-Sektion neu schreibt. Hier werden stattdessen nur die Bilddaten der
+acht vorhandenen Icon-Bitmaps (vier Größen in zwei Sprachvarianten) an Ort und
+Stelle überschrieben – gleiche Größe, gleiche Bittiefe, gleicher Platz.
+Ressourcenverzeichnis, Offsets und Dateigröße bleiben unverändert, und der
+Patch lässt sich wie jeder andere wieder zurücknehmen. ICO-Bilder in BMP-Form
+(1, 4, 8, 16, 24 oder 32 Bit) und PNG (nicht interlaced) liest der Patcher
+selbst, ohne Zusatzmodule. Der Pfad wird in `patcher_selection.ini` gemerkt;
+mit `-Unattended` muss er dort stehen, sonst bricht der Patcher mit einer
+Meldung ab.
+
+> [!NOTE]
+> Zeigt der Explorer danach noch das alte Icon, liegt das am Icon-Cache von
+> Windows: `Wow.exe` kurz umbenennen oder in einen anderen Ordner kopieren,
+> Verknüpfungen neu anlegen oder den Explorer neu starten. Das Icon im Spiel
+> selbst (Fenstertitel) kommt ebenfalls aus diesen Ressourcen.
 
 ---
 
