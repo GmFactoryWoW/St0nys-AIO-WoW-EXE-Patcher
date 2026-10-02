@@ -16,11 +16,15 @@ originalen `Wow.exe`.
 > Dieses Repository enthält **keine** `Wow.exe` und keine anderen Dateien von
 > Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).
 
-> [!WARNING]
-> **Benutzung auf eigene Gefahr.** Einige Patches in diesem Patcher können auf
-> manchen öffentlichen Servern zu einem **Bann** führen. Wir geben uns Mühe,
-> alle betroffenen Patches entsprechend zu kennzeichnen, aber die Server ändern
-> ihre Erkennung auch mal. Prüfe im Zweifel die Regeln deines Servers.
+> [!CAUTION]
+> **Entwickler-Werkzeug – Benutzung auf eigene Gefahr.** Dieser Patcher ist
+> für eigene Server, Modding und Tests gedacht. Auf öffentlichen Servern kann
+> **jeder** Patch gegen die Serverregeln verstoßen und zu einem **Bann**
+> führen – auch die Patches, die hier **nicht** als Bann-Gefahr markiert sind.
+> Die Markierungen nennen nur die bekannten Fälle; was ein Server erkennt und
+> duldet, entscheidet er selbst und ändert es auch mal. Prüfe die Richtlinien
+> deines Servers, **bevor** du eine gepatchte `Wow.exe` dort benutzt. Der
+> Patcher zeigt diese Warnung auch bei jedem Start an.
 
 ---
 
