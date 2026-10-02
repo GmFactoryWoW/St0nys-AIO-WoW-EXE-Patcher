@@ -278,7 +278,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
 | 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
 | 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 53 | HD unit frame portraits: 256x256 (live 3D portraits) *(exe grows – ban risk)* | Badgermilk0 | – | – |
+| 53 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | – |
 |    | **Interface & comfort** |  |  |  |
 | 54 | Auto-sort quest tracker |  | – | ✅ |
 | 55 | Advanced world map enabled by default |  | – | ✅ |
@@ -888,10 +888,15 @@ before.
 > As with No. 4, the code lives in the free gap at the end of `.text`. Both fit
 > in there together, the file size does not change.
 
-**HD unit frame portraits: 256x256 (live 3D portraits)** *(No. 53, off by default, Author: Badgermilk0)*
-Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
-instead of the default 64×64. Framing, tilt and zoom stay the same – only the
-render resolution increases, so the portraits become much sharper.
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 53, off by default, Author: Badgermilk0)*
+The unit frames (player, target, party, bosses etc.) already show the 3D model
+of the respective character in the unmodified client. So the patch creates
+**no new portraits, no images and no animations** – it changes a single
+number: the client renders this model into a texture for the frame, and that
+texture is 64×64 pixels in the original. The patch raises exactly this render
+resolution to 256×256 pixels, hard-wired via the call `Add-HdPortraits 256` in
+`apply_patches.ps1`. Framing, tilt and zoom stay the same, the portraits just
+become much sharper.
 Only the 3D model path is raised; the icon/file path (fixed 64×64 images for
 item/spell icons) deliberately stays at 64, because its copy loop would
 otherwise read past the source.

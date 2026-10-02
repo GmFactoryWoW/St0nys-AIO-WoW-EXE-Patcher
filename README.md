@@ -284,7 +284,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 50 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
 | 51 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
 | 52 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 53 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
+| 53 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
 |    | **Interface & Komfort** |  |  |  |
 | 54 | Quest-Tracker automatisch sortieren |  | – | ✅ |
 | 55 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |
@@ -913,10 +913,15 @@ wie bisher.
 > Der Code liegt wie bei Nr. 4 in der freien Lücke am Ende von `.text`. Beide
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
-**HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)** *(Nr. 53, standardmäßig aus, Autor: Badgermilk0)*
-Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
-statt der Standard-64×64. Bildausschnitt, Neigung und Zoom bleiben unverändert
-– nur die Renderauflösung steigt, die Portraits werden also deutlich schärfer.
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 53, standardmäßig aus, Autor: Badgermilk0)*
+Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
+Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
+**keine neuen Portraits, keine Bilder und keine Animationen** – er ändert nur
+eine Zahl: Der Client rendert dieses Modell für den Frame in eine Textur, und
+die ist im Original 64×64 Pixel groß. Der Patch hebt genau diese
+Renderauflösung auf 256×256 Pixel an, fest eingebaut über den Aufruf
+`Add-HdPortraits 256` in `apply_patches.ps1`. Bildausschnitt, Neigung und Zoom
+bleiben unverändert, die Portraits werden nur deutlich schärfer.
 Nur der 3D-Modell-Pfad wird angehoben; der Icon-/Datei-Pfad (feste
 64×64-Bilder für Item-/Zauber-Icons) bleibt bewusst auf 64, da dessen
 Kopierschleife sonst über die Quelle hinaus liest.
