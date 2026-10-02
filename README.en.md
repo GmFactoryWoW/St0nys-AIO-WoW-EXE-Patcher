@@ -895,7 +895,9 @@ of the respective character in the unmodified client. So the patch creates
 number: the client renders this model into a texture for the frame, and that
 texture is 64×64 pixels in the original. The patch raises exactly this render
 resolution to 256×256 pixels, hard-wired via the call `Add-HdPortraits 256` in
-`apply_patches.ps1`. Framing, tilt and zoom stay the same, the portraits just
+`apply_patches.ps1`. Badgermilk0's original allows up to 4096×4096; 256 was
+chosen here deliberately, because more only costs memory without looking
+visibly better. Framing, tilt and zoom stay the same, the portraits just
 become much sharper.
 Only the 3D model path is raised; the icon/file path (fixed 64×64 images for
 item/spell icons) deliberately stays at 64, because its copy loop would

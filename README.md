@@ -920,7 +920,9 @@ Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
 eine Zahl: Der Client rendert dieses Modell für den Frame in eine Textur, und
 die ist im Original 64×64 Pixel groß. Der Patch hebt genau diese
 Renderauflösung auf 256×256 Pixel an, fest eingebaut über den Aufruf
-`Add-HdPortraits 256` in `apply_patches.ps1`. Bildausschnitt, Neigung und Zoom
+`Add-HdPortraits 256` in `apply_patches.ps1`. Das Original von Badgermilk0
+lässt bis zu 4096×4096 zu; hier ist bewusst 256 gewählt, weil mehr nur Speicher
+kostet, ohne sichtbar besser auszusehen. Bildausschnitt, Neigung und Zoom
 bleiben unverändert, die Portraits werden nur deutlich schärfer.
 Nur der 3D-Modell-Pfad wird angehoben; der Icon-/Datei-Pfad (feste
 64×64-Bilder für Item-/Zauber-Icons) bleibt bewusst auf 64, da dessen
