@@ -18,7 +18,7 @@
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "billy" (Preset
 #                             Billy's_Wow.exe = Standard), "stony" (Preset
-#                             Billy's_Wow.exe (modded by St0ny)), "all", "none"
+#                             Billy's_Wow.exe (edited by St0ny)), "all", "none"
 #                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
@@ -119,8 +119,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (modded by St0ny) - noch ungetestet'
-        StonyUntested = 'Achtung: Das Preset Billy''s_Wow.exe (modded by St0ny) ist noch ungetestet.'
+        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (edited by St0ny) - noch ungetestet'
+        StonyUntested = 'Achtung: Das Preset Billy''s_Wow.exe (edited by St0ny) ist noch ungetestet.'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
@@ -205,8 +205,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (modded by St0ny) - not tested yet'
-        StonyUntested = 'Warning: the preset Billy''s_Wow.exe (modded by St0ny) has not been tested yet.'
+        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (edited by St0ny) - not tested yet'
+        StonyUntested = 'Warning: the preset Billy''s_Wow.exe (edited by St0ny) has not been tested yet.'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
@@ -1047,8 +1047,11 @@ function Test-DoubleJump([string]$v) {
 
 # ============================================================
 #  Wasserzeichen
-#  Jede gepatchte Wow.exe bekommt einen Text, an dem man spaeter erkennt,
-#  dass sie mit diesem Patcher erstellt wurde. Er steht im Fuellbereich
+#  Jede gepatchte Wow.exe bekommt einen Text, an dem der Patcher sie eindeutig
+#  als seine eigene erkennt: So vermischt er nie Patches mit denen anderer
+#  Patcher und kann seinen Patchstand auch ohne patcher_state.ini aus der Exe
+#  auslesen. Dass sich die Herkunft damit auch belegen laesst, ist nur ein
+#  Nebeneffekt. Er steht im Fuellbereich
 #  hinter der .tls-Sektion (Datei 0x72DE19-0x72DFFF, 487 Byte Nullen):
 #  ausserhalb der VirtualSize, wird also nie geladen, und kein Patch nutzt
 #  diesen Bereich. Die Dateigroesse bleibt gleich. Geschrieben wird ueber
@@ -1297,7 +1300,7 @@ function Test-JumpValue([string]$v) {
 #    De/En - Anzeigename je Sprache
 #    On    - Teil des Presets "Billy's_Wow.exe", das zugleich die Standard-
 #            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false). Das
-#            zweite Preset "Billy's_Wow.exe (modded by St0ny)" steht als
+#            zweite Preset "Billy's_Wow.exe (edited by St0ny)" steht als
 #            Id-Liste in $PRESET_STONY hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
@@ -2361,7 +2364,7 @@ $patches = @(
     }}
 )
 
-# Zweites Preset "Billy's_Wow.exe (modded by St0ny)" - Billys Patch-Set plus
+# Zweites Preset "Billy's_Wow.exe (edited by St0ny)" - Billys Patch-Set plus
 # RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
 # Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue mit S, ueber
 # -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
@@ -2574,7 +2577,7 @@ function Get-DefaultSelection {
     return , $sel
 }
 
-# Preset "Billy's_Wow.exe (modded by St0ny)" aus der Id-Liste $PRESET_STONY
+# Preset "Billy's_Wow.exe (edited by St0ny)" aus der Id-Liste $PRESET_STONY
 function Get-StonySelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_STONY -contains $patches[$i].Id }

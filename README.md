@@ -16,6 +16,12 @@ originalen `Wow.exe`.
 > Dieses Repository enthält **keine** `Wow.exe` und keine anderen Dateien von
 > Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).
 
+> [!WARNING]
+> **Benutzung auf eigene Gefahr.** Einige Patches in diesem Patcher können auf
+> manchen öffentlichen Servern zu einem **Bann** führen. Wir geben uns Mühe,
+> alle betroffenen Patches entsprechend zu kennzeichnen, aber die Server ändern
+> ihre Erkennung auch mal. Prüfe im Zweifel die Regeln deines Servers.
+
 ---
 
 ## Inhalt
@@ -86,7 +92,7 @@ Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
 die [Patch-Übersicht](#patch-übersicht). Beim ersten Start ist das
 **Preset „Billy's_Wow.exe“** vorausgewählt (Spalte „Standard“ in der Übersicht),
 danach die gespeicherte Auswahl bzw. die Patches, die gerade in der `Wow.exe`
-stecken. Mit `S` lädst du das zweite Preset **„Billy's_Wow.exe (modded by
+stecken. Mit `S` lädst du das zweite Preset **„Billy's_Wow.exe (edited by
 St0ny)“** (Spalte „St0ny“). Patches, die zusätzlich etwas benötigen, zeigen das in Klammern hinter
 dem Namen, der Link dazu steht direkt darunter.
 
@@ -99,7 +105,7 @@ dem Namen, der Link dazu steht direkt darunter.
 | `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
 | `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
-| `S`                | Preset „Billy's_Wow.exe (modded by St0ny)“ laden – **noch ungetestet** |
+| `S`                | Preset „Billy's_Wow.exe (edited by St0ny)“ laden – **noch ungetestet** |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -131,7 +137,7 @@ Das Preset „Billy's_Wow.exe“ ist das Patch-Set von Billy Hoyle und zugleich 
 Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
 einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
-Das zweite Preset „Billy's_Wow.exe (modded by St0ny)“ (Taste `S`) ist Billys
+Das zweite Preset „Billy's_Wow.exe (edited by St0ny)“ (Taste `S`) ist Billys
 Patch-Set plus RCE-Fix, Sicherheits- und Login-Patches, MPQ-Signaturprüfung
 aus, `/follow`-Fix, Level 101, Objektgröße, Tracker, Weltkarte und
 Fenstermodus. Die Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`,
@@ -187,7 +193,7 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
 | `-Language de\|en`     | Sprache für diesen Lauf festlegen (ändert die gemerkte Sprache nicht)       |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `stony` (Preset „Billy's_Wow.exe (modded by St0ny)“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
+| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `stony` (Preset „Billy's_Wow.exe (edited by St0ny)“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
 | `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Billy's_Wow.exe“. |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
@@ -1164,13 +1170,15 @@ schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`.
   rote Warnung. Alle anderen Patches ändern die Dateigröße nicht.
 - **Wasserzeichen:** Jede gepatchte `Wow.exe` enthält den Text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
-  Er steht im ungenutzten Füllbereich hinter der `.tls`-Sektion (Datei-Offset
-  `0x72DE20`), wird nie in den Speicher geladen und ändert die Dateigröße nicht.
-  So lässt sich jederzeit nachweisen, dass eine `Wow.exe` mit diesem Patcher
-  erstellt wurde – z. B. per Hex-Editor oder in der Eingabeaufforderung mit
-  `findstr /m "St0nys AIO" Wow.exe` (gibt den Dateinamen aus, wenn er drin ist).
-  Beim Zurücknehmen aller Patches verschwindet er wieder. Am Wasserzeichen
-  erkennt der Patcher auch selbst, dass eine `Wow.exe` von ihm stammt.
+  Daran erkennt der Patcher eine `Wow.exe` eindeutig als seine eigene: So
+  vermischt er nie seine Patches mit denen anderer Patcher, und er kann seinen
+  Patchstand auch dann aus der Exe auslesen, wenn `patcher_state.ini` gelöscht
+  wurde. Der Text steht im ungenutzten Füllbereich hinter der `.tls`-Sektion
+  (Datei-Offset `0x72DE20`), wird nie in den Speicher geladen und ändert die
+  Dateigröße nicht. Beim Zurücknehmen aller Patches verschwindet er wieder.
+  Nebeneffekt: Man kann jederzeit nachsehen, ob eine `Wow.exe` mit diesem
+  Patcher erstellt wurde – z. B. per Hex-Editor oder in der Eingabeaufforderung
+  mit `findstr /m "St0nys AIO" Wow.exe` (gibt den Dateinamen aus, wenn er drin ist).
 - **Original wiederherstellen:** Patcher starten, `N` und ENTER drücken – mit
   oder ohne `patcher_state.ini`. Alternativ gepatchte `Wow.exe` löschen und
   `Wow.exe.ORI` in `Wow.exe` umbenennen. `Wow.exe.BAK` ist dagegen die `Wow.exe`

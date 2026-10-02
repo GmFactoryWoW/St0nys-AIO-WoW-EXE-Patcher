@@ -15,6 +15,12 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 > This repository does **not** contain a `Wow.exe` or any other Blizzard files.
 > You need your own unmodified `Wow.exe` 3.3.5a (12340).
 
+> [!WARNING]
+> **Use at your own risk.** Some patches in this patcher can get you **banned**
+> on some public servers. We do our best to mark all affected patches
+> accordingly, but servers change their detection from time to time. When in
+> doubt, check the rules of your server.
+
 ---
 
 ## Contents
@@ -83,7 +89,7 @@ The menu lists every patch with a number. `[X]` = will be applied,
 [patch overview](#patch-overview). On the first start the
 **preset "Billy's_Wow.exe"** is preselected (see the "Default" column in the
 overview), after that the saved selection or the patches currently in
-`Wow.exe`. `S` loads the second preset **"Billy's_Wow.exe (modded by St0ny)"**
+`Wow.exe`. `S` loads the second preset **"Billy's_Wow.exe (edited by St0ny)"**
 (column "St0ny"). Patches that need something additional say so in parentheses after
 their name, with the link right below.
 
@@ -96,7 +102,7 @@ their name, with the link right below.
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
-| `S`                | load preset "Billy's_Wow.exe (modded by St0ny)" – **not tested yet** |
+| `S`                | load preset "Billy's_Wow.exe (edited by St0ny)" – **not tested yet** |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -127,7 +133,7 @@ The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
-The second preset "Billy's_Wow.exe (modded by St0ny)" (key `S`) is Billy's
+The second preset "Billy's_Wow.exe (edited by St0ny)" (key `S`) is Billy's
 patch set plus the RCE fix, the security and login patches, MPQ signature
 check off, the `/follow` fix, level 101, object scale, tracker, world map and
 windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
@@ -182,7 +188,7 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | set the language for this run (does not change the remembered language)   |
-| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "Billy's_Wow.exe (modded by St0ny)"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "Billy's_Wow.exe (edited by St0ny)"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
 | `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
@@ -1138,13 +1144,15 @@ applied, the current date of `Wow.exe` is suggested.
   the file size.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
-  It sits in the unused padding behind the `.tls` section (file offset
+  This is how the patcher identifies a `Wow.exe` unambiguously as its own: it
+  never mixes its patches with those of other patchers, and it can read its
+  patch state from the exe even if `patcher_state.ini` was deleted. The text
+  sits in the unused padding behind the `.tls` section (file offset
   `0x72DE20`), is never loaded into memory and does not change the file size.
-  This way you can always prove that a `Wow.exe` was made with this patcher –
-  e.g. with a hex editor or in the command prompt with
-  `findstr /m "St0nys AIO" Wow.exe` (prints the file name if it is there).
-  Removing all patches removes it again. The patcher itself also uses the
-  watermark to recognize that a `Wow.exe` comes from it.
+  Removing all patches removes it again. As a side effect you can always
+  check whether a `Wow.exe` was made with this patcher – e.g. with a hex editor
+  or in the command prompt with `findstr /m "St0nys AIO" Wow.exe` (prints the
+  file name if it is there).
 - **Restoring the original:** run the patcher, press `N` and ENTER – with or
   without `patcher_state.ini`. Alternatively delete the patched `Wow.exe` and
   rename `Wow.exe.ORI` to `Wow.exe`. `Wow.exe.BAK`, on the other hand, is the
