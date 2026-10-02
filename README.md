@@ -17,7 +17,7 @@ originalen `Wow.exe`.
 > Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).
 
 > [!WARNING]
-> **ACHTUNG – Entwickler-Werkzeug, Benutzung auf eigene Gefahr.** Dieser Patcher ist
+> **Entwickler-Werkzeug, Benutzung auf eigene Gefahr.** Dieser Patcher ist
 > für eigene Server, Modding und Tests gedacht. Auf öffentlichen Servern kann
 > **jeder** Patch gegen die Serverregeln verstoßen und zu einem **Bann**
 > führen – auch die Patches, die hier **nicht** als Bann-Gefahr markiert sind.
