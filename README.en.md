@@ -15,7 +15,7 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 > This repository does **not** contain a `Wow.exe` or any other Blizzard files.
 > You need your own unmodified `Wow.exe` 3.3.5a (12340).
 
-> [!WARNING]
+> [!CAUTION]
 > **Developer tool – use at your own risk.** This patcher is meant for your
 > own servers, modding and testing. On public servers **any** patch can violate
 > the server rules and get you **banned** – including the patches that are
