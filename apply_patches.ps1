@@ -148,8 +148,6 @@ $TEXT = @{
         HintHead      = 'HINWEIS zu "{0}":'
         Hint          = 'wirkt nur vollstaendig zusammen mit:'
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
-        Conflict      = 'nutzt dieselbe Code-Hoehle wie diese Patches und weicht darum auf eine eigene Sektion am Dateiende aus (die Wow.exe wird dadurch etwas groesser):'
-        ConflictBan   = 'Zusammen funktionieren sie, aber viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
@@ -234,8 +232,6 @@ $TEXT = @{
         HintHead      = 'NOTE on "{0}":'
         Hint          = 'only takes full effect together with:'
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
-        Conflict      = 'uses the same code cave as these patches and therefore moves to a section of its own at the end of the file (Wow.exe becomes slightly larger):'
-        ConflictBan   = 'They work together, but many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
@@ -850,9 +846,7 @@ function Add-VoiceLoader([string]$DllName) {
 #  Wie HD-Portraits und CameraReforged: Padding bis FileAlignment, Sektion
 #  am Dateiende anhaengen, PE-Header anpassen (NumberOfSections, SizeOfImage,
 #  neuer Sektionsheader, ausfuehrbar, mit -Writable auch beschreibbar).
-#  Genutzt vom Doppelsprung (braucht beschreibbaren Speicher) und als
-#  Ausweichmodus von WorldFrame-Absturzfix und NPC-Ausblenden, wenn der
-#  Slider-Patch die Luecke in .text belegt (siehe Get-CodeCave).
+#  Genutzt vom Doppelsprung, der beschreibbaren Speicher braucht.
 #  Liefert @(VA der Sektion, Dateioffset der Sektion).
 # ============================================================
 function Add-CodeSection([string]$Name, [int]$Size, [switch]$Writable) {
@@ -897,17 +891,12 @@ function Add-CodeSection([string]$Name, [int]$Size, [switch]$Writable) {
 # ============================================================
 #  Code-Hoehle am Ende von .text
 #  Hinter dem Code von .text liegen 77 freie Bytes (Datei 0x5DD7B3-0x5DD7FF,
-#  Nullen). Der Slider-Patch legt dort seinen Code ab (0x5DD7B8-0x5DD7E2).
-#  WorldFrame-Absturzfix (38 Byte) und NPC-Ausblenden (37 Byte) passen
-#  zusammen ebenfalls hinein - aber nicht neben den Slider-Patch. Ist der
-#  Slider-Patch gewaehlt, weichen beide automatisch auf eine eigene kleine
-#  Sektion am Dateiende aus (Ausweichmodus, siehe Add-CodeSection).
-#  Liefert @(VA, Dateioffset) der Hoehle.
+#  Nullen). WorldFrame-Absturzfix (38 Byte) und NPC-Ausblenden (37 Byte)
+#  teilen sie sich. Liefert @(VA, Dateioffset) der Hoehle.
 # ============================================================
 $TEXT_CAVE = @{ worldcrash = 0x5DD7B3; nofade = 0x5DD7D9 }
 
-function Get-CodeCave([string]$Id, [int]$Size, [string]$SectionName) {
-    if ($script:chosenIds -contains 'sliders') { return , (Add-CodeSection $SectionName $Size) }
+function Get-CodeCave([string]$Id, [int]$Size) {
     $off = $TEXT_CAVE[$Id]
     for ($i = 0; $i -lt $Size; $i++) {
         if ($script:f[$off + $i] -ne 0) { throw ('Code-Hoehle bei 0x{0:X} ist belegt.' -f ($off + $i)) }
@@ -951,7 +940,7 @@ function Assert-Bytes([int64]$Off, [byte[]]$Expected, [string]$What) {
 function Add-WorldFrameCrashFix {
     $HOOK_VA = 0x81D51B; $BACK_VA = 0x81D521; $EXIT_VA = 0x81D66E
     Assert-Bytes ($HOOK_VA - 0x400C00) @(0x0F, 0x83, 0x4D, 0x01, 0x00, 0x00) 'WorldFrame-Absturzfix'
-    $loc = Get-CodeCave 'worldcrash' 38 '.wfcfix'
+    $loc = Get-CodeCave 'worldcrash' 38
     $CAVE = $loc[0]
     $c = New-Object System.Collections.Generic.List[byte]
     AddRaw $c @(0x73, 0x1F)                      # jae Ausgang (leere Liste, wie im Original)
@@ -983,7 +972,7 @@ function Add-WorldFrameCrashFix {
 function Add-NoFadeOutFlag {
     $HOOK_VA = 0x743DA3; $BACK_VA = 0x743DA8; $NOFADE_VA = 0x743DE3
     Assert-Bytes ($HOOK_VA - 0x400C00) @(0x8B, 0x06, 0x8B, 0x50, 0x40) 'NPC-Ausblenden'
-    $loc = Get-CodeCave 'nofade' 37 '.nofade'
+    $loc = Get-CodeCave 'nofade' 37
     $CAVE = $loc[0]
     $c = New-Object System.Collections.Generic.List[byte]
     AddRaw $c @(0x8B, 0x06)                                  # mov eax, [esi]          (Original)
@@ -1051,11 +1040,11 @@ function Test-DoubleJump([string]$v) {
 #  als seine eigene erkennt: So vermischt er nie Patches mit denen anderer
 #  Patcher und kann seinen Patchstand auch ohne patcher_state.ini aus der Exe
 #  auslesen. Dass sich die Herkunft damit auch belegen laesst, ist nur ein
-#  Nebeneffekt. Er steht im Fuellbereich
-#  hinter der .tls-Sektion (Datei 0x72DE19-0x72DFFF, 487 Byte Nullen):
-#  ausserhalb der VirtualSize, wird also nie geladen, und kein Patch nutzt
-#  diesen Bereich. Die Dateigroesse bleibt gleich. Geschrieben wird ueber
-#  Patch(), beim Zuruecknehmen verschwindet das Wasserzeichen also wieder.
+#  Nebeneffekt. Der Text steht im Fuellbereich hinter der .tls-Sektion (Datei
+#  0x72DE19-0x72DFFF, 487 Byte Nullen): ausserhalb der VirtualSize, wird also
+#  nie geladen, und kein Patch nutzt diesen Bereich. Die Dateigroesse bleibt
+#  gleich. Geschrieben wird ueber Patch(), beim Zuruecknehmen verschwindet das
+#  Wasserzeichen also wieder.
 # ============================================================
 $WATERMARK_OFF = 0x72DE20
 $WATERMARK = 'Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher'
@@ -1173,8 +1162,8 @@ function Get-DoubleJumpFromExe {
 # ============================================================
 #  Original-Byte-Tabelle erzeugen (Entwickler, Parameter -BuildTable)
 #  Spielt auf Kopien der originalen Wow.exe alle Patches ein - alle
-#  zusammen, alle ohne Slider-Patch (Code-Hoehle in .text) und jeden
-#  einzeln (Sektionsheader an der ersten freien Stelle) - und merkt sich je
+#  zusammen und jeden einzeln (Sektionsheader an der ersten freien Stelle) -
+#  und merkt sich je
 #  Patch alle Stellen im Original, die er beschreibt. Stellen, die nur ein
 #  Patch beschreibt, bekommen die Markierung 1 (fuer die Erkennung).
 #  Dazu kommt der Pseudo-Eintrag "pe": NumberOfSections, SizeOfImage und die
@@ -1190,7 +1179,6 @@ function Invoke-BuildTable {
     $allIds = @($patches | ForEach-Object { $_.Id })
     $configs = New-Object System.Collections.Generic.List[object]
     $configs.Add($allIds)
-    $configs.Add(@($allIds | Where-Object { $_ -ne 'sliders' }))
     foreach ($id in $allIds) { $configs.Add(@($id)) }
     $n = 0
     foreach ($cfg in $configs) {
@@ -1308,9 +1296,6 @@ function Test-JumpValue([string]$v) {
 #    Author - optional: Urheber bzw. Quelle des Patches (nur zur Dokumentation)
 #    Obsoletes - optional: Ids von Patches, die dieser ueberfluessig macht
 #            (erzeugt nur einen Hinweis, wenn beide ausgewaehlt sind)
-#    Conflicts - optional: Ids von Patches, die dieselbe Code-Hoehle nutzen;
-#            sind sie gewaehlt, weicht dieser Patch auf eine eigene Sektion aus
-#            (erzeugt einen Hinweis)
 #    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
 #    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
@@ -1373,15 +1358,12 @@ $patches = @(
         Patch 0x2689FD @(0x00, 0x00)
     }}
 
-    @{ Id = 'worldcrash'; Cat = 'system'; On = $false; Conflicts = @('sliders')
+    @{ Id = 'worldcrash'; Cat = 'system'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
        En = 'WorldFrame crash fix (invalid triangle indices)'
-       NoteDe = 'teilt Code-Hoehle mit Slider-Patch; zusammen wird die Exe groesser - Bann-Gefahr'
-       NoteEn = 'shares code cave with the slider patch; together the exe grows - ban risk'
        Code = {
-        # Code-Hoehle am Ende von .text, mit Slider-Patch eigene Sektion
-        # (.wfcfix), siehe Get-CodeCave / Add-WorldFrameCrashFix.
+        # Code-Hoehle am Ende von .text, siehe Get-CodeCave / Add-WorldFrameCrashFix.
         Add-WorldFrameCrashFix
     }}
 
@@ -1576,9 +1558,10 @@ $patches = @(
 
     @{ Id = 'areatrigger'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
-       De = 'Area-Trigger-Timer genauer (50 ms statt 250 ms)'
-       En = 'More precise area trigger timer (50 ms instead of 250 ms)'
+       De = 'Area-Trigger-Timer genauer (50 ms statt 100 ms)'
+       En = 'More precise area trigger timer (50 ms instead of 100 ms)'
        Code = {
+        # push 64h -> push 32h: Intervall des Area-Trigger-Timers (VA 0x6DBE40)
         Patch 0x2DB241 @(0x32)
     }}
 
@@ -1656,9 +1639,9 @@ $patches = @(
         # Vor dem Folgen ruft der Client eine Pruefung auf (call 0x729BD0 bei VA
         # 0x72B525) und bricht bei "nein" ab. Das Original lenkt den Aufruf in eine
         # Code-Hoehle um, die die Pruefung zwar ausfuehrt, ihr Ergebnis aber
-        # ignoriert und immer zum Erfolgsweg 0x72B546 springt. Diese Hoehle liegt
-        # im .text-Padding bei 0x9DE3B8 - genau dort, wo der Slider-Patch seine
-        # Such-Routine ablegt; beide zusammen waeren nicht moeglich.
+        # ignoriert und immer zum Erfolgsweg 0x72B546 springt. Diese Hoehle laege
+        # im .text-Padding bei 0x9DE3B8 - genau dort, wo WorldFrame-Absturzfix
+        # und NPC-Ausblenden ihre Code-Hoehlen haben.
         # Gleiche Wirkung ohne Hoehle: den bedingten Sprung direkt hinter der
         # Pruefung (jne 0x72B546 bei VA 0x72B52C) unbedingt machen. Der Code am
         # Ziel setzt die Flags selbst neu, haengt also nicht davon ab.
@@ -1883,10 +1866,12 @@ $patches = @(
         #
         # WAS DER PATCH TUT
         # In beiden Funktionen wird der farclip-Vergleich durch einen Aufruf einer
-        # gemeinsamen Such-Routine ersetzt, die eine Tabelle {Name, Maximum}
-        # durchlaeuft. Treffer -> Wert auf den FPU-Stack und weiter im vorhandenen
-        # lua_pushnumber-Pfad. Kein Treffer -> in den vorhandenen nil-Pfad, alle
-        # uebrigen CVars verhalten sich also unveraendert.
+        # gemeinsamen Such-Routine ersetzt, die eine Namensliste durchlaeuft.
+        # Treffer -> zugehoeriges Maximum auf den FPU-Stack und weiter im
+        # vorhandenen lua_pushnumber-Pfad. Kein Treffer -> in den vorhandenen
+        # nil-Pfad, alle uebrigen CVars verhalten sich also unveraendert.
+        # Die Dateigroesse bleibt gleich, und die Code-Hoehle am Ende von .text
+        # bleibt frei fuer WorldFrame-Absturzfix und NPC-Ausblenden.
         #
         #   CVar                  vorher   nachher
         #   farclip               1277     2477
@@ -1911,42 +1896,49 @@ $patches = @(
         #    density*64 <= 4096 geklemmt. Der Regler laeuft dann zwar bis 256,
         #    optisch aendert sich ab 64 aber nichts.
 
-        # 1) Such-Routine im .text-Padding (VA 0x9DE3B8, 77 freie Bytes ab
-        #    0x5DD7B3). Eingang esi = CVar-Name aus dem CVar-Objekt ([obj+0x14]),
-        #    Ausgang eax = Zeiger auf den Tabelleneintrag oder 0.
-        #    [ebp-4] ist der freie Slot aus dem Prolog beider Funktionen und
-        #    dient als Laufzeiger; ebx/edi bleiben unberuehrt, damit beide
-        #    Aufrufer ihren Lua-State behalten.
-        #      mov  dword [ebp-4], 0xAB5680     Tabellenanfang
-        #    L:mov  eax, [ebp-4]
-        #      mov  ecx, [eax]                  Namenszeiger
-        #      test ecx, ecx / je notfound      0x00000000 = Endmarke
-        #      push 0x7FFFFFFF / push ecx / push esi
-        #      call SStrCmpI (0x76E780)         stdcall, raeumt selbst auf
-        #      test eax, eax / je hit
-        #      add  dword [ebp-4], 12 / jmp L
-        #    hit:      mov eax, [ebp-4] / ret
-        #    notfound: xor eax, eax / ret
-        Patch 0x5DD7B8 @(0xC7, 0x45, 0xFC, 0x80, 0x56, 0xAB, 0x00, 0x8B, 0x45, 0xFC, 0x8B, 0x08, 0x85, 0xC9, 0x74, 0x1A, 0x68, 0xFF, 0xFF, 0xFF, 0x7F, 0x51, 0x56, 0xE8, 0xAC, 0x03, 0xD9, 0xFF, 0x85, 0xC0, 0x74, 0x06, 0x83, 0x45, 0xFC, 0x0C, 0xEB, 0xE1, 0x8B, 0x45, 0xFC, 0xC3, 0x33, 0xC0, 0xC3)
+        # 1) Such-Routine in einer 19-Byte-int3-Luecke zwischen zwei Funktionen
+        #    (VA 0x9296ED, Datei 0x528AED; nichts springt dorthin). 18 Byte.
+        #    Eingang: ebx = CVar-Name (aus dem CVar-Objekt, [obj+0x14]),
+        #    esi = Anfang der Namensliste. Ausgang: esi steht hinter dem
+        #    gefundenen Namen bzw. hinter der Endmarke; die Stubs lesen
+        #    [esi-4] (0 = Endmarke) und das Maximum bei [esi+16].
+        #    Als Laengenlimit fuer SStrCmpI dient esi selbst - eine feste
+        #    Adresse in .rdata, also immer unter 0x7FFFFFFF (die CRT lehnt
+        #    groessere Werte ab) und weit laenger als jeder CVar-Name.
+        #    SStrCmpI (stdcall, raeumt selbst auf) erhaelt ebx/esi/edi.
+        #    L:lodsd                           eax = Namenszeiger, esi += 4
+        #      test eax, eax / jz R            0x00000000 = Endmarke
+        #      push esi / push eax / push ebx
+        #      call SStrCmpI (0x76E780)
+        #      test eax, eax / jnz L           0 = Treffer
+        #    R:ret
+        Patch 0x528AED @(0xAD, 0x85, 0xC0, 0x74, 0x0C, 0x56, 0x50, 0x53, 0xE8, 0x86, 0x50, 0xE4, 0xFF, 0x85, 0xC0, 0x75, 0xEF, 0xC3)
 
         # 2) Aufrufstelle im Glue-Screen: ersetzt den farclip-Vergleich bei
-        #    0x4DE046. 21 Byte Stub, Rest bis 0x4DE060 mit int3 gefuellt.
-        #      call 0x9DE3B8 / test eax,eax / je 0x4DE07A (nil-Pfad)
-        #      fld qword [eax+4] / jmp 0x4DE060 (lua_pushnumber-Pfad)
-        Patch 0xDD446 @(0xE8, 0x6D, 0x03, 0x50, 0x00, 0x85, 0xC0, 0x0F, 0x84, 0x27, 0x00, 0x00, 0x00, 0xDD, 0x40, 0x04, 0xE9, 0x05, 0x00, 0x00, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC)
+        #    0x4DE046 (26 Byte). esi (der Name) ist danach tot, ebx wird
+        #    gesichert - im Spiel haelt es den Lua-State. eax/ecx/edx waren
+        #    schon im Original durch den SStrCmpI-Aufruf verbraucht.
+        #      push ebx / mov ebx, esi / mov esi, 0xAB5680 (Namensliste)
+        #      call 0x9296ED / pop ebx
+        #      cmp dword [esi-4], 0 / je 0x4DE07A (nil-Pfad)
+        #      fld dword [esi+16] / 3x nop -> 0x4DE060 (lua_pushnumber-Pfad)
+        Patch 0xDD446 @(0x53, 0x8B, 0xDE, 0xBE, 0x80, 0x56, 0xAB, 0x00, 0xE8, 0x9A, 0xB6, 0x44, 0x00, 0x5B, 0x83, 0x7E, 0xFC, 0x00, 0x74, 0x20, 0xD9, 0x46, 0x10, 0x90, 0x90, 0x90)
 
         # 3) Dieselbe Aufrufstelle im Spiel, bei 0x514EEA. Gleicher Stub, nur
         #    andere Ziele: nil-Pfad 0x514F1E, Fortsetzung 0x514F04.
-        Patch 0x1142EA @(0xE8, 0xC9, 0x94, 0x4C, 0x00, 0x85, 0xC0, 0x0F, 0x84, 0x27, 0x00, 0x00, 0x00, 0xDD, 0x40, 0x04, 0xE9, 0x05, 0x00, 0x00, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC)
+        Patch 0x1142EA @(0x53, 0x8B, 0xDE, 0xBE, 0x80, 0x56, 0xAB, 0x00, 0xE8, 0xF6, 0x47, 0x41, 0x00, 0x5B, 0x83, 0x7E, 0xFC, 0x00, 0x74, 0x20, 0xD9, 0x46, 0x10, 0x90, 0x90, 0x90)
 
-        # 4) Tabelle im .rdata-Padding (VA 0xAB5680, 384 freie Bytes ab 0x6B3E80).
-        #    Je 12 Byte: char* Name, double Maximum. Endmarke 0x00000000.
+        # 4) Tabelle im .rdata-Padding (VA 0xAB5680, 384 freie Bytes ab 0x6B3E80,
+        #    hinter der VirtualSize, aber innerhalb der Rohdaten - der Lader
+        #    blendet die ganze Seite ein). Erst fuenf Namenszeiger (der letzte
+        #    0x00000000 = Endmarke), dahinter die vier Maxima als float, in
+        #    derselben Reihenfolge: Maximum i liegt 16 Byte hinter Name i+1.
         #    Als Namen dienen die CVar-Namen, die ohnehin in der EXE stehen:
         #      0x9F57A0 "farclip"              2477.0
         #      0xA3F3BC "environmentDetail"       2.5
         #      0xA3F438 "groundEffectDist"      250.0
         #      0xA3F460 "groundEffectDensity"   256.0
-        Patch 0x6B3E80 @(0xA0, 0x57, 0x9F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5A, 0xA3, 0x40, 0xBC, 0xF3, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x40, 0x38, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x6F, 0x40, 0x60, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x40, 0x00, 0x00, 0x00, 0x00)
+        Patch 0x6B3E80 @(0xA0, 0x57, 0x9F, 0x00, 0xBC, 0xF3, 0xA3, 0x00, 0x38, 0xF4, 0xA3, 0x00, 0x60, 0xF4, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xD0, 0x1A, 0x45, 0x00, 0x00, 0x20, 0x40, 0x00, 0x00, 0x7A, 0x43, 0x00, 0x00, 0x80, 0x43)
     }}
 
     @{ Id = 'goscale'; Cat = 'graphics'; On = $false; Needs = @('envdetail')
@@ -2059,15 +2051,14 @@ $patches = @(
         Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'nofade'; Cat = 'graphics'; On = $false; Conflicts = @('sliders')
+    @{ Id = 'nofade'; Cat = 'graphics'; On = $false
        Author = 'Alyst3r (0x539wowmod) / St0ny'
        De = 'Kein Ausblenden fuer NPCs mit Flag DO_NOT_FADE_IN'
        En = 'No fade-out for NPCs with flag DO_NOT_FADE_IN'
-       NoteDe = 'Server muss das Flag setzen, teilt Code-Hoehle mit Slider-Patch; zusammen wird die Exe groesser - Bann-Gefahr'
-       NoteEn = 'server must set the flag, shares code cave with the slider patch; together the exe grows - ban risk'
+       NoteDe = 'Server muss das Flag setzen'
+       NoteEn = 'server must set the flag'
        Code = {
-        # Code-Hoehle am Ende von .text, mit Slider-Patch eigene Sektion
-        # (.nofade), siehe Get-CodeCave / Add-NoFadeOutFlag.
+        # Code-Hoehle am Ende von .text, siehe Get-CodeCave / Add-NoFadeOutFlag.
         Add-NoFadeOutFlag
     }}
 
@@ -2390,12 +2381,9 @@ size;7704216
 laa;126;03;1
 cache;61BE58;4361;1
 itemcache;2689FD;3075;1
-worldcrash;116;0600;0
-worldcrash;160;00D09F00;0
 worldcrash;210;B3D35D00;0
-worldcrash;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 worldcrash;41C91B;0F834D010000;1
-worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;0
+worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
 rce;2A7;E0;1
 rce;3D9D7C;750A;1
 wardenoff;3D9C5B;7406;1
@@ -2454,7 +2442,7 @@ airlateral;587FEF;0F85AC010000;1
 airturn;588F97;7512;1
 doublejump;116;0600;0
 doublejump;160;00D09F00;0
-doublejump;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+doublejump;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 doublejump;58782A;8B7E44F7C7001800027544;1
 farclip;63CF0C;ABEA4544ABEAC544;1
 horizon;38CBDF;F88C9E00;1
@@ -2462,8 +2450,8 @@ envdetail;38D08E;D9;1
 grounddist;5E74FC;00000C43;1
 sliders;DD446;68FFFFFF7F68A0579F0056E82A07290085C07520DD05D8579F00;1
 sliders;1142EA;68FFFFFF7F68A0579F0056E88698250085C07520DD05D8579F00;1
-sliders;5DD7B8;000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-sliders;6B3E80;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;1
+sliders;528AED;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
+sliders;6B3E80;000000000000000000000000000000000000000000000000000000000000000000000000;1
 goscale;38E973;D90550F3AD00D91D78F3AD00D90564F3AD00D915A0F3AD00;1
 goscale;38EA64;D90560F3AD00D91D88F3AD00D90574F3AD00D915B0F3AD00;1
 cat0;6DD364;0000F041;1
@@ -2474,16 +2462,12 @@ cat0;6DD3DC;00401C44;1
 occluder;6EE040;00000000;1
 bluemoon;5CFBC0;C3CCCCCCCCCCCCCCCCCCCC;1
 notransparency;336841;8896CB000000;1
-nofade;116;0600;0
-nofade;160;00D09F00;0
 nofade;210;B3D35D00;0
-nofade;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 nofade;3431A3;8B068B5040;1
-nofade;5DD7D9;00000000000000000000000000000000000000000000000000000000000000000000000000;0
+nofade;5DD7D9;00000000000000000000000000000000000000000000000000000000000000000000000000;1
 hdportraits;116;0600;0
 hdportraits;160;00D09F00;0
 hdportraits;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-hdportraits;370;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 hdportraits;21620A;40000000;1
 hdportraits;216AA0;558BEC81EC04050000;1
 hdportraits;2174E9;930BEAFF;1
@@ -2507,7 +2491,6 @@ camera;116;0600;0
 camera;160;00D09F00;0
 camera;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-camera;398;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;11CDB0;558BEC81EC80000000;1
 camera;1FCE36;68E0E7A100;1
 camera;1FD5B2;6840139E00;1
@@ -3223,20 +3206,6 @@ foreach ($p in $chosen) {
         Say (T 'HintHead' (PatchName $p)) 'Yellow'
         Say (T 'Obsolete') 'Yellow'
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
-    }
-}
-foreach ($p in $chosen) {
-    if (-not $p.Conflicts) { continue }
-    $both = @()
-    foreach ($id in $p.Conflicts) {
-        if ($chosenIds -contains $id) { $both += Get-NameById $id }
-    }
-    if ($both.Count -gt 0) {
-        Write-Host ''
-        Say (T 'HintHead' (PatchName $p)) 'Yellow'
-        Say (T 'Conflict') 'Yellow'
-        foreach ($m in $both) { Say "  - $m" 'Yellow' }
-        Say (T 'ConflictBan') 'Red'
     }
 }
 foreach ($p in $chosen) {

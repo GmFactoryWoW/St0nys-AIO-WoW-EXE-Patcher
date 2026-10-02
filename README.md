@@ -74,8 +74,8 @@ siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
    letzten Mal bzw. bei einer gepatchten `Wow.exe` die Patches, die gerade
    darin stecken.
 7. Zusammenfassung der gewählten Patches (bei einer gepatchten `Wow.exe`: was
-   neu dazukommt, was zurückgenommen wird), Hinweise auf fehlende oder
-   überflüssige Ergänzungs-Patches und Sicherheitsabfrage (J/N).
+   neu dazukommt, was zurückgenommen wird), Hinweise (fehlende oder
+   überflüssige Ergänzungs-Patches, Bann-Gefahr) und Sicherheitsabfrage (J/N).
 8. Backup: Beim ersten Patchen wird das Original als `Wow.exe.ORI` gesichert,
    bei jedem weiteren Lauf die bisherige `Wow.exe` als `Wow.exe.BAK`.
 9. Alle gewählten Patches werden im Speicher eingespielt (mit Fortschrittsanzeige)
@@ -92,9 +92,10 @@ Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
 die [Patch-Übersicht](#patch-übersicht). Beim ersten Start ist das
 **Preset „Billy's_Wow.exe“** vorausgewählt (Spalte „Standard“ in der Übersicht),
 danach die gespeicherte Auswahl bzw. die Patches, die gerade in der `Wow.exe`
-stecken. Mit `S` lädst du das zweite Preset **„Billy's_Wow.exe (edited by
-St0ny)“** (Spalte „St0ny“). Patches, die zusätzlich etwas benötigen, zeigen das in Klammern hinter
-dem Namen, der Link dazu steht direkt darunter.
+stecken. Mit `S` lädst du das zweite Preset
+**„Billy's_Wow.exe (edited by St0ny)“** (Spalte „St0ny“). Patches, die
+zusätzlich etwas benötigen, zeigen das in Klammern hinter dem Namen, der Link
+dazu steht direkt darunter.
 
 | Eingabe            | Wirkung                                     |
 |--------------------|---------------------------------------------|
@@ -170,8 +171,8 @@ So funktioniert es:
   mit welchen Werten (Sprunghöhe, Build-Datum usw.)? Dafür enthält das Skript
   eine kleine Tabelle mit den Original-Bytes an allen Patch-Stellen.
 - **Original wiederherstellen:** Aus der gepatchten Exe baut der Patcher im
-  Speicher das Original wieder auf, prüft es per SHA256 gegen das Original und
-  spielt darauf die neue Auswahl ein. Klappt das nicht exakt – etwa weil die
+  Speicher das Original wieder auf, prüft es per SHA256 und spielt darauf die
+  neue Auswahl ein. Klappt das nicht exakt – etwa weil die
   Exe nach dem Patchen noch anderweitig verändert wurde –, bricht er ab.
 - Vor dem Schreiben prüft der Patcher außerdem, dass sich das neue Ergebnis
   wieder sauber zum Original zurücknehmen lässt.
@@ -229,7 +230,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 1  | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ |
 | 2  | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – | – |
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ |
-| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) *(teilt Code-Höhle mit Slider-Patch; zusammen wird die Exe größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Sicherheit & Datenschutz** |  |  |  |
 | 5  | Remote Code Execution Exploit Fix *(nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | ✅ |
 | 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden; nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | – |
@@ -251,7 +252,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 20 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul ungetestet und unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 | 21 | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
 |    | **Gameplay-Fixes** |  |  |  |
-| 22 | Area-Trigger-Timer genauer (50 ms statt 250 ms) | Robinsch | ✅ | ✅ |
+| 22 | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | ✅ | ✅ |
 | 23 | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
 | 24 | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ | ✅ |
 | 25 | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ | ✅ |
@@ -282,7 +283,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 49 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – |
 | 50 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
 | 51 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
-| 52 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen, teilt Code-Höhle mit Slider-Patch; zusammen wird die Exe größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 52 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 53 | HD Unit-Frame Portraits: 256x256 (live 3D-Portraits) *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
 |    | **Interface & Komfort** |  |  |  |
 | 54 | Quest-Tracker automatisch sortieren |  | – | ✅ |
@@ -335,16 +336,9 @@ vor den Puffer und der Client stürzt ab. Der Patch prüft vorher die drei Indiz
 des ersten Dreiecks und überspringt die Funktion in diesem Fall. Gegenüber dem
 Original sind die drei Sprungweiten korrigiert und der Code ist kürzer.
 
-> [!IMPORTANT]
-> **Teilt sich die Code-Höhle mit dem Slider-Patch (Nr. 46).** Der Code liegt in
-> der freien Lücke am Ende von `.text`, die auch Nr. 52 nutzt. Nr. 4 und 52 passen
-> zusammen hinein, nicht aber neben den Slider-Patch: Ist Nr. 46 gewählt, weicht
-> der Patch automatisch auf eine eigene kleine Sektion `.wfcfix` am Dateiende aus,
-> und der Patcher weist vor der Sicherheitsabfrage darauf hin. Die `Wow.exe` wird
-> dadurch etwas größer (512-Byte-Sektion plus Auffüllen des Dateiendes, mit Nr. 4
-> und 52 zusammen rund 1,4 KB; beim Zurücknehmen fällt das wieder weg).
-> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
-> kann zu einem Bann führen.**
+> [!NOTE]
+> Der Code liegt in der freien Lücke am Ende von `.text`, die auch Nr. 52 nutzt.
+> Beide passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 > [!NOTE]
 > Ein heuristischer Fix, wie ihn auch der Autor nennt: Geprüft wird nur das erste
@@ -477,8 +471,8 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 
 ### Gameplay-Fixes
 
-**Area-Trigger-Timer genauer (50 ms statt 250 ms)** *(Nr. 22, Autor: Robinsch)*
-Erhöht die Prüffrequenz für Area-Trigger von 250 ms auf 50 ms. Dadurch werden
+**Area-Trigger-Timer genauer (50 ms statt 100 ms)** *(Nr. 22, Autor: Robinsch)*
+Erhöht die Prüffrequenz für Area-Trigger von 100 ms auf 50 ms. Dadurch werden
 Zonen-Übergänge und Trigger präziser erkannt.
 
 **Nahkampf-Schwung bei Rechtsklick entfernt** *(Nr. 23, Autor: Robinsch)*
@@ -517,9 +511,9 @@ Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem /follow-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
 Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
 eine Code-Höhle um, die ihr Ergebnis ignoriert. Diese Höhle läge aber genau
-dort, wo der Slider-Patch (Nr. 46) seinen Code ablegt. Hier wird
+in der Lücke am Ende von `.text`, die Nr. 4 und Nr. 52 nutzen. Hier wird
 stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
-einziges Byte, gleiche Wirkung, und beide Patches vertragen sich.
+einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
 **Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)** *(Nr. 32, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Druiden ab Level 101 können ihre Grundwerte wieder ansehen, und der
@@ -653,9 +647,8 @@ der Wert auf den Bereich 0.5 bis 1.5 begrenzt; der Patch hebelt die obere
 Begrenzung aus, sodass beliebig hohe Werte durchgereicht werden.
 Wichtig: Dieses CVar tut nichts anderes, als die GameObject-Sichtweiten zu
 multiplizieren (siehe Patch Nr. 47) – im Original nur die der Kategorien 1 bis
-3, mit Patch Nr. 47 alle fünf. Es ist
-damit der bequemste FPS-Hebel im Objekt-Rendering, weil er ohne Neupatchen im
-Spiel wirkt.
+3, mit Patch Nr. 47 alle fünf. Es ist damit der bequemste FPS-Hebel im
+Objekt-Rendering, weil er ohne Neupatchen im Spiel wirkt.
 
 **CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 45)*
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
@@ -699,10 +692,11 @@ lieferte sie eine feste 1277 – ebenfalls unabhängig davon, wie weit das CVar
 entsperrt ist.
 
 Der Patch ersetzt den festen farclip-Vergleich durch den Aufruf einer kleinen
-Such-Routine, die eine Tabelle {CVar-Name, Maximum} durchläuft. Steht ein CVar
-drin, bekommt das Interface den Wert; steht es nicht drin, läuft alles wie
-bisher. Die Routine liegt im Padding am Ende der Code-Sektion, die Tabelle im
-Padding der Datensektion – die Datei wächst dadurch nicht.
+Such-Routine, die eine Liste von CVar-Namen durchläuft. Steht ein CVar drin,
+bekommt das Interface das zugehörige Maximum; steht es nicht drin, läuft alles
+wie bisher. Die Routine (18 Byte) liegt in einer freien Lücke zwischen zwei
+Funktionen der Code-Sektion, die Liste mit den Maxima im ungenutzten Rest von
+`.rdata` – die Datei wächst dadurch nicht.
 
 Wichtig: `GetCVarMax` liegt zweimal in der EXE – einmal für den
 Anmelde-/Charakterbildschirm und einmal für das laufende Spiel. Beide Stellen
@@ -758,11 +752,10 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 `Config.wtf`, `/console horizonFarclipScale 12` oder ein CVar-Addon setzen
 (entsperrt ist er bis 12, siehe oben).
 
-> [!WARNING]
-> Die Code-Höhle am Ende von `.text` nutzen auch Nr. 4 und Nr. 52. Zusammen mit
-> diesem Patch weichen sie automatisch auf eigene kleine Sektionen am Dateiende
-> aus – die `Wow.exe` wird dadurch etwas größer. **Viele Server tolerieren eine
-> veränderte Dateigröße der `Wow.exe` nicht – das kann zu einem Bann führen.**
+> [!NOTE]
+> Die Dateigröße ändert sich nicht: Die kleine Such-Routine liegt in einer
+> freien Lücke zwischen zwei Funktionen, die Tabelle mit den Maxima im
+> ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 52 gibt es keine Überschneidung.
 
 **GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 47, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
@@ -917,11 +910,8 @@ wie bisher.
 > Wirkt nur, wenn der Server das Flag setzt. Ohne Unterstützung durch den Server
 > ändert sich nichts.
 >
-> **Teilt sich die Code-Höhle mit dem Slider-Patch (Nr. 46).** Wie bei Nr. 4: Mit
-> dem Slider-Patch weicht der Patch automatisch auf eine eigene kleine Sektion
-> `.nofade` am Dateiende aus, die `Wow.exe` wird dadurch etwas größer.
-> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
-> kann zu einem Bann führen.**
+> Der Code liegt wie bei Nr. 4 in der freien Lücke am Ende von `.text`. Beide
+> passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 **HD Unit-Frame Portraits: 256x256 (live 3D-Portraits)** *(Nr. 53, standardmäßig aus, Autor: Badgermilk0)*
 Rendert die Live-3D-Portraits (Spieler, Ziel, Gruppe, Bosse usw.) in 256×256
@@ -1164,10 +1154,10 @@ schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`.
   werten können: LUA Unlock (Nr. 18), Steigwinkel (36), Sprunghöhe (37), die
   Sprungsteuerung (38–40) und der Doppelsprung (41). Zweitens Patches, die eine
   Sektion an die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 41,
-  53 und 64 immer, Nr. 4 und 52 zusammen mit Nr. 46 – viele Server tolerieren
-  eine veränderte Dateigröße nicht. Beide Gruppen sind in der Übersicht mit
-  „Bann-Gefahr“ markiert, und der Patcher zeigt vor der Sicherheitsabfrage eine
-  rote Warnung. Alle anderen Patches ändern die Dateigröße nicht.
+  53 und 64 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
+  Gruppen sind in der Übersicht mit „Bann-Gefahr“ markiert, und der Patcher
+  zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
+  ändern die Dateigröße nicht.
 - **Wasserzeichen:** Jede gepatchte `Wow.exe` enthält den Text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   Daran erkennt der Patcher eine `Wow.exe` eindeutig als seine eigene: So

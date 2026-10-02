@@ -71,8 +71,8 @@ To **change or remove** patches just run `patcher.bat` again, see
 6. **Patch selection** menu (see below). Your selection from last time is
    preselected, or for a patched `Wow.exe` the patches currently in it.
 7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
-   what is removed), notes about missing or redundant companion patches and a
-   confirmation prompt (Y/N).
+   what is removed), notes (missing or redundant companion patches, ban risk)
+   and a confirmation prompt (Y/N).
 8. Backup: on the first patch run the original is saved as `Wow.exe.ORI`, on
    every later run the previous `Wow.exe` is saved as `Wow.exe.BAK`.
 9. All selected patches are applied in memory (with progress output) and
@@ -90,8 +90,8 @@ The menu lists every patch with a number. `[X]` = will be applied,
 **preset "Billy's_Wow.exe"** is preselected (see the "Default" column in the
 overview), after that the saved selection or the patches currently in
 `Wow.exe`. `S` loads the second preset **"Billy's_Wow.exe (edited by St0ny)"**
-(column "St0ny"). Patches that need something additional say so in parentheses after
-their name, with the link right below.
+(column "St0ny"). Patches that need something additional say so in parentheses
+after their name, with the link right below.
 
 | Input              | Effect                                     |
 |--------------------|--------------------------------------------|
@@ -165,8 +165,8 @@ How it works:
   values (jump height, build date etc.)? For this the script contains a small
   table with the original bytes at all patch locations.
 - **Restoring the original:** from the patched exe the patcher rebuilds the
-  original in memory, verifies it against the original's SHA256 and applies the
-  new selection on top. If that does not work exactly – e.g. because the exe
+  original in memory, verifies it by SHA256 and applies the new selection on
+  top. If that does not work exactly – e.g. because the exe
   was changed in some other way after patching – it aborts.
 - Before writing, the patcher also checks that the new result can be reverted
   cleanly to the original.
@@ -224,7 +224,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 1  | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ |
 | 2  | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – |
 | 3  | Refresh item cache immediately | Robinsch | ✅ | ✅ |
-| 4  | WorldFrame crash fix (invalid triangle indices) *(shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 4  | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Security & privacy** |  |  |  |
 | 5  | Remote code execution exploit fix *(enable only one of the two RCE patches)* | Robinsch | – | ✅ |
 | 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active; enable only one of the two RCE patches)* | Robinsch | – | – |
@@ -246,7 +246,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 20 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 | 21 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
 |    | **Gameplay fixes** |  |  |  |
-| 22 | More precise area trigger timer (50 ms instead of 250 ms) | Robinsch | ✅ | ✅ |
+| 22 | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
 | 23 | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
 | 24 | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
 | 25 | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
@@ -277,7 +277,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 49 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – |
 | 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
 | 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
-| 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag, shares code cave with the slider patch; together the exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 53 | HD unit frame portraits: 256x256 (live 3D portraits) *(exe grows – ban risk)* | Badgermilk0 | – | – |
 |    | **Interface & comfort** |  |  |  |
 | 54 | Auto-sort quest tracker |  | – | ✅ |
@@ -330,16 +330,9 @@ the buffer and the client crashes. The patch checks the three indices of the
 first triangle beforehand and skips the function in that case. Compared to the
 original, the three jump distances have been corrected and the code is shorter.
 
-> [!IMPORTANT]
-> **Shares the code cave with the slider patch (No. 46).** The code lives in the
-> free gap at the end of `.text`, which No. 52 uses as well. No. 4 and 52 fit in
-> there together, but not next to the slider patch: if No. 46 is selected, the
-> patch automatically moves to a small section `.wfcfix` of its own at the end
-> of the file, and the patcher points this out before the confirmation prompt.
-> This makes `Wow.exe` slightly larger (a 512-byte section plus padding of the
-> end of the file, about 1.4 KB for No. 4 and 52 together; removing the patches
-> takes this away again). **Many servers do not tolerate a changed file size of
-> `Wow.exe` – this can lead to a ban.**
+> [!NOTE]
+> The code lives in the free gap at the end of `.text`, which No. 52 uses as
+> well. Both fit in there together, the file size does not change.
 
 > [!NOTE]
 > A heuristic fix, as the author calls it too: only the first triangle of each
@@ -466,8 +459,8 @@ all key presses without blocking the normal controls.
 
 ### Gameplay fixes
 
-**More precise area trigger timer (50 ms instead of 250 ms)** *(No. 22, Author: Robinsch)*
-Increases the area trigger check frequency from 250 ms to 50 ms, so zone
+**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 22, Author: Robinsch)*
+Increases the area trigger check frequency from 100 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
 **Remove melee swing on right-click** *(No. 23, Author: Robinsch)*
@@ -504,10 +497,10 @@ Slash commands also work while the character is dead.
 `/follow` also works on NPCs, not just players. Based on the /follow patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
 the original redirects the check into a code cave that ignores its result.
-That cave, however, sits exactly where the slider
-patch (No. 46) puts its code. Here the conditional jump after the check
-is made unconditional instead – a single byte, same effect, and both patches
-work together.
+That cave, however, would sit exactly in the gap at the end of `.text` that
+No. 4 and No. 52 use. Here the conditional jump after the check is made
+unconditional instead – a single byte, same effect, and the patches work
+together.
 
 **Level 101+ fix (druid base stats and barber chair)** *(No. 32, off by default, Author: Alastor StrixEfuartus)*
 Druids at level 101 and above can view their base stats again, and the
@@ -637,9 +630,8 @@ the value is clamped to the range 0.5 to 1.5; the patch disables the upper
 clamp so arbitrarily high values are passed through.
 Important: this CVar does nothing but multiply the GameObject view distances
 (see patch No. 47) – in the original only for categories 1 to 3, with patch
-No. 47 for all five. That makes it the
-most convenient FPS lever for object rendering, since it works in-game without
-re-patching.
+No. 47 for all five. That makes it the most convenient FPS lever for object
+rendering, since it works in-game without re-patching.
 
 **CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 45)*
 Raises the maximum view distance for ground effects (grass, flowers, ground
@@ -682,10 +674,10 @@ everything else it returns nothing, and then the hard-coded Lua values
 regardless of how far the CVar is unlocked.
 
 The patch replaces the fixed farclip comparison with a call to a small lookup
-routine that walks a table of {CVar name, maximum}. If a CVar is listed, the
-interface gets that value; if not, everything works as before. The routine
-lives in the padding at the end of the code section, the table in the padding
-of the data section – the file does not grow.
+routine that walks a list of CVar names. If a CVar is listed, the interface
+gets the matching maximum; if not, everything works as before. The routine
+(18 bytes) lives in a free gap between two functions of the code section, the
+list with the maximums in the unused rest of `.rdata` – the file does not grow.
 
 Important: `GetCVarMax` exists twice in the EXE – once for the login/character
 screens and once for the running game. Both call the same lookup routine. If
@@ -739,11 +731,10 @@ there is nothing to raise. The value can still only be set via `Config.wtf`,
 `/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
 see above).
 
-> [!WARNING]
-> No. 4 and No. 52 use the code cave at the end of `.text` as well. Together with
-> this patch they automatically move to small sections of their own at the end
-> of the file – this makes `Wow.exe` slightly larger. **Many servers do not
-> tolerate a changed file size of `Wow.exe` – this can lead to a ban.**
+> [!NOTE]
+> The file size does not change: the small search routine lives in a free gap
+> between two functions, the table with the maximums in the unused rest of
+> `.rdata`. There is no overlap with No. 4 and No. 52.
 
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 47, off by default, Author: St0ny)*
 Fixes an omission in the client: the function that calculates the runtime view
@@ -894,11 +885,8 @@ before.
 > Only takes effect if the server sets the flag. Without server support nothing
 > changes.
 >
-> **Shares the code cave with the slider patch (No. 46).** As with No. 4: together
-> with the slider patch, the patch automatically moves to a small section
-> `.nofade` of its own at the end of the file, which makes `Wow.exe` slightly
-> larger. **Many servers do not tolerate a changed file size of `Wow.exe` – this
-> can lead to a ban.**
+> As with No. 4, the code lives in the free gap at the end of `.text`. Both fit
+> in there together, the file size does not change.
 
 **HD unit frame portraits: 256x256 (live 3D portraits)** *(No. 53, off by default, Author: Badgermilk0)*
 Renders the live 3D portraits (player, target, party, bosses etc.) at 256×256
@@ -1137,11 +1125,10 @@ applied, the current date of `Wow.exe` is suggested.
   patches that servers with anti-cheat may treat as cheating or botting: LUA
   unlock (No. 18), climb angle (36), jump height (37), the air steering (38–40)
   and the double jump (41). Second, patches that append a section to `Wow.exe`
-  and thus make the file larger: No. 41, 53 and 64 always, No. 4 and 52
-  together with No. 46 – many servers do not tolerate a changed file size.
-  Both groups are marked "ban risk" in the overview, and the patcher shows a
-  red warning before the confirmation prompt. All other patches do not change
-  the file size.
+  and thus make the file larger: No. 41, 53 and 64 – many servers do not
+  tolerate a changed file size. Both groups are marked "ban risk" in the
+  overview, and the patcher shows a red warning before the confirmation prompt.
+  All other patches do not change the file size.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   This is how the patcher identifies a `Wow.exe` unambiguously as its own: it
