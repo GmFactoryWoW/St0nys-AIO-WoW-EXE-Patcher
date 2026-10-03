@@ -1179,9 +1179,10 @@ Zeitstempel im Programmkopf, den Analyse-Werkzeuge als Erstellungszeit der
 `Wow.exe` anzeigen (Original 25.06.2010 06:55:58 UTC). Datum und Uhrzeit gelten
 als Ortszeit des Rechners, auf dem du patchst.
 
-Eingabe als `JJJJ-MM-TT`, optional mit Uhrzeit `HH:MM` oder `HH:MM:SS` und mit
-`FR` dahinter für französische Monatsnamen (z. B. `2026-09-28 14:30 FR` →
-`Sep 28 2026 14:30:00`). Ohne Uhrzeit bleibt die originale `23:54:57`. Als
+Eingabe als `JJJJ-MM-TT HH:MM` oder `JJJJ-MM-TT HH:MM:SS`, optional mit `FR`
+dahinter für französische Monatsnamen (z. B. `2026-09-28 14:30 FR` →
+`Sep 28 2026 14:30:00`). Die Uhrzeit ist Pflicht; ein gemerkter Wert aus einer
+älteren Version ohne Uhrzeit bekommt die originale `23:54:57`. Als
 Vorschlag stehen **Datum und Uhrzeit des Rechners** in den Klammern (mit `FR`,
 wenn du das zuletzt gewählt hast) – ENTER übernimmt sie. Mit `-Unattended` gilt
 der gemerkte Wert, ohne gemerkten Wert der aktuelle Zeitpunkt. Ist der Patch

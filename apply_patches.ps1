@@ -794,40 +794,34 @@ function Set-ClientTitle([string]$v) {
     PatchU16 0x757942 ($v.Length + 1)
 }
 
-# Wert: "JJJJ-MM-TT", optional mit Uhrzeit "HH:MM" bzw. "HH:MM:SS" und mit
-# " FR" fuer franzoesische Monatsnamen. Ohne Uhrzeit gilt die originale
-# 23:54:57. Liefert @(Datum mit Uhrzeit, 'EN'|'FR', Uhrzeit angegeben).
+# Wert: "JJJJ-MM-TT HH:MM" bzw. "JJJJ-MM-TT HH:MM:SS", optional mit " FR" fuer
+# franzoesische Monatsnamen. Die Uhrzeit ist Pflicht. Liefert
+# @(Datum mit Uhrzeit, 'EN'|'FR').
 $CLIENT_TIME_ORIG = '23:54:57'
 function Get-ClientDateParts([string]$v) {
-    if ($v -notmatch '^\s*(\d{4}-\d{2}-\d{2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?(?:\s+(EN|FR|en|fr))?\s*$') { return $null }
+    if ($v -notmatch '^\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s+(EN|FR|en|fr))?\s*$') { return $null }
     $date = $matches[1]; $hh = $matches[2]; $mm = $matches[3]; $ss = $matches[4]; $lng = 'EN'
     if ($matches[5]) { $lng = $matches[5].ToUpperInvariant() }
     $d = [datetime]::MinValue
     $ok = [datetime]::TryParseExact($date, 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::None, [ref]$d)
     if (-not $ok) { return $null }
-    $hasTime = [bool]$hh
-    if ($hasTime) {
-        if (-not $ss) { $ss = '0' }
-        if ([int]$hh -gt 23 -or [int]$mm -gt 59 -or [int]$ss -gt 59) { return $null }
-        $d = $d.Date.AddHours([int]$hh).AddMinutes([int]$mm).AddSeconds([int]$ss)
-    } else {
-        $d = $d.Date.Add([timespan]::Parse($CLIENT_TIME_ORIG, [System.Globalization.CultureInfo]::InvariantCulture))
-    }
-    return , @($d, $lng, $hasTime)
+    if (-not $ss) { $ss = '0' }
+    if ([int]$hh -gt 23 -or [int]$mm -gt 59 -or [int]$ss -gt 59) { return $null }
+    $d = $d.Date.AddHours([int]$hh).AddMinutes([int]$mm).AddSeconds([int]$ss)
+    return , @($d, $lng)
 }
 
-# Einheitliche Schreibweise eines gueltigen Werts: "JJJJ-MM-TT HH:MM:SS [FR]",
-# ohne Uhrzeit, wenn sie der originalen 23:54:57 entspricht. So vergleicht der
-# Patcher eingegebene, gemerkte und aus der Exe gelesene Werte richtig.
+# Einheitliche Schreibweise eines gueltigen Werts: "JJJJ-MM-TT HH:MM:SS [FR]".
+# So vergleicht der Patcher eingegebene, gemerkte und aus der Exe gelesene
+# Werte richtig. Ein gemerkter Wert aus einer aelteren Version ohne Uhrzeit
+# bekommt die originale 23:54:57.
 function Format-ClientDate($parts) {
-    $d = $parts[0]
-    $t = $d.ToString('HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
-    $s = $d.ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
-    if ($t -ne $CLIENT_TIME_ORIG) { $s += " $t" }
+    $s = $parts[0].ToString('yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
     if ($parts[1] -eq 'FR') { $s += ' FR' }
     return $s
 }
 function ConvertTo-ClientDate([string]$v) {
+    if ($v -match '^\s*(\d{4}-\d{2}-\d{2})((?:\s+(?:EN|FR|en|fr))?)\s*$') { $v = $matches[1] + ' ' + $CLIENT_TIME_ORIG + $matches[2] }
     $parts = Get-ClientDateParts $v
     if ($null -eq $parts) { return $v }
     return (Format-ClientDate $parts)
@@ -843,7 +837,7 @@ function Get-ClientDateSuggestion([string]$saved) {
 
 function Test-ClientDate([string]$v) {
     $parts = Get-ClientDateParts $v
-    if ($null -eq $parts) { return (L 'Format: JJJJ-MM-TT, optional mit Uhrzeit HH:MM oder HH:MM:SS und mit FR dahinter (z.B. 2026-09-28 14:30 FR).' 'Format: YYYY-MM-DD, optionally with a time HH:MM or HH:MM:SS and followed by FR (e.g. 2026-09-28 14:30 FR).') }
+    if ($null -eq $parts) { return (L 'Format: JJJJ-MM-TT HH:MM oder JJJJ-MM-TT HH:MM:SS, optional mit FR dahinter (z.B. 2026-09-28 14:30 FR).' 'Format: YYYY-MM-DD HH:MM or YYYY-MM-DD HH:MM:SS, optionally followed by FR (e.g. 2026-09-28 14:30 FR).') }
     if ($parts[0].Year -lt 1971 -or $parts[0].Year -gt 2105) { return (L 'Das Jahr muss zwischen 1971 und 2105 liegen.' 'The year must be between 1971 and 2105.') }
     return $null
 }
@@ -3060,9 +3054,9 @@ $patches = @(
        Author = 'MacWarrior'
        De = 'Build-Datum aendern (Original Jun 24 2010)'
        En = 'Change build date (original Jun 24 2010)'
-       PromptDe = 'Neues Build-Datum JJJJ-MM-TT, optional mit Uhrzeit HH:MM[:SS] und FR fuer franzoesische Monatsnamen'
-       PromptEn = 'New build date YYYY-MM-DD, optionally with a time HH:MM[:SS] and FR for French month names'
-       Default = '2010-06-24'
+       PromptDe = 'Neues Build-Datum mit Uhrzeit JJJJ-MM-TT HH:MM[:SS], optional mit FR fuer franzoesische Monatsnamen'
+       PromptEn = 'New build date with time YYYY-MM-DD HH:MM[:SS], optionally followed by FR for French month names'
+       Default = '2010-06-24 23:54:57'
        Suggest = { param($saved) Get-ClientDateSuggestion $saved }
        Check = { param($v) Test-ClientDate $v }
        Normalize = { param($v) ConvertTo-ClientDate $v }
@@ -3505,6 +3499,7 @@ function Read-State {
             $st.Undo.Add(@([Convert]::ToInt64($matches[1], 16), (ConvertFrom-Hex $matches[2])))
         }
     }
+    if ($st.Values.ContainsKey('clientdate')) { $st.Values['clientdate'] = ConvertTo-ClientDate $st.Values['clientdate'] }   # aeltere Versionen: ohne Uhrzeit
     if (-not $st.Hash -or $st.Size -le 0) { return $null }
     return $st
 }
@@ -3897,6 +3892,8 @@ Write-Host ''
 
 # --- 3. Patches auswaehlen ---
 $savedValues = Get-SavedValues
+# Build-Datum aus aelteren Versionen ohne Uhrzeit: originale 23:54:57 ergaenzen
+if ($savedValues.ContainsKey('clientdate')) { $savedValues['clientdate'] = ConvertTo-ClientDate $savedValues['clientdate'] }
 $fromMenu = $false
 if ($Select) {
     $selection = Get-SelectionFromParam $Select
