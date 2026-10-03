@@ -1088,7 +1088,7 @@ shown in square brackets, ENTER accepts it. Invalid input is rejected with a
 message and asked for again, and all values are checked before anything is
 written. The patcher remembers the values in `patcher_selection.ini`
 (`value.<Id>=…`); with `-Unattended` the remembered values are used, otherwise
-the original values – exceptions: build date (today's date) and icon (the
+the original values – exceptions: build date (current time) and icon (the
 patcher aborts), see No. 72 and 73. If a patch is already in `Wow.exe`, its
 current value is the suggestion. When asking, it is also shown after the patch
 name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
@@ -1146,12 +1146,20 @@ characters, ASCII only.
 **Change build date (original Jun 24 2010)** *(No. 72, off by default, Author: MacWarrior)*
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
-the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
-`FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
-suggestion in brackets is **today's date** (with `FR` if you chose it last
-time); with `-Unattended` the remembered value is used, or today's date if
-nothing is remembered. If the patch is already applied, the current date of
-`Wow.exe` is suggested.
+the year in the copyright notice, plus the time. The time is stored in two
+places: in the build text `WoW [Release] Build 12340 (Jun 24 2010 23:54:57)` and
+as the timestamp in the program header, which analysis tools show as the build
+time of `Wow.exe` (original 2010-06-25 06:55:58 UTC). Date and time are taken
+as local time of the computer you patch on.
+
+Input as `YYYY-MM-DD`, optionally with a time `HH:MM` or `HH:MM:SS` and followed
+by `FR` for French month names (e.g. `2026-09-28 14:30 FR` →
+`Sep 28 2026 14:30:00`). Without a time the original `23:54:57` stays. The
+suggestion in brackets is the **computer's current date and time** (with `FR`
+if you chose it last time) – ENTER accepts it. With `-Unattended` the
+remembered value is used, or the current time if nothing is remembered. If the
+patch is already applied, the current date and time of `Wow.exe` are
+suggested.
 
 <a id="patch-clienticon"></a>
 **Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*

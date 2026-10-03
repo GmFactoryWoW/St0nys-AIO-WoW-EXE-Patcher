@@ -1113,7 +1113,7 @@ Klammern steht ein Vorschlag, ENTER übernimmt ihn. Ungültige Eingaben werden m
 einer Meldung neu abgefragt, und alle Werte werden geprüft, bevor irgendetwas
 geschrieben wird. Die Werte merkt sich der Patcher in `patcher_selection.ini`
 (`value.<Id>=…`); mit `-Unattended` gelten die gemerkten Werte, ohne gemerkten
-Wert die Originalwerte – Ausnahmen: Build-Datum (heutiges Datum) und Icon
+Wert die Originalwerte – Ausnahmen: Build-Datum (aktueller Zeitpunkt) und Icon
 (Abbruch), siehe Nr. 72 und 73. Steckt ein Patch schon in der `Wow.exe`, ist
 sein aktueller Wert der Vorschlag.
 Bei der Abfrage steht er auch hinter dem Patchnamen (`-> Vorschlag: …`, bei einem
@@ -1173,12 +1173,19 @@ Höchstens 17 Zeichen, nur ASCII.
 **Build-Datum ändern (Original Jun 24 2010)** *(Nr. 72, standardmäßig aus, Autor: MacWarrior)*
 
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
-und das Jahr im Copyright-Vermerk. Eingabe als `JJJJ-MM-TT`, optional mit `FR`
-dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`).
-Als Vorschlag steht das **heutige Datum** in den Klammern (mit `FR`, wenn du das
-zuletzt gewählt hast); mit `-Unattended` gilt der gemerkte Wert, ohne gemerkten
-Wert das heutige Datum. Ist der Patch schon eingespielt, steht dort das aktuelle
-Datum der `Wow.exe`.
+und das Jahr im Copyright-Vermerk, dazu die Uhrzeit. Die steht an zwei Stellen:
+im Build-Text `WoW [Release] Build 12340 (Jun 24 2010 23:54:57)` und als
+Zeitstempel im Programmkopf, den Analyse-Werkzeuge als Erstellungszeit der
+`Wow.exe` anzeigen (Original 25.06.2010 06:55:58 UTC). Datum und Uhrzeit gelten
+als Ortszeit des Rechners, auf dem du patchst.
+
+Eingabe als `JJJJ-MM-TT`, optional mit Uhrzeit `HH:MM` oder `HH:MM:SS` und mit
+`FR` dahinter für französische Monatsnamen (z. B. `2026-09-28 14:30 FR` →
+`Sep 28 2026 14:30:00`). Ohne Uhrzeit bleibt die originale `23:54:57`. Als
+Vorschlag stehen **Datum und Uhrzeit des Rechners** in den Klammern (mit `FR`,
+wenn du das zuletzt gewählt hast) – ENTER übernimmt sie. Mit `-Unattended` gilt
+der gemerkte Wert, ohne gemerkten Wert der aktuelle Zeitpunkt. Ist der Patch
+schon eingespielt, steht dort das aktuelle Datum samt Uhrzeit der `Wow.exe`.
 
 <a id="patch-clienticon"></a>
 **Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
