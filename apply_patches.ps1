@@ -53,8 +53,9 @@ if (-not $Path) {
     $Path = Join-Path (Get-Location).ProviderPath $Path
 }
 
-# -Unattended stellt keine Rueckfragen: ohne -Language Deutsch, ohne -Select
-# die gespeicherte Auswahl (bzw. die Standard-Auswahl, wenn es keine gibt).
+# -Unattended stellt keine Rueckfragen: ohne -Language die gemerkte Sprache
+# bzw. Deutsch, ohne -Select die gespeicherte Auswahl (bzw. die Standard-
+# Auswahl, wenn es keine gibt).
 if ($Unattended) {
     if (-not $Select) { $Select = 'saved' }
 }
@@ -306,6 +307,17 @@ function Exit-Patcher([int]$code) {
     exit $code
 }
 
+# Unerwarteter Fehler irgendwo im Skript: Meldung zeigen und wie bei jedem
+# anderen Fehler mit Pause beenden - sonst schliesst sich das Fenster beim
+# Start per Doppelklick einfach, ohne dass man etwas lesen kann.
+trap {
+    if (-not $script:lang) { $script:lang = 'de' }
+    Write-Host ''
+    Say ('[FEHLER/ERROR] ' + $_.Exception.Message) 'Red'
+    if ($_.InvocationInfo -and $_.InvocationInfo.PositionMessage) { Say $_.InvocationInfo.PositionMessage 'DarkGray' }
+    Exit-Patcher 1
+}
+
 # ============================================================
 #  Helfer fuer den HD-Portrait-Patch
 #  Haengt eine neue PE-Sektion ".hdp" an die EXE an (256x256-Alphamaske
@@ -394,8 +406,10 @@ function Add-HdPortraits([int]$SIZE) {
     AddRaw $code @(0xE9);                   AddLE32 $code ($MASKFN_CONT - ($det_va + 22 + 5))
     $codeArr = $code.ToArray()
 
-    $vsize = $MASK_OFF + $maskLen + $codeArr.Length
-    $raw_size = AlignUp ($CODE_OFF + $codeArr.Length) $FA
+    $vsize = $CODE_OFF + $codeArr.Length
+    $raw_size = AlignUp $vsize $FA
+    $hoff = $sectBase + 40 * $nsec
+    if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'HD-Portraits: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
 
     # --- Sektions-Rohdaten: [slot][maske][pad][code][pad] ---
     $sec = New-Object byte[] $raw_size
@@ -416,8 +430,6 @@ function Add-HdPortraits([int]$SIZE) {
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $vsize) $SA)))
-    $hoff = $sectBase + 40 * $nsec
-    if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'HD-Portraits: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.hdp'), 0, $sh, 0, 4)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$vsize), 0, $sh, 8, 4)
@@ -607,6 +619,8 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     }
 
     # --- Datei vergroessern: padding bis FileAlignment, dann Sektion anhaengen ---
+    $hoff = $sectBase + 40 * $nsec
+    if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'CameraReforged: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
     $raw_size = AlignUp $SEC_SIZE $FA
     $oldLen = $script:f.Length
     $new_raw = AlignUp $oldLen $FA
@@ -618,8 +632,6 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $SEC_SIZE) $SA)))
-    $hoff = $sectBase + 40 * $nsec
-    if (($hoff + 40) -gt (RU32 $script:f ($sectBase + 20))) { throw 'CameraReforged: kein Platz im PE-Header fuer einen weiteren Sektionseintrag.' }
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.camr'), 0, $sh, 0, 5)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$SEC_SIZE), 0, $sh, 8, 4)
@@ -654,18 +666,15 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     [Array]::Copy([BitConverter]::GetBytes([int32]($DATA_VA + $O_ZOOM)), 0, $j, 1, 4)
     Patch 0x1FCE36 $j                                  # cameraDistanceMoveSpeed, VA 0x5FDA36
 
-    # --- Schulterversatz: vier Lesestellen auf den Datenblock umbiegen ---
-    # Alle vier lesen das Feld +0x2E4 des Kameraobjekts, das im Client nie
-    # beschrieben wird und darum immer 0 ist. Ersetzt durch einen festen Zeiger
-    # auf den Wert im Datenblock, den der Kamera-Hook je Bild auffrischt -
-    # beide Formen sind 6 Byte lang.
-    #   fld [reg+2E4h]  ->  fld [DATA+O_SHOULDER]
-    $j = New-Object byte[] 6; $j[0] = 0xD9; $j[1] = 0x05
-    [Array]::Copy([BitConverter]::GetBytes([int32]($DATA_VA + $O_SHOULDER)), 0, $j, 2, 4)
-    Patch 0x568792 $j                                  # VA 0x969392
-    Patch 0x56884F $j                                  # VA 0x96944F
-    Patch 0x569EE1 $j                                  # VA 0x96AAE1
-    Patch 0x572DD8 $j                                  # VA 0x9739D8
+    # --- Schulterversatz: NICHT umgesetzt ---
+    # Die Vorlage biegt vier "fld [reg+2E4h]"-Lesestellen (VA 0x969392,
+    # 0x96944F, 0x96AAE1, 0x9739D8) auf den Schulterwert um. Diese Stellen
+    # gehoeren aber nicht zur Kamera, sondern zum Chat-Fenster
+    # (CSimpleMessageScrollFrame: +0x2E4 = timeVisible, +0x2E8 = fadeDuration;
+    # 0x9739D8 liegt in der Lua-Methode GetTimeVisible). Umgebogen bekaeme jede
+    # Chat-Nachricht den Schulterwert als Anzeigedauer. Darum bleiben diese vier
+    # Stellen hier unangetastet; das CVar test_cameraOverShoulder wird zwar
+    # registriert und vom Kamera-Hook gelesen, hat aber noch keine Wirkung.
 }
 
 # ============================================================
@@ -758,9 +767,14 @@ function Test-ClientTitle([string]$v) {
 }
 
 function Set-ClientTitle([string]$v) {
-    PatchUtf16 0x7577C0 50 $v                         # FileDescription
-    PatchUtf16 0x757854 36 $v                         # InternalName
-    PatchUtf16 0x757960 36 $v                         # ProductName
+    # Je String-Eintrag der Versionsressource: Text und wValueLength (Zeichen
+    # inklusive Nullterminator) im Eintragskopf (+2).
+    PatchUtf16 0x7577C0 50 $v                         # FileDescription (Kopf 0x757798)
+    PatchU16 0x75779A ($v.Length + 1)
+    PatchUtf16 0x757854 36 $v                         # InternalName (Kopf 0x757834)
+    PatchU16 0x757836 ($v.Length + 1)
+    PatchUtf16 0x757960 36 $v                         # ProductName (Kopf 0x757940)
+    PatchU16 0x757942 ($v.Length + 1)
 }
 
 # Wert: "JJJJ-MM-TT", optional mit " FR" fuer franzoesische Monatsnamen.
@@ -770,7 +784,7 @@ function Get-ClientDateParts([string]$v) {
     $ok = [datetime]::TryParseExact($matches[1], 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::None, [ref]$d)
     if (-not $ok -or $d.Year -lt 1000) { return $null }
     $lng = 'EN'; if ($matches[2]) { $lng = $matches[2].ToUpperInvariant() }
-    return @($d, $lng)
+    return , @($d, $lng)
 }
 
 # Vorschlag im Dialog: immer das heutige Datum, die Sprache (FR) vom gemerkten Wert.
@@ -824,9 +838,11 @@ $ICON_SLOTS = @(
 
 function Get-IconDibLength([int]$S) { return 40 + $S * $S * 4 + [int](([Math]::Floor(($S + 31) / 32)) * 4) * $S }
 
+# Relative Pfade gelten ab dem Ordner der Wow.exe (bei -Path kann der ein anderer
+# als der Skriptordner sein).
 function Resolve-IconPath([string]$v) {
     $p = $v.Trim().Trim('"')
-    if (-not [System.IO.Path]::IsPathRooted($p)) { $p = Join-Path $scriptDir $p }
+    if (-not [System.IO.Path]::IsPathRooted($p)) { $p = Join-Path (Split-Path -Parent $file) $p }
     return $p
 }
 
@@ -835,8 +851,8 @@ function BE32([byte[]]$a, [int]$o) { return ([int64]$a[$o] -shl 24) -bor ([int64
 # PNG -> @{ W; H; Px = RGBA-Bytes zeilenweise von oben }. Nur nicht-interlaced.
 function Read-PngImage([byte[]]$data) {
     $sig = @(0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
-    if ($data.Length -lt 8) { throw 'Keine PNG-Datei.' }
-    for ($i = 0; $i -lt 8; $i++) { if ($data[$i] -ne $sig[$i]) { throw 'Keine PNG-Datei.' } }
+    if ($data.Length -lt 8) { throw (L 'Keine PNG-Datei.' 'Not a PNG file.') }
+    for ($i = 0; $i -lt 8; $i++) { if ($data[$i] -ne $sig[$i]) { throw (L 'Keine PNG-Datei.' 'Not a PNG file.') } }
     $idat = New-Object System.IO.MemoryStream
     $pal = $null; $trns = $null
     $w = 0; $h = 0; $depth = 0; $ctype = 0
@@ -845,12 +861,12 @@ function Read-PngImage([byte[]]$data) {
         $len = [int](BE32 $data $pos)
         $type = [System.Text.Encoding]::ASCII.GetString($data, $pos + 4, 4)
         $body = $pos + 8
-        if ($body + $len + 4 -gt $data.Length) { throw 'PNG-Datei ist beschaedigt.' }
+        if ($body + $len + 4 -gt $data.Length) { throw (L 'PNG-Datei ist beschaedigt.' 'PNG file is damaged.') }
         switch ($type) {
             'IHDR' {
                 $w = [int](BE32 $data $body); $h = [int](BE32 $data ($body + 4))
                 $depth = [int]$data[$body + 8]; $ctype = [int]$data[$body + 9]
-                if ($data[$body + 12] -ne 0) { throw 'Interlaced PNG wird nicht unterstuetzt.' }
+                if ($data[$body + 12] -ne 0) { throw (L 'Interlaced PNG wird nicht unterstuetzt.' 'Interlaced PNG is not supported.') }
             }
             'PLTE' { $pal = New-Object byte[] $len; [Array]::Copy($data, $body, $pal, 0, $len) }
             'tRNS' { $trns = New-Object byte[] $len; [Array]::Copy($data, $body, $trns, 0, $len) }
@@ -859,11 +875,11 @@ function Read-PngImage([byte[]]$data) {
         if ($type -eq 'IEND') { break }
         $pos = $body + $len + 4
     }
-    if ($w -le 0 -or $h -le 0 -or $w -gt 1024 -or $h -gt 1024) { throw 'PNG: ungueltige oder zu grosse Abmessungen (max. 1024).' }
-    $channels = switch ($ctype) { 0 { 1 } 2 { 3 } 3 { 1 } 4 { 2 } 6 { 4 } default { throw 'PNG: unbekannter Farbtyp.' } }
-    if ($depth -notin @(1, 2, 4, 8, 16)) { throw 'PNG: ungueltige Bittiefe.' }
-    if ($depth -lt 8 -and $ctype -notin @(0, 3)) { throw 'PNG: ungueltige Bittiefe.' }
-    if ($ctype -eq 3 -and $null -eq $pal) { throw 'PNG: Palette fehlt.' }
+    if ($w -le 0 -or $h -le 0 -or $w -gt 1024 -or $h -gt 1024) { throw (L 'PNG: ungueltige oder zu grosse Abmessungen (max. 1024).' 'PNG: invalid or too large dimensions (max. 1024).') }
+    $channels = switch ($ctype) { 0 { 1 } 2 { 3 } 3 { 1 } 4 { 2 } 6 { 4 } default { throw (L 'PNG: unbekannter Farbtyp.' 'PNG: unknown colour type.') } }
+    if ($depth -notin @(1, 2, 4, 8, 16)) { throw (L 'PNG: ungueltige Bittiefe.' 'PNG: invalid bit depth.') }
+    if ($depth -lt 8 -and $ctype -notin @(0, 3)) { throw (L 'PNG: ungueltige Bittiefe.' 'PNG: invalid bit depth.') }
+    if ($ctype -eq 3 -and $null -eq $pal) { throw (L 'PNG: Palette fehlt.' 'PNG: palette missing.') }
     # zlib-Kopf (2 Byte) ueberspringen, dann roher Deflate-Strom
     $idat.Position = 2
     $inf = New-Object System.IO.Compression.DeflateStream($idat, [System.IO.Compression.CompressionMode]::Decompress)
@@ -873,7 +889,7 @@ function Read-PngImage([byte[]]$data) {
     $bitsPP = $channels * $depth
     $rowBytes = [int][Math]::Floor(($w * $bitsPP + 7) / 8)
     $fb = [Math]::Max(1, [int][Math]::Floor($bitsPP / 8))     # Abstand fuer die Filter
-    if ($raw.Length -lt ($rowBytes + 1) * $h) { throw 'PNG: Bilddaten unvollstaendig.' }
+    if ($raw.Length -lt ($rowBytes + 1) * $h) { throw (L 'PNG: Bilddaten unvollstaendig.' 'PNG: image data incomplete.') }
     # Filter rueckgaengig machen, Ergebnis zeilenweise in $img (ohne Filterbyte)
     $img = New-Object byte[] ($rowBytes * $h)
     $prev = New-Object int[] $rowBytes
@@ -939,12 +955,12 @@ function Read-PngImage([byte[]]$data) {
 
 # BMP-Bild aus einer ICO-Datei (BITMAPINFOHEADER, XOR-Bitmap, AND-Maske) -> RGBA
 function Read-DibImage([byte[]]$data) {
-    if ($data.Length -lt 40 -or (RU32 $data 0) -ne 40) { throw 'ICO: unbekanntes Bitmap-Format.' }
+    if ($data.Length -lt 40 -or (RU32 $data 0) -ne 40) { throw (L 'ICO: unbekanntes Bitmap-Format.' 'ICO: unknown bitmap format.') }
     $w = [int][BitConverter]::ToInt32($data, 4); $h = [int]([BitConverter]::ToInt32($data, 8) / 2)
     $bpp = RU16 $data 14; $comp = RU32 $data 16; $clrUsed = RU32 $data 32
-    if ($w -le 0 -or $h -le 0 -or $w -gt 1024 -or $h -gt 1024) { throw 'ICO: ungueltige Abmessungen.' }
-    if ($bpp -notin @(1, 4, 8, 16, 24, 32)) { throw "ICO: Bittiefe $bpp wird nicht unterstuetzt." }
-    if ($comp -ne 0 -and -not ($comp -eq 3 -and $bpp -ge 16)) { throw 'ICO: komprimierte Bitmaps werden nicht unterstuetzt.' }
+    if ($w -le 0 -or $h -le 0 -or $w -gt 1024 -or $h -gt 1024) { throw (L 'ICO: ungueltige Abmessungen.' 'ICO: invalid dimensions.') }
+    if ($bpp -notin @(1, 4, 8, 16, 24, 32)) { throw (L "ICO: Bittiefe $bpp wird nicht unterstuetzt." "ICO: bit depth $bpp is not supported.") }
+    if ($comp -ne 0 -and -not ($comp -eq 3 -and $bpp -ge 16)) { throw (L 'ICO: komprimierte Bitmaps werden nicht unterstuetzt.' 'ICO: compressed bitmaps are not supported.') }
     $xorOff = 40
     $pal = $null
     if ($bpp -le 8) {
@@ -955,7 +971,7 @@ function Read-DibImage([byte[]]$data) {
     $andRow = [int]([Math]::Floor(($w + 31) / 32) * 4)
     $andOff = $xorOff + $xorRow * $h
     $hasMask = ($data.Length -ge $andOff + $andRow * $h)
-    if ($data.Length -lt $andOff) { throw 'ICO: Bilddaten unvollstaendig.' }
+    if ($data.Length -lt $andOff) { throw (L 'ICO: Bilddaten unvollstaendig.' 'ICO: image data incomplete.') }
     $px = New-Object byte[] ($w * $h * 4)
     $alphaUsed = $false
     for ($y = 0; $y -lt $h; $y++) {
@@ -1034,21 +1050,26 @@ function Select-IconSource($entries, [int]$S) {
     return ($entries | Sort-Object { $_.W * $_.H } -Descending | Select-Object -First 1)
 }
 
-# Die vier Bilder fuer die Slots: Hashtable Groesse -> dekodiertes Bild.
+# Die vier Bilder fuer die Slots: Hashtable Groesse -> dekodiertes Bild. Einmal
+# dekodierte Dateien werden fuer diesen Lauf gemerkt (Pruefung, Patchen und
+# Erkennung brauchen dieselbe Datei).
+$iconCache = @{}
 function Get-IconImages([string]$path) {
+    if ($script:iconCache.ContainsKey($path)) { return $script:iconCache[$path] }
     $entries = Read-IconFile $path
     $result = @{}
     foreach ($slot in $ICON_SLOTS) {
         $e = Select-IconSource $entries $slot.Size
         try { $result[$slot.Size] = Get-IconImage $e } catch { throw ((L "Bild $($e.W)x$($e.H): " "Image $($e.W)x$($e.H): ") + $_.Exception.Message) }
     }
+    $script:iconCache[$path] = $result
     return $result
 }
 
 # RGBA auf SxS umrechnen: Flaechenmittelung mit vormultipliziertem Alpha.
 function Resize-Rgba($img, [int]$S) {
     $w = $img.W; $h = $img.H; $src = $img.Px
-    if ($w -eq $S -and $h -eq $S) { return $src }
+    if ($w -eq $S -and $h -eq $S) { return , $src }
     $out = New-Object byte[] ($S * $S * 4)
     for ($y = 0; $y -lt $S; $y++) {
         $y0 = [int][Math]::Floor($y * $h / $S); $y1 = [int][Math]::Floor(($y + 1) * $h / $S); if ($y1 -le $y0) { $y1 = $y0 + 1 }
@@ -1434,7 +1455,7 @@ function Get-OriginalTable {
     $t = @{ Size = [int64]0; Entries = (New-Object System.Collections.Generic.List[object]) }
     foreach ($l in ($ORIGINAL_TABLE -split "`r?`n")) {
         if ($l -match '^size;(\d+)$') { $t.Size = [int64]$matches[1] }
-        elseif ($l -match '^([a-z0-9]+);([0-9A-F]+);([0-9A-F]+);([01])$') {
+        elseif ($l -match '^([A-Za-z0-9_]+);([0-9A-F]+);([0-9A-F]+);([01])$') {
             $t.Entries.Add(@{ Id = $matches[1]; Off = [Convert]::ToInt64($matches[2], 16); Bytes = (ConvertFrom-Hex $matches[3]); Own = ($matches[4] -eq '1') })
         }
     }
@@ -1493,12 +1514,16 @@ function ConvertTo-FileOffset([int64]$va) {
 function Get-ClientDateFromExe {
     $t = [System.Text.Encoding]::ASCII.GetString($script:f, 0x5F39F4, 11)
     if ($t -notmatch '^([A-Za-z]{3}) (\d{2}) (\d{4})$') { return $null }
+    $mon = $matches[1]; $day = $matches[2]; $year = $matches[3]   # vor dem naechsten -match sichern
     $en = @('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     $fr = @('Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec')
-    $m = [array]::IndexOf($en, $matches[1]); $suffix = ''
-    if ($m -lt 0) { $m = [array]::IndexOf($fr, $matches[1]); $suffix = ' FR' }
+    $m = [array]::IndexOf($en, $mon); $suffix = ''
+    if ($m -lt 0) { $m = [array]::IndexOf($fr, $mon); $suffix = ' FR' }
     if ($m -lt 0) { return $null }
-    return ('{0}-{1:00}-{2}{3}' -f $matches[3], ($m + 1), $matches[2], $suffix)
+    # Monate, die in beiden Sprachen gleich heissen (Jan, Mar, Jun, ...), verraten
+    # die Sprache nicht - dann gilt die aus dem gemerkten Wert.
+    if ($suffix -eq '' -and $fr[$m] -eq $en[$m] -and ((Get-SavedValues)['clientdate'] -match '\sFR\s*$')) { $suffix = ' FR' }
+    return ('{0}-{1:00}-{2}{3}' -f $year, ($m + 1), $day, $suffix)
 }
 function Get-DoubleJumpFromExe {
     $hook = 0x98842A - 0x400C00
@@ -1534,7 +1559,6 @@ function Invoke-BuildTable {
         $n++
         Write-Host ("  Konfiguration {0}/{1}" -f $n, $configs.Count)
         $script:f = [byte[]]$orig.Clone()
-        $script:chosenIds = $cfg
         $script:VALUES = @{}
         foreach ($p in $patches) { if ($p.Check) { $script:VALUES[$p.Id] = $p.Default } }
         $script:writes.Clear()
@@ -1593,7 +1617,7 @@ function Invoke-BuildTable {
     $src = [System.IO.File]::ReadAllText($scriptPath)
     if ($src -match '[^\x00-\x7F]') { Write-Host 'BuildTable: Skript enthaelt Nicht-ASCII-Zeichen, Abbruch (es wird als ASCII zurueckgeschrieben).'; exit 1 }
     $a = $src.IndexOf('# BEGIN ORIGINAL-BYTES' + "`r`n")
-    $z = $src.IndexOf('# END ORIGINAL-BYTES', $a)
+    $z = -1; if ($a -ge 0) { $z = $src.IndexOf('# END ORIGINAL-BYTES', $a) }
     if ($a -lt 0 -or $z -lt 0) { Write-Host 'BuildTable: Markierungen nicht gefunden.'; exit 1 }
     $src = $src.Substring(0, $a) + $block + $src.Substring($z + '# END ORIGINAL-BYTES'.Length)
     [System.IO.File]::WriteAllText($scriptPath, $src, (New-Object System.Text.ASCIIEncoding))
@@ -1802,12 +1826,19 @@ $patches = @(
 
     @{ Id = 'afk'; Cat = 'login'; On = $false
        Author = 'St0ny'
-       De = 'AFK-Timer / IDLE-Check deaktivieren'
-       En = 'Disable AFK timer idle check'
-       NoteDe = 'wird fuer Character-Autologin benoetigt'
-       NoteEn = 'required for character auto-login'
+       De = 'Idle-Kick nach Character-Autologin verhindern'
+       En = 'Prevent the idle kick after character auto-login'
+       NoteDe = 'wird fuer Character-Autologin benoetigt; AFK- und Idle-Timer bleiben aktiv'
+       NoteEn = 'required for character auto-login; AFK and idle timers stay active'
        Url = 'https://discord.com/channels/858041817043042364/1515439916878663701'
        Code = {
+        # Nach einem Autologin ohne jede Eingabe steht der Zeitstempel der
+        # letzten Eingabe ([0xB499A4]) noch auf 0 - der Idle-Check haelt den
+        # Spieler sofort fuer untaetig. Der Umweg bei VA 0x52B24C (Hoehle in der
+        # int3-Luecke VA 0x94B902) setzt den Zeitstempel beim ersten Durchlauf
+        # auf "jetzt", wenn er noch 0 ist. Dazu wird bei VA 0x52AFAF ein
+        # Fatal-Error-Check entfernt, der dabei ausloesen kann. Die eigentlichen
+        # Timer (AFK nach 5 Minuten, Logout nach 30 Minuten) bleiben.
         Patch 0x12A3AF @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
         Patch 0x12A64C @(0xE9, 0xB1, 0x06, 0x42, 0x00)
         Patch 0x54AD02 @(0xE8, 0x19, 0xF5, 0xF1, 0xFF, 0x83, 0x3D, 0xA4, 0x99, 0xB4, 0x00, 0x00, 0x75, 0x05, 0xA3, 0xA4, 0x99, 0xB4, 0x00, 0xE9, 0x37, 0xF9, 0xBD, 0xFF)
@@ -1820,8 +1851,19 @@ $patches = @(
        De = 'Custom Glue-XML erlauben'
        En = 'Allow custom GlueXML'
        Code = {
+        # Signaturpruefung der Interface-Dateien (VA 0x8165E0, liefert 0 = keine
+        # Signatur, 1 = kaputt, 2 = veraendert, 3 = gueltig) immer "gueltig"
+        # melden; ausserdem (0x1F41BF) die lokalen Ordner Interface\GlueXML und
+        # Interface\FrameXML nicht mehr in "*.old" umbenennen.
+        # Die verbreitete Fassung dieses Patches (Alastor/Kebabstorm) macht aus
+        # dem Sprung bei VA 0x816625 ein "jmp": Laesst sich die .sig-Datei
+        # nicht laden (Addons ohne Signatur!), lief die Pruefung dann mit
+        # uninitialisierten Variablen weiter und gab einen Zeiger in .rdata
+        # frei (undefiniertes Verhalten). Hier stattdessen am Fehlerausgang
+        # (VA 0x816627) direkt "3" zurueckgeben: mov al,3 / pop esi / leave / ret.
+        # Gleiche Wirkung, ohne wilden Speicherzugriff.
         Patch 0x1F41BF @(0xEB)
-        Patch 0x415A25 @(0xEB)
+        Patch 0x415A27 @(0xB0, 0x03, 0x5E, 0xC9, 0xC3)
         Patch 0x415A3F @(0x03)
         Patch 0x415A95 @(0x03)
         Patch 0x415B46 @(0xEB)
@@ -1833,6 +1875,10 @@ $patches = @(
        De = 'Falsch/Nicht signierte MPQs zulassen'
        En = 'Allow unsigned / incorrectly signed MPQs'
        Code = {
+        # Die Signaturpruefung fuer MPQ-Archive (VA 0x421F50) meldet immer
+        # "gueltig". Im Client wird sie nur fuer Archive aufgerufen, die der
+        # Server schickt: wow-patch.mpq (PatchDownloadApply) und Cache\Survey.mpq.
+        # Die normalen Data\*.MPQ laedt der Client ohne Signaturpruefung.
         Patch 0x021350 @(0x55, 0x8B, 0xEC, 0xB9, 0x05, 0x00, 0x00, 0x00, 0x8B, 0x45, 0x0C, 0x89, 0x08, 0xB8, 0x01, 0x00, 0x00, 0x00, 0x5D, 0xC2, 0x18, 0x00)
     }}
 
@@ -1860,9 +1906,12 @@ $patches = @(
        NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
        NoteEn = 'may be treated as botting - ban risk'
        Code = {
-        # Gibt geschuetzte Lua-Funktionen fuer Addons/Makros frei, z.B.
-        # CastSpellByName, CastSpellByID, TargetUnit, FocusUnit, InteractUnit,
-        # Bewegungsfunktionen, ReloadUI. AttackTarget meldet weiterhin einen Fehler.
+        # Die zentrale Schutzpruefung (VA 0x5191C0) meldet fuer die Schutzarten
+        # 0-5, 16 und 17 immer "erlaubt": Bewegungsfunktionen (MoveForwardStart,
+        # TurnLeftStart, ...), CastSpellByName / CastSpell / UseAction /
+        # PetAttack, RunMacro / RunMacroText, GM-Ticket-Funktionen.
+        # Nicht betroffen (eigene Pruefungen im Code): TargetUnit, FocusUnit,
+        # InteractUnit, ReloadUI; AttackTarget meldet weiterhin einen Fehler.
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
@@ -1908,6 +1957,14 @@ $patches = @(
        NoteEn = 'requires awesome_wotlk'
        Url = 'https://github.com/noname08662/awesome_wotlk'
        Code = {
+        # Patch von FrostAtom (awesome_wotlk). Der Start der Haupt-Fiber (VA
+        # 0x40B7D0, kurz vor WinMain) springt in einen Lader bei VA 0x4E5CB0,
+        # der die DLL per LoadLibraryA laedt, das Scan.dll-Flag ("Pruefung
+        # bestanden") setzt und den ueberschriebenen Prolog nachholt. Der Lader
+        # ueberschreibt den Anfang der Scan.dll-Startfunktion, deren einziger
+        # Aufrufer (Lua ScanDLLStart, VA 0x4DCCF0) deshalb zu "return 0" wird -
+        # der Scan.dll-Mechanismus ist damit abgeschaltet (wie bei "Scan.dll
+        # deaktivieren"). Fehlt die DLL, startet WoW normal weiter.
         Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
         Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
         Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
@@ -1962,22 +2019,6 @@ $patches = @(
         Patch 0x33E0D6 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch'
-       De = '"Geister"-Angriff von NPCs beim Evade behoben'
-       En = 'Fix "ghost" attack when NPCs evade from combat'
-       Code = {
-        Patch 0x0355BF @(0xEB)
-    }}
-
-    @{ Id = 'naked'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch'
-       De = 'Nackter-Charakter-Bug behoben'
-       En = 'Fix naked character bug'
-       Code = {
-        Patch 0x1DDC5D @(0xEB)
-    }}
-
     @{ Id = 'forcereaction'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Force-Reaction bei /reload erhalten'
@@ -2022,24 +2063,43 @@ $patches = @(
     }}
 
     @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
-       Author = 'Alastor StrixEfuartus'
-       De = 'Level 101+ Fix (Druiden-Grundwerte und Barbierstuhl)'
-       En = 'Level 101+ fix (druid base stats and barber chair)'
+       Author = 'Alastor StrixEfuartus / St0ny'
+       De = 'Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)'
+       En = 'Level 101+ fix (game tables, barber chair, base stats)'
        Code = {
-        # Druiden koennen ihre Grundwerte wieder ansehen und der Barbierstuhl
-        # funktioniert fuer alle Charaktere ab Level 101.
-        # Braucht laut Quelle "XML MD5" = den Patch "Disable XML SIG MD5", das ist
-        # hier der Patch "Custom Glue-XML erlauben" (glue).
-        Patch 0x3F5DC2 @(0x90, 0x90, 0x90)
+        # Die Spielwert-Tabellen (gtCombatRatings, gtBarberShopCostBase,
+        # gtOCTRegenHP/MP, gtChanceToMeleeCrit, ... - elf Tabellen) sind je
+        # Spalte 100 Zeilen lang, eine je Level. Der gemeinsame Zugriff (VA
+        # 0x7F69B0, Zwilling 0x7F69E0 fuer den zweiten Wert eines Eintrags)
+        # rechnet Index = Zeilen * Spalte + (Level - 1); ab Level 101 landet er
+        # ausserhalb der Spalte - falsche Werte oder Absturz (Druiden-Grundwerte,
+        # Barbierstuhl).
+        # Die verbreitete Fassung (12th Generation EXE) entfernt dort einfach das
+        # "+ Zeile" - damit ignorieren ALLE Abfragen das Level, auch unter 100
+        # (Wertungen, Krit-Chance, Regeneration zeigen Level-1-Werte).
+        # Hier wird die Zeile stattdessen auf die letzte Zeile der Spalte
+        # begrenzt: Level 101+ bekommt die Werte fuer Level 100, alles darunter
+        # bleibt unveraendert. Beide Funktionen werden neu geschrieben (48 bzw.
+        # 23 Byte, der Zwilling ruft den ersten Zugriff auf und liest dessen
+        # zweiten Wert), nichts springt in ihre Mitte.
+        # Braucht laut Quelle den Patch "Custom Glue-XML erlauben" (glue).
+        Patch 0x3F5DB0 @(0x55, 0x8B, 0xEC, 0x8B, 0xC1, 0x8B, 0x48, 0x0C, 0x8B, 0x40, 0x08, 0x8B, 0x40, 0x04, 0x8B, 0x55, 0x08, 0x3B, 0xD0, 0x72, 0x03, 0x8D, 0x50, 0xFF, 0x0F, 0xAF, 0x45, 0x0C, 0x03, 0xC2, 0x8B, 0x51, 0x18, 0x8B, 0x52, 0x04, 0x83, 0xC1, 0x18, 0x50, 0xFF, 0xD2, 0xD9, 0x00, 0x5D, 0xC2, 0x08, 0x00)
+        Patch 0x3F5DE0 @(0x55, 0x8B, 0xEC, 0xFF, 0x75, 0x0C, 0xFF, 0x75, 0x08, 0xE8, 0xC2, 0xFF, 0xFF, 0xFF, 0xDD, 0xD8, 0xD9, 0x40, 0x04, 0x5D, 0xC2, 0x08, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC)
     }}
 
     @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false
        Author = 'Alastor StrixEfuartus / Robinsch'
-       De = 'Unbegrenzte Rasse/Klasse-Kombinationen'
-       En = 'Unlimited race/class combinations'
-       NoteDe = 'Server muss es unterstuetzen'
-       NoteEn = 'server must support it'
+       De = 'Charaktererstellung: mehr als 10 Klassen (Zufallsklasse)'
+       En = 'Character creation: more than 10 classes (random class)'
+       NoteDe = 'fuer eigene Klassen; Server muss es unterstuetzen'
+       NoteEn = 'for custom classes; server must support it'
        Code = {
+        # Die Zufallsauswahl der Klasse bei der Charaktererstellung (VA 0x4E0F50)
+        # sammelt die erlaubten Klassen in einem Feld mit 10 Plaetzen auf dem
+        # Stack. Mit eigenen Klassen (ChrClasses.dbc, mehr als 10) wuerde es
+        # ueberlaufen. Das Feld wird auf 30 Plaetze vergroessert: Stackrahmen
+        # 0x28 -> 0x78 und die drei Zugriffe [ebp-0x28] -> [ebp-0x78].
+        # Welche Rasse welche Klasse darf, prueft weiterhin der Server.
         Patch 0xE0355 @(0x78)
         Patch 0xE038E @(0x88)
         Patch 0xE03A3 @(0x88)
@@ -2291,6 +2351,9 @@ $patches = @(
        De = 'CVar environmentDetail unlock (kein Limit statt 1.5)'
        En = 'CVar environmentDetail unlock (no limit instead of 1.5)'
        Code = {
+        # Im Setz-Callback (VA 0x78DC60) wird der geklemmte Wert durch den
+        # Rohwert ersetzt (fstp st(1) -> fstp st(0)). Der Ausgang ist fuer beide
+        # Grenzen derselbe, es faellt also auch die Untergrenze 0.5 weg.
         Patch 0x38D08E @(0xD8)
     }}
 
@@ -2499,6 +2562,10 @@ $patches = @(
        De = 'Occluder Fix fuer Stormwind (Open Azeroth)'
        En = 'Occluder fix for Stormwind (Open Azeroth)'
        Code = {
+        # VA 0xAF0040 ist der Karten-Schluessel (mapId 0 = Oestliche
+        # Koenigreiche) des ersten Eintrags der fest eingebauten Occluder-Tabelle
+        # (VA 0x7CDD31 vergleicht ihn mit der aktuellen Karte). 99999 passt zu
+        # keiner Karte - die Stormwind-Occluder werden nie mehr angewendet.
         Patch 0x6EE040 @(0x9F, 0x86, 0x01, 0x00)
     }}
 
@@ -2630,7 +2697,12 @@ $patches = @(
        NoteEn = 'requires the FlashWindow addon'
        Url = 'https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash'
        Code = {
-        # Datei-Offsets: VA 0x134ED5 -> File 0x1342D5 / VA 0x6086E4 -> File 0x606EE4
+        # Ersetzt die in 3.3.5a funktionslose Lua-Funktion BNRemoveFriend (VA
+        # 0x534ED5, Datei 0x1342D5) durch FlashWindow(): GetModuleHandleA
+        # ("user32.dll") / GetProcAddress("FlashWindow") / FlashWindow(hwnd,
+        # FALSE) - genau wie die Fassung in der AwesomeWotlkLib.dll. Der Name
+        # im Lua-Namenseintrag (VA 0xA086E4, Datei 0x606EE4) wird mit
+        # "FlashWindow" ueberschrieben.
         Patch 0x1342D5 @(0x14, 0x68, 0xD8, 0x4C, 0x9E, 0x00, 0xFF, 0x15, 0xB0, 0xF1, 0x9D, 0x00, 0x68, 0xE4, 0x86, 0xA0, 0x00, 0x50, 0xE8, 0xCD, 0x7E, 0xEE, 0xFF, 0x6A, 0x00, 0xB9, 0x20, 0x16, 0xD4, 0x00, 0xFF, 0x31, 0xFF, 0xD0, 0xB8, 0x00, 0x00, 0x00, 0x00, 0xC9, 0xC3, 0xCC)
         Patch 0x606EE4 @(0x46, 0x6C, 0x61, 0x73, 0x68, 0x57, 0x69, 0x6E, 0x64, 0x6F, 0x77, 0x00, 0x00, 0x00)
     }}
@@ -2686,10 +2758,10 @@ $patches = @(
 
     @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
        Author = 'Stormhand / St0ny'
-       De = 'CameraReforged [BETA]: Kamerahoehe, Schulterversatz, Zoom-Grenzen'
-       En = 'CameraReforged [BETA]: camera height, shoulder offset, zoom limits'
-       NoteDe = 'noch nicht 100% fertig; Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'not 100% finished yet; exe grows - ban risk'
+       De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen'
+       En = 'CameraReforged [BETA]: camera height and zoom limits'
+       NoteDe = 'Schulterversatz noch ohne Wirkung; Exe wird groesser - Bann-Gefahr'
+       NoteEn = 'shoulder offset has no effect yet; exe grows - ban risk'
        Code = {
         # BETA - funktioniert noch nicht zu 100 Prozent, hier fliesst noch Arbeit rein.
         #
@@ -2705,8 +2777,9 @@ $patches = @(
         #                               zielt auf die Brust; der Wert hebt die
         #                               Kamera auf Kopfhoehe an. Bereich 0.0 - 3.0.
         #      test_cameraOverShoulder  Seitlicher Versatz in Yards, negativ =
-        #                               links. 0 laesst die Kamera mittig.
-        #                               Bereich -2.0 - 2.0.
+        #                               links. Bereich -2.0 - 2.0. NOCH OHNE
+        #                               WIRKUNG - die Lesestellen der Vorlage
+        #                               waren falsch, siehe Add-CameraReforged.
         # 2. Er tauscht die Vorgabewerte zweier vorhandener CVars aus:
         #      cameraDistanceMaxFactor  max. Zoom-Faktor, Blizzard 1.0  -> 2.6
         #      cameraDistanceMoveSpeed  Zoom-Tempo,      Blizzard 8.33 -> 20.0
@@ -2724,8 +2797,8 @@ $patches = @(
         #
         # WO DAS IM BINARY LANDET
         # Eine eigene, angehaengte Sektion ".camr" (RWX) mit Code und Daten,
-        # Detours auf CVars_Initialize und den Kamera-Fokuspfad, dazu sechs
-        # umgebogene Lesestellen. Details stehen bei Add-CameraReforged oben.
+        # Detours auf CVars_Initialize und den Kamera-Fokuspfad, dazu zwei
+        # umgebogene Vorgabewerte. Details stehen bei Add-CameraReforged oben.
         #
         # EINE EINSCHRAENKUNG
         # Dieser Patch veraendert wie die HD-Portraits die
@@ -2850,7 +2923,7 @@ $PRESET_STONY = @(
     'scandll', 'noserverpatch', 'nosurvey',
     'skipbnet', 'skiprdp', 'nohttp',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
-    'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
+    'areatrigger', 'swing', 'npcanim', 'spellanim',
     'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars',
     'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
     'bluemoon', 'notransparency',
@@ -2884,7 +2957,7 @@ afk;12A3AF;0F85A4030000;1
 afk;12A64C;E8CFFB3300;1
 afk;54AD02;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 glue;1F41BF;74;1
-glue;415A25;75;1
+glue;415A27;5E8BE55DC3;1
 glue;415A3F;01;1
 glue;415A95;01;1
 glue;415B46;7F;1
@@ -2905,13 +2978,11 @@ areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
 npcanim;33D7C9;74;1
 spellanim;33E0D6;6AFF6A008BCEE84FBFFFFF8D8D58FDFFFFE884FEEAFF;1
-ghostattack;355BF;E8;1
-naked;1DDC5D;00;1
 forcereaction;12811E;E89D970A00;1
 mail;16D899;0560EA0000;1
 deadchat;10CA41;74;1
 follow;32A92C;75;1
-level101;3F5DC2;034508;1
+level101;3F5DB0;558BEC8BC18B480C8B40088B40040FAF450C0345088B51188B520483C11850FFD2D9005DC20800CCCCCCCCCCCCCCCCCC558BEC8BC18B480C8B40088B40040FAF450C0345088B51188B520483C11850FFD2D940045DC20800CCCCCCCCCCCCCC;1
 raceclass;E0355;28;1
 raceclass;E038E;D8;1
 raceclass;E03A3;D8;1
@@ -3037,10 +3108,6 @@ camera;11CDB0;558BEC81EC80000000;1
 camera;1FCE36;68E0E7A100;1
 camera;1FD5B2;6840139E00;1
 camera;2064CB;D90570169F00;1
-camera;568792;D981E4020000;1
-camera;56884F;D987E4020000;1
-camera;569EE1;D987E4020000;1
-camera;572DD8;D980E4020000;1
 sound;C77C2;85C074068B40308945F8;1
 sound;D0604;6864149E00;1
 sound;D0624;68DC219E00;1
@@ -3058,8 +3125,11 @@ clientversion;7579A8;560065007200730069006F006E00200033002E0033000000;1
 clientbuild;4C99F0;3430;1
 clientbuild;5F3A00;313233343000;1
 clientbuild;7576CC;3430;1
+clienttitle;75779A;1900;1
 clienttitle;7577C0;57006F0072006C00640020006F0066002000570061007200630072006100660074002000520065007400610069006C000000;1
+clienttitle;757836;1200;1
 clienttitle;757854;57006F0072006C00640020006F0066002000570061007200630072006100660074000000;1
+clienttitle;757942;1200;1
 clienttitle;757960;57006F0072006C00640020006F0066002000570061007200630072006100660074000000;1
 clientdate;5F39F4;4A756E2032342032303130;1
 clientdate;62F3F3;4A756E2032342032303130;1
@@ -3082,10 +3152,10 @@ function ConvertTo-Indices([string]$text, [int]$max) {
     $result = New-Object System.Collections.Generic.List[int]
     foreach ($tok in ($text -split '[\s,;]+')) {
         if ($tok -eq '') { continue }
-        if ($tok -match '^(\d+)-(\d+)$') {
+        if ($tok -match '^(\d{1,6})-(\d{1,6})$') {
             $a = [int]$matches[1]; $b = [int]$matches[2]
             if ($a -gt $b) { $t = $a; $a = $b; $b = $t }
-        } elseif ($tok -match '^\d+$') {
+        } elseif ($tok -match '^\d{1,6}$') {
             $a = [int]$tok; $b = $a
         } else {
             return $null
@@ -3150,6 +3220,23 @@ function Save-Language([string]$language) {
             }
         }
         $lines.Add("language=$language")
+        [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
+    } catch { }
+}
+
+# Nur die Werte (value.<Id>=...) in patcher_selection.ini erneuern, die Auswahl
+# bleibt stehen - fuer -Select, das die gespeicherte Auswahl nicht veraendern
+# soll. Fehler beim Schreiben sind hier unkritisch und werden ignoriert.
+function Save-Values($values) {
+    if ($values.Count -eq 0) { return }
+    try {
+        $lines = New-Object System.Collections.Generic.List[string]
+        if (Test-Path -LiteralPath $settingsFile -PathType Leaf) {
+            foreach ($l in [System.IO.File]::ReadAllLines($settingsFile)) {
+                if ($l -notmatch '^\s*value\.') { $lines.Add($l) }
+            }
+        }
+        foreach ($k in ($values.Keys | Sort-Object)) { $lines.Add("value.$k=$($values[$k])") }
         [System.IO.File]::WriteAllLines($settingsFile, $lines.ToArray())
     } catch { }
 }
@@ -3306,8 +3393,10 @@ function Get-NameById([string]$id) {
 
 # Vorschlag fuer einen Patch mit eigener Eingabe: der gemerkte Wert, sonst der
 # Default; Patches mit Suggest berechnen ihren Vorschlag selbst (Build-Datum:
-# heute). Ohne Rueckfragen (-Unattended) gilt der gemerkte Wert. Ist der Patch
-# schon in der Wow.exe, ist sein aktueller Wert der Vorschlag.
+# heute). Ist der Patch schon in der Wow.exe, ist sein aktueller Wert der
+# Vorschlag. Ohne Rueckfragen (-Unattended) gilt der gemerkte Wert - auch wenn
+# der Patch schon mit einem anderen Wert drin ist, sonst liesse sich der Wert
+# unbeaufsichtigt nie aendern.
 function Test-ValueActive($p) {
     return ($script:patchedMode -and ($script:appliedIds -contains $p.Id) -and $script:state.Values.ContainsKey($p.Id))
 }
@@ -3315,7 +3404,7 @@ function Test-ValueActive($p) {
 function Get-ValueSuggestion($p) {
     $active = Test-ValueActive $p
     $saved = $script:savedValues[$p.Id]
-    if ($active) { $saved = $script:state.Values[$p.Id] }
+    if ($active -and -not ($Unattended -and $saved)) { $saved = $script:state.Values[$p.Id] }
     $def = $saved
     if (-not $def) { $def = $p.Default }
     if ($p.Suggest -and -not $active -and -not ($Unattended -and $saved)) { $def = & $p.Suggest $saved }
@@ -3427,7 +3516,8 @@ function Get-SelectionFromParam([string]$value) {
 # ============================================================
 #  Banner in der figlet-Schrift "big"
 #  Einzeilig ist es 136 Zeichen breit, das Standard-Konsolenfenster hat aber
-#  nur 120 Spalten. Ist das Fenster schmaler als das Banner, kommt dieselbe
+#  nur 120 Spalten. Ist das Fenster nicht breiter als das Banner (bei genau
+#  136 Spalten wuerde die letzte Spalte schon umbrechen), kommt dieselbe
 #  Schrift zweizeilig (max. 78 Zeichen), damit nichts umbricht.
 #  Das Fenster wird bewusst NICHT per Skript verbreitert: Beim Start per
 #  Doppelklick unter Windows 11 uebernimmt Windows Terminal das Fenster, die
@@ -3682,13 +3772,17 @@ foreach ($p in $chosen) {
     $VALUES[$p.Id] = $v
 }
 
+$allValues = @{}
+foreach ($k in $savedValues.Keys) { $allValues[$k] = $savedValues[$k] }
+foreach ($k in $VALUES.Keys) { $allValues[$k] = $VALUES[$k] }
 if ($fromMenu) {
-    $allValues = @{}
-    foreach ($k in $savedValues.Keys) { $allValues[$k] = $savedValues[$k] }
-    foreach ($k in $VALUES.Keys) { $allValues[$k] = $VALUES[$k] }
     Write-Host ''
     $saveError = Save-Selection $selection $allValues
     if ($saveError) { Say (T 'SaveFail' $saveError) 'Yellow' } else { Say (T 'Saved') 'DarkGray' }
+} elseif ($VALUES.Count -gt 0) {
+    # -Select laesst die gespeicherte Auswahl unveraendert, eingegebene Werte
+    # werden aber gemerkt (die Icon-Erkennung braucht z.B. den Pfad).
+    Save-Values $allValues
 }
 
 # --- 4. Zusammenfassung, Hinweise, Bestaetigung ---
@@ -3881,12 +3975,24 @@ if ($total -gt 0) {
 }
 
 # --- 8. Datei einmal zurueckschreiben ---
+# Erst in eine .tmp-Datei, dann in einem Schritt an die Stelle der Wow.exe -
+# bricht das Schreiben ab (Platte voll, Absturz), bleibt die bisherige Wow.exe
+# unversehrt. Geht das Ersetzen nicht (z.B. Dateisystem ohne Replace), wird
+# direkt geschrieben.
+$fileTmp = $file + '.tmp'
 try {
-    [System.IO.File]::WriteAllBytes($file, $f)
+    [System.IO.File]::WriteAllBytes($fileTmp, $f)
+    try {
+        [System.IO.File]::Replace($fileTmp, $file, $null)
+    } catch {
+        [System.IO.File]::WriteAllBytes($file, $f)
+        try { [System.IO.File]::Delete($fileTmp) } catch { }
+    }
 } catch {
     Write-Host ''
     Say (T 'WriteFail') 'Red'
     Say $_.Exception.Message 'Red'
+    try { Remove-Item -LiteralPath $fileTmp -Force -ErrorAction SilentlyContinue } catch { }
     try { Remove-Item -LiteralPath $stateTmp -Force -ErrorAction SilentlyContinue } catch { }
     Exit-Patcher 1
 }
@@ -3902,6 +4008,7 @@ try {
     } elseif (Test-Path -LiteralPath $stateFile -PathType Leaf) {
         [System.IO.File]::Delete($stateFile)
     }
+    if ($total -eq 0 -and (Test-Path -LiteralPath $stateTmp -PathType Leaf)) { [System.IO.File]::Delete($stateTmp) }
 } catch {
     $stateWarn = $_.Exception.Message
 }
