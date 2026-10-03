@@ -41,6 +41,7 @@ originalen `Wow.exe`.
 - [Patch-Übersicht](#patch-übersicht)
 - [Patch-Beschreibungen](#patch-beschreibungen)
 - [Hinweise](#hinweise)
+- [Entfernte Patches](#entfernte-patches)
 - [Danksagung](#danksagung)
 - [Lizenz](#lizenz)
 
@@ -145,7 +146,8 @@ Sicherheitsabfrage abgebrochen hast.
   und die neuen Patches starten mit ihrer Standard-Einstellung.
 - Die Datei ist eine einfache Textdatei (`laa=1`, `cache=0`, …) und kann auch
   von Hand bearbeitet werden. Dort stehen auch die eingegebenen Werte der
-  Client-Info-Patches (`value.clientversion=3.3.6` usw.).
+  Patches mit eigenem Wert – Client-Infos, Sprunghöhe, Doppelsprung
+  (`value.clientversion=3.3.6` usw.).
 - Auch die Sprache wird dort gemerkt (`language=de` bzw. `en`).
 - **Zurücksetzen:** im Menü `B` drücken oder `patcher_selection.ini` löschen –
   dann gilt wieder das Preset „Billy's_Wow.exe“ (beim Löschen der Datei werden
@@ -155,17 +157,17 @@ Das Preset „Billy's_Wow.exe“ ist das Patch-Set von Billy Hoyle und zugleich 
 Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
 einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
-Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist Billys Patch-Set ohne die
-255 Charaktere pro Server (Nr. 35), dafür mit dem WorldFrame-Absturzfix und dem
-RCE-Fix (Nr. 4 und 5), den Sicherheits-Patches Nr. 7–9, den Login-Patches
-Nr. 10–13, MPQ-Signaturprüfung aus (Nr. 15), `/follow`-Fix, Level 101, Custom
-Item Fix, Sprungsteuerung und Doppelsprung (Nr. 39–42), Slider-Maxima und den
-drei GameObject-Sichtweiten-Patches (Nr. 47–50), Tracker, Weltkarte,
-HD-Portraits, Retail-Gildenemblemen, Fenstermodus maximiert und den
-Sound-Einstellungen. Die Liste steht in `apply_patches.ps1` unter
-`$PRESET_STONY`, in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses
-Preset ist noch ungetestet.** Der Patcher zeigt das beim Laden mit `S` als
-gelben Hinweis an.
+Damit lässt sich die erprobte `Wow.exe` aus Billys Paket jederzeit
+nachbauen: Wer experimentiert, kommt mit `B` immer wieder zu einem Stand
+zurück, der seit Jahren auf öffentlichen Servern läuft.
+
+Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist St0nys eigene Auswahl für
+eigene Server. Es enthält auch Patches mit Bann-Gefahr und solche, die die
+`Wow.exe` vergrößern – **nur auf eigenen Servern verwenden**. Welche Patches
+dazugehören, zeigt die Spalte „St0ny“ in der
+[Patch-Übersicht](#patch-übersicht); im Skript steht die Liste unter
+`$PRESET_STONY`. **Achtung: Dieses Preset ist noch ungetestet.** Der Patcher
+zeigt das beim Laden mit `S` als gelben Hinweis an.
 
 ## Patches ändern oder zurücknehmen
 
@@ -311,7 +313,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 51 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
 | 52 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 54 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | ✅ |
+| 54 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 / St0ny | – | ✅ |
 |    | **Interface & Komfort** |  |  |  |
 | 55 | Quest-Tracker automatisch sortieren |  | – | ✅ |
 | 56 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |
@@ -397,9 +399,8 @@ läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 Der Client verwirft alle Warden-Pakete des Servers (`SMSG_WARDEN_DATA`).
 Warden-Module sind Code, den der Server im Client ausführen lässt – mit diesem
 Patch ist das überhaupt nicht mehr möglich, auch nicht über künftige Tricks.
-Macht den RCE-Fix (Nr. 5) überflüssig, es ist also nur sinnvoll, einen der
-beiden zu aktivieren. Beide zusammen schaden aber nicht, der Patcher weist dann
-nur darauf hin.
+Macht den RCE-Fix (Nr. 5) überflüssig; beide zusammen schaden nicht, der
+Patcher weist dann nur darauf hin.
 
 > [!WARNING]
 > Der Client antwortet danach nicht mehr auf Warden. Server mit aktivem Warden
@@ -497,7 +498,7 @@ Addons und Makros dürfen geschützte Funktionen aufrufen: Bewegungsfunktionen
 `UseAction`, `PetAttack`, `RunMacro`/`RunMacroText` und die
 GM-Ticket-Funktionen. Nicht freigegeben, weil sie eigene Prüfungen im Code
 haben: `TargetUnit`, `FocusUnit`, `InteractUnit`, `ReloadUI`; `AttackTarget`
-meldet weiterhin einen Fehler.
+meldet weiterhin einen Fehler. Diese und alle übrigen gibt Nr. 19 frei.
 
 > [!WARNING]
 > Das ermöglicht Automatisierung. Server mit Anti-Cheat können das als Botting
@@ -593,8 +594,7 @@ Fehlt die DLL, startet WoW normal weiter.
 
 Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem
-Voice-Chat-Modul für AzerothCore. Fehlt die DLL,
-startet WoW ganz normal.
+Voice-Chat-Modul für AzerothCore. Fehlt die DLL, startet WoW ganz normal.
 
 > [!CAUTION]
 > **ALPHA** – das Modul mod-voicechat ist noch nicht fertig. Deshalb ist dieser
@@ -990,10 +990,10 @@ unlock“ (Nr. 45) voraus.
 
 **GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 49, standardmäßig aus, Autor: St0ny)*
 
-Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
-Patch ab. Er kostet Leistung: Es ist deutlich mehr Kleinkram gleichzeitig
+Der Patch kostet Leistung: Es ist deutlich mehr Kleinkram gleichzeitig
 sichtbar, und die Anzahl der gezeichneten Objekte ist der Performance-Hebel.
-Der Patch hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
+Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, lässt ihn
+weg. Er hebt ausschließlich die kleinste Objektkategorie an: Kerzen, Bücher,
 Säcke, Werkzeug. Cat 0 ist im Original mit 30 Yards so knapp bemessen, dass
 Kleinkram deutlich früher verschwindet als alles andere; 50 verbessert das
 Verhältnis zu Cat 1 von 1:3.3 auf 1:2, und der `environmentDetail`-Regler zieht
@@ -1133,7 +1133,7 @@ wie bisher.
 > Der Code liegt wie bei Nr. 4 in der freien Lücke am Ende von `.text`. Beide
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 54, standardmäßig aus, Autor: Badgermilk0)*
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 54, standardmäßig aus, Autor: Badgermilk0 / St0ny)*
 
 Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
 Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
@@ -1431,9 +1431,9 @@ verschieben sich dadurch nicht, auch nicht die, die eine Sektion anhängen: Sie
 landen hinter dem Dateiende, die Icon-Bilder liegen davor. Vor dem Schreiben
 prüft der Patcher im Ressourcenverzeichnis, dass an allen acht Stellen
 tatsächlich ein Icon-Bild genau dieser Größe liegt. Stimmt das nicht, bricht er
-ab, ohne etwas zu schreiben. ICO-Bilder in BMP-Form
-(1, 4, 8, 16, 24 oder 32 Bit) und PNG (nicht interlaced) liest der Patcher
-selbst, ohne Zusatzmodule. Der Pfad wird in `patcher_selection.ini` gemerkt;
+ab, ohne etwas zu schreiben. ICO-Bilder in BMP-Form (1, 4, 8, 16, 24 oder
+32 Bit) und PNG (nicht interlaced) liest der Patcher selbst, ohne
+Zusatzmodule. Der Pfad wird in `patcher_selection.ini` gemerkt;
 mit `-Unattended` muss er dort stehen, sonst bricht der Patcher mit einer
 Meldung ab.
 
@@ -1449,10 +1449,10 @@ Meldung ab.
 
 - **Bann-Gefahr:** Zwei Gruppen von Patches können auf vielen Servern zu einem
   Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder Botting
-  werten können: LUA Unlock (Nr. 18 und 19), Steigwinkel (37), Sprunghöhe (38),
-  die Sprungsteuerung (39–41) und der Doppelsprung (42). Zweitens Patches, die eine
-  Sektion an die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 42,
-  54 und 65 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
+  werten können: LUA Unlock (Nr. 18 und 19), Steigwinkel (37), Sprunghöhe
+  (38), die Sprungsteuerung (39–41) und der Doppelsprung (42). Zweitens
+  Patches, die eine Sektion an die `Wow.exe` anhängen und die Datei damit
+  größer machen: Nr. 42, 54 und 65 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
   Gruppen sind in der Übersicht mit „Bann-Gefahr“ markiert, und der Patcher
   zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
   ändern die Dateigröße nicht.
@@ -1462,8 +1462,8 @@ Meldung ab.
   „Weitere Informationen“ → „Trotzdem ausführen“ startet WoW ganz normal. Eine
   neue Signatur, der Windows vertraut, gibt es nur von Zertifizierungsstellen
   mit Identitätsprüfung – für eine veränderte Blizzard-Datei bekommt man sie
-  nicht. Die Patches, die eine Sektion anhängen (Nr. 42, 54 und 65), entfernen zusätzlich
-  den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
+  nicht. Die Patches, die eine Sektion anhängen (Nr. 42, 54 und 65), entfernen
+  zusätzlich den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
   Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
   Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das
   Original samt Signatur wieder her. Eine Download-Markierung („Diese Datei

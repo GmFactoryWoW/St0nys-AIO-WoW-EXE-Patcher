@@ -2696,7 +2696,7 @@ $patches = @(
     }}
 
     @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true
-       Author = 'Badgermilk0'
+       Author = 'Badgermilk0 / St0ny'
        De = 'HD Unit-Frame Portraits: Renderaufloesung 256 statt 64 Pixel'
        En = 'HD unit frame portraits: render resolution 256 instead of 64 pixels'
        NoteDe = 'Exe wird groesser - Bann-Gefahr'

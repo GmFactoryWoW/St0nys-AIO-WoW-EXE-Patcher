@@ -38,6 +38,7 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 - [Patch overview](#patch-overview)
 - [Patch descriptions](#patch-descriptions)
 - [Notes](#notes)
+- [Removed patches](#removed-patches)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
@@ -149,17 +150,16 @@ The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
-The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set without the
-255 characters per server (No. 35), but with the WorldFrame crash fix and the
-RCE fix (No. 4 and 5), the security patches No. 7–9, the login patches
-No. 10–13, MPQ signature check off (No. 15), the `/follow` fix, level 101, the
-Custom Item Fix, air steering and double jump (No. 39–42), slider maximums and
-the three GameObject view distance patches (No. 47–50), HD portraits, tracker,
-world map, retail guild emblems, maximized window and the sound settings. The
-list is in
-`apply_patches.ps1` under `$PRESET_STONY`; in the overview it is the "St0ny"
-column. **Warning: this preset has not been tested yet.** The patcher shows this
-as a yellow note when you load it with `S`.
+This lets you rebuild the proven `Wow.exe` from Billy's package at any time:
+whoever experiments can always return with `B` to a state that has been
+running on public servers for years.
+
+The second preset "St0nys_Wow.exe" (key `S`) is St0ny's own selection for
+private servers. It also contains patches with a ban risk and patches that make
+`Wow.exe` larger – **use it only on your own servers**. The "St0ny" column in
+the [patch overview](#patch-overview) shows which patches belong to it; in the
+script the list is `$PRESET_STONY`. **Warning: this preset has not been tested
+yet.** The patcher shows this as a yellow note when you load it with `S`.
 
 ## Changing or removing patches
 
@@ -304,7 +304,7 @@ the user or because no more input is possible).
 | 51 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
 | 52 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 54 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | ✅ |
+| 54 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 / St0ny | – | ✅ |
 |    | **Interface & comfort** |  |  |  |
 | 55 | Auto-sort quest tracker |  | – | ✅ |
 | 56 | Advanced world map enabled by default |  | – | ✅ |
@@ -389,8 +389,7 @@ servers with active Warden are not a problem.
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
-(No. 5) unnecessary, so it only makes sense to enable one of the two. Both
-together do no harm, the patcher just points it out.
+(No. 5) unnecessary; both together do no harm, the patcher just points it out.
 
 > [!WARNING]
 > The client no longer answers Warden. Servers with active Warden (e.g.
@@ -486,7 +485,7 @@ Addons and macros may call protected functions: movement functions
 `UseAction`, `PetAttack`, `RunMacro`/`RunMacroText` and the GM ticket
 functions. Not unlocked, because they have their own checks in the code:
 `TargetUnit`, `FocusUnit`, `InteractUnit`, `ReloadUI`; `AttackTarget` still
-prints an error.
+prints an error. No. 19 unlocks these and all others.
 
 > [!WARNING]
 > This enables automation. Servers with anti-cheat may treat it as botting –
@@ -581,8 +580,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 
 Loads `voice.dll` from the WoW folder at startup – the client part of
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
-module for AzerothCore. If the DLL is
-missing, WoW starts normally.
+module for AzerothCore. If the DLL is missing, WoW starts normally.
 
 > [!CAUTION]
 > **ALPHA** – the mod-voicechat module is not finished yet. That is why this
@@ -966,10 +964,10 @@ unlock" (No. 45).
 
 **GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 49, off by default, Author: St0ny)*
 
-If you want to keep view distances entirely at Blizzard's values, deselect
-this patch. It costs performance: noticeably more small clutter is visible at
-the same time, and the number of drawn objects is the performance lever.
-The patch only raises the smallest object category: candles, books, sacks,
+The patch costs performance: noticeably more small clutter is visible at the
+same time, and the number of drawn objects is the performance lever. If you
+want to keep view distances entirely at Blizzard's values, leave it out. It
+only raises the smallest object category: candles, books, sacks,
 tools. In the original, Cat 0 is so tight at 30 yards that small clutter
 disappears much earlier than everything else; 50 improves the ratio to Cat 1
 from 1:3.3 to 1:2, and the `environmentDetail` slider scales it
@@ -1104,7 +1102,7 @@ before.
 > As with No. 4, the code lives in the free gap at the end of `.text`. Both fit
 > in there together, the file size does not change.
 
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 54, off by default, Author: Badgermilk0)*
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 54, off by default, Author: Badgermilk0 / St0ny)*
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -1397,7 +1395,8 @@ patches are not shifted by it, not even those that append a section: they land
 after the end of the file, while the icon images lie before it. Before writing,
 the patcher checks in the resource directory that each of the eight places
 really holds an icon image of exactly this size. If not, it aborts without
-writing anything. The patcher reads ICO images in BMP form (1, 4, 8, 16, 24 or 32 bit) and PNG (not
+writing anything. The patcher reads ICO images in BMP form (1, 4, 8, 16, 24
+or 32 bit) and PNG (not
 interlaced) by itself, without extra modules. The path is remembered in
 `patcher_selection.ini`; with `-Unattended` it has to be there, otherwise the
 patcher aborts with a message.
@@ -1425,8 +1424,8 @@ patcher aborts with a message.
   an unsigned, potentially harmful app when it starts; with "More info" → "Run
   anyway" WoW starts normally. A new signature that Windows trusts is only
   issued by certificate authorities with identity verification – you cannot
-  get one for a modified Blizzard file. The patches that
-  append a section (No. 42, 54 and 65) also remove the reference to the
+  get one for a modified Blizzard file. The patches that append a section
+  (No. 42, 54 and 65) also remove the reference to the
   signature from the header: the new section lies behind the signature, and
   some tools would otherwise report the file as damaged. The signature bytes
   themselves stay untouched, and removing the patches restores the original
