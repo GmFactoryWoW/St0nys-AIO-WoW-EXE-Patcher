@@ -1799,7 +1799,7 @@ $patches = @(
     }}
 
     @{ Id = 'worldcrash'; Cat = 'system'; On = $false
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
        En = 'WorldFrame crash fix (invalid triangle indices)'
        Code = {
@@ -1911,7 +1911,7 @@ $patches = @(
     # --- Modding: Interface, MPQs & Addons ---
 
     @{ Id = 'glue'; Cat = 'modding'; On = $true
-       Author = 'Alastor StrixEfuartus / Kebabstorm / St0ny'
+       Author = 'Alastor StrixEfuartus / Kebabstorm (fixed by St0ny)'
        De = 'Custom Glue-XML erlauben'
        En = 'Allow custom GlueXML'
        Code = {
@@ -2026,7 +2026,7 @@ $patches = @(
     }}
 
     @{ Id = 'globalsv'; Cat = 'modding'; On = $false
-       Author = 'boredatom / St0ny'
+       Author = 'St0ny (original by boredatom)'
        De = 'Addon-Daten aller Accounts zusammenlegen (SavedVariables)'
        En = 'Merge addon data of all accounts (SavedVariables)'
        NoteDe = 'gemeinsamer Ordner WTF\Account\global'
@@ -2119,7 +2119,7 @@ $patches = @(
     }}
 
     @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch / St0ny'
+       Author = 'Robinsch (fixed by St0ny)'
        De = '"Geister"-Angriff von NPCs beim Evade behoben'
        En = 'Fix "ghost" attack when NPCs evade from combat'
        Code = {
@@ -2134,7 +2134,7 @@ $patches = @(
     }}
 
     @{ Id = 'naked'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch / St0ny'
+       Author = 'Robinsch (fixed by St0ny)'
        De = 'Nackter-Charakter-Bug behoben'
        En = 'Fix naked character bug'
        Code = {
@@ -2171,7 +2171,7 @@ $patches = @(
     }}
 
     @{ Id = 'follow'; Cat = 'gameplay'; On = $false
-       Author = 'Alastor StrixEfuartus / St0ny'
+       Author = 'St0ny (original by Alastor StrixEfuartus)'
        De = '/follow auch bei NPCs erlauben'
        En = 'Allow /follow on NPCs'
        Code = {
@@ -2190,7 +2190,7 @@ $patches = @(
     }}
 
     @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
-       Author = 'Alastor StrixEfuartus / St0ny'
+       Author = 'Alastor StrixEfuartus (fixed by St0ny)'
        De = 'Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)'
        En = 'Level 101+ fix (game tables, barber chair, base stats)'
        Code = {
@@ -2234,7 +2234,7 @@ $patches = @(
     }}
 
     @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'Namenspruefung bei der Charaktererstellung abschalten (z.B. Zahlen im Namen)'
        En = 'Disable the name check in character creation (e.g. digits in names)'
        NoteDe = 'Server muss die Namen ebenfalls erlauben'
@@ -2255,7 +2255,7 @@ $patches = @(
     }}
 
     @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache')
-       Author = 'Kebabstorm / St0ny'
+       Author = 'Kebabstorm (fixed by St0ny)'
        De = 'Custom Item Fix (BETA) v2'
        En = 'Custom Item Fix (BETA) v2'
        NoteDe = 'Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten'
@@ -2381,7 +2381,7 @@ $patches = @(
     }}
 
     @{ Id = 'airforward'; Cat = 'gameplay'; On = $false; BanRisk = $true
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung vorwaerts/rueckwaerts steuern'
        En = 'Steer forward/backward while jumping'
        NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
@@ -2401,7 +2401,7 @@ $patches = @(
     }}
 
     @{ Id = 'airlateral'; Cat = 'gameplay'; On = $false; BanRisk = $true
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung seitwaerts steuern'
        En = 'Steer sideways while jumping'
        NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
@@ -2419,7 +2419,7 @@ $patches = @(
     }}
 
     @{ Id = 'airturn'; Cat = 'gameplay'; On = $false; BanRisk = $true
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung drehen aendert die Flugrichtung'
        En = 'Turning while jumping changes the flight direction'
        NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
@@ -2432,7 +2432,7 @@ $patches = @(
     }}
 
     @{ Id = 'doublejump'; Cat = 'gameplay'; On = $false; GrowsExe = $true; BanRisk = $true
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Doppelsprung (weitere Spruenge in der Luft)'
        En = 'Double jump (more jumps in the air)'
        NoteDe = 'kann vom Server als Cheat erkannt werden, Exe wird groesser - Bann-Gefahr'
@@ -2713,7 +2713,7 @@ $patches = @(
     }}
 
     @{ Id = 'nofade'; Cat = 'graphics'; On = $false
-       Author = 'Alyst3r (0x539wowmod) / St0ny'
+       Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Kein Ausblenden fuer NPCs mit Flag DO_NOT_FADE_IN'
        En = 'No fade-out for NPCs with flag DO_NOT_FADE_IN'
        NoteDe = 'Server muss das Flag setzen'
@@ -2724,7 +2724,7 @@ $patches = @(
     }}
 
     @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true
-       Author = 'Badgermilk0 / St0ny'
+       Author = 'St0ny (original by Badgermilk0)'
        De = 'HD Unit-Frame Portraits: Renderaufloesung 256 statt 64 Pixel'
        En = 'HD unit frame portraits: render resolution 256 instead of 64 pixels'
        NoteDe = 'Exe wird groesser - Bann-Gefahr'
@@ -2884,7 +2884,7 @@ $patches = @(
     }}
 
     @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
-       Author = 'Stormhand / St0ny'
+       Author = 'Stormhand (fixed by St0ny)'
        De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen'
        En = 'CameraReforged [BETA]: camera height and zoom limits'
        NoteDe = 'Schulterversatz noch ohne Wirkung; Exe wird groesser - Bann-Gefahr'
@@ -2994,7 +2994,7 @@ $patches = @(
     }}
 
     @{ Id = 'clienttitle'; Cat = 'client'; On = $false
-       Author = 'MacWarrior / St0ny'
+       Author = 'MacWarrior (fixed by St0ny)'
        De = 'Programmtitel in den Dateieigenschaften aendern'
        En = 'Change program title in the file properties'
        PromptDe = 'Neuer Titel, max. 17 Zeichen, nur ASCII'
@@ -3025,7 +3025,7 @@ $patches = @(
     }}
 
     @{ Id = 'clienticon'; Cat = 'client'; On = $false
-       Author = 'MacWarrior / St0ny'
+       Author = 'St0ny (original by MacWarrior)'
        De = 'Programm-Icon aendern (Symbol der Wow.exe)'
        En = 'Change program icon (icon of Wow.exe)'
        PromptDe = 'Icon-Datei (.ico oder .png), Pfad absolut oder relativ zum WoW-Ordner'

@@ -38,7 +38,7 @@ Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame crash fix (invalid triangle indices)** *(No. 4, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**WorldFrame crash fix (invalid triangle indices)** *(No. 4, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Prevents a crash in a world rendering function (VA `0x81D510`). It walks over
 triangles made of three vertex indices each and turns "index minus base" into a
@@ -137,7 +137,7 @@ logout after 30 minutes without input.
 ## Modding: interface, MPQs & addons
 
 <a id="patch-glue"></a>
-**Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm / St0ny)*
+**Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
 
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding): the signature check of the interface files
@@ -228,7 +228,7 @@ all key presses without blocking the normal controls.
 > bound action.
 
 <a id="patch-globalsv"></a>
-**Merge addon data of all accounts (SavedVariables)** *(No. 21, off by default, Author: boredatom / St0ny)*
+**Merge addon data of all accounts (SavedVariables)** *(No. 21, off by default, Author: St0ny (original by boredatom))*
 
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
@@ -323,7 +323,7 @@ Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 <a id="patch-ghostattack"></a>
-**Fix "ghost" attack when NPCs evade from combat** *(No. 28, Author: Robinsch / St0ny)*
+**Fix "ghost" attack when NPCs evade from combat** *(No. 28, Author: Robinsch (fixed by St0ny))*
 
 Before the client shows a new melee result, it plays the last stored swing on
 the target once more. If an NPC has evaded from combat in the meantime, that is
@@ -336,7 +336,7 @@ string helper function and would have turned it into an endless loop. Here it
 is corrected to `0x3555BF`.
 
 <a id="patch-naked"></a>
-**Fix naked character bug** *(No. 29, Author: Robinsch / St0ny)*
+**Fix naked character bug** *(No. 29, Author: Robinsch (fixed by St0ny))*
 
 Fixes characters shown naked, as happens on private servers when new items are
 only distributed via `ItemDisplayInfo`. The patch disables `SPELL_AURA_X_RAY`:
@@ -366,7 +366,7 @@ relog needed to receive new mail.
 Slash commands also work while the character is dead.
 
 <a id="patch-follow"></a>
-**Allow /follow on NPCs** *(No. 33, off by default, Author: Alastor StrixEfuartus / St0ny)*
+**Allow /follow on NPCs** *(No. 33, off by default, Author: St0ny (original by Alastor StrixEfuartus))*
 
 `/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
@@ -377,7 +377,7 @@ unconditional instead – a single byte, same effect, and the patches work
 together.
 
 <a id="patch-level101"></a>
-**Level 101+ fix (game tables, barber chair, base stats)** *(No. 34, off by default, Author: Alastor StrixEfuartus / St0ny)*
+**Level 101+ fix (game tables, barber chair, base stats)** *(No. 34, off by default, Author: Alastor StrixEfuartus (fixed by St0ny))*
 
 The client's game tables (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – eleven tables) have 100 rows per
@@ -405,7 +405,7 @@ in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 pick which class is still checked by the server – this patch does nothing more.
 
 <a id="patch-namecheck"></a>
-**Disable the name check in character creation (e.g. digits in names)** *(No. 36, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Disable the name check in character creation (e.g. digits in names)** *(No. 36, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -425,7 +425,7 @@ has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(No. 38, off by default, Author: Kebabstorm / St0ny)*
+**Custom Item Fix (BETA) v2** *(No. 38, off by default, Author: Kebabstorm (fixed by St0ny))*
 
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
@@ -485,7 +485,7 @@ remembered like those of the client info patches.
 > ban.
 
 <a id="patch-airforward"></a>
-**Steer forward/backward while jumping** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer forward/backward while jumping** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
@@ -500,7 +500,7 @@ byte patch from 0x539wowmod that updates the movement in the air.
 > lead to a ban.
 
 <a id="patch-airlateral"></a>
-**Steer sideways while jumping** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer sideways while jumping** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
@@ -511,7 +511,7 @@ the movement early while the falling flag is set.
 > lead to a ban.
 
 <a id="patch-airturn"></a>
-**Turning while jumping changes the flight direction** *(No. 43, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Turning while jumping changes the flight direction** *(No. 43, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
@@ -523,7 +523,7 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 44, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Double jump (more jumps in the air)** *(No. 44, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
@@ -847,7 +847,7 @@ the character sits in a vehicle or is attached to another object, it can still
 become transparent when zooming in (same as in the original patch).
 
 <a id="patch-nofade"></a>
-**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 55, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 55, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
@@ -863,7 +863,7 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 56, off by default, Author: Badgermilk0 / St0ny)*
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 56, off by default, Author: St0ny (original by Badgermilk0))*
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -988,7 +988,7 @@ A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 67, off by default, Author: Stormhand / St0ny)*
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 67, off by default, Author: Stormhand (fixed by St0ny))*
 
 Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
 **Stormhand** into this patcher, so everything
@@ -1136,7 +1136,7 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title in the file properties** *(No. 71, off by default, Author: MacWarrior / St0ny)*
+**Change program title in the file properties** *(No. 71, off by default, Author: MacWarrior (fixed by St0ny))*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
@@ -1154,7 +1154,7 @@ nothing is remembered. If the patch is already applied, the current date of
 `Wow.exe` is suggested.
 
 <a id="patch-clienticon"></a>
-**Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: MacWarrior / St0ny)*
+**Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
 
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or

@@ -38,7 +38,7 @@ Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes)** *(Nr. 4, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes)** *(Nr. 4, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Verhindert einen Absturz in einer Funktion der Weltdarstellung (VA `0x81D510`).
 Sie läuft über Dreiecke aus je drei Vertex-Indizes und rechnet „Index minus
@@ -140,7 +140,7 @@ unverändert: AFK-Status nach 5 Minuten, Logout nach 30 Minuten ohne Eingabe.
 ## Modding: Interface, MPQs & Addons
 
 <a id="patch-glue"></a>
-**Custom Glue-XML erlauben** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm / St0ny)*
+**Custom Glue-XML erlauben** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
 
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding): Die Signaturprüfung der Interface-Dateien
@@ -232,7 +232,7 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 > damit zusätzlich die belegte Aktion aus.
 
 <a id="patch-globalsv"></a>
-**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 21, standardmäßig aus, Autor: boredatom / St0ny)*
+**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 21, standardmäßig aus, Autor: St0ny (original by boredatom))*
 
 WoW speichert die Daten der Addons normalerweise pro Account unter
 `WTF\Account\<ACCOUNT>\`. Mit dem Patch nutzen alle Accounts dafür den
@@ -328,7 +328,7 @@ Behebt einen Bug, bei dem nach dem Abbrechen eines kanalisierten Zaubers die
 Vorbereitungsanimation hängen blieb.
 
 <a id="patch-ghostattack"></a>
-**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 28, Autor: Robinsch / St0ny)*
+**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 28, Autor: Robinsch (fixed by St0ny))*
 
 Bevor der Client ein neues Nahkampf-Ergebnis anzeigt, spielt er den zuletzt
 gespeicherten Schlag noch einmal auf dem Ziel ab. Hat ein NPC inzwischen den
@@ -342,7 +342,7 @@ In Robinschs Liste steht der Offset `0x355BF` – dort fehlt eine 5. Er traf ein
 gemacht. Hier ist er auf `0x3555BF` korrigiert.
 
 <a id="patch-naked"></a>
-**Nackter-Charakter-Bug behoben** *(Nr. 29, Autor: Robinsch / St0ny)*
+**Nackter-Charakter-Bug behoben** *(Nr. 29, Autor: Robinsch (fixed by St0ny))*
 
 Behebt nackt dargestellte Charaktere, wie sie auf privaten Servern vorkommen,
 wenn neue Items nur über `ItemDisplayInfo` verteilt werden. Der Patch schaltet
@@ -373,7 +373,7 @@ Relog, um neue Post zu bekommen.
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
 <a id="patch-follow"></a>
-**/follow auch bei NPCs erlauben** *(Nr. 33, standardmäßig aus, Autor: Alastor StrixEfuartus / St0ny)*
+**/follow auch bei NPCs erlauben** *(Nr. 33, standardmäßig aus, Autor: St0ny (original by Alastor StrixEfuartus))*
 
 Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem `/follow`-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
@@ -384,7 +384,7 @@ stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
 <a id="patch-level101"></a>
-**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus / St0ny)*
+**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus (fixed by St0ny))*
 
 Die Spielwert-Tabellen des Clients (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – elf Tabellen) haben je Spalte
@@ -414,7 +414,7 @@ vergrößert es auf 30 Plätze. Welche Rasse welche Klasse darf, prüft weiterhi
 der Server – mehr macht dieser Patch nicht.
 
 <a id="patch-namecheck"></a>
-**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen)** *(Nr. 36, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen)** *(Nr. 36, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Schaltet die komplette clientseitige Namensprüfung bei der Charaktererstellung
 ab: Die Prüffunktion (VA `0x6B0F90`) meldet immer „Name gültig“. Damit sind z. B.
@@ -435,7 +435,7 @@ Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(Nr. 38, standardmäßig aus, Autor: Kebabstorm / St0ny)*
+**Custom Item Fix (BETA) v2** *(Nr. 38, standardmäßig aus, Autor: Kebabstorm (fixed by St0ny))*
 
 Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
 Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
@@ -496,7 +496,7 @@ Wert wird wie bei den Client-Info-Patches gemerkt.
 > Bann führen.
 
 <a id="patch-airforward"></a>
-**Im Sprung vorwärts/rückwärts steuern** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung vorwärts/rückwärts steuern** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Normalerweise ignoriert der Client Vorwärts- und Rückwärts-Eingaben, solange der
 Charakter springt oder fällt. Mit dem Patch lässt sich die Richtung auch in der
@@ -511,7 +511,7 @@ der Byte-Patch aus 0x539wowmod, der die Bewegung in der Luft aktualisiert.
 > kann zu einem Bann führen.
 
 <a id="patch-airlateral"></a>
-**Im Sprung seitwärts steuern** *(Nr. 42, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung seitwärts steuern** *(Nr. 42, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Wie der vorige Patch, nur für seitliche Bewegung (Strafen): zwei Sprünge in der
 Seitwärts-Eingabe des Clients plus der Byte-Patch aus 0x539wowmod, der die
@@ -522,7 +522,7 @@ Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
 > kann zu einem Bann führen.
 
 <a id="patch-airturn"></a>
-**Im Sprung drehen ändert die Flugrichtung** *(Nr. 43, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung drehen ändert die Flugrichtung** *(Nr. 43, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Dreht man sich im Sprung (Maus oder Tasten), behält der Charakter im Original
 seine Flugrichtung. Mit dem Patch setzt der Client die Bewegungsrichtung auch in
@@ -534,7 +534,7 @@ den beiden vorigen Patches.
 > kann zu einem Bann führen.
 
 <a id="patch-doublejump"></a>
-**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 44, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 44, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Erlaubt weitere Sprünge, während der Charakter in der Luft ist. Der Patcher fragt
 nach der Auswahl, wie viele zusätzliche Sprünge es sein sollen (1 bis 9, `1` =
@@ -871,7 +871,7 @@ Objekt, kann er beim Heranzoomen weiterhin durchsichtig werden (so auch im
 Original-Patch).
 
 <a id="patch-nofade"></a>
-**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 55, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 55, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Beim Entfernen eines NPCs (z. B. Despawn) blendet der Client das Modell
 normalerweise langsam aus. Mit dem Patch verschwinden NPCs sofort, bei denen der
@@ -887,7 +887,7 @@ wie bisher.
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 <a id="patch-hdportraits"></a>
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 56, standardmäßig aus, Autor: Badgermilk0 / St0ny)*
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 56, standardmäßig aus, Autor: St0ny (original by Badgermilk0))*
 
 Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
 Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
@@ -1014,7 +1014,7 @@ hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 67, standardmäßig aus, Autor: Stormhand / St0ny)*
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 67, standardmäßig aus, Autor: Stormhand (fixed by St0ny))*
 
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged)
 von **Stormhand** in diesen Patcher, damit
@@ -1163,7 +1163,7 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 71, standardmäßig aus, Autor: MacWarrior / St0ny)*
+**Programmtitel in den Dateieigenschaften ändern** *(Nr. 71, standardmäßig aus, Autor: MacWarrior (fixed by St0ny))*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
@@ -1181,7 +1181,7 @@ Wert das heutige Datum. Ist der Patch schon eingespielt, steht dort das aktuelle
 Datum der `Wow.exe`.
 
 <a id="patch-clienticon"></a>
-**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: MacWarrior / St0ny)*
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
 
 Tauscht das Icon aus, das Windows für die `Wow.exe` anzeigt (Explorer,
 Taskleiste, Verknüpfungen). Der Patcher fragt nach dem Pfad einer `.ico`-
