@@ -108,8 +108,8 @@ after their name, with the link right below.
 | `A`                | all patches on                             |
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
-| `B`                | load preset "Billy's_Wow.exe" (= default)  |
-| `S`                | load preset "St0nys_Wow.exe" – **not tested yet** |
+| `B`                | load preset "Billy's_Wow.exe" (= default) (safe on public servers) |
+| `S`                | load preset "St0nys_Wow.exe" (**NOT safe, use ONLY on your own servers**) |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
