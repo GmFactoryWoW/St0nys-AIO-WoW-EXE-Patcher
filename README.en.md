@@ -399,21 +399,17 @@ clicking the number of a patch takes you straight to its description.
 
 ## Acknowledgements
 
-A very special thank you goes to **Billy Hoyle** – for all his help and tips
-over the past months and for helping to collect the patches. His patch set is
-included as the preset "Billy's_Wow.exe" and is the default selection.
-
-**MacWarrior** also helped collect the patches and contributed some of his
-own – thank you as well!
-
-Thanks also to **Stormhand** for the permission to include his CameraReforged
-patch.
-
-Thanks to **Moroes**, who tracked down patch [#21](PATCHES.en.md#patch-globalsv) and passed it
-on to me.
-
-And of course thanks to all patch authors named in the
-[patch overview](#patch-overview).
+- A very special thank you goes to **Billy Hoyle** – for all his help and tips
+  over the past months and for helping to collect the patches. His patch set is
+  included as the preset "Billy's_Wow.exe" and is the default selection.
+- **MacWarrior** also helped collect the patches and contributed some of his
+  own – thank you as well!
+- Thanks also to **Stormhand** for the permission to include his
+  CameraReforged patch.
+- Thanks to **Moroes**, who tracked down patch
+  [#21](PATCHES.en.md#patch-globalsv) and passed it on to me.
+- And of course thanks to all patch authors named in the
+  [patch overview](#patch-overview).
 
 ## License
 
