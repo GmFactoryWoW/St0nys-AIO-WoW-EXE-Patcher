@@ -283,8 +283,8 @@ Click the number of a patch to jump to its description.
 | [25](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
 | [26](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
 | [27](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
-| [28](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat | Robinsch / St0ny | ✅ | – |
-| [29](PATCHES.en.md#patch-naked) | Fix naked character bug | Robinsch / St0ny | ✅ | – |
+| [28](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat | Robinsch / St0ny | ✅ | ✅ |
+| [29](PATCHES.en.md#patch-naked) | Fix naked character bug | Robinsch / St0ny | ✅ | ✅ |
 | [30](PATCHES.en.md#patch-forcereaction) | Keep force reaction on /reload | Robinsch | ✅ | ✅ |
 | [31](PATCHES.en.md#patch-mail) | New mail without the 60-second wait | Robinsch | ✅ | ✅ |
 | [32](PATCHES.en.md#patch-deadchat) | Allow chat commands while dead | Robinsch | ✅ | ✅ |

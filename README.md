@@ -292,8 +292,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [25](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
 | [26](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ | ✅ |
 | [27](PATCHES.md#patch-spellanim) | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ | ✅ |
-| [28](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch / St0ny | ✅ | – |
-| [29](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben | Robinsch / St0ny | ✅ | – |
+| [28](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch / St0ny | ✅ | ✅ |
+| [29](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben | Robinsch / St0ny | ✅ | ✅ |
 | [30](PATCHES.md#patch-forcereaction) | Force-Reaction bei /reload erhalten | Robinsch | ✅ | ✅ |
 | [31](PATCHES.md#patch-mail) | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | ✅ | ✅ |
 | [32](PATCHES.md#patch-deadchat) | Chat-Befehle auch im Tod erlauben | Robinsch | ✅ | ✅ |

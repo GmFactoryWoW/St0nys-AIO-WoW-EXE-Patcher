@@ -3050,7 +3050,7 @@ $PRESET_STONY = @(
     'scandll', 'noserverpatch', 'nosurvey',
     'skipbnet', 'skiprdp', 'nohttp', 'afk',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
-    'areatrigger', 'swing', 'npcanim', 'spellanim',
+    'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
     'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'customitem',
     'airforward', 'airlateral', 'airturn', 'doublejump',
     'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
