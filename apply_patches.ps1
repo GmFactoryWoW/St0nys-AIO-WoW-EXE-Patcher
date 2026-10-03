@@ -18,7 +18,7 @@
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "billy" (Preset
 #                             Billy's_Wow.exe = Standard), "stony" (Preset
-#                             Billy's_Wow.exe (edited by St0ny)), "all", "none"
+#                             St0nys_Wow.exe), "all", "none"
 #                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
@@ -124,8 +124,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset Billy''s_Wow.exe (edited by St0ny) - noch ungetestet'
-        StonyUntested = 'Achtung: Das Preset Billy''s_Wow.exe (edited by St0ny) ist noch ungetestet.'
+        MenuPresets   = 'B = Preset Billy''s_Wow.exe    S = Preset St0nys_Wow.exe - noch ungetestet'
+        StonyUntested = 'Achtung: Das Preset St0nys_Wow.exe ist noch ungetestet.'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
         SavedLoaded   = 'Deine gespeicherte Auswahl vom letzten Mal wurde geladen.'
@@ -213,8 +213,8 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset Billy''s_Wow.exe (edited by St0ny) - not tested yet'
-        StonyUntested = 'Warning: the preset Billy''s_Wow.exe (edited by St0ny) has not been tested yet.'
+        MenuPresets   = 'B = preset Billy''s_Wow.exe    S = preset St0nys_Wow.exe - not tested yet'
+        StonyUntested = 'Warning: the preset St0nys_Wow.exe has not been tested yet.'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
         SavedLoaded   = 'Your saved selection from last time has been loaded.'
@@ -1637,7 +1637,7 @@ function Test-JumpValue([string]$v) {
 #    De/En - Anzeigename je Sprache
 #    On    - Teil des Presets "Billy's_Wow.exe", das zugleich die Standard-
 #            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false). Das
-#            zweite Preset "Billy's_Wow.exe (edited by St0ny)" steht als
+#            zweite Preset "St0nys_Wow.exe" steht als
 #            Id-Liste in $PRESET_STONY hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
@@ -1671,6 +1671,7 @@ $CATEGORIES = @{
     security = @{ De = 'Sicherheit & Datenschutz';          En = 'Security & privacy' }
     login    = @{ De = 'Login & Verbindung';                En = 'Login & connection' }
     modding  = @{ De = 'Modding: Interface, MPQs & Addons'; En = 'Modding: interface, MPQs & addons' }
+    dll      = @{ De = 'DLL-Loader';                        En = 'DLL loaders' }
     gameplay = @{ De = 'Gameplay-Fixes';                    En = 'Gameplay fixes' }
     graphics = @{ De = 'Grafik & Sichtweite';               En = 'Graphics & view distance' }
     ui       = @{ De = 'Interface & Komfort';               En = 'Interface & comfort' }
@@ -1865,33 +1866,6 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'awesome'; Cat = 'modding'; On = $true; Needs = @('laa'); DllHint = $true
-       Author = 'FrostAtom'
-       De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
-       En = 'Enable AwesomeWotlkLib.dll support'
-       NoteDe = 'benoetigt awesome_wotlk'
-       NoteEn = 'requires awesome_wotlk'
-       Url = 'https://github.com/noname08662/awesome_wotlk'
-       Code = {
-        Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
-        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
-        Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
-    }}
-
-    @{ Id = 'voicedll'; Cat = 'modding'; On = $false
-       Author = 'St0ny'
-       De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
-       En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
-       NoteDe = 'Modul ungetestet und unfertig'
-       NoteEn = 'module untested and unfinished'
-       Url = 'https://github.com/Raz0r1337/mod-voicechat'
-       Code = {
-        # ALPHA - das Modul mod-voicechat ist noch komplett ungetestet und nicht
-        # fertig. Laedt beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
-        # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
-        Add-VoiceLoader 'voice.dll'
-    }}
-
     @{ Id = 'keyprop'; Cat = 'modding'; On = $false
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)'
@@ -1922,6 +1896,35 @@ $patches = @(
         # push 0x7F / push "global" / nop / nop. 0x7F ist nur die Hoechstlaenge
         # fuer SStrCopy und reicht fuer "global".
         Patch 0x1F8488 @(0x6A, 0x7F, 0x68, 0xA0, 0x84, 0xA3, 0x00, 0x90, 0x90)
+    }}
+
+    # --- DLL-Loader ---
+
+    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa'); DllHint = $true
+       Author = 'FrostAtom'
+       De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
+       En = 'Enable AwesomeWotlkLib.dll support'
+       NoteDe = 'benoetigt awesome_wotlk'
+       NoteEn = 'requires awesome_wotlk'
+       Url = 'https://github.com/noname08662/awesome_wotlk'
+       Code = {
+        Patch 0xABD0 @(0xE9, 0xDB, 0xA4, 0x0D, 0x00, 0x90, 0x90, 0x90)
+        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
+        Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
+    }}
+
+    @{ Id = 'voicedll'; Cat = 'dll'; On = $false
+       Author = 'St0ny'
+       De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
+       En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
+       NoteDe = 'Modul ungetestet und unfertig'
+       NoteEn = 'module untested and unfinished'
+       Url = 'https://github.com/Raz0r1337/mod-voicechat'
+       Code = {
+        # ALPHA - das Modul mod-voicechat ist noch komplett ungetestet und nicht
+        # fertig. Laedt beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
+        # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
+        Add-VoiceLoader 'voice.dll'
     }}
 
     # --- Gameplay-Fixes ---
@@ -2838,7 +2841,7 @@ $patches = @(
     }}
 )
 
-# Zweites Preset "Billy's_Wow.exe (edited by St0ny)" - Billys Patch-Set plus
+# Zweites Preset "St0nys_Wow.exe" - Billys Patch-Set plus
 # Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
 # Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
 # mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
@@ -2891,13 +2894,13 @@ mpqnames;5E0F09;3F;1
 mpqnames;5E0F16;3F;1
 localdata;1F2A;E821EC01006A00;1
 luaunlock;1185E7;33C05050E840A3FFFF83C40833C0;1
+keyprop;8EFD9;01;1
+globalsv;1F8488;8B4508680005000050;1
 awesome;ABD0;558BECE898B5FFFF;1
 awesome;DC0F0;558BEC568B75;1
 awesome;E50B0;558BEC5633F639356CB4B6000F85DB010000393568B4B6000F85CF01000033C0B968B4B6008701566A5468F8659F006A18E85A8828006860659F00A380B4B600E81BBEF7;1
 voicedll;406;91AA0000;1
 voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
-keyprop;8EFD9;01;1
-globalsv;1F8488;8B4508680005000050;1
 areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
 npcanim;33D7C9;74;1
@@ -3100,7 +3103,7 @@ function Get-DefaultSelection {
     return , $sel
 }
 
-# Preset "Billy's_Wow.exe (edited by St0ny)" aus der Id-Liste $PRESET_STONY
+# Preset "St0nys_Wow.exe" aus der Id-Liste $PRESET_STONY
 function Get-StonySelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_STONY -contains $patches[$i].Id }

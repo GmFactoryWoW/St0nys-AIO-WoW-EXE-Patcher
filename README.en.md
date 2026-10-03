@@ -92,8 +92,8 @@ The menu lists every patch with a number. `[X]` = will be applied,
 [patch overview](#patch-overview). On the first start the
 **preset "Billy's_Wow.exe"** is preselected (see the "Default" column in the
 overview), after that the saved selection or the patches currently in
-`Wow.exe`. `S` loads the second preset **"Billy's_Wow.exe (edited by St0ny)"**
-(column "St0ny"). Patches that need something additional say so in parentheses
+`Wow.exe`. `S` loads the second preset **"St0nys_Wow.exe"** (column "St0ny").
+Patches that need something additional say so in parentheses
 after their name, with the link right below.
 
 | Input              | Effect                                     |
@@ -105,7 +105,7 @@ after their name, with the link right below.
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
 | `B`                | load preset "Billy's_Wow.exe" (= default)  |
-| `S`                | load preset "Billy's_Wow.exe (edited by St0ny)" – **not tested yet** |
+| `S`                | load preset "St0nys_Wow.exe" – **not tested yet** |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
@@ -136,8 +136,7 @@ The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
-The second preset "Billy's_Wow.exe (edited by St0ny)" (key `S`) is Billy's
-patch set plus the security and login patches, MPQ signature check off, the
+The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set plus the security and login patches, MPQ signature check off, the
 `/follow` fix, level 101, slider maximums, object scale, tracker, world map
 and windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
 the overview it is the "St0ny" column. **Warning: this preset has not been
@@ -191,7 +190,7 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | set the language for this run (does not change the remembered language)   |
-| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "Billy's_Wow.exe (edited by St0ny)"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
 | `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
@@ -245,10 +244,11 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 16 | Allow extended MPQ names |  | ✅ | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
 | 18 | LUA unlock (allow protected functions) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – |
-| 19 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| 20 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
-| 21 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
-| 22 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
+| 19 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
+| 20 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
+|    | **DLL loaders** |  |  |  |
+| 21 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
+| 22 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 |    | **Gameplay fixes** |  |  |  |
 | 23 | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
 | 24 | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
@@ -426,34 +426,7 @@ or `ReloadUI`. `AttackTarget` still prints an error.
 > This enables automation. Servers with anti-cheat may treat it as botting –
 > this can lead to a ban.
 
-**Enable AwesomeWotlkLib.dll support** *(No. 19, Author: FrostAtom)*
-Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
-the client with additional features and improvements for private servers.
-**Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
-
-> [!NOTE]
-> The patch itself is harmless, it only loads a DLL that is not included here.
-> Only the loaded `AwesomeWotlkLib.dll` may be noticed by servers with
-> anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
-> a yellow note for this.
-
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 20, off by default, Author: St0ny)*
-Loads `voice.dll` from the WoW folder at startup – the client part of
-[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat module for AzerothCore. If the DLL is
-missing, WoW starts normally.
-
-> [!CAUTION]
-> **ALPHA** – the mod-voicechat module is still completely untested and not
-> finished. It is not released for playing. That is why this patch is
-> deselected by default.
-
-File size and PE header stay unchanged: the jump at the entry point (VA
-`0x401005`) is redirected into a free 27-byte gap between two functions (VA
-`0x944B45`), which holds `push "voice.dll"` → `call [LoadLibraryA]` → jump to the
-original target. Before writing, the patcher checks the entry point, the gap and
-the `LoadLibraryA` import.
-
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 21, off by default, Author: Alyst3r (0x539wowmod))*
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 19, off by default, Author: Alyst3r (0x539wowmod))*
 If a frame has an OnKeyDown script, the client reports the key as handled
 afterwards – it no longer reaches the key bindings. With the patch every key
 continues to the key bindings after the OnKeyDown script. This lets addons see
@@ -463,7 +436,7 @@ all key presses without blocking the normal controls.
 > Addons that rely on OnKeyDown "swallowing" a key will additionally trigger the
 > bound action.
 
-**Merge addon data of all accounts (SavedVariables)** *(No. 22, off by default, Author: boredatom / St0ny)*
+**Merge addon data of all accounts (SavedVariables)** *(No. 20, off by default, Author: boredatom / St0ny)*
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
 you play several accounts, you only have to set up your addons once. Merged are:
@@ -488,6 +461,35 @@ boredatom (`patch_globalvariables.exe`) moves the rest of the function by 4 byte
 for this; here everything stays in place. The advertising that the original
 additionally writes into `Wow.exe` (a Telegram notice on the login screen) is
 not included.
+
+### DLL loaders
+
+**Enable AwesomeWotlkLib.dll support** *(No. 21, Author: FrostAtom)*
+Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
+the client with additional features and improvements for private servers.
+**Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
+
+> [!NOTE]
+> The patch itself is harmless, it only loads a DLL that is not included here.
+> Only the loaded `AwesomeWotlkLib.dll` may be noticed by servers with
+> anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
+> a yellow note for this.
+
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 22, off by default, Author: St0ny)*
+Loads `voice.dll` from the WoW folder at startup – the client part of
+[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat module for AzerothCore. If the DLL is
+missing, WoW starts normally.
+
+> [!CAUTION]
+> **ALPHA** – the mod-voicechat module is still completely untested and not
+> finished. It is not released for playing. That is why this patch is
+> deselected by default.
+
+File size and PE header stay unchanged: the jump at the entry point (VA
+`0x401005`) is redirected into a free 27-byte gap between two functions (VA
+`0x944B45`), which holds `push "voice.dll"` → `call [LoadLibraryA]` → jump to the
+original target. Before writing, the patcher checks the entry point, the gap and
+the `LoadLibraryA` import.
 
 ### Gameplay fixes
 

@@ -96,10 +96,9 @@ Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
 die [Patch-Übersicht](#patch-übersicht). Beim ersten Start ist das
 **Preset „Billy's_Wow.exe“** vorausgewählt (Spalte „Standard“ in der Übersicht),
 danach die gespeicherte Auswahl bzw. die Patches, die gerade in der `Wow.exe`
-stecken. Mit `S` lädst du das zweite Preset
-**„Billy's_Wow.exe (edited by St0ny)“** (Spalte „St0ny“). Patches, die
-zusätzlich etwas benötigen, zeigen das in Klammern hinter dem Namen, der Link
-dazu steht direkt darunter.
+stecken. Mit `S` lädst du das zweite Preset **„St0nys_Wow.exe“** (Spalte
+„St0ny“). Patches, die zusätzlich etwas benötigen, zeigen das in Klammern hinter
+dem Namen, der Link dazu steht direkt darunter.
 
 | Eingabe            | Wirkung                                     |
 |--------------------|---------------------------------------------|
@@ -110,7 +109,7 @@ dazu steht direkt darunter.
 | `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
 | `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) |
-| `S`                | Preset „Billy's_Wow.exe (edited by St0ny)“ laden – **noch ungetestet** |
+| `S`                | Preset „St0nys_Wow.exe“ laden – **noch ungetestet** |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
 
@@ -142,8 +141,7 @@ Das Preset „Billy's_Wow.exe“ ist das Patch-Set von Billy Hoyle und zugleich 
 Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
 einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
-Das zweite Preset „Billy's_Wow.exe (edited by St0ny)“ (Taste `S`) ist Billys
-Patch-Set plus Sicherheits- und Login-Patches, MPQ-Signaturprüfung aus,
+Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist Billys Patch-Set plus Sicherheits- und Login-Patches, MPQ-Signaturprüfung aus,
 `/follow`-Fix, Level 101, Slider-Maxima, Objektgröße, Tracker, Weltkarte und
 Fenstermodus. Die Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`,
 in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch
@@ -198,7 +196,7 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
 | `-Language de\|en`     | Sprache für diesen Lauf festlegen (ändert die gemerkte Sprache nicht)       |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `stony` (Preset „Billy's_Wow.exe (edited by St0ny)“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
+| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `billy` (Preset „Billy's_Wow.exe“, auch `default`), `stony` (Preset „St0nys_Wow.exe“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
 | `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Billy's_Wow.exe“. |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
@@ -252,10 +250,11 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 16 | Erweiterte MPQ-Namen erlauben |  | ✅ | ✅ |
 | 17 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
 | 18 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
-| 19 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| 20 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul ungetestet und unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
-| 21 | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
-| 22 | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | boredatom / St0ny | – | – |
+| 19 | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
+| 20 | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | boredatom / St0ny | – | – |
+|    | **DLL-Loader** |  |  |  |
+| 21 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
+| 22 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul ungetestet und unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 |    | **Gameplay-Fixes** |  |  |  |
 | 23 | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | ✅ | ✅ |
 | 24 | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
@@ -438,35 +437,7 @@ Fehler.
 > Das ermöglicht Automatisierung. Server mit Anti-Cheat können das als Botting
 > werten – das kann zu einem Bann führen.
 
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 19, Autor: FrostAtom)*
-Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
-erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
-Server.
-**Benötigt** die `AwesomeWotlkLib.dll` aus [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
-
-> [!NOTE]
-> Der Patch selbst ist unkritisch, er lädt nur eine DLL, die hier nicht
-> enthalten ist. Erst die geladene `AwesomeWotlkLib.dll` kann auf Servern mit
-> Anti-Cheat auffallen – also nur dort einsetzen, wo awesome_wotlk erlaubt ist.
-> Der Patcher zeigt dazu einen gelben Hinweis.
-
-**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 20, standardmäßig aus, Autor: St0ny)*
-Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
-[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem Voice-Chat-Modul für AzerothCore. Fehlt die DLL,
-startet WoW ganz normal.
-
-> [!CAUTION]
-> **ALPHA** – das Modul mod-voicechat ist noch komplett ungetestet und nicht
-> fertig. Es ist nicht zum Spielen freigegeben. Deshalb ist dieser Patch
-> standardmäßig abgewählt.
-
-Dateigröße und PE-Header bleiben unverändert: Der Sprung am Einstiegspunkt
-(VA `0x401005`) wird in eine freie 27-Byte-Lücke zwischen zwei Funktionen
-(VA `0x944B45`) umgebogen. Dort stehen `push "voice.dll"` → `call [LoadLibraryA]`
-→ Sprung zum ursprünglichen Ziel. Vor dem Schreiben prüft der Patcher
-Einstiegspunkt, Lücke und den `LoadLibraryA`-Import.
-
-**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 21, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
+**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 19, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
 Hat ein Frame ein OnKeyDown-Skript, meldet der Client die Taste danach als
 erledigt – sie erreicht die Tastenbelegungen dann nicht mehr. Mit dem Patch läuft
 jede Taste nach dem OnKeyDown-Skript weiter zu den Tastenbelegungen. So können
@@ -476,7 +447,7 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 > Addons, die sich darauf verlassen, dass OnKeyDown eine Taste „schluckt“, lösen
 > damit zusätzlich die belegte Aktion aus.
 
-**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 22, standardmäßig aus, Autor: boredatom / St0ny)*
+**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 20, standardmäßig aus, Autor: boredatom / St0ny)*
 WoW speichert die Daten der Addons normalerweise pro Account unter
 `WTF\Account\<ACCOUNT>\`. Mit dem Patch nutzen alle Accounts dafür den
 gemeinsamen Ordner `WTF\Account\global\` – wer mehrere Accounts spielt, richtet
@@ -502,6 +473,36 @@ von boredatom (`patch_globalvariables.exe`) verschiebt dafür den Rest der
 Funktion um 4 Byte, hier bleibt alles an seinem Platz. Die Werbung, die das
 Original zusätzlich in die `Wow.exe` schreibt (ein Telegram-Hinweis im
 Login-Bildschirm), ist nicht enthalten.
+
+### DLL-Loader
+
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 21, Autor: FrostAtom)*
+Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
+erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
+Server.
+**Benötigt** die `AwesomeWotlkLib.dll` aus [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
+
+> [!NOTE]
+> Der Patch selbst ist unkritisch, er lädt nur eine DLL, die hier nicht
+> enthalten ist. Erst die geladene `AwesomeWotlkLib.dll` kann auf Servern mit
+> Anti-Cheat auffallen – also nur dort einsetzen, wo awesome_wotlk erlaubt ist.
+> Der Patcher zeigt dazu einen gelben Hinweis.
+
+**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 22, standardmäßig aus, Autor: St0ny)*
+Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
+[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem Voice-Chat-Modul für AzerothCore. Fehlt die DLL,
+startet WoW ganz normal.
+
+> [!CAUTION]
+> **ALPHA** – das Modul mod-voicechat ist noch komplett ungetestet und nicht
+> fertig. Es ist nicht zum Spielen freigegeben. Deshalb ist dieser Patch
+> standardmäßig abgewählt.
+
+Dateigröße und PE-Header bleiben unverändert: Der Sprung am Einstiegspunkt
+(VA `0x401005`) wird in eine freie 27-Byte-Lücke zwischen zwei Funktionen
+(VA `0x944B45`) umgebogen. Dort stehen `push "voice.dll"` → `call [LoadLibraryA]`
+→ Sprung zum ursprünglichen Ziel. Vor dem Schreiben prüft der Patcher
+Einstiegspunkt, Lücke und den `LoadLibraryA`-Import.
 
 ### Gameplay-Fixes
 
