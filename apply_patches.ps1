@@ -2069,8 +2069,8 @@ $patches = @(
 
     @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache')
        Author = 'Kebabstorm / St0ny'
-       De = 'Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny'
-       En = 'Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny'
+       De = 'Custom Item Fix (BETA) v2'
+       En = 'Custom Item Fix (BETA) v2'
        NoteDe = 'Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten'
        NoteEn = 'custom items without DBC changes: model, icon and item type from the server data'
        Code = {
