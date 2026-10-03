@@ -328,7 +328,7 @@ Behebt einen Bug, bei dem nach dem Abbrechen eines kanalisierten Zaubers die
 Vorbereitungsanimation hängen blieb.
 
 <a id="patch-ghostattack"></a>
-**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 28, Autor: Robinsch / St0ny)*
+**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 28, Autor: Robinsch)*
 
 Bevor der Client ein neues Nahkampf-Ergebnis anzeigt, spielt er den zuletzt
 gespeicherten Schlag noch einmal auf dem Ziel ab. Hat ein NPC inzwischen den
@@ -342,7 +342,7 @@ In Robinschs Liste steht der Offset `0x355BF` – dort fehlt eine 5. Er traf ein
 gemacht. Hier ist er auf `0x3555BF` korrigiert.
 
 <a id="patch-naked"></a>
-**Nackter-Charakter-Bug behoben** *(Nr. 29, Autor: Robinsch / St0ny)*
+**Nackter-Charakter-Bug behoben** *(Nr. 29, Autor: Robinsch)*
 
 Behebt nackt dargestellte Charaktere, wie sie auf privaten Servern vorkommen,
 wenn neue Items nur über `ItemDisplayInfo` verteilt werden. Der Patch schaltet

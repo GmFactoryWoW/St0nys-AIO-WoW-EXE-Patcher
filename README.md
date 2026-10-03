@@ -292,8 +292,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [25](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
 | [26](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ | ✅ |
 | [27](PATCHES.md#patch-spellanim) | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ | ✅ |
-| [28](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch / St0ny | ✅ | – |
-| [29](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben | Robinsch / St0ny | ✅ | – |
+| [28](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch | ✅ | – |
+| [29](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben | Robinsch | ✅ | – |
 | [30](PATCHES.md#patch-forcereaction) | Force-Reaction bei /reload erhalten | Robinsch | ✅ | ✅ |
 | [31](PATCHES.md#patch-mail) | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | ✅ | ✅ |
 | [32](PATCHES.md#patch-deadchat) | Chat-Befehle auch im Tod erlauben | Robinsch | ✅ | ✅ |
@@ -411,22 +411,18 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
 
 ## Danksagung
 
-Ein ganz besonderer Dank geht an **Billy Hoyle** – für all seine Hilfe und
-seine Tipps in den letzten Monaten und für die Unterstützung beim
-Zusammentragen der Patches. Sein Patch-Set steckt als Preset „Billy's_Wow.exe“
-in diesem Patcher und ist die Standard-Auswahl.
-
-Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen und dazu
-einige eigene Patches beigesteuert – vielen Dank auch dafür!
-
-Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
-einzubauen.
-
-Danke an **Moroes**, der den Patch [#21](PATCHES.md#patch-globalsv) aufgespürt und mir
-zugespielt hat.
-
-Und natürlich danke an alle Autoren der Patches, die in der
-[Patch-Übersicht](#patch-übersicht) genannt sind.
+- Ein ganz besonderer Dank geht an **Billy Hoyle** – für all seine Hilfe und
+  seine Tipps in den letzten Monaten und für die Unterstützung beim
+  Zusammentragen der Patches. Sein Patch-Set steckt als Preset
+  „Billy's_Wow.exe“ in diesem Patcher und ist die Standard-Auswahl.
+- Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen und dazu
+  einige eigene Patches beigesteuert – vielen Dank auch dafür!
+- Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
+  einzubauen.
+- Danke an **Moroes**, der den Patch [#21](PATCHES.md#patch-globalsv)
+  aufgespürt und mir zugespielt hat.
+- Und natürlich danke an alle Autoren der Patches, die in der
+  [Patch-Übersicht](#patch-übersicht) genannt sind.
 
 ## Lizenz
 

@@ -2119,7 +2119,7 @@ $patches = @(
     }}
 
     @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch / St0ny'
+       Author = 'Robinsch'
        De = '"Geister"-Angriff von NPCs beim Evade behoben'
        En = 'Fix "ghost" attack when NPCs evade from combat'
        Code = {
@@ -2134,7 +2134,7 @@ $patches = @(
     }}
 
     @{ Id = 'naked'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch / St0ny'
+       Author = 'Robinsch'
        De = 'Nackter-Charakter-Bug behoben'
        En = 'Fix naked character bug'
        Code = {
