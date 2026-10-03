@@ -1192,7 +1192,10 @@ Zusätzlich setzt der Patcher bei jedem Lauf mit aktivem Patch das Datum
 **„Erstellt“** der `Wow.exe`, das Windows in den Eigenschaften und im Tooltip
 zeigt, auf das Build-Datum mit Uhrzeit. „Geändert“ setzt Windows beim Schreiben
 wie gewohnt selbst auf den Zeitpunkt des Patchens. Diese Zeiten stehen im
-Dateisystem, nicht in der Exe. Ohne den Patch bleibt „Erstellt“ unverändert.
+Dateisystem, nicht in der Exe. Das originale Erstelldatum merkt sich der Patcher
+beim ersten Einspielen in `patcher_state.ini` und überträgt es auch auf
+`Wow.exe.ORI`. Wird der Patch abgewählt, bekommt die `Wow.exe` es zurück – wie
+bei jedem anderen Patch steht danach wieder der Originalzustand da.
 
 <a id="patch-clienticon"></a>
 **Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
