@@ -1162,6 +1162,13 @@ remembered value is used, or the current time if nothing is remembered. If the
 patch is already applied, the current date and time of `Wow.exe` are
 suggested.
 
+In addition, the patcher sets the file times of `Wow.exe` that Windows shows in
+the properties and in the tooltip: **"Created"** gets the build date and time
+only when the patch is newly applied and stays like that afterwards.
+**"Modified"** gets it on every run in which the patch is active. These times
+are stored in the file system, not in the exe. Without the patch Windows sets
+them as usual.
+
 <a id="patch-clienticon"></a>
 **Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
 
