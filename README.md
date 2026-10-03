@@ -500,6 +500,7 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 > Addons, die sich darauf verlassen, dass OnKeyDown eine Taste „schluckt“, lösen
 > damit zusätzlich die belegte Aktion aus.
 
+<a id="patch-20"></a>
 **Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 20, standardmäßig aus, Autor: boredatom / St0ny)*
 
 WoW speichert die Daten der Addons normalerweise pro Account unter
@@ -1470,8 +1471,8 @@ einige eigene Patches beigesteuert – vielen Dank auch dafür!
 Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
 einzubauen.
 
-Danke an **Moroes**, der den Patch „Addon-Daten aller Accounts zusammenlegen
-(SavedVariables)“ (Nr. 20) aufgespürt und mir zugespielt hat.
+Danke an **Moroes**, der den Patch [#20](#patch-20) aufgespürt und mir
+zugespielt hat.
 
 Und natürlich danke an alle Autoren der Patches, die in der
 [Patch-Übersicht](#patch-übersicht) genannt sind.

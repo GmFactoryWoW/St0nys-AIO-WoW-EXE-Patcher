@@ -490,6 +490,7 @@ all key presses without blocking the normal controls.
 > Addons that rely on OnKeyDown "swallowing" a key will additionally trigger the
 > bound action.
 
+<a id="patch-20"></a>
 **Merge addon data of all accounts (SavedVariables)** *(No. 20, off by default, Author: boredatom / St0ny)*
 
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
@@ -1433,8 +1434,8 @@ own – thank you as well!
 Thanks also to **Stormhand** for the permission to include his CameraReforged
 patch.
 
-Thanks to **Moroes**, who tracked down the patch "Merge addon data of all
-accounts (SavedVariables)" (No. 20) and passed it on to me.
+Thanks to **Moroes**, who tracked down patch [#20](#patch-20) and passed it
+on to me.
 
 And of course thanks to all patch authors named in the
 [patch overview](#patch-overview).
