@@ -141,10 +141,13 @@ The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
-The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set plus the
-security patches No. 7–9 and the login patches No. 10–12, MPQ signature check
-off, the `/follow` fix, level 101, slider maximums, GameObject view distance
-scaling (No. 48), tracker, world map and windowed mode. The list is in
+The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set without the
+255 characters per server (No. 35), but with the WorldFrame crash fix and the
+RCE fix (No. 4 and 5), the security patches No. 7–9, the login patches
+No. 10–13, MPQ signature check off (No. 15), the `/follow` fix, level 101, the
+Custom Item Fix, air steering and double jump (No. 39–42), slider maximums and
+the three GameObject view distance patches (No. 47–50), tracker, world map,
+retail guild emblems, maximized window and the sound settings. The list is in
 `apply_patches.ps1` under `$PRESET_STONY`; in the overview it is the "St0ny"
 column. **Warning: this preset has not been tested yet.** The patcher shows this
 as a yellow note when you load it with `S`.
@@ -236,9 +239,9 @@ the user or because no more input is possible).
 | 1  | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ |
 | 2  | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – |
 | 3  | Refresh item cache immediately | Robinsch | ✅ | ✅ |
-| 4  | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 4  | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
 |    | **Security & privacy** |  |  |  |
-| 5  | Remote code execution exploit fix | Robinsch | – | – |
+| 5  | Remote code execution exploit fix | Robinsch | – | ✅ |
 | 6  | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – | – |
 | 7  | Disable Scan.dll | Alastor StrixEfuartus | – | ✅ |
 | 8  | Disallow client patches from the server | Kebabstorm | – | ✅ |
@@ -247,7 +250,7 @@ the user or because no more input is possible).
 | 10 | Skip Battle.net login | Kebabstorm | – | ✅ |
 | 11 | Skip Remote Desktop check | Kebabstorm | – | ✅ |
 | 12 | Disable HTTP requests to Battle.net | Kebabstorm | – | ✅ |
-| 13 | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – |
+| 13 | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | ✅ |
 |    | **Modding: interface, MPQs & addons** |  |  |  |
 | 14 | Allow custom GlueXML | Alastor StrixEfuartus / Kebabstorm / St0ny | ✅ | ✅ |
 | 15 | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | ✅ |
@@ -272,14 +275,14 @@ the user or because no more input is possible).
 | 32 | Level 101+ fix (game tables, barber chair, base stats) | Alastor StrixEfuartus / St0ny | – | ✅ |
 | 33 | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 34 | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 35 | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
-| 36 | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm / St0ny | – | – |
+| 35 | Max characters per realm raised to 255 | St0ny | ✅ | – |
+| 36 | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm / St0ny | – | ✅ |
 | 37 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
 | 38 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
-| 39 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 40 | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 41 | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 42 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 39 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 40 | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 41 | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 42 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
 |    | **Graphics & view distance** |  |  |  |
 | 43 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
 | 44 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
@@ -287,8 +290,8 @@ the user or because no more input is possible).
 | 46 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ | ✅ |
 | 47 | Graphics options: extend slider maximums | St0ny | – | ✅ |
 | 48 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | ✅ |
-| 49 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – |
-| 50 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – |
+| 49 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | ✅ |
+| 50 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | ✅ |
 | 51 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
 | 52 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
@@ -297,7 +300,7 @@ the user or because no more input is possible).
 | 55 | Auto-sort quest tracker |  | – | ✅ |
 | 56 | Advanced world map enabled by default |  | – | ✅ |
 | 57 | Cast bars on all frames | Kebabstorm | ✅ | ✅ |
-| 58 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
+| 58 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | ✅ |
 | 59 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
 | 60 | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – |
 |    | **Window, mouse & camera** |  |  |  |
@@ -307,7 +310,7 @@ the user or because no more input is possible).
 | 64 | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ |
 | 65 | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
-| 66 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – |
+| 66 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | ✅ |
 |    | **Client info: version, build, title, date, icon** |  |  |  |
 | 67 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
 | 68 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |

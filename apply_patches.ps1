@@ -2952,16 +2952,17 @@ $patches = @(
 # Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
 # mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
 $PRESET_STONY = @(
-    'laa', 'itemcache',
+    'laa', 'itemcache', 'worldcrash', 'rce',
     'scandll', 'noserverpatch', 'nosurvey',
-    'skipbnet', 'skiprdp', 'nohttp',
+    'skipbnet', 'skiprdp', 'nohttp', 'afk',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
     'areatrigger', 'swing', 'npcanim', 'spellanim',
-    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars',
-    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
+    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'customitem',
+    'airforward', 'airlateral', 'airturn', 'doublejump',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
     'bluemoon', 'notransparency',
-    'tracker', 'worldmap', 'castbars', 'flash',
-    'window', 'maximize', 'windowfix', 'mouse'
+    'tracker', 'worldmap', 'castbars', 'emblems', 'flash',
+    'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
 
 # ============================================================

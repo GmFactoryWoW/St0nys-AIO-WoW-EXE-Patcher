@@ -146,13 +146,16 @@ Das Preset „Billy's_Wow.exe“ ist das Patch-Set von Billy Hoyle und zugleich 
 Standard-Auswahl. Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
 einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
-Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist Billys Patch-Set plus den
-Sicherheits-Patches Nr. 7–9 und den Login-Patches Nr. 10–12,
-MPQ-Signaturprüfung aus, `/follow`-Fix, Level 101, Slider-Maxima,
-GameObject-Sichtweite (Nr. 48), Tracker, Weltkarte und Fenstermodus. Die Liste
-steht in `apply_patches.ps1` unter `$PRESET_STONY`,
-in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch
-ungetestet.** Der Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
+Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist Billys Patch-Set ohne die
+255 Charaktere pro Server (Nr. 35), dafür mit dem WorldFrame-Absturzfix und dem
+RCE-Fix (Nr. 4 und 5), den Sicherheits-Patches Nr. 7–9, den Login-Patches
+Nr. 10–13, MPQ-Signaturprüfung aus (Nr. 15), `/follow`-Fix, Level 101, Custom
+Item Fix, Sprungsteuerung und Doppelsprung (Nr. 39–42), Slider-Maxima und den
+drei GameObject-Sichtweiten-Patches (Nr. 47–50), Tracker, Weltkarte,
+Retail-Gildenemblemen, Fenstermodus maximiert und den Sound-Einstellungen. Die
+Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`, in der Übersicht ist
+es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch ungetestet.** Der
+Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
 
 ## Patches ändern oder zurücknehmen
 
@@ -242,9 +245,9 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 1  | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ |
 | 2  | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – | – |
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ |
-| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
 |    | **Sicherheit & Datenschutz** |  |  |  |
-| 5  | Remote Code Execution Exploit Fix | Robinsch | – | – |
+| 5  | Remote Code Execution Exploit Fix | Robinsch | – | ✅ |
 | 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – | – |
 | 7  | Scan.dll deaktivieren | Alastor StrixEfuartus | – | ✅ |
 | 8  | Client-Patches vom Server verbieten | Kebabstorm | – | ✅ |
@@ -253,7 +256,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 10 | Battle.net-Login überspringen | Kebabstorm | – | ✅ |
 | 11 | Remote-Desktop-Prüfung überspringen | Kebabstorm | – | ✅ |
 | 12 | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – | ✅ |
-| 13 | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – |
+| 13 | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | ✅ |
 |    | **Modding: Interface, MPQs & Addons** |  |  |  |
 | 14 | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm / St0ny | ✅ | ✅ |
 | 15 | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | ✅ |
@@ -278,14 +281,14 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 32 | Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) | Alastor StrixEfuartus / St0ny | – | ✅ |
 | 33 | Charaktererstellung: mehr als 10 Klassen (Zufallsklasse) *(für eigene Klassen; Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 34 | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 35 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ | ✅ |
-| 36 | Custom Item Fix (BETA) v2 *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm / St0ny | – | – |
+| 35 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ | – |
+| 36 | Custom Item Fix (BETA) v2 *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm / St0ny | – | ✅ |
 | 37 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 38 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
-| 39 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 40 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 41 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 42 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 39 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 40 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 41 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
+| 42 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | ✅ |
 |    | **Grafik & Sichtweite** |  |  |  |
 | 43 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
 | 44 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
@@ -293,8 +296,8 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 46 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ | ✅ |
 | 47 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | ✅ |
 | 48 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – | ✅ |
-| 49 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | – |
-| 50 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – |
+| 49 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | ✅ |
+| 50 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | ✅ |
 | 51 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
 | 52 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
@@ -303,7 +306,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 55 | Quest-Tracker automatisch sortieren |  | – | ✅ |
 | 56 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |
 | 57 | Cast Bars auf allen Frames | Kebabstorm | ✅ | ✅ |
-| 58 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
+| 58 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | ✅ |
 | 59 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
 | 60 | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – |
 |    | **Fenster, Maus & Kamera** |  |  |  |
@@ -313,7 +316,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 64 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ |
 | 65 | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
-| 66 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – |
+| 66 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | ✅ |
 |    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |
 | 67 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – |
 | 68 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – |
