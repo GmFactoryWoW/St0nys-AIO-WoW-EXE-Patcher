@@ -152,10 +152,11 @@ RCE-Fix (Nr. 4 und 5), den Sicherheits-Patches Nr. 7–9, den Login-Patches
 Nr. 10–13, MPQ-Signaturprüfung aus (Nr. 15), `/follow`-Fix, Level 101, Custom
 Item Fix, Sprungsteuerung und Doppelsprung (Nr. 39–42), Slider-Maxima und den
 drei GameObject-Sichtweiten-Patches (Nr. 47–50), Tracker, Weltkarte,
-Retail-Gildenemblemen, Fenstermodus maximiert und den Sound-Einstellungen. Die
-Liste steht in `apply_patches.ps1` unter `$PRESET_STONY`, in der Übersicht ist
-es die Spalte „St0ny“. **Achtung: Dieses Preset ist noch ungetestet.** Der
-Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
+HD-Portraits, Retail-Gildenemblemen, Fenstermodus maximiert und den
+Sound-Einstellungen. Die Liste steht in `apply_patches.ps1` unter
+`$PRESET_STONY`, in der Übersicht ist es die Spalte „St0ny“. **Achtung: Dieses
+Preset ist noch ungetestet.** Der Patcher zeigt das beim Laden mit `S` als
+gelben Hinweis an.
 
 ## Patches ändern oder zurücknehmen
 
@@ -301,7 +302,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 51 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
 | 52 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 54 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
+| 54 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | ✅ |
 |    | **Interface & Komfort** |  |  |  |
 | 55 | Quest-Tracker automatisch sortieren |  | – | ✅ |
 | 56 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |

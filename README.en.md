@@ -146,8 +146,9 @@ The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set without the
 RCE fix (No. 4 and 5), the security patches No. 7–9, the login patches
 No. 10–13, MPQ signature check off (No. 15), the `/follow` fix, level 101, the
 Custom Item Fix, air steering and double jump (No. 39–42), slider maximums and
-the three GameObject view distance patches (No. 47–50), tracker, world map,
-retail guild emblems, maximized window and the sound settings. The list is in
+the three GameObject view distance patches (No. 47–50), HD portraits, tracker,
+world map, retail guild emblems, maximized window and the sound settings. The
+list is in
 `apply_patches.ps1` under `$PRESET_STONY`; in the overview it is the "St0ny"
 column. **Warning: this preset has not been tested yet.** The patcher shows this
 as a yellow note when you load it with `S`.
@@ -295,7 +296,7 @@ the user or because no more input is possible).
 | 51 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
 | 52 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
 | 53 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 54 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | – |
+| 54 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | ✅ |
 |    | **Interface & comfort** |  |  |  |
 | 55 | Auto-sort quest tracker |  | – | ✅ |
 | 56 | Advanced world map enabled by default |  | – | ✅ |

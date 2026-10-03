@@ -2960,7 +2960,7 @@ $PRESET_STONY = @(
     'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'customitem',
     'airforward', 'airlateral', 'airturn', 'doublejump',
     'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
-    'bluemoon', 'notransparency',
+    'bluemoon', 'notransparency', 'hdportraits',
     'tracker', 'worldmap', 'castbars', 'emblems', 'flash',
     'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
