@@ -165,9 +165,9 @@ eigene Server. Es enthält auch Patches mit Bann-Gefahr und solche, die die
 `Wow.exe` vergrößern – **nur auf eigenen Servern verwenden**. Welche Patches
 dazugehören, zeigt die Spalte „St0ny“ in der
 [Patch-Übersicht](#patch-übersicht); im Skript steht die Liste unter
-`$PRESET_STONY`. **Achtung: Dieses Preset darf unter keinen Umständen auf
-öffentlichen Servern verwendet werden!** Der Patcher zeigt das beim Laden mit
-`S` als gelben Hinweis an.
+`$PRESET_STONY`. **Achtung: Dieses Preset sollte unter keinen Umständen
+auf öffentlichen Servern verwendet werden – das führt wahrscheinlich zu einem
+Bann!** Der Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
 
 ## Patches ändern oder zurücknehmen
 
