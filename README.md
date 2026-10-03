@@ -271,46 +271,47 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 34 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 35 | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 36 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ | ✅ |
-| 37 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
-| 38 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
-| 39 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 40 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 41 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 42 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 37 | Custom Item Fix (BETA) v2 by St0ny *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | unbekannt (v1) / St0ny (v2) | – | – |
+| 38 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
+| 39 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
+| 40 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 41 | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 42 | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 43 | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Grafik & Sichtweite** |  |  |  |
-| 43 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
-| 44 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
-| 45 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ | ✅ |
-| 46 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ | ✅ |
-| 47 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | ✅ |
-| 48 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – | ✅ |
-| 49 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | – |
-| 50 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – |
-| 51 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
-| 52 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
-| 53 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 54 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
+| 44 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
+| 45 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
+| 46 | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | ✅ | ✅ |
+| 47 | CVar groundEffectDist unlock (max 3166 statt 140) |  | ✅ | ✅ |
+| 48 | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | ✅ |
+| 49 | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – | ✅ |
+| 50 | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | – |
+| 51 | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – |
+| 52 | Blauer Mond am Nachthimmel reaktiviert | Robinsch | ✅ | ✅ |
+| 53 | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | ✅ | ✅ |
+| 54 | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 55 | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | Badgermilk0 | – | – |
 |    | **Interface & Komfort** |  |  |  |
-| 55 | Quest-Tracker automatisch sortieren |  | – | ✅ |
-| 56 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |
-| 57 | Cast Bars auf allen Frames | Kebabstorm | ✅ | ✅ |
-| 58 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
-| 59 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
-| 60 | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – |
+| 56 | Quest-Tracker automatisch sortieren |  | – | ✅ |
+| 57 | Erweiterte Weltkarte standardmäßig aktiv |  | – | ✅ |
+| 58 | Cast Bars auf allen Frames | Kebabstorm | ✅ | ✅ |
+| 59 | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
+| 60 | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
+| 61 | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – |
 |    | **Fenster, Maus & Kamera** |  |  |  |
-| 61 | Fenstermodus als Standard setzen | St0ny | – | ✅ |
-| 62 | Fenstermodus maximiert als Standard setzen | St0ny | – | ✅ |
-| 63 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ |
-| 64 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ |
-| 65 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig; Exe wird größer – Bann-Gefahr)* | Stormhand / St0ny | – | – |
+| 62 | Fenstermodus als Standard setzen | St0ny | – | ✅ |
+| 63 | Fenstermodus maximiert als Standard setzen | St0ny | – | ✅ |
+| 64 | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ |
+| 65 | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ |
+| 66 | CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen *(noch nicht 100 % fertig; Exe wird größer – Bann-Gefahr)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
-| 66 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – | – |
+| 67 | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – | – |
 |    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |
-| 67 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – |
-| 68 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – |
-| 69 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – | – |
-| 70 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – | – |
-| 71 | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
+| 68 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – |
+| 69 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – |
+| 70 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – | – |
+| 71 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – | – |
+| 72 | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
@@ -343,7 +344,7 @@ des ersten Dreiecks und überspringt die Funktion in diesem Fall. Gegenüber dem
 Original sind die drei Sprungweiten korrigiert und der Code ist kürzer.
 
 > [!NOTE]
-> Der Code liegt in der freien Lücke am Ende von `.text`, die auch Nr. 53 nutzt.
+> Der Code liegt in der freien Lücke am Ende von `.text`, die auch Nr. 54 nutzt.
 > Beide passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 > [!NOTE]
@@ -544,7 +545,7 @@ Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem /follow-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
 Portierung und Anpassung von St0ny: Das Original leitet die Prüfung in
 eine Code-Höhle um, die ihr Ergebnis ignoriert. Diese Höhle läge aber genau
-in der Lücke am Ende von `.text`, die Nr. 4 und Nr. 53 nutzen. Hier wird
+in der Lücke am Ende von `.text`, die Nr. 4 und Nr. 54 nutzen. Hier wird
 stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
@@ -575,7 +576,35 @@ Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
-**Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)** *(Nr. 37, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Custom Item Fix (BETA) v2 by St0ny** *(Nr. 37, standardmäßig aus, Autor: unbekannt (v1) / St0ny (v2))*
+Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
+Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
+eines Items nur aus der `Item.dbc`. Items, die nur in der Datenbank des Servers
+stehen, fehlen dort – der Client zeigt dann z. B. kein Modell am Charakter und
+kein Icon. Die `Wow.exe` hat aber schon Hilfsfunktionen, die diese Werte zuerst
+im Item-Cache suchen (also in den Daten, die der Server zu jedem Item schickt)
+und erst danach in der `Item.dbc`. Der Patch leitet die reinen DBC-Zugriffe auf
+diese Hilfsfunktionen um. Steht ein Item in beiden, gelten damit die Werte des
+Servers.
+
+**Empfohlen** zusammen mit „CACHE-Ordner-Erstellung deaktivieren“ (Nr. 2): Dann
+speichert WoW den Item-Cache nicht auf der Festplatte und holt geänderte
+Custom-Items bei jedem Start frisch vom Server. Fehlt Nr. 2 in der Auswahl,
+weist der Patcher darauf hin.
+
+> [!CAUTION]
+> **BETA** – im Spiel noch nicht getestet. Die ursprüngliche Fassung v1 hatte
+> zwei Fehler, mit denen der Client abgestürzt wäre: In einer Zeile fehlte ein
+> Byte (die Funktion für die Item-Klasse wurde dadurch zu Datenmüll), eine
+> andere war eine Kopie der Zeile davor (ein Aufruf landete mitten in einer
+> fremden Funktion). v2 behebt beides. Alle umgebauten Stellen wurden per
+> Emulation mit Test-Items geprüft: nur im Cache, nur in der `Item.dbc`, in
+> beiden und in keinem.
+
+Aus v1 nicht übernommen: die PE-Prüfsumme (Windows prüft sie bei Programmen
+nicht) und die Änderung `Cache` → `||che` – das ist genau Patch Nr. 2.
+
+**Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)** *(Nr. 38, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Der Charakter kommt jeden Hang hoch, egal wie steil. Im Original ist bei 50°
 Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
 (`0.6427876` bei VA `0xA37F0C`). Der Patch setzt ihn auf `0.0` = cos 90°.
@@ -584,7 +613,7 @@ Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
 > Server mit Anti-Cheat können das als Climb-Hack erkennen – das kann zu einem
 > Bann führen.
 
-**Sprunghöhe ändern (Original -7.9555473)** *(Nr. 38, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Sprunghöhe ändern (Original -7.9555473)** *(Nr. 39, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 Ändert die Anfangsgeschwindigkeit des Sprungs (VA `0xAA33DC`, Original
 `-7.9555473`). Der Patcher fragt den Wert nach der Auswahl ab: eine negative
 Zahl von `-100` bis knapp unter `0`, Komma oder Punkt als Dezimaltrenner. Je
@@ -596,7 +625,7 @@ Wert wird wie bei den Client-Info-Patches gemerkt.
 > Server mit Anti-Cheat können das als Jump-Hack erkennen – das kann zu einem
 > Bann führen.
 
-**Im Sprung vorwärts/rückwärts steuern** *(Nr. 39, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung vorwärts/rückwärts steuern** *(Nr. 40, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Normalerweise ignoriert der Client Vorwärts- und Rückwärts-Eingaben, solange der
 Charakter springt oder fällt. Mit dem Patch lässt sich die Richtung auch in der
 Luft ändern, bis hin zur Gegenrichtung. 0x539wowmod ersetzt dafür per DLL die
@@ -609,7 +638,7 @@ der Byte-Patch aus 0x539wowmod, der die Bewegung in der Luft aktualisiert.
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
-**Im Sprung seitwärts steuern** *(Nr. 40, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung seitwärts steuern** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Wie der vorige Patch, nur für seitliche Bewegung (Strafen): zwei Sprünge in der
 Seitwärts-Eingabe des Clients plus der Byte-Patch aus 0x539wowmod, der die
 Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
@@ -618,7 +647,7 @@ Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
-**Im Sprung drehen ändert die Flugrichtung** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Im Sprung drehen ändert die Flugrichtung** *(Nr. 42, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Dreht man sich im Sprung (Maus oder Tasten), behält der Charakter im Original
 seine Flugrichtung. Mit dem Patch setzt der Client die Bewegungsrichtung auch in
 der Luft neu, wie es die DLL von 0x539wowmod tut. Passt am besten zusammen mit
@@ -628,7 +657,7 @@ den beiden vorigen Patches.
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
-**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 42, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 43, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Erlaubt weitere Sprünge, während der Charakter in der Luft ist. Der Patcher fragt
 nach der Auswahl, wie viele zusätzliche Sprünge es sein sollen (1 bis 9, `1` =
 Doppelsprung); der Wert wird wie bei den Client-Info-Patches gemerkt.
@@ -656,7 +685,7 @@ beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 
 ### Grafik & Sichtweite
 
-**CVar farclip unlock (max 10000)** *(Nr. 43, Autor: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(Nr. 44, Autor: Alastor StrixEfuartus)*
 Entsperrt die maximale Sichtweite (Farclip) auf 10000 Yards. Der Client klemmt
 den Wert beim Setzen in einer einzigen Funktion (VA `0x780770`) nach oben ab
 und hält dafür zwei Grenzen bereit: 1583 Yards im Normalfall und 791 Yards als
@@ -668,26 +697,26 @@ Die Untergrenze von 183 Yards bleibt unangetastet, und ein davon getrenntes
 Eingabelimit für das CVar gibt es nicht – diese Klemme ist das Limit.
 Nicht zu verwechseln mit der 1277 aus dem Video-Menü: Das ist die Obergrenze
 des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
-Patch Nr. 47 „Grafikoptionen: Slider-Maxima erweitern“).
+Patch Nr. 48 „Grafikoptionen: Slider-Maxima erweitern“).
 
-**CVar horizonFarclipScale unlock (max 12)** *(Nr. 44, Autor: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(Nr. 45, Autor: St0ny)*
 Entsperrt den CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
-**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 45, Autor: St0ny)*
+**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 46, Autor: St0ny)*
 Entfernt die Obergrenze des CVars `environmentDetail` komplett. Original wird
 der Wert auf den Bereich 0.5 bis 1.5 begrenzt; der Patch hebelt die obere
 Begrenzung aus, sodass beliebig hohe Werte durchgereicht werden.
 Wichtig: Dieses CVar tut nichts anderes, als die GameObject-Sichtweiten zu
-multiplizieren (siehe Patch Nr. 48) – im Original nur die der Kategorien 1 bis
-3, mit Patch Nr. 48 alle fünf. Es ist damit der bequemste FPS-Hebel im
+multiplizieren (siehe Patch Nr. 49) – im Original nur die der Kategorien 1 bis
+3, mit Patch Nr. 49 alle fünf. Es ist damit der bequemste FPS-Hebel im
 Objekt-Rendering, weil er ohne Neupatchen im Spiel wirkt.
 
-**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 46)*
+**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 47)*
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
-**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 47, standardmäßig aus, Autor: St0ny)*
+**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 48, standardmäßig aus, Autor: St0ny)*
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
 blieben trotzdem auf Blizzards Werten stehen, weil sie ihr Maximum nicht aus
@@ -743,8 +772,8 @@ irgendetwas auffällt.
 
 - Der Regler setzt nur das CVar. Ohne die Unlock-Patches klemmt der Client den
   Wert beim Setzen sofort wieder auf sein Original zurück – die Patches
-  „Farclip unlock“ (Nr. 43), „CVar environmentDetail unlock“ (Nr. 45) und
-  „CVar groundEffectDist unlock“ (Nr. 46) gehören also dazu. Fehlen sie in der
+  „Farclip unlock“ (Nr. 44), „CVar environmentDetail unlock“ (Nr. 46) und
+  „CVar groundEffectDist unlock“ (Nr. 47) gehören also dazu. Fehlen sie in der
   Auswahl, weist der Patcher darauf hin.
 - Bei `groundEffectDensity` wirkt oberhalb von 64 nichts mehr: Der Vertexbuffer
   der Bodendeko ist im Client fest auf Dichte × 64 ≤ 4096 geklemmt. Der Regler
@@ -788,9 +817,9 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 > [!NOTE]
 > Die Dateigröße ändert sich nicht: Die kleine Such-Routine liegt in einer
 > freien Lücke zwischen zwei Funktionen, die Tabelle mit den Maxima im
-> ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 53 gibt es keine Überschneidung.
+> ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 54 gibt es keine Überschneidung.
 
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 48, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 49, standardmäßig aus, Autor: St0ny)*
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
 `environmentDetail`. Cat 0 (Kleinkram) und Cat 4 (riesige Gebäude) übernehmen
@@ -808,11 +837,11 @@ geregelt wird über das CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10                | 300   | 1000  | 2000  | 7500  | 12500 |
 
-Mit Patch Nr. 49 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
+Mit Patch Nr. 50 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 50 / 100 / 500). Werte über 1.5 setzen den Patch „CVar environmentDetail
-unlock“ (Nr. 45) voraus.
+unlock“ (Nr. 46) voraus.
 
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 49, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 50, standardmäßig aus, Autor: St0ny)*
 Wer die Sichtweiten komplett auf Blizzards Werten lassen möchte, wählt diesen
 Patch ab. Er kostet Leistung: Es ist deutlich mehr Kleinkram gleichzeitig
 sichtbar, und die Anzahl der gezeichneten Objekte ist der Performance-Hebel.
@@ -919,20 +948,20 @@ sie unabhängig von den Distanzen verbreitern.
 
 </details>
 
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 50, standardmäßig aus, Autor: Robinsch)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 51, standardmäßig aus, Autor: Robinsch)*
 Erhöht den Occluder-Schwellenwert für Stormwind, damit Gebäude und Objekte
 nicht fälschlicherweise ausgeblendet werden. Behebt Grafikfehler auf
 Custom-Servern mit umgebautem Stormwind.
 
-**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 51, Autor: Robinsch)*
+**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 52, Autor: Robinsch)*
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
-**Keine Transparenz beim Heranzoomen** *(Nr. 52, Autor: Alastor StrixEfuartus)*
+**Keine Transparenz beim Heranzoomen** *(Nr. 53, Autor: Alastor StrixEfuartus)*
 Der eigene Charakter wird nicht mehr durchsichtig, wenn die Kamera nah
 herangezoomt wird.
 
-**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 53, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
+**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 54, standardmäßig aus, Autor: Alyst3r (0x539wowmod) / St0ny)*
 Beim Entfernen eines NPCs (z. B. Despawn) blendet der Client das Modell
 normalerweise langsam aus. Mit dem Patch verschwinden NPCs sofort, bei denen der
 Server in `UNIT_FIELD_FLAGS_2` das Flag `UNIT_FLAG2_DO_NOT_FADE_IN` (`0x20`) setzt –
@@ -946,7 +975,7 @@ wie bisher.
 > Der Code liegt wie bei Nr. 4 in der freien Lücke am Ende von `.text`. Beide
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 54, standardmäßig aus, Autor: Badgermilk0)*
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 55, standardmäßig aus, Autor: Badgermilk0)*
 Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
 Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
 **keine neuen Portraits, keine Bilder und keine Animationen** – er ändert nur
@@ -969,20 +998,20 @@ Kopierschleife sonst über die Quelle hinaus liest.
 
 ### Interface & Komfort
 
-**Quest-Tracker automatisch sortieren** *(Nr. 55, standardmäßig aus)*
+**Quest-Tracker automatisch sortieren** *(Nr. 56, standardmäßig aus)*
 Setzt den CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 56, standardmäßig aus)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 57, standardmäßig aus)*
 Setzt den CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
 
-**Cast Bars auf allen Frames** *(Nr. 57, Autor: Kebabstorm)*
+**Cast Bars auf allen Frames** *(Nr. 58, Autor: Kebabstorm)*
 Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 58, standardmäßig aus, Autor: MacWarrior)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 59, standardmäßig aus, Autor: MacWarrior)*
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
 6 Bordüren, 17 Bordürenfarben, 51 Hintergrundfarben. Der Tabard-Designer
@@ -1013,13 +1042,13 @@ Hälften = 34 Dateien, für alle 26 neuen Wappen zusammen 884. Der Archivname
 ist frei wählbar (`patch-*.MPQ`), dafür sorgt der Patch
 „Erweiterte MPQ-Namen erlauben“ (Nr. 16).
 
-**FlashWindow Patch** *(Nr. 59, Autor: Kebabstorm)*
+**FlashWindow Patch** *(Nr. 60, Autor: Kebabstorm)*
 FlashWindow: Lässt das WoW-Fenster in der Taskleiste blinken, wenn ein
 relevantes Ereignis eintritt und das Spiel im Hintergrund läuft.
 Die Funktion kann per Addon angesprochen werden.
 **Benötigt** das [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) aus awesome_wotlk.
 
-**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 60, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
+**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 61, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
 Beim Öffnen der Charaktererstellung (Klick auf „Neuer Charakter“) und beim
 Wechsel von Volk oder Geschlecht würfelt der Client Gesicht, Haut, Frisur usw.
 nicht mehr automatisch aus, man startet mit dem Standard-Aussehen. Der
@@ -1027,24 +1056,24 @@ Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 
 ### Fenster, Maus & Kamera
 
-**Fenstermodus als Standard setzen** *(Nr. 61, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 62, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
-**Fenstermodus maximiert als Standard setzen** *(Nr. 62, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 63, standardmäßig aus, Autor: St0ny)*
 Setzt den CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 63, Autor: Robinsch)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 64, Autor: Robinsch)*
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr.
 
-**Mausflackern / Kamerasprünge Fix** *(Nr. 64, Autor: Robinsch)*
+**Mausflackern / Kamerasprünge Fix** *(Nr. 65, Autor: Robinsch)*
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
-**CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen** *(Nr. 65, standardmäßig aus, Autor: Stormhand / St0ny)*
+**CameraReforged [BETA]: Kamerahöhe, Schulterversatz, Zoom-Grenzen** *(Nr. 66, standardmäßig aus, Autor: Stormhand / St0ny)*
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged) von **Stormhand** in diesen Patcher, damit
 alles in einem Durchgang läuft – eingebaut mit seiner ausdrücklichen Erlaubnis
 („Of course! Take whatever you need. I appreciate your work.“). Die Portierung
@@ -1109,7 +1138,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 
 ### Sound
 
-**Sound-Einstellungen optimieren** *(Nr. 66, standardmäßig aus, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 67, standardmäßig aus, Autor: St0ny)*
 Umfasst folgende Änderungen:
 
 - Sound-Kanal-Hardware-Limit auf 126 angehoben
@@ -1140,14 +1169,14 @@ bereits eingespielten Patch `-> aktuell: …`).
 > Server können die Client-Version bzw. Build-Nummer prüfen. Ein geänderter Wert
 > muss also zum Server passen.
 
-**Client-Version ändern (Original 3.3.5)** *(Nr. 67, standardmäßig aus, Autor: MacWarrior)*
+**Client-Version ändern (Original 3.3.5)** *(Nr. 68, standardmäßig aus, Autor: MacWarrior)*
 Setzt eine neue Version im Format `x.y.z` (z. B. `3.3.6` oder `3.3.123`, höchstens
 7 Zeichen). Geändert werden die Version, die der Client im Spiel anzeigt, die
 FileVersion und die ProductVersion (`Version x.y`) der Versionsressource sowie
 `VS_FIXEDFILEINFO`. Die Build-Nummer bleibt erhalten. Haupt- und Nebenversion
 müssen zusammen in das ProductVersion-Feld passen (z. B. `3.3`).
 
-**Build-Nummer ändern (Original 12340)** *(Nr. 68, standardmäßig aus, Autor: MacWarrior)*
+**Build-Nummer ändern (Original 12340)** *(Nr. 69, standardmäßig aus, Autor: MacWarrior)*
 Setzt eine neue Build-Nummer (6142 bis 65535, Original `12340`): die interne
 Build-Nummer, die sichtbare Build-Nummer und den vierten Teil der FileVersion.
 Builds bis 6141 lässt der Patcher nicht zu: Server wie AzerothCore oder
@@ -1172,12 +1201,12 @@ den Server.
 > Build aus `realmlist.gamebuild` an; Spieler mit älterem Client sehen ihn als
 > offline.
 
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 69, standardmäßig aus, Autor: MacWarrior)*
+**Programmtitel in den Dateieigenschaften ändern** *(Nr. 70, standardmäßig aus, Autor: MacWarrior)*
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
 Höchstens 17 Zeichen, nur ASCII.
 
-**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 70, standardmäßig aus, Autor: MacWarrior)*
+**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 71, standardmäßig aus, Autor: MacWarrior)*
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk. Eingabe als `JJJJ-MM-TT`, optional mit `FR`
 dahinter für französische Monatsnamen (z. B. `2026-09-28 FR` → `Sep 28 2026`).
@@ -1185,7 +1214,7 @@ Als Vorschlag steht das **heutige Datum** in den Klammern (mit `FR`, wenn du das
 zuletzt gewählt hast); mit `-Unattended` gilt der gemerkte Wert. Ist der Patch
 schon eingespielt, steht dort das aktuelle Datum der `Wow.exe`.
 
-**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 71, standardmäßig aus, Autor: MacWarrior / St0ny)*
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 72, standardmäßig aus, Autor: MacWarrior / St0ny)*
 Tauscht das Icon aus, das Windows für die `Wow.exe` anzeigt (Explorer,
 Taskleiste, Verknüpfungen). Der Patcher fragt nach dem Pfad einer `.ico`-
 oder `.png`-Datei, absolut oder relativ zum WoW-Ordner. Aus der Datei baut er
@@ -1218,10 +1247,10 @@ Meldung ab.
 
 - **Bann-Gefahr:** Zwei Gruppen von Patches können auf vielen Servern zu einem
   Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder Botting
-  werten können: LUA Unlock (Nr. 18), Steigwinkel (37), Sprunghöhe (38), die
-  Sprungsteuerung (39–41) und der Doppelsprung (42). Zweitens Patches, die eine
-  Sektion an die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 42,
-  54 und 65 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
+  werten können: LUA Unlock (Nr. 18), Steigwinkel (38), Sprunghöhe (39), die
+  Sprungsteuerung (40–42) und der Doppelsprung (43). Zweitens Patches, die eine
+  Sektion an die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 43,
+  55 und 66 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
   Gruppen sind in der Übersicht mit „Bann-Gefahr“ markiert, und der Patcher
   zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
   ändern die Dateigröße nicht.
