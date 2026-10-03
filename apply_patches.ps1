@@ -2118,6 +2118,34 @@ $patches = @(
         Patch 0x33E0D6 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
+    @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
+       Author = 'Robinsch / St0ny'
+       De = '"Geister"-Angriff von NPCs beim Evade behoben'
+       En = 'Fix "ghost" attack when NPCs evade from combat'
+       Code = {
+        # Vor jedem neuen Nahkampf-Ergebnis (SMSG_ATTACKERSTATEUPDATE) spielt
+        # der Client den zuletzt gespeicherten Schlag noch einmal auf dem Ziel
+        # ab (VA 0x7561BF in UnitCombat_C, Aufruf 0x755A60). Nach einem Evade
+        # ist das ein veralteter Schlag - der "Geister"-Angriff. je -> jmp:
+        # der gespeicherte Schlag wird nur noch geloescht, nicht abgespielt.
+        # Robinschs Offset 0x355BF ist ein Tippfehler (eine 5 zu wenig) und
+        # traf einen call in einer String-Hilfsfunktion (Endlosschleife).
+        Patch 0x3555BF @(0xEB)
+    }}
+
+    @{ Id = 'naked'; Cat = 'gameplay'; On = $true
+       Author = 'Robinsch / St0ny'
+       De = 'Nackter-Charakter-Bug behoben'
+       En = 'Fix naked character bug'
+       Code = {
+        # Die Abfrage, ob der eigene Spieler die X-Ray-Aura hat (VA 0x6DE840,
+        # Bit 1 von [Spieler+0xF42]), meldet immer "nein": je -> jmp bei
+        # VA 0x6DE85D. Mit der Aura zeichnet der Client andere Einheiten ohne
+        # Ausruestung. Robinsch hat mit der Basis 0x500C00 statt 0x400C00
+        # gerechnet; sein Offset 0x1DDC5D traf ein push in GetTradeSkillTools.
+        Patch 0x2DDC5D @(0xEB)
+    }}
+
     @{ Id = 'forcereaction'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch'
        De = 'Force-Reaction bei /reload erhalten'
@@ -3090,6 +3118,8 @@ areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
 npcanim;33D7C9;74;1
 spellanim;33E0D6;6AFF6A008BCEE84FBFFFFF8D8D58FDFFFFE884FEEAFF;1
+ghostattack;3555BF;74;1
+naked;2DDC5D;74;1
 forcereaction;12811E;E89D970A00;1
 mail;16D899;0560EA0000;1
 deadchat;10CA41;74;1
