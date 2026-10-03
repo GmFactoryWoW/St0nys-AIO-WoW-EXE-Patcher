@@ -1901,8 +1901,8 @@ $patches = @(
 
     @{ Id = 'luaunlock'; Cat = 'modding'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus'
-       De = 'LUA Unlock (geschuetzte Funktionen freigeben)'
-       En = 'LUA unlock (allow protected functions)'
+       De = 'LUA Unlock (Zauber, Bewegung, Makros)'
+       En = 'LUA unlock (spells, movement, macros)'
        NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
        NoteEn = 'may be treated as botting - ban risk'
        Code = {

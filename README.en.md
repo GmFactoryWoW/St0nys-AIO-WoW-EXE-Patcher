@@ -253,7 +253,7 @@ the user or because no more input is possible).
 | 15 | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | ✅ |
 | 16 | Allow extended MPQ names |  | ✅ | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
-| 18 | LUA unlock (allow protected functions) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – |
+| 18 | LUA unlock (spells, movement, macros) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – |
 | 19 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
 | 20 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
 |    | **DLL loaders** |  |  |  |
@@ -466,7 +466,7 @@ Allows wildcard names for MPQ archives (`patch-*.MPQ` and
 The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
 
-**LUA unlock (allow protected functions)** *(No. 18, off by default, Author: Alastor StrixEfuartus)*
+**LUA unlock (spells, movement, macros)** *(No. 18, off by default, Author: Alastor StrixEfuartus)*
 
 Addons and macros may call protected functions: movement functions
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,

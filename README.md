@@ -259,7 +259,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 15 | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | ✅ |
 | 16 | Erweiterte MPQ-Namen erlauben |  | ✅ | ✅ |
 | 17 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
-| 18 | LUA Unlock (geschützte Funktionen freigeben) *(kann als Botting gewertet werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
+| 18 | LUA Unlock (Zauber, Bewegung, Makros) *(kann als Botting gewertet werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 19 | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
 | 20 | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | boredatom / St0ny | – | – |
 |    | **DLL-Loader** |  |  |  |
@@ -476,7 +476,7 @@ Der Client liest Dateien direkt aus dem Data-Ordner, ohne dass sie in ein MPQ
 gepackt werden müssen – z. B. `Data\DBFilesClient\ItemDisplayInfo.dbc`.
 Praktisch für Modder.
 
-**LUA Unlock (geschützte Funktionen freigeben)** *(Nr. 18, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**LUA Unlock (Zauber, Bewegung, Makros)** *(Nr. 18, standardmäßig aus, Autor: Alastor StrixEfuartus)*
 
 Addons und Makros dürfen geschützte Funktionen aufrufen: Bewegungsfunktionen
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,
