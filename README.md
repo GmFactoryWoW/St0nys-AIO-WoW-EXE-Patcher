@@ -271,7 +271,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 34 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 35 | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 36 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ | ✅ |
-| 37 | Custom Item Fix (BETA) v2 by St0ny *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | unbekannt (v1) / St0ny (v2) | – | – |
+| 37 | Custom Item Fix (BETA) v2 by St0ny *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm | – | – |
 | 38 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 39 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 40 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
@@ -576,7 +576,7 @@ Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
-**Custom Item Fix (BETA) v2 by St0ny** *(Nr. 37, standardmäßig aus, Autor: unbekannt (v1) / St0ny (v2))*
+**Custom Item Fix (BETA) v2 by St0ny** *(Nr. 37, standardmäßig aus, Autor: Kebabstorm)*
 Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
 Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
 eines Items nur aus der `Item.dbc`. Items, die nur in der Datenbank des Servers
@@ -585,7 +585,13 @@ kein Icon. Die `Wow.exe` hat aber schon Hilfsfunktionen, die diese Werte zuerst
 im Item-Cache suchen (also in den Daten, die der Server zu jedem Item schickt)
 und erst danach in der `Item.dbc`. Der Patch leitet die reinen DBC-Zugriffe auf
 diese Hilfsfunktionen um. Steht ein Item in beiden, gelten damit die Werte des
-Servers.
+Servers. Auf dem Server reicht für ein Custom-Item dann der Eintrag in
+`item_template`; bei TrinityCore muss dazu in der `worldserver.conf`
+`DBC.EnforceItemAttributes = 0` gesetzt sein. Nur das Material (das Geräusch
+beim Verschieben im Inventar) kommt weiter allein aus der `Item.dbc`.
+
+Vorlage ist der „Custom Item Fix (BETA) v1“ aus Kebabstorms
+[WoW 3.3.5 Patcher (Custom Item Fix)](https://www.wowmodding.net/files/file/283-wow-335-patcher-custom-item-fix/).
 
 **Empfohlen** zusammen mit „CACHE-Ordner-Erstellung deaktivieren“ (Nr. 2): Dann
 speichert WoW den Item-Cache nicht auf der Festplatte und holt geänderte
@@ -593,13 +599,13 @@ Custom-Items bei jedem Start frisch vom Server. Fehlt Nr. 2 in der Auswahl,
 weist der Patcher darauf hin.
 
 > [!CAUTION]
-> **BETA** – im Spiel noch nicht getestet. Die ursprüngliche Fassung v1 hatte
-> zwei Fehler, mit denen der Client abgestürzt wäre: In einer Zeile fehlte ein
-> Byte (die Funktion für die Item-Klasse wurde dadurch zu Datenmüll), eine
-> andere war eine Kopie der Zeile davor (ein Aufruf landete mitten in einer
-> fremden Funktion). v2 behebt beides. Alle umgebauten Stellen wurden per
-> Emulation mit Test-Items geprüft: nur im Cache, nur in der `Item.dbc`, in
-> beiden und in keinem.
+> **BETA** – im Spiel noch nicht getestet. Die Patch-Liste von v1, aus der
+> dieser Patch übernommen wurde, enthielt zwei Fehler, mit denen der Client
+> abgestürzt wäre: In einer Zeile fehlte ein Byte (die Funktion für die
+> Item-Klasse wurde dadurch zu Datenmüll), eine andere war eine Kopie der Zeile
+> davor (ein Aufruf landete mitten in einer fremden Funktion). v2 behebt beides.
+> Alle umgebauten Stellen wurden per Emulation mit Test-Items geprüft: nur im
+> Cache, nur in der `Item.dbc`, in beiden und in keinem.
 
 Aus v1 nicht übernommen: die PE-Prüfsumme (Windows prüft sie bei Programmen
 nicht) und die Änderung `Cache` → `||che` – das ist genau Patch Nr. 2.
