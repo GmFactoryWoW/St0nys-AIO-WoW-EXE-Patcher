@@ -244,8 +244,8 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 3  | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ |
 | 4  | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Sicherheit & Datenschutz** |  |  |  |
-| 5  | Remote Code Execution Exploit Fix *(nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | – |
-| 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden; nur einen der beiden RCE-Patches aktivieren)* | Robinsch | – | – |
+| 5  | Remote Code Execution Exploit Fix | Robinsch | – | – |
+| 6  | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – | – |
 | 7  | Scan.dll deaktivieren | Alastor StrixEfuartus | – | ✅ |
 | 8  | Client-Patches vom Server verbieten | Kebabstorm | – | ✅ |
 | 9  | Hardware-Umfragen vom Server verbieten | Kebabstorm | – | ✅ |
@@ -375,9 +375,9 @@ und Warden-Module werden nicht mehr aus dem lokalen Cache geladen. Warden selbst
 läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 
 > [!NOTE]
-> Nur einen der beiden RCE-Patches aktivieren: entweder diesen (Warden läuft
-> weiter) oder „Warden komplett abschalten“ (Nr. 6), der die Lücke ebenfalls
-> schließt. Beide zusammen bringen nichts zusätzlich.
+> „Warden komplett abschalten“ (Nr. 6) schließt die Lücke ebenfalls und macht
+> diesen Patch überflüssig. Wählst du beide, weist der Patcher darauf hin;
+> schaden tun sie zusammen nicht.
 
 **Warden komplett abschalten, RCE-Fix** *(Nr. 6, standardmäßig aus, Autor: Robinsch)*
 
