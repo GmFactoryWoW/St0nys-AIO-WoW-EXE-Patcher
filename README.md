@@ -65,6 +65,15 @@ originalen `Wow.exe`.
 Patches **ändern oder zurücknehmen:** `patcher.bat` einfach erneut starten,
 siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
 
+> [!NOTE]
+> Windows warnt beim Start der gepatchten `Wow.exe` wahrscheinlich vor einer
+> nicht signierten, möglicherweise schädlichen App. Das ist bei jeder
+> veränderten `Wow.exe` so: Jede Änderung macht Blizzards digitale Signatur
+> ungültig, und eine neue, von Windows anerkannte Signatur lässt sich für eine
+> veränderte Blizzard-Datei nicht erstellen. Starten lässt sie sich trotzdem,
+> z. B. über „Weitere Informationen“ → „Trotzdem ausführen“. Mehr dazu unter
+> [Hinweise](#hinweise).
+
 ## Ablauf
 
 1. ASCII-Banner wird angezeigt.
@@ -1448,8 +1457,12 @@ Meldung ab.
   zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
   ändern die Dateigröße nicht.
 - **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
-  Patch macht diese Signatur ungültig, WoW startet trotzdem ganz normal. Die
-  Patches, die eine Sektion anhängen (Nr. 42, 54 und 65), entfernen zusätzlich
+  Patch macht diese Signatur ungültig. Windows warnt deshalb wahrscheinlich
+  beim Start vor einer nicht signierten, möglicherweise schädlichen App; mit
+  „Weitere Informationen“ → „Trotzdem ausführen“ startet WoW ganz normal. Eine
+  neue Signatur, der Windows vertraut, gibt es nur von Zertifizierungsstellen
+  mit Identitätsprüfung – für eine veränderte Blizzard-Datei bekommt man sie
+  nicht. Die Patches, die eine Sektion anhängen (Nr. 42, 54 und 65), entfernen zusätzlich
   den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
   Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
   Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das

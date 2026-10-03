@@ -62,6 +62,14 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 To **change or remove** patches just run `patcher.bat` again, see
 [Changing or removing patches](#changing-or-removing-patches).
 
+> [!NOTE]
+> Windows will probably warn about an unsigned, potentially harmful app when
+> you start the patched `Wow.exe`. This happens with every modified `Wow.exe`:
+> any change invalidates Blizzard's digital signature, and a new signature that
+> Windows accepts cannot be created for a modified Blizzard file. It still
+> starts, e.g. via "More info" → "Run anyway". More on this under
+> [Notes](#notes).
+
 ## Workflow
 
 1. The ASCII banner is shown.
@@ -1413,7 +1421,11 @@ patcher aborts with a message.
   overview, and the patcher shows a red warning before the confirmation prompt.
   All other patches do not change the file size.
 - **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every
-  patch invalidates this signature, WoW still starts normally. The patches that
+  patch invalidates this signature. Windows will therefore probably warn about
+  an unsigned, potentially harmful app when it starts; with "More info" → "Run
+  anyway" WoW starts normally. A new signature that Windows trusts is only
+  issued by certificate authorities with identity verification – you cannot
+  get one for a modified Blizzard file. The patches that
   append a section (No. 42, 54 and 65) also remove the reference to the
   signature from the header: the new section lies behind the signature, and
   some tools would otherwise report the file as damaged. The signature bytes
