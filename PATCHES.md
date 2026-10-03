@@ -1188,12 +1188,11 @@ wenn du das zuletzt gewählt hast) – ENTER übernimmt sie. Mit `-Unattended` g
 der gemerkte Wert, ohne gemerkten Wert der aktuelle Zeitpunkt. Ist der Patch
 schon eingespielt, steht dort das aktuelle Datum samt Uhrzeit der `Wow.exe`.
 
-Zusätzlich setzt der Patcher die Datei-Zeiten der `Wow.exe`, die Windows in den
-Eigenschaften und im Tooltip zeigt: **„Erstellt“** bekommt das Build-Datum mit
-Uhrzeit nur, wenn der Patch neu eingespielt wird, und bleibt danach stehen.
-**„Geändert“** bekommt es bei jedem Lauf, in dem der Patch aktiv ist. Diese
-Zeiten stehen im Dateisystem, nicht in der Exe. Ohne den Patch setzt Windows sie
-wie gewohnt selbst.
+Zusätzlich setzt der Patcher bei jedem Lauf mit aktivem Patch das Datum
+**„Erstellt“** der `Wow.exe`, das Windows in den Eigenschaften und im Tooltip
+zeigt, auf das Build-Datum mit Uhrzeit. „Geändert“ setzt Windows beim Schreiben
+wie gewohnt selbst auf den Zeitpunkt des Patchens. Diese Zeiten stehen im
+Dateisystem, nicht in der Exe. Ohne den Patch bleibt „Erstellt“ unverändert.
 
 <a id="patch-clienticon"></a>
 **Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: St0ny (original by MacWarrior))*

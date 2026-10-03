@@ -4201,18 +4201,16 @@ if (Get-Command Unblock-File -ErrorAction SilentlyContinue) {
     try { Unblock-File -LiteralPath $file -ErrorAction Stop } catch { }
 }
 
-# Build-Datum-Patch aktiv: Datei-Zeiten wie das Build-Datum setzen (Explorer:
-# "Erstellt" und "Geaendert" in den Eigenschaften und im Tooltip). "Erstellt"
-# nur, wenn der Patch in diesem Lauf neu dazukommt, sonst bleibt es; "Geaendert"
-# bei jedem Lauf mit aktivem Patch. Die Zeiten stehen im Dateisystem, nicht in
-# der Exe - ohne den Patch bleibt alles wie von Windows gesetzt.
+# Build-Datum-Patch aktiv: "Erstellt" der Wow.exe (Explorer-Eigenschaften und
+# Tooltip) auf das Build-Datum mit Uhrzeit setzen, bei jedem Lauf. "Geaendert"
+# setzt Windows beim Schreiben selbst auf den Zeitpunkt des Patchens. Die Zeiten
+# stehen im Dateisystem, nicht in der Exe - ohne den Patch bleibt alles wie
+# von Windows gesetzt.
 if (($chosenIds -contains 'clientdate') -and $VALUES.ContainsKey('clientdate')) {
     $parts = Get-ClientDateParts $VALUES['clientdate']
     if ($null -ne $parts) {
         $stamp = [datetime]::SpecifyKind($parts[0], [System.DateTimeKind]::Local)
-        $dateNew = -not ($patchedMode -and ($appliedIds -contains 'clientdate'))
-        if ($dateNew) { try { [System.IO.File]::SetCreationTime($file, $stamp) } catch { } }
-        try { [System.IO.File]::SetLastWriteTime($file, $stamp) } catch { }
+        try { [System.IO.File]::SetCreationTime($file, $stamp) } catch { }
     }
 }
 
