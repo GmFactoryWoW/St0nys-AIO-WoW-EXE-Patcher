@@ -1915,6 +1915,41 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
+    @{ Id = 'luaunlockfull'; Cat = 'modding'; On = $false; BanRisk = $true; Obsoletes = @('luaunlock')
+       Author = 'St0ny'
+       De = 'LUA Unlock (vollstaendig): alle geschuetzten Funktionen freigeben'
+       En = 'LUA unlock (complete): allow all protected functions'
+       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
+       NoteEn = 'may be treated as botting - ban risk'
+       Code = {
+        # Umfasst die Wirkung von "LUA Unlock (Zauber, Bewegung, Makros)" und
+        # gibt zusaetzlich alle Funktionen frei, die eine eigene Pruefung haben.
+        # 1) Zentrale Schutzpruefung (VA 0x5191C0): 24 Schutztypen in drei
+        #    Klassen (immer verboten / nur nach Hardware-Ereignis / nur bei
+        #    erlaubten Attribut-Aenderungen). Liefert sofort "erlaubt":
+        #    mov eax,1 / ret (cdecl, der Aufrufer raeumt den Stack).
+        #    Damit u.a. UseAction, Handel, Auktionshaus, Kalender, LFG,
+        #    Raid-Untergruppen, Makros anlegen/aendern, Mouselook-Bindings.
+        Patch 0x1185C0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xC3)
+        # 2) Eigene Pruefungen "cmp [Taint],0 / je erlaubt" -> "jmp erlaubt":
+        Patch 0x1216E7 @(0xEB)   # ReloadUI (VA 0x5222E7)
+        Patch 0x11F34A @(0xEB)   # FocusUnit, ClearFocus (VA 0x51FF4A)
+        Patch 0x127389 @(0xEB)   # InteractUnit (VA 0x527F89)
+        Patch 0x119BD6 @(0xEB)   # UninviteUnit (VA 0x51A7D6)
+        Patch 0x11A097 @(0xEB)   # CancelLogout (VA 0x51AC97)
+        Patch 0x11CD67 @(0xEB)   # UI-Neuladen-Helfer (VA 0x51D967)
+        Patch 0x11F088 @(0xEB)   # Grafik-Einstellung mit UI-Neuladen (VA 0x51FC88)
+        Patch 0x124076 @(0xEB)   # TargetUnit, AssistUnit, TargetLast*, TargetNearest*, TargetTotem (VA 0x524C76)
+        Patch 0x1246E0 @(0xEB)   # TargetDirectionEnemy/Friend (VA 0x5252E0)
+        Patch 0x40259C @(0xEB)   # Sperrliste fuer Zauber aus unsicherem Code (VA 0x80319C)
+        # 3) AttackTarget, StartAttack, TargetNearest*, Pet-Befehle: "jne Fehler"
+        #    (VA 0x524FD7, 6 Byte) wird zu nop - der Fehlerpfad entfaellt.
+        Patch 0x1243D7 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+        # Unangetastet bleiben die Frame-Schutzpruefung (SetAttribute, Show,
+        # Hide auf geschuetzten Frames) und RegisterForSave - sie betreffen
+        # keine Spielaktionen.
+    }}
+
     @{ Id = 'keyprop'; Cat = 'modding'; On = $false
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)'
@@ -2967,6 +3002,18 @@ mpqnames;5E0F09;3F;1
 mpqnames;5E0F16;3F;1
 localdata;1F2A;E821EC01006A00;1
 luaunlock;1185E7;33C05050E840A3FFFF83C40833C0;1
+luaunlockfull;1185C0;558BEC833D9C;1
+luaunlockfull;119BD6;74;1
+luaunlockfull;11A097;74;1
+luaunlockfull;11CD67;74;1
+luaunlockfull;11F088;74;1
+luaunlockfull;11F34A;74;1
+luaunlockfull;1216E7;74;1
+luaunlockfull;124076;74;1
+luaunlockfull;1243D7;0F859B020000;1
+luaunlockfull;1246E0;74;1
+luaunlockfull;127389;74;1
+luaunlockfull;40259C;74;1
 keyprop;8EFD9;01;1
 globalsv;1F8488;8B4508680005000050;1
 awesome;ABD0;558BECE898B5FFFF;1

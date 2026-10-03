@@ -144,7 +144,7 @@ selection. It is defined in `apply_patches.ps1`: every patch has an entry
 The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set plus the
 security patches No. 7–9 and the login patches No. 10–12, MPQ signature check
 off, the `/follow` fix, level 101, slider maximums, GameObject view distance
-scaling (No. 47), tracker, world map and windowed mode. The list is in
+scaling (No. 48), tracker, world map and windowed mode. The list is in
 `apply_patches.ps1` under `$PRESET_STONY`; in the overview it is the "St0ny"
 column. **Warning: this preset has not been tested yet.** The patcher shows this
 as a yellow note when you load it with `S`.
@@ -254,65 +254,66 @@ the user or because no more input is possible).
 | 16 | Allow extended MPQ names |  | ✅ | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
 | 18 | LUA unlock (spells, movement, macros) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – |
-| 19 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
-| 20 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
+| 19 | LUA unlock (complete): allow all protected functions *(may be treated as botting – ban risk)* | St0ny | – | – |
+| 20 | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
+| 21 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
 |    | **DLL loaders** |  |  |  |
-| 21 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| 22 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
+| 22 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
+| 23 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 |    | **Gameplay fixes** |  |  |  |
-| 23 | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
-| 24 | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
-| 25 | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
-| 26 | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
-| 27 | Keep force reaction on /reload | Robinsch | ✅ | ✅ |
-| 28 | New mail without the 60-second wait | Robinsch | ✅ | ✅ |
-| 29 | Allow chat commands while dead | Robinsch | ✅ | ✅ |
-| 30 | Allow /follow on NPCs | Alastor StrixEfuartus / St0ny | – | ✅ |
-| 31 | Level 101+ fix (game tables, barber chair, base stats) | Alastor StrixEfuartus / St0ny | – | ✅ |
-| 32 | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
-| 33 | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 34 | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
-| 35 | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm / St0ny | – | – |
-| 36 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
-| 37 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
-| 38 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 39 | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 40 | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 41 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 24 | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
+| 25 | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
+| 26 | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
+| 27 | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
+| 28 | Keep force reaction on /reload | Robinsch | ✅ | ✅ |
+| 29 | New mail without the 60-second wait | Robinsch | ✅ | ✅ |
+| 30 | Allow chat commands while dead | Robinsch | ✅ | ✅ |
+| 31 | Allow /follow on NPCs | Alastor StrixEfuartus / St0ny | – | ✅ |
+| 32 | Level 101+ fix (game tables, barber chair, base stats) | Alastor StrixEfuartus / St0ny | – | ✅ |
+| 33 | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
+| 34 | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 35 | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
+| 36 | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm / St0ny | – | – |
+| 37 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
+| 38 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
+| 39 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 40 | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 41 | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 42 | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 |    | **Graphics & view distance** |  |  |  |
-| 42 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
-| 43 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
-| 44 | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ | ✅ |
-| 45 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ | ✅ |
-| 46 | Graphics options: extend slider maximums | St0ny | – | ✅ |
-| 47 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | ✅ |
-| 48 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – |
-| 49 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – |
-| 50 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
-| 51 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
-| 52 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
-| 53 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | – |
+| 43 | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
+| 44 | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
+| 45 | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ | ✅ |
+| 46 | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ | ✅ |
+| 47 | Graphics options: extend slider maximums | St0ny | – | ✅ |
+| 48 | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | ✅ |
+| 49 | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – |
+| 50 | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – |
+| 51 | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
+| 52 | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
+| 53 | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) / St0ny | – | – |
+| 54 | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | Badgermilk0 | – | – |
 |    | **Interface & comfort** |  |  |  |
-| 54 | Auto-sort quest tracker |  | – | ✅ |
-| 55 | Advanced world map enabled by default |  | – | ✅ |
-| 56 | Cast bars on all frames | Kebabstorm | ✅ | ✅ |
-| 57 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
-| 58 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
-| 59 | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – |
+| 55 | Auto-sort quest tracker |  | – | ✅ |
+| 56 | Advanced world map enabled by default |  | – | ✅ |
+| 57 | Cast bars on all frames | Kebabstorm | ✅ | ✅ |
+| 58 | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – |
+| 59 | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
+| 60 | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – |
 |    | **Window, mouse & camera** |  |  |  |
-| 60 | Windowed mode by default | St0ny | – | ✅ |
-| 61 | Maximized window by default | St0ny | – | ✅ |
-| 62 | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ |
-| 63 | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ |
-| 64 | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand / St0ny | – | – |
+| 61 | Windowed mode by default | St0ny | – | ✅ |
+| 62 | Maximized window by default | St0ny | – | ✅ |
+| 63 | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ |
+| 64 | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ |
+| 65 | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
-| 65 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – |
+| 66 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – |
 |    | **Client info: version, build, title, date, icon** |  |  |  |
-| 66 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
-| 67 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
-| 68 | Change program title in the file properties *(asks for the value)* | MacWarrior / St0ny | – | – |
-| 69 | Change build date (original Jun 24 2010) *(asks for the value)* | MacWarrior | – | – |
-| 70 | Change program icon (icon of Wow.exe) *(asks for the value)* | MacWarrior / St0ny | – | – |
+| 67 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
+| 68 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
+| 69 | Change program title in the file properties *(asks for the value)* | MacWarrior / St0ny | – | – |
+| 70 | Change build date (original Jun 24 2010) *(asks for the value)* | MacWarrior | – | – |
+| 71 | Change program icon (icon of Wow.exe) *(asks for the value)* | MacWarrior / St0ny | – | – |
 
 > [!NOTE]
 > **Authors wanted:** For patches without an entry in the "Author" column, the
@@ -349,7 +350,7 @@ first triangle beforehand and skips the function in that case. Compared to the
 original, the three jump distances have been corrected and the code is shorter.
 
 > [!NOTE]
-> The code lives in the free gap at the end of `.text`, which No. 52 uses as
+> The code lives in the free gap at the end of `.text`, which No. 53 uses as
 > well. Both fit in there together, the file size does not change.
 
 > [!NOTE]
@@ -479,7 +480,30 @@ prints an error.
 > This enables automation. Servers with anti-cheat may treat it as botting –
 > this can lead to a ban.
 
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 19, off by default, Author: Alyst3r (0x539wowmod))*
+**LUA unlock (complete): allow all protected functions** *(No. 19, off by default, Author: St0ny)*
+
+Extends No. 18 to all protected functions. The client's central protection
+check knows 24 protection types in three classes (always forbidden, allowed only
+after a hardware event, allowed only while attribute changes are permitted) –
+with this patch it reports "allowed" for all of them. In addition, the own
+checks of the functions that do not go through this central check are bypassed:
+`TargetUnit`, `AssistUnit`, `TargetLastTarget`, `TargetNearest…`,
+`TargetDirection…`, `AttackTarget`, `StartAttack`, `FocusUnit`, `ClearFocus`,
+`InteractUnit`, `ReloadUI`, `UninviteUnit`, `CancelLogout`, the pet commands
+(`PetAttack`, `PetFollow`, …) as well as `UseAction`, trading, the auction
+house, the calendar, LFG, raid subgroups and creating or editing macros. The
+block list for spells cast from insecure code is no longer checked either.
+
+Left untouched are the frame protection check (`SetAttribute`, `Show`, `Hide`
+on protected frames) and `RegisterForSave` – they do not concern game actions.
+Makes No. 18 unnecessary; both together do no harm, the patcher only points it
+out.
+
+> [!WARNING]
+> This enables automation to the full extent. Servers with anti-cheat may treat
+> it as botting – this can lead to a ban.
+
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 20, off by default, Author: Alyst3r (0x539wowmod))*
 
 If a frame has an OnKeyDown script, the client reports the key as handled
 afterwards – it no longer reaches the key bindings. With the patch every key
@@ -490,8 +514,8 @@ all key presses without blocking the normal controls.
 > Addons that rely on OnKeyDown "swallowing" a key will additionally trigger the
 > bound action.
 
-<a id="patch-20"></a>
-**Merge addon data of all accounts (SavedVariables)** *(No. 20, off by default, Author: boredatom / St0ny)*
+<a id="patch-21"></a>
+**Merge addon data of all accounts (SavedVariables)** *(No. 21, off by default, Author: boredatom / St0ny)*
 
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
@@ -521,7 +545,7 @@ not included.
 
 ### DLL loaders
 
-**Enable AwesomeWotlkLib.dll support** *(No. 21, Author: FrostAtom)*
+**Enable AwesomeWotlkLib.dll support** *(No. 22, Author: FrostAtom)*
 
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
@@ -541,7 +565,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
 > a yellow note for this.
 
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 22, off by default, Author: St0ny)*
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 23, off by default, Author: St0ny)*
 
 Loads `voice.dll` from the WoW folder at startup – the client part of
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
@@ -560,51 +584,51 @@ the `LoadLibraryA` import.
 
 ### Gameplay fixes
 
-**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 23, Author: Robinsch)*
+**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 24, Author: Robinsch)*
 
 Increases the area trigger check frequency from 100 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
-**Remove melee swing on right-click** *(No. 24, Author: Robinsch)*
+**Remove melee swing on right-click** *(No. 25, Author: Robinsch)*
 
 Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
-**Suppress NPC attack animation when turning** *(No. 25, Author: Robinsch)*
+**Suppress NPC attack animation when turning** *(No. 26, Author: Robinsch)*
 
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
 
-**Fix spell animation after cancelled channel** *(No. 26, Author: Robinsch)*
+**Fix spell animation after cancelled channel** *(No. 27, Author: Robinsch)*
 
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
-**Keep force reaction on /reload** *(No. 27, Author: Robinsch)*
+**Keep force reaction on /reload** *(No. 28, Author: Robinsch)*
 
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
-**New mail without the 60-second wait** *(No. 28, Author: Robinsch)*
+**New mail without the 60-second wait** *(No. 29, Author: Robinsch)*
 
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
-**Allow chat commands while dead** *(No. 29, Author: Robinsch)*
+**Allow chat commands while dead** *(No. 30, Author: Robinsch)*
 
 Slash commands also work while the character is dead.
 
-**Allow /follow on NPCs** *(No. 30, off by default, Author: Alastor StrixEfuartus / St0ny)*
+**Allow /follow on NPCs** *(No. 31, off by default, Author: Alastor StrixEfuartus / St0ny)*
 
 `/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
 the original redirects the check into a code cave that ignores its result.
 That cave, however, would sit exactly in the gap at the end of `.text` that
-No. 4 and No. 52 use. Here the conditional jump after the check is made
+No. 4 and No. 53 use. Here the conditional jump after the check is made
 unconditional instead – a single byte, same effect, and the patches work
 together.
 
-**Level 101+ fix (game tables, barber chair, base stats)** *(No. 31, off by default, Author: Alastor StrixEfuartus / St0ny)*
+**Level 101+ fix (game tables, barber chair, base stats)** *(No. 32, off by default, Author: Alastor StrixEfuartus / St0ny)*
 
 The client's game tables (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – eleven tables) have 100 rows per
@@ -623,14 +647,14 @@ unchanged.
 **Requires** the patch "Allow custom GlueXML" (No. 14) according to the
 source. There it is called "Disable XML SIG MD5", hence the note "Use XML MD5".
 
-**Character creation: more than 10 classes (random class)** *(No. 32, off by default, Author: Alastor StrixEfuartus / Robinsch)*
+**Character creation: more than 10 classes (random class)** *(No. 33, off by default, Author: Alastor StrixEfuartus / Robinsch)*
 
 The random class selection in character creation collects the allowed classes
 in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 10 entries) it would overflow; the patch enlarges it to 30 slots. Which race may
 pick which class is still checked by the server – this patch does nothing more.
 
-**Disable the name check in character creation (e.g. digits in names)** *(No. 33, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Disable the name check in character creation (e.g. digits in names)** *(No. 34, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -642,13 +666,13 @@ convention, here it is done directly in the function (`mov eax, 57h` / `ret`).
 > The server still checks names itself and has to allow them as well, otherwise
 > it rejects the character.
 
-**Max characters per realm raised to 255** *(No. 34, Author: St0ny)*
+**Max characters per realm raised to 255** *(No. 35, Author: St0ny)*
 
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
-**Custom Item Fix (BETA) v2** *(No. 35, off by default, Author: Kebabstorm / St0ny)*
+**Custom Item Fix (BETA) v2** *(No. 36, off by default, Author: Kebabstorm / St0ny)*
 
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
@@ -682,7 +706,7 @@ this out.
 Not taken over from v1: the PE checksum (Windows does not check it for
 programs) and the change `Cache` → `||che` – that is exactly patch No. 2.
 
-**Remove the climb angle limit (walk up any slope)** *(No. 36, off by default, Author: Alastor StrixEfuartus)*
+**Remove the climb angle limit (walk up any slope)** *(No. 37, off by default, Author: Alastor StrixEfuartus)*
 
 The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
@@ -692,7 +716,7 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > Servers with anti-cheat may detect this as a climb hack – this can lead to a
 > ban.
 
-**Change jump height (original -7.9555473)** *(No. 37, off by default, Author: Alastor StrixEfuartus)*
+**Change jump height (original -7.9555473)** *(No. 38, off by default, Author: Alastor StrixEfuartus)*
 
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
@@ -705,7 +729,7 @@ remembered like those of the client info patches.
 > Servers with anti-cheat may detect this as a jump hack – this can lead to a
 > ban.
 
-**Steer forward/backward while jumping** *(No. 38, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer forward/backward while jumping** *(No. 39, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
@@ -719,7 +743,7 @@ byte patch from 0x539wowmod that updates the movement in the air.
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
-**Steer sideways while jumping** *(No. 39, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Steer sideways while jumping** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
@@ -729,7 +753,7 @@ the movement early while the falling flag is set.
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
-**Turning while jumping changes the flight direction** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Turning while jumping changes the flight direction** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
@@ -740,7 +764,7 @@ two previous patches.
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
-**Double jump (more jumps in the air)** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**Double jump (more jumps in the air)** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
@@ -752,7 +776,7 @@ charges. Here the same happens in a small code cave: a jump from the ground
 sets a counter to the selected number, and in the air a jump is allowed as long
 as the counter is not 0. Rooted or flying still blocks jumping. Every air jump
 uses the same jump height as a normal jump (so also the value from "Change jump
-height", No. 37). The separate second jump height of 0x539wowmod's double jump
+height", No. 38). The separate second jump height of 0x539wowmod's double jump
 is not included. The counter is only reset by the next jump from the ground,
 not on landing: if you land after a jump and then walk off a ledge, you have the
 chosen number of jumps in the air again.
@@ -770,7 +794,7 @@ writable); this makes `Wow.exe` slightly larger.
 
 ### Graphics & view distance
 
-**CVar farclip unlock (max 10000)** *(No. 42, Author: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(No. 43, Author: Alastor StrixEfuartus)*
 
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
@@ -782,14 +806,14 @@ The lower limit of 183 yards stays untouched, and there is no separate input
 limit for the CVar – this clamp is the limit.
 Not to be confused with the 1277 from the video menu: that is the maximum of
 the view distance slider and a completely different location in the EXE (see
-patch No. 46 "Graphics options: extend slider maximums").
+patch No. 47 "Graphics options: extend slider maximums").
 
-**CVar horizonFarclipScale unlock (max 12)** *(No. 43, Author: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(No. 44, Author: St0ny)*
 
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
-**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 44, Author: St0ny)*
+**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 45, Author: St0ny)*
 
 Removes the upper limit of the CVar `environmentDetail` entirely. Originally
 the value is clamped to the range 0.5 to 1.5; the patch replaces the clamped
@@ -797,16 +821,16 @@ value with the raw value at the shared exit of the check – so the lower limit
 0.5 goes away as well, any value is passed through (sensible values start at
 0.5).
 Important: this CVar does nothing but multiply the GameObject view distances
-(see patch No. 47) – in the original only for categories 1 to 3, with patch
-No. 47 for all five. That makes it the most convenient FPS lever for object
+(see patch No. 48) – in the original only for categories 1 to 3, with patch
+No. 48 for all five. That makes it the most convenient FPS lever for object
 rendering, since it works in-game without re-patching.
 
-**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 45)*
+**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 46)*
 
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
-**Graphics options: extend slider maximums** *(No. 46, off by default, Author: St0ny)*
+**Graphics options: extend slider maximums** *(No. 47, off by default, Author: St0ny)*
 
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
@@ -860,8 +884,8 @@ without any visible sign.
 
 - The slider only sets the CVar. Without the unlock patches the client clamps
   the value back to its original immediately – so the patches "CVar farclip
-  unlock" (No. 42), "CVar environmentDetail unlock" (No. 44) and "CVar
-  groundEffectDist unlock" (No. 45) belong with it. If they are missing from
+  unlock" (No. 43), "CVar environmentDetail unlock" (No. 45) and "CVar
+  groundEffectDist unlock" (No. 46) belong with it. If they are missing from
   the selection, the patcher points this out.
 - For `groundEffectDensity` nothing changes above 64: the vertex buffer for
   ground clutter is hard-clamped in the client to density × 64 ≤ 4096. The
@@ -904,9 +928,9 @@ see above).
 > [!NOTE]
 > The file size does not change: the small search routine lives in a free gap
 > between two functions, the table with the maximums in the unused rest of
-> `.rdata`. There is no overlap with No. 4 and No. 52.
+> `.rdata`. There is no overlap with No. 4 and No. 53.
 
-**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 47, off by default, Author: St0ny)*
+**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 48, off by default, Author: St0ny)*
 
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
@@ -924,11 +948,11 @@ distances stay at Blizzard's values; everything is controlled via the CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10                | 300   | 1000  | 2000  | 7500  | 12500 |
 
-With patch No. 48, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
+With patch No. 49, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
 the table above). Values above 1.5 require the patch "CVar environmentDetail
-unlock" (No. 44).
+unlock" (No. 45).
 
-**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 48, off by default, Author: St0ny)*
+**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 49, off by default, Author: St0ny)*
 
 If you want to keep view distances entirely at Blizzard's values, deselect
 this patch. It costs performance: noticeably more small clutter is visible at
@@ -938,7 +962,7 @@ tools. In the original, Cat 0 is so tight at 30 yards that small clutter
 disappears much earlier than everything else; 50 improves the ratio to Cat 1
 from 1:3.3 to 1:2, and the `environmentDetail` slider scales it
 proportionally. Cat 1 to 4 are not touched – the view distance is controlled
-via the CVar, which, together with the code patch No. 47, stretches all five
+via the CVar, which, together with the code patch No. 48, stretches all five
 categories evenly.
 
 Five related values are changed:
@@ -991,7 +1015,7 @@ environmentDetail" adds it, so all five categories grow evenly.
 Important when doing the math: the two factors **multiply**. Base value ×2 at
 CVar 1.5 results in ×3, not ×2. To reach a target factor Z at CVar value E,
 enter Z/E as the base value.
-Without patch No. 47 this only applies to Cat 1–3, and the categories drift
+Without patch No. 48 this only applies to Cat 1–3, and the categories drift
 apart at high CVar values: Cat 3 would eventually overtake Cat 4, so
 medium-sized objects would be visible further away than huge ones.
 
@@ -1034,26 +1058,26 @@ you can widen them independently of the distances.
 
 </details>
 
-**Occluder fix for Stormwind (Open Azeroth)** *(No. 49, off by default, Author: Robinsch)*
+**Occluder fix for Stormwind (Open Azeroth)** *(No. 50, off by default, Author: Robinsch)*
 
 Disables the occluders (view blockers) for Stormwind that are hard-coded in the
 client: the map key of the table entry for the Eastern Kingdoms is set to
 99999, so it no longer matches any map. This way no buildings and objects are
 hidden incorrectly on custom servers with a rebuilt Stormwind.
 
-**Re-enable the blue moon in the night sky** *(No. 50, Author: Robinsch)*
+**Re-enable the blue moon in the night sky** *(No. 51, Author: Robinsch)*
 
 Restores a removed legacy feature: the blue moon that used to be visible in
 the night sky.
 
-**No character transparency when zooming in** *(No. 51, Author: Alastor StrixEfuartus)*
+**No character transparency when zooming in** *(No. 52, Author: Alastor StrixEfuartus)*
 
 Your own character no longer becomes transparent when the camera is zoomed in
 close. The patch removes the transparency assignment for the normal case; if
 the character sits in a vehicle or is attached to another object, it can still
 become transparent when zooming in (same as in the original patch).
 
-**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 52, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 53, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
 
 When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
@@ -1068,7 +1092,7 @@ before.
 > As with No. 4, the code lives in the free gap at the end of `.text`. Both fit
 > in there together, the file size does not change.
 
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 53, off by default, Author: Badgermilk0)*
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 54, off by default, Author: Badgermilk0)*
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -1092,23 +1116,23 @@ otherwise read past the source.
 
 ### Interface & comfort
 
-**Auto-sort quest tracker** *(No. 54, off by default)*
+**Auto-sort quest tracker** *(No. 55, off by default)*
 
 Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
 sorted automatically.
 
-**Advanced world map enabled by default** *(No. 55, off by default)*
+**Advanced world map enabled by default** *(No. 56, off by default)*
 
 Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
 enabled from the start.
 
-**Cast bars on all frames** *(No. 56, Author: Kebabstorm)*
+**Cast bars on all frames** *(No. 57, Author: Kebabstorm)*
 
 Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
-**Retail guild emblems: selection extended from 170 to 196** *(No. 57, off by default, Author: MacWarrior)*
+**Retail guild emblems: selection extended from 170 to 196** *(No. 58, off by default, Author: MacWarrior)*
 
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
@@ -1140,7 +1164,7 @@ The texture loader appends the `.blp` extension. That is 17 colors × 2 halves
 up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
 (No. 16).
 
-**FlashWindow patch** *(No. 58, Author: Kebabstorm)*
+**FlashWindow patch** *(No. 59, Author: Kebabstorm)*
 
 Makes the WoW window flash in the taskbar when a relevant event occurs while
 the game is in the background. For this the Lua function `BNRemoveFriend`,
@@ -1150,9 +1174,9 @@ can call (Windows API `FlashWindow(hwnd, FALSE)`, exactly like the version in
 **Requires** an addon that calls `FlashWindow()`, e.g. the
 [Flash addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk –
 which additionally needs `IsWindowFocused()` from `AwesomeWotlkLib.dll`
-(No. 21).
+(No. 22).
 
-**Character creation: do not randomize the appearance automatically** *(No. 59, off by default, Author: Alyst3r (0x539wowmod))*
+**Character creation: do not randomize the appearance automatically** *(No. 60, off by default, Author: Alyst3r (0x539wowmod))*
 
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
@@ -1161,28 +1185,28 @@ keeps working – it uses a separate path in the client.
 
 ### Window, mouse & camera
 
-**Windowed mode by default** *(No. 60, off by default, Author: St0ny)*
+**Windowed mode by default** *(No. 61, off by default, Author: St0ny)*
 
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
-**Maximized window by default** *(No. 61, off by default, Author: St0ny)*
+**Maximized window by default** *(No. 62, off by default, Author: St0ny)*
 
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
-**No black screen when switching to windowed mode** *(No. 62, Author: Robinsch)*
+**No black screen when switching to windowed mode** *(No. 63, Author: Robinsch)*
 
 Switching to windowed mode while in-game no longer results in a black
 screen. Technically the callback of the CVar `DesktopGamma` always takes the
 game-gamma path; the desktop-gamma path and with it the CVar `DesktopGamma`
 have no effect.
 
-**Mouse flicker / camera jump fix** *(No. 63, Author: Robinsch)*
+**Mouse flicker / camera jump fix** *(No. 64, Author: Robinsch)*
 
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 64, off by default, Author: Stormhand / St0ny)*
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 65, off by default, Author: Stormhand / St0ny)*
 
 Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
 **Stormhand** into this patcher, so everything
@@ -1253,7 +1277,7 @@ overwrites the table of the slider patch.
 
 ### Sound
 
-**Optimize sound settings** *(No. 65, off by default, Author: St0ny)*
+**Optimize sound settings** *(No. 66, off by default, Author: St0ny)*
 
 Includes the following changes:
 
@@ -1282,7 +1306,7 @@ message and asked for again, and all values are checked before anything is
 written. The patcher remembers the values in `patcher_selection.ini`
 (`value.<Id>=…`); with `-Unattended` the remembered values are used, otherwise
 the original values – exceptions: build date (today's date) and icon (the
-patcher aborts), see No. 69 and 70. If a patch is already in `Wow.exe`, its
+patcher aborts), see No. 70 and 71. If a patch is already in `Wow.exe`, its
 current value is the suggestion. When asking, it is also shown after the patch
 name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 
@@ -1290,7 +1314,7 @@ name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 > Servers may check the client version or build number, so a changed value has
 > to match the server.
 
-**Change client version (original 3.3.5)** *(No. 66, off by default, Author: MacWarrior)*
+**Change client version (original 3.3.5)** *(No. 67, off by default, Author: MacWarrior)*
 
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
@@ -1299,7 +1323,7 @@ The build number in `VS_FIXEDFILEINFO` is kept; the FileVersion text
 (`3, 3, 5, 12340`) becomes the plain version (`3.3.6`). Major and minor version
 together must fit into the ProductVersion field (e.g. `3.3`).
 
-**Change build number (original 12340)** *(No. 67, off by default, Author: MacWarrior)*
+**Change build number (original 12340)** *(No. 68, off by default, Author: MacWarrior)*
 
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion in
@@ -1326,13 +1350,13 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > accepts the build in `realmlist.gamebuild`; players with an older client see
 > it as offline.
 
-**Change program title in the file properties** *(No. 68, off by default, Author: MacWarrior / St0ny)*
+**Change program title in the file properties** *(No. 69, off by default, Author: MacWarrior / St0ny)*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
 
-**Change build date (original Jun 24 2010)** *(No. 69, off by default, Author: MacWarrior)*
+**Change build date (original Jun 24 2010)** *(No. 70, off by default, Author: MacWarrior)*
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
@@ -1342,7 +1366,7 @@ time); with `-Unattended` the remembered value is used, or today's date if
 nothing is remembered. If the patch is already applied, the current date of
 `Wow.exe` is suggested.
 
-**Change program icon (icon of Wow.exe)** *(No. 70, off by default, Author: MacWarrior / St0ny)*
+**Change program icon (icon of Wow.exe)** *(No. 71, off by default, Author: MacWarrior / St0ny)*
 
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or
@@ -1374,9 +1398,9 @@ patcher aborts with a message.
 
 - **Ban risk:** two groups of patches can lead to a ban on many servers. First,
   patches that servers with anti-cheat may treat as cheating or botting: LUA
-  unlock (No. 18), climb angle (36), jump height (37), the air steering (38–40)
-  and the double jump (41). Second, patches that append a section to `Wow.exe`
-  and thus make the file larger: No. 41, 53 and 64 – many servers do not
+  unlock (No. 18 and 19), climb angle (37), jump height (38), the air steering
+  (39–41) and the double jump (42). Second, patches that append a section to `Wow.exe`
+  and thus make the file larger: No. 42, 54 and 65 – many servers do not
   tolerate a changed file size. Both groups are marked "ban risk" in the
   overview, and the patcher shows a red warning before the confirmation prompt.
   All other patches do not change the file size.
@@ -1434,7 +1458,7 @@ own – thank you as well!
 Thanks also to **Stormhand** for the permission to include his CameraReforged
 patch.
 
-Thanks to **Moroes**, who tracked down patch [#20](#patch-20) and passed it
+Thanks to **Moroes**, who tracked down patch [#21](#patch-21) and passed it
 on to me.
 
 And of course thanks to all patch authors named in the
