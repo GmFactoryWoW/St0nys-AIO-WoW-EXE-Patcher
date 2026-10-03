@@ -270,7 +270,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 34 | Unbegrenzte Rasse/Klasse-Kombinationen *(Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 35 | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 36 | Max. Charaktere pro Server auf 255 erhöht | St0ny | ✅ | ✅ |
-| 37 | Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm | – | – |
+| 37 | Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm / St0ny | – | – |
 | 38 | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 39 | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – |
 | 40 | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) / St0ny | – | – |
@@ -577,7 +577,7 @@ Der Server muss dies ebenfalls unterstützen. Zusätzliche
 Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
-**Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny** *(Nr. 37, standardmäßig aus, Autor: Kebabstorm)*
+**Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny** *(Nr. 37, standardmäßig aus, Autor: Kebabstorm / St0ny)*
 Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
 Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
 eines Items nur aus der `Item.dbc`. Items, die nur in der Datenbank des Servers
