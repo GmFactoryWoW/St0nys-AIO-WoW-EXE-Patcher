@@ -157,8 +157,9 @@ The second preset "St0nys_Wow.exe" (key `S`) is St0ny's own selection for
 private servers. It also contains patches with a ban risk and patches that make
 `Wow.exe` larger – **use it only on your own servers**. The "St0ny" column in
 the [patch overview](#patch-overview) shows which patches belong to it; in the
-script the list is `$PRESET_STONY`. **Warning: this preset has not been tested
-yet.** The patcher shows this as a yellow note when you load it with `S`.
+script the list is `$PRESET_STONY`. **Warning: this preset must never be used on
+public servers under any circumstances!** The patcher shows this as a yellow
+note when you load it with `S`.
 
 ## Changing or removing patches
 
