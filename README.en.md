@@ -1384,8 +1384,12 @@ MacWarrior's `edit_icon.py` swaps the resources via the Windows API, which
 rewrites the `.rsrc` section. Here only the image data of the eight existing
 icon bitmaps (four sizes in two language variants) is overwritten in place –
 same size, same bit depth, same space. Resource directory, offsets and file
-size stay unchanged, and the patch can be removed like any other. The patcher
-reads ICO images in BMP form (1, 4, 8, 16, 24 or 32 bit) and PNG (not
+size stay unchanged, and the patch can be removed like any other. The other
+patches are not shifted by it, not even those that append a section: they land
+after the end of the file, while the icon images lie before it. Before writing,
+the patcher checks in the resource directory that each of the eight places
+really holds an icon image of exactly this size. If not, it aborts without
+writing anything. The patcher reads ICO images in BMP form (1, 4, 8, 16, 24 or 32 bit) and PNG (not
 interlaced) by itself, without extra modules. The path is remembered in
 `patcher_selection.ini`; with `-Unattended` it has to be there, otherwise the
 patcher aborts with a message.

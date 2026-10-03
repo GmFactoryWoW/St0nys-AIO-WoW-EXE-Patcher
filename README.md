@@ -1417,7 +1417,12 @@ die `.rsrc`-Sektion neu schreibt. Hier werden stattdessen nur die Bilddaten der
 acht vorhandenen Icon-Bitmaps (vier Größen in zwei Sprachvarianten) an Ort und
 Stelle überschrieben – gleiche Größe, gleiche Bittiefe, gleicher Platz.
 Ressourcenverzeichnis, Offsets und Dateigröße bleiben unverändert, und der
-Patch lässt sich wie jeder andere wieder zurücknehmen. ICO-Bilder in BMP-Form
+Patch lässt sich wie jeder andere wieder zurücknehmen. Die anderen Patches
+verschieben sich dadurch nicht, auch nicht die, die eine Sektion anhängen: Sie
+landen hinter dem Dateiende, die Icon-Bilder liegen davor. Vor dem Schreiben
+prüft der Patcher im Ressourcenverzeichnis, dass an allen acht Stellen
+tatsächlich ein Icon-Bild genau dieser Größe liegt. Stimmt das nicht, bricht er
+ab, ohne etwas zu schreiben. ICO-Bilder in BMP-Form
 (1, 4, 8, 16, 24 oder 32 Bit) und PNG (nicht interlaced) liest der Patcher
 selbst, ohne Zusatzmodule. Der Pfad wird in `patcher_selection.ini` gemerkt;
 mit `-Unattended` muss er dort stehen, sonst bricht der Patcher mit einer

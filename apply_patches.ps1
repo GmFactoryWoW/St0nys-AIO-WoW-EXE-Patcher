@@ -838,6 +838,43 @@ $ICON_SLOTS = @(
 
 function Get-IconDibLength([int]$S) { return 40 + $S * $S * 4 + [int](([Math]::Floor(($S + 31) / 32)) * 4) * $S }
 
+# Liest aus dem Ressourcen-Verzeichnis der aktuellen Wow.exe alle RT_ICON-
+# Eintraege als "Dateioffset/Groesse". Damit prueft Set-ClientIcon vor dem
+# Schreiben, dass jeder Slot wirklich ein Icon-Bild genau dieser Groesse ist -
+# ein Bild kann so nie ueber seinen Platz hinaus in andere Daten laufen, auch
+# wenn die Exe von einem anderen Werkzeug veraendert wurde.
+function Get-IconResourceSlots {
+    $list = New-Object System.Collections.Generic.List[string]
+    $e = RU32 $script:f 0x3C
+    $IB = RU32 $script:f ($e + 24 + 28)
+    $rva = RU32 $script:f ($e + 24 + 96 + 2 * 8)        # Datenverzeichnis 2 = Ressourcen
+    if ($rva -eq 0) { return , $list }
+    $base = ConvertTo-FileOffset ($IB + $rva)
+    if ($base -lt 0) { return , $list }
+    $HI = [int64]2147483648                             # Bit 31: Unterverzeichnis
+    $n1 = (RU16 $script:f ($base + 12)) + (RU16 $script:f ($base + 14))
+    for ($i = 0; $i -lt $n1; $i++) {
+        $id = RU32 $script:f ($base + 16 + 8 * $i); $p1 = RU32 $script:f ($base + 20 + 8 * $i)
+        if ($id -ne 3 -or $p1 -lt $HI) { continue }      # nur RT_ICON
+        $d2 = $base + ($p1 - $HI)
+        $n2 = (RU16 $script:f ($d2 + 12)) + (RU16 $script:f ($d2 + 14))
+        for ($j = 0; $j -lt $n2; $j++) {
+            $p2 = RU32 $script:f ($d2 + 20 + 8 * $j)
+            if ($p2 -lt $HI) { continue }
+            $d3 = $base + ($p2 - $HI)
+            $n3 = (RU16 $script:f ($d3 + 12)) + (RU16 $script:f ($d3 + 14))
+            for ($k = 0; $k -lt $n3; $k++) {
+                $p3 = RU32 $script:f ($d3 + 20 + 8 * $k)
+                if ($p3 -ge $HI) { continue }
+                $leaf = $base + $p3
+                $off = ConvertTo-FileOffset ($IB + (RU32 $script:f $leaf))
+                $list.Add(('{0}/{1}' -f $off, (RU32 $script:f ($leaf + 4))))
+            }
+        }
+    }
+    return , $list
+}
+
 # Relative Pfade gelten ab dem Ordner der Wow.exe (bei -Path kann der ein anderer
 # als der Skriptordner sein).
 function Resolve-IconPath([string]$v) {
@@ -1149,6 +1186,15 @@ function Set-ClientIcon([string]$v) {
             foreach ($off in $slot.Offsets) { $b = New-Object byte[] $len; [Array]::Copy($script:f, $off, $b, 0, $len); Patch $off $b }
         }
         return
+    }
+    # Erst alle acht Slots gegen das Ressourcen-Verzeichnis pruefen, dann schreiben.
+    $res = Get-IconResourceSlots
+    foreach ($slot in $ICON_SLOTS) {
+        foreach ($off in $slot.Offsets) {
+            if (-not $res.Contains(('{0}/{1}' -f $off, (Get-IconDibLength $slot.Size)))) {
+                throw ('Icon: Bei Datei 0x{0:X} liegt kein Icon-Bild mit {1} Pixeln - die Icon-Ressourcen dieser Wow.exe sind veraendert.' -f $off, $slot.Size)
+            }
+        }
     }
     $images = Get-IconImages (Resolve-IconPath $v)
     foreach ($slot in $ICON_SLOTS) {
