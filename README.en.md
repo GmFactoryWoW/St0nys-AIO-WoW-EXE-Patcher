@@ -1433,6 +1433,9 @@ own – thank you as well!
 Thanks also to **Stormhand** for the permission to include his CameraReforged
 patch.
 
+Thanks to **Moroes**, who tracked down the patch "Merge addon data of all
+accounts (SavedVariables)" (No. 22) and passed it on to me.
+
 And of course thanks to all patch authors named in the
 [patch overview](#patch-overview).
 

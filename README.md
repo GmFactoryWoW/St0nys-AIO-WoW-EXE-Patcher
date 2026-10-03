@@ -1470,6 +1470,9 @@ einige eigene Patches beigesteuert – vielen Dank auch dafür!
 Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
 einzubauen.
 
+Danke an **Moroes**, der den Patch „Addon-Daten aller Accounts zusammenlegen
+(SavedVariables)“ (Nr. 22) aufgespürt und mir zugespielt hat.
+
 Und natürlich danke an alle Autoren der Patches, die in der
 [Patch-Übersicht](#patch-übersicht) genannt sind.
 
