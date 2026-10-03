@@ -2,10 +2,10 @@
 
 [🇩🇪 Deutsch](README.md) | 🇬🇧 English
 
-An all-in-one (AIO) patcher for the `Wow.exe` of **World of Warcraft 3.3.5a (build 12340)**.
-It applies bug fixes, performance optimizations, extended view distances,
-improved sound settings and a few quality-of-life features directly to the
-executable – in a single pass, without extra tools or DLL injectors.
+An all-in-one (AIO) patcher for the `Wow.exe` of **World of Warcraft 3.3.5a
+(build 12340)**. It applies bug fixes, performance optimizations, extended view
+distances, improved sound settings and a few quality-of-life features directly
+to the executable – in a single pass, without extra tools or DLL injectors.
 
 On start you choose the **language** (Deutsch / English) and then pick
 **which patches** to apply from a menu. Applied patches can be **deselected or
@@ -48,7 +48,8 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 - Windows with PowerShell (Windows PowerShell 5.1 ships with Windows 10 and later)
 - An **original, unmodified** `Wow.exe` 3.3.5a, build 12340 with
   SHA256 `AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8`
-  (on the first start; after that a `Wow.exe` patched with this patcher)
+  (only on the first start; after that a `Wow.exe` patched with this patcher is
+  enough)
 
 ## Usage
 
@@ -69,19 +70,22 @@ To **change or remove** patches just run `patcher.bat` again, see
 3. Welcome message, press ENTER to start.
 4. Check that a `Wow.exe` exists in the folder.
 5. Checking `Wow.exe`: on the first start it must be original and unmodified
-   (SHA256). After that the patcher recognizes a `Wow.exe` patched by itself by
-   the watermark and determines which patches are in it. Anything else aborts.
+   (SHA256). After that the patcher recognizes a `Wow.exe` it patched itself
+   by the watermark and determines which patches are in it. Anything else
+   aborts.
 6. **Patch selection** menu (see below). Your selection from last time is
    preselected, or for a patched `Wow.exe` the patches currently in it.
-7. Summary of the selected patches (for a patched `Wow.exe`: what is added and
+7. For patches with their own value (jump height, double jump, client info) the
+   patcher asks for the values; then it saves the selection.
+8. Summary of the selected patches (for a patched `Wow.exe`: what is added and
    what is removed), notes (missing or redundant companion patches, ban risk)
    and a confirmation prompt (Y/N).
-8. Backup: on the first patch run the original is saved as `Wow.exe.ORI`, on
+9. Backup: on the first patch run the original is saved as `Wow.exe.ORI`, on
    every later run the previous `Wow.exe` is saved as `Wow.exe.BAK`.
-9. All selected patches are applied in memory (with progress output) and
-   `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
-   untouched.
-10. The patcher remembers the hash of the new `Wow.exe` together with the
+10. All selected patches are applied in memory (with progress output) and
+    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
+    untouched.
+11. The patcher remembers the hash of the new `Wow.exe` together with the
     original bytes in `patcher_state.ini` (for a faster next start) and shows a
     final message.
 
@@ -99,7 +103,7 @@ after their name, with the link right below.
 | Input              | Effect                                     |
 |--------------------|--------------------------------------------|
 | `5`                | toggle patch 5                             |
-| `3 7 12` / `3,7,12`| toggle several patches                     |
+| `3 7 12` / `3,7,12` | toggle several patches                    |
 | `10-15`            | toggle a range                             |
 | `A`                | all patches on                             |
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
@@ -109,7 +113,7 @@ after their name, with the link right below.
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
 
-Before the confirmation prompt the patcher shows **notes**, nothing is blocked:
+Before the confirmation prompt the patcher shows **notes** – nothing is blocked:
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
 completely replaces the RCE fix) and – as a red line – when selected patches
@@ -126,21 +130,24 @@ prompt.
   newer version adds patches, your selection stays correct and the new patches
   start with their default setting.
 - The file is plain text (`laa=1`, `cache=0`, …) and can also be edited by
-  hand. It also holds the entered values of the client info patches
-  (`value.clientversion=3.3.6` etc.).
+  hand. It also holds the entered values of the value patches – client info,
+  jump height, double jump (`value.clientversion=3.3.6` etc.).
 - The language is remembered there as well (`language=de` or `en`).
 - **Reset:** press `B` in the menu or delete `patcher_selection.ini` – then
-  the preset "Billy's_Wow.exe" applies again.
+  the preset "Billy's_Wow.exe" applies again (deleting the file also forgets the
+  language and the remembered values, they are asked for again).
 
 The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
 selection. It is defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
-The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set plus the security and login patches, MPQ signature check off, the
-`/follow` fix, level 101, slider maximums, object scale, tracker, world map
-and windowed mode. The list is in `apply_patches.ps1` under `$PRESET_STONY`; in
-the overview it is the "St0ny" column. **Warning: this preset has not been
-tested yet.** The patcher shows this as a yellow note when you load it with `S`.
+The second preset "St0nys_Wow.exe" (key `S`) is Billy's patch set plus the
+security patches No. 7–9 and the login patches No. 10–12, MPQ signature check
+off, the `/follow` fix, level 101, slider maximums, GameObject view distance
+scaling (No. 49), tracker, world map and windowed mode. The list is in
+`apply_patches.ps1` under `$PRESET_STONY`; in the overview it is the "St0ny"
+column. **Warning: this preset has not been tested yet.** The patcher shows this
+as a yellow note when you load it with `S`.
 
 ## Changing or removing patches
 
@@ -148,7 +155,7 @@ Applied patches are not final. Just run `patcher.bat` again: the menu then has
 exactly the patches checked that are currently in `Wow.exe`. Newly checked
 patches are marked **(new)**, deselected ones **(will be removed)**. This way
 you can add patches, deselect them or change values (jump height, double
-jump, client info) as you like. `N` and ENTER removes every patch – afterwards
+jump, client info) as you like. `N` plus ENTER removes every patch – afterwards
 `Wow.exe` is **byte-for-byte the original** again.
 
 How it works:
@@ -156,7 +163,7 @@ How it works:
 - **First start:** `Wow.exe` must be original (SHA256 check), otherwise the
   patcher aborts. Patching saves the original as `Wow.exe.ORI`, and every
   patched `Wow.exe` gets a [watermark](#notes).
-- **Every later start:** the patcher recognizes a `Wow.exe` patched by itself
+- **Every later start:** the patcher recognizes a `Wow.exe` it patched itself
   by the watermark. If it is missing (and the file is not original), it aborts
   – e.g. for an exe patched with another tool.
 - **Determining the patch state:** if the hash in `patcher_state.ini` matches
@@ -165,11 +172,13 @@ How it works:
   missing or the `Wow.exe` comes from another computer, the patcher checks all
   patch locations in the exe itself: which patches are in it, and with which
   values (jump height, build date etc.)? For this the script contains a small
-  table with the original bytes at all patch locations.
+  table with the original bytes at all patch locations. If there is nothing to
+  do afterwards, the patcher still recreates `patcher_state.ini` so that the
+  next start takes the fast way again.
 - **Restoring the original:** from the patched exe the patcher rebuilds the
   original in memory, verifies it by SHA256 and applies the new selection on
-  top. If that does not work exactly – e.g. because the exe
-  was changed in some other way after patching – it aborts.
+  top. If that does not work exactly – e.g. because the exe was changed in
+  some other way after patching – it aborts.
 - Before writing, the patcher also checks that the new result can be reverted
   cleanly to the original.
 - `Wow.exe.ORI` is not touched on later runs and is always the original. If
@@ -189,7 +198,7 @@ All parameters are optional and are passed through from `patcher.bat` to
 
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
-| `-Language de\|en`     | set the language for this run (does not change the remembered language)   |
+| `-Language de\|en`     | set the language for this run. Together with `-Select` the remembered language stays unchanged; if you accept a selection in the menu with ENTER, it is saved along with it. |
 | `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
 | `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
@@ -200,7 +209,8 @@ Example:
 patcher.bat -Language en -Select saved -Unattended
 ```
 
-Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by the user or because no more input is possible).
+Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by
+the user or because no more input is possible).
 
 ## Files
 
@@ -210,7 +220,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | `apply_patches.ps1` | Patch engine: language selection, checks, selection menu, backup; reads the EXE once, patches in memory, writes it back once |
 | `README.md`         | German documentation |
 | `README.en.md`      | This file |
-| `patcher_selection.ini` | Created when you accept a selection, stores your patch selection |
+| `patcher_selection.ini` | Created on the first start (remembered language), stores the accepted selection and the entered values |
 | `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches, values and original bytes – speeds up the next start, but is not strictly required |
 | `Wow.exe.ORI`       | Backup of the original `Wow.exe`, created on the first patch run |
 | `Wow.exe.BAK`       | Backup of the previous `Wow.exe` from before the last run |
@@ -298,7 +308,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 65 | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ |
 | 66 | CameraReforged [BETA]: camera height, shoulder offset, zoom limits *(not 100% finished yet; exe grows – ban risk)* | Stormhand / St0ny | – | – |
 |    | **Sound** |  |  |  |
-| 67 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft))* | St0ny | – | – |
+| 67 | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – |
 |    | **Client info: version, build, title, date, icon** |  |  |  |
 | 68 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
 | 69 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
@@ -318,17 +328,21 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 ### System & performance
 
 **4GB patch (Large Address Aware)** *(No. 1, Author: Alastor StrixEfuartus / Kebabstorm / Robinsch)*
+
 Lets `Wow.exe` use up to 4 GB of RAM instead of the default 2 GB limit for
 32-bit applications.
 
 **Disable CACHE folder creation** *(No. 2, off by default, Author: Alastor StrixEfuartus / Kebabstorm)*
+
 Prevents the client from creating a `CACHE` folder automatically.
 
 **Refresh item cache immediately** *(No. 3, Author: Robinsch)*
+
 Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
 **WorldFrame crash fix (invalid triangle indices)** *(No. 4, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 Prevents a crash in a world rendering function (VA `0x81D510`). It walks over
 triangles made of three vertex indices each and turns "index minus base" into a
 memory address. If an index is smaller than the base, the address points before
@@ -341,13 +355,14 @@ original, the three jump distances have been corrected and the code is shorter.
 > well. Both fit in there together, the file size does not change.
 
 > [!NOTE]
-> A heuristic fix, as the author calls it too: only the first triangle of each
-> call is checked. It does no harm when everything is fine, but does not catch
-> every conceivable case.
+> A heuristic fix, as the author himself calls it: only the first triangle of
+> each call is checked. It does no harm when everything is fine, but does not
+> catch every conceivable case.
 
 ### Security & privacy
 
 **Remote code execution exploit fix** *(No. 5, off by default, Author: Robinsch)*
+
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
 are no longer loaded from the local cache. Warden itself keeps working, so
@@ -359,6 +374,7 @@ servers with active Warden are not a problem.
 > together add nothing.
 
 **Disable Warden completely, RCE fix** *(No. 6, off by default, Author: Robinsch)*
+
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
@@ -370,31 +386,38 @@ together do no harm, the patcher just points it out.
 > AzerothCore or TrinityCore with default settings) may therefore kick you.
 
 **Disable Scan.dll** *(No. 7, off by default, Author: Alastor StrixEfuartus)*
+
 Disables the Warden scan DLL mechanism in the client.
 
 **Disallow client patches from the server** *(No. 8, off by default, Author: Kebabstorm)*
+
 The server can no longer send patch files to the client and have them
 installed.
 
 **Disallow hardware surveys from the server** *(No. 9, off by default, Author: Kebabstorm)*
+
 The server can no longer request a hardware survey (information about your PC)
 from the client.
 
 ### Login & connection
 
 **Skip Battle.net login** *(No. 10, off by default, Author: Kebabstorm)*
+
 The client skips the Battle.net login step and goes straight to the classic
 login.
 
 **Skip Remote Desktop check** *(No. 11, off by default, Author: Kebabstorm)*
+
 The client no longer checks whether it runs over a Remote Desktop connection –
 so WoW can be played via RDP, for example.
 
 **Disable HTTP requests to Battle.net** *(No. 12, off by default, Author: Kebabstorm)*
+
 The client no longer fetches news, help articles and terms of use from
 Blizzard's servers – they no longer exist for 3.3.5 anyway.
 
 **Disable AFK timer idle check** *(No. 13, off by default, Author: St0ny)*
+
 Disables the idle login check but keeps the automatic AFK disconnect timer
 active. Also prevents the CharAutoLogin bug.
 **Required for character auto-login** – details on [Discord](https://discord.com/channels/858041817043042364/1515439916878663701).
@@ -402,22 +425,27 @@ active. Also prevents the CharAutoLogin bug.
 ### Modding: interface, MPQs & addons
 
 **Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm)*
+
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding).
 
 **Allow unsigned / incorrectly signed MPQs** *(No. 15, off by default, Author: Alastor StrixEfuartus)*
+
 Allows loading MPQ archives without a valid signature. Required for custom
 content on private servers.
 
 **Allow extended MPQ names** *(No. 16)*
+
 Allows wildcard names for MPQ archives (`patch-*.MPQ` and
 `patch-locale-*.MPQ`).
 
 **Load data directly from the Data folder (no MPQ)** *(No. 17, Author: Alastor StrixEfuartus)*
+
 The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
 
 **LUA unlock (allow protected functions)** *(No. 18, off by default, Author: Alastor StrixEfuartus)*
+
 Addons and macros may call protected functions, e.g. `CastSpellByName`,
 `CastSpellByID`, `TargetUnit`, `FocusUnit`, `InteractUnit`, movement functions
 or `ReloadUI`. `AttackTarget` still prints an error.
@@ -427,6 +455,7 @@ or `ReloadUI`. `AttackTarget` still prints an error.
 > this can lead to a ban.
 
 **Pass all keyboard events on to addons (OnKeyDown)** *(No. 19, off by default, Author: Alyst3r (0x539wowmod))*
+
 If a frame has an OnKeyDown script, the client reports the key as handled
 afterwards – it no longer reaches the key bindings. With the patch every key
 continues to the key bindings after the OnKeyDown script. This lets addons see
@@ -437,16 +466,18 @@ all key presses without blocking the normal controls.
 > bound action.
 
 **Merge addon data of all accounts (SavedVariables)** *(No. 20, off by default, Author: boredatom / St0ny)*
+
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
-you play several accounts, you only have to set up your addons once. Merged are:
+you play several accounts, you only have to set up your addons once. The
+following are merged:
 
 - the account-wide addon data (`SavedVariables\*.lua`),
 - the per-character addon data (`<Realm>\<Character>\SavedVariables\*.lua`),
 - the list of enabled addons (`AddOns.txt`, account-wide and per character).
 
-Macros, key bindings and chat and game settings stay separate per account as
-before.
+Macros, key bindings as well as chat and game settings stay separate per
+account as before.
 
 > [!NOTE]
 > The patch does not move existing addon data. To keep it, copy the contents of
@@ -454,8 +485,8 @@ before.
 > the patch is reverted, WoW uses the folders of the individual accounts again;
 > `global` is simply left as it is.
 
-Technically the patch changes 9 bytes in the function that takes over the
-account name for the addon paths after login (VA `0x5F9080`): instead of the
+Technically the patch changes 9 bytes in the function that stores the account
+name for the addon paths after login (VA `0x5F9080`): instead of the
 name it copies the text `global`, which is already in `Wow.exe`. The original by
 boredatom (`patch_globalvariables.exe`) moves the rest of the function by 4 bytes
 for this; here everything stays in place. The advertising that the original
@@ -465,9 +496,12 @@ not included.
 ### DLL loaders
 
 **Enable AwesomeWotlkLib.dll support** *(No. 21, Author: FrostAtom)*
+
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
 **Requires** `AwesomeWotlkLib.dll` from [awesome_wotlk](https://github.com/noname08662/awesome_wotlk).
+Belongs together with the 4GB patch (No. 1): if that one is not selected, the
+patcher points it out.
 
 > [!NOTE]
 > The patch itself is harmless, it only loads a DLL that is not included here.
@@ -476,8 +510,10 @@ the client with additional features and improvements for private servers.
 > a yellow note for this.
 
 **Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 22, off by default, Author: St0ny)*
+
 Loads `voice.dll` from the WoW folder at startup – the client part of
-[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat module for AzerothCore. If the DLL is
+[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
+module for AzerothCore. If the DLL is
 missing, WoW starts normally.
 
 > [!CAUTION]
@@ -493,41 +529,51 @@ the `LoadLibraryA` import.
 ### Gameplay fixes
 
 **More precise area trigger timer (50 ms instead of 100 ms)** *(No. 23, Author: Robinsch)*
+
 Increases the area trigger check frequency from 100 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
 **Remove melee swing on right-click** *(No. 24, Author: Robinsch)*
+
 Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
 **Suppress NPC attack animation when turning** *(No. 25, Author: Robinsch)*
+
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
 
 **Fix spell animation after cancelled channel** *(No. 26, Author: Robinsch)*
+
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 **Fix "ghost" attack when NPCs evade from combat** *(No. 27, Author: Robinsch)*
+
 Fixes the "ghost" attack NPCs perform when they evade from combat.
 
 **Fix naked character bug** *(No. 28, Author: Robinsch)*
+
 Disables the `SPELL_AURA_X_RAY` effect that could cause characters to be
 rendered without their equipment.
 
 **Keep force reaction on /reload** *(No. 29, Author: Robinsch)*
+
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
 **New mail without the 60-second wait** *(No. 30, Author: Robinsch)*
+
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
 **Allow chat commands while dead** *(No. 31, Author: Robinsch)*
+
 Slash commands also work while the character is dead.
 
 **Allow /follow on NPCs** *(No. 32, off by default, Author: Alastor StrixEfuartus / St0ny)*
-`/follow` also works on NPCs, not just players. Based on the /follow patch
+
+`/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
 the original redirects the check into a code cave that ignores its result.
 That cave, however, would sit exactly in the gap at the end of `.text` that
@@ -536,16 +582,19 @@ unconditional instead – a single byte, same effect, and the patches work
 together.
 
 **Level 101+ fix (druid base stats and barber chair)** *(No. 33, off by default, Author: Alastor StrixEfuartus)*
+
 Druids at level 101 and above can view their base stats again, and the
 barber chair works for all characters at level 101 and above.
 **Requires** the patch "Allow custom GlueXML" (No. 14). In the source it is
 called "Disable XML SIG MD5", hence the note "Use XML MD5" there.
 
 **Unlimited race/class combinations** *(No. 34, off by default, Author: Alastor StrixEfuartus / Robinsch)*
+
 Character creation allows every race with every class. The server has to
 support this as well.
 
 **Disable the name check in character creation (e.g. digits in names)** *(No. 35, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
 names – but all other client rules (length, allowed characters etc.) are gone as
@@ -557,11 +606,13 @@ convention, here it is done directly in the function (`mov eax, 57h` / `ret`).
 > it rejects the character.
 
 **Max characters per realm raised to 255** *(No. 36, Author: St0ny)*
+
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 **Custom Item Fix (BETA) v2** *(No. 37, off by default, Author: Kebabstorm / St0ny)*
+
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
 sheath of an item only from `Item.dbc`. Items that only exist in the server's
@@ -595,6 +646,7 @@ Not taken over from v1: the PE checksum (Windows does not check it for
 programs) and the change `Cache` → `||che` – that is exactly patch No. 2.
 
 **Remove the climb angle limit (walk up any slope)** *(No. 38, off by default, Author: Alastor StrixEfuartus)*
+
 The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
 at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
@@ -604,6 +656,7 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > ban.
 
 **Change jump height (original -7.9555473)** *(No. 39, off by default, Author: Alastor StrixEfuartus)*
+
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
 `-100` to just below `0`, with comma or dot as decimal separator. The lower the
@@ -616,19 +669,21 @@ remembered like those of the client info patches.
 > ban.
 
 **Steer forward/backward while jumping** *(No. 40, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
 well, even to the opposite direction. 0x539wowmod replaces the client's forward
 input with a DLL for this; that version differs from the original only in two
 jumps (do not stop in the air, recalculate the speed), which are changed directly
-in the EXE here – without DLL and without a code cave. On top comes the byte
-patch from 0x539wowmod that updates the movement in the air.
+in the EXE here – without DLL and without a code cave. Added to this is the
+byte patch from 0x539wowmod that updates the movement in the air.
 
 > [!WARNING]
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
 **Steer sideways while jumping** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
 the movement early while the falling flag is set.
@@ -638,6 +693,7 @@ the movement early while the falling flag is set.
 > lead to a ban.
 
 **Turning while jumping changes the flight direction** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
 in the air as well, like the 0x539wowmod DLL does. Works best together with the
@@ -648,17 +704,19 @@ two previous patches.
 > lead to a ban.
 
 **Double jump (more jumps in the air)** *(No. 43, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
 the value is remembered like those of the client info patches.
 
-The client's jump function (VA `0x9883F0`) rejects every jump while the character
-is falling. 0x539wowmod replaces it with a DLL and counts jump charges. Here the
-same happens in a small code cave: a jump from the ground sets a counter to the
-selected number, and in the air a jump is allowed as long as the counter is not
-0. Rooted or flying still blocks jumping. Every air jump uses the same jump
-height as a normal jump (so also the value from "Change jump height"). The
-separate second jump height of 0x539wowmod's double jump is not included.
+The client's jump function (VA `0x9883F0`) rejects every jump while the
+character is falling. 0x539wowmod replaces it with a DLL and counts jump
+charges. Here the same happens in a small code cave: a jump from the ground
+sets a counter to the selected number, and in the air a jump is allowed as long
+as the counter is not 0. Rooted or flying still blocks jumping. Every air jump
+uses the same jump height as a normal jump (so also the value from "Change jump
+height", No. 39). The separate second jump height of 0x539wowmod's double jump
+is not included.
 
 The counter is a byte the client has to write. That is why the patch gets a small
 section `.djump` of its own at the end of the file (the gap in `.text` is not
@@ -674,6 +732,7 @@ writable); this makes `Wow.exe` slightly larger.
 ### Graphics & view distance
 
 **CVar farclip unlock (max 10000)** *(No. 44, Author: Alastor StrixEfuartus)*
+
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
 upper limits for it: 1583 yards normally and 791 yards as a fallback. The 791
@@ -687,10 +746,12 @@ the view distance slider and a completely different location in the EXE (see
 patch No. 48 "Graphics options: extend slider maximums").
 
 **CVar horizonFarclipScale unlock (max 12)** *(No. 45, Author: St0ny)*
+
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
 **CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 46, Author: St0ny)*
+
 Removes the upper limit of the CVar `environmentDetail` entirely. Originally
 the value is clamped to the range 0.5 to 1.5; the patch disables the upper
 clamp so arbitrarily high values are passed through.
@@ -700,10 +761,12 @@ No. 49 for all five. That makes it the most convenient FPS lever for object
 rendering, since it works in-game without re-patching.
 
 **CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 47)*
+
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
 **Graphics options: extend slider maximums** *(No. 48, off by default, Author: St0ny)*
+
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
 sliders stayed at Blizzard's values because they don't take their maximum
@@ -723,7 +786,7 @@ the interface calculates the step size itself as (max−min)/10, so 230 yards
 per notch here.
 
 <details>
-<summary><b>Background: why the sliders didn't grow along before</b></summary>
+<summary><b>Background: why the sliders didn't grow with the unlocks before</b></summary>
 
 The interface builds every slider using this pattern:
 
@@ -755,8 +818,8 @@ without any visible sign.
 **Two limitations**
 
 - The slider only sets the CVar. Without the unlock patches the client clamps
-  the value back to its original immediately – so the patches "Farclip unlock"
-  (No. 44), "CVar environmentDetail unlock" (No. 46) and "CVar
+  the value back to its original immediately – so the patches "CVar farclip
+  unlock" (No. 44), "CVar environmentDetail unlock" (No. 46) and "CVar
   groundEffectDist unlock" (No. 47) belong with it. If they are missing from
   the selection, the patcher points this out.
 - For `groundEffectDensity` nothing changes above 64: the vertex buffer for
@@ -765,7 +828,7 @@ without any visible sign.
 
 **The Ultra preset stays at Blizzard's values**
 
-The master "Graphics quality" slider still sets 1277 / 1.5 / 64 / 140 on
+The master "Graphics quality" slider still sets 1277 / 1.5 / 140 / 64 on
 Ultra, not the new maximums. This cannot be changed from the EXE: the preset
 values are plain Lua constants in
 `Interface\FrameXML\GraphicsQualityLevels.lua` and are written directly into
@@ -803,6 +866,7 @@ see above).
 > `.rdata`. There is no overlap with No. 4 and No. 54.
 
 **GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 49, off by default, Author: St0ny)*
+
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
 `environmentDetail`. Cat 0 (small clutter) and Cat 4 (huge buildings) take
@@ -824,6 +888,7 @@ the table above). Values above 1.5 require the patch "CVar environmentDetail
 unlock" (No. 46).
 
 **GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 50, off by default, Author: St0ny)*
+
 If you want to keep view distances entirely at Blizzard's values, deselect
 this patch. It costs performance: noticeably more small clutter is visible at
 the same time, and the number of drawn objects is the performance lever.
@@ -832,14 +897,15 @@ tools. In the original, Cat 0 is so tight at 30 yards that small clutter
 disappears much earlier than everything else; 50 improves the ratio to Cat 1
 from 1:3.3 to 1:2, and the `environmentDetail` slider scales it
 proportionally. Cat 1 to 4 are not touched – the view distance is controlled
-via the CVar (see the previous patch), which, together with the code patch,
-stretches all five categories evenly.
+via the CVar, which, together with the code patch No. 49, stretches all five
+categories evenly.
 
 Five related values are changed:
 
 | Value                   | Blizzard | Patch |
 |-------------------------|---------:|------:|
-| View distance           | 30       | 50    |
+| Base view distance      | 30       | 50    |
+| Runtime view distance   | 30       | 50    |
 | View distance squared   | 900      | 2500  |
 | Fade start              | 25       | 45    |
 | Fade start squared      | 625      | 2025  |
@@ -884,7 +950,7 @@ environmentDetail" adds it, so all five categories grow evenly.
 Important when doing the math: the two factors **multiply**. Base value ×2 at
 CVar 1.5 results in ×3, not ×2. To reach a target factor Z at CVar value E,
 enter Z/E as the base value.
-Without the code patch this only applies to Cat 1–3, and the categories drift
+Without patch No. 49 this only applies to Cat 1–3, and the categories drift
 apart at high CVar values: Cat 3 would eventually overtake Cat 4, so
 medium-sized objects would be visible further away than huge ones.
 
@@ -928,19 +994,23 @@ you can widen them independently of the distances.
 </details>
 
 **Occluder fix for Stormwind (Open Azeroth)** *(No. 51, off by default, Author: Robinsch)*
+
 Raises the occluder threshold for Stormwind so buildings and objects are not
 hidden incorrectly. Fixes graphical glitches on custom servers with a rebuilt
 Stormwind.
 
 **Re-enable the blue moon in the night sky** *(No. 52, Author: Robinsch)*
+
 Restores a removed legacy feature: the blue moon that used to be visible in
 the night sky.
 
 **No character transparency when zooming in** *(No. 53, Author: Alastor StrixEfuartus)*
+
 Your own character no longer becomes transparent when the camera is zoomed in
 close.
 
 **No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 54, off by default, Author: Alyst3r (0x539wowmod) / St0ny)*
+
 When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
 `UNIT_FLAG2_DO_NOT_FADE_IN` (`0x20`) in `UNIT_FIELD_FLAGS_2` disappear instantly –
@@ -955,6 +1025,7 @@ before.
 > in there together, the file size does not change.
 
 **HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 55, off by default, Author: Badgermilk0)*
+
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
 **no new portraits, no images and no animations** – it changes a single
@@ -978,19 +1049,23 @@ otherwise read past the source.
 ### Interface & comfort
 
 **Auto-sort quest tracker** *(No. 56, off by default)*
+
 Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
 sorted automatically.
 
 **Advanced world map enabled by default** *(No. 57, off by default)*
+
 Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
 enabled from the start.
 
 **Cast bars on all frames** *(No. 58, Author: Kebabstorm)*
+
 Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
 **Retail guild emblems: selection extended from 170 to 196** *(No. 59, off by default, Author: MacWarrior)*
+
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
 6 borders, 17 border colors, 51 background colors. The tabard designer cycles
@@ -1022,12 +1097,14 @@ up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
 (No. 16).
 
 **FlashWindow patch** *(No. 60, Author: Kebabstorm)*
+
 FlashWindow: makes the WoW window flash in the taskbar when a relevant event
 occurs while the game is in the background. The function can be called from
 addons.
 **Requires** the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk.
 
 **Character creation: do not randomize the appearance automatically** *(No. 61, off by default, Author: Alyst3r (0x539wowmod))*
+
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
 etc. automatically; you start with the default appearance. The randomize button
@@ -1036,22 +1113,28 @@ keeps working – it uses a separate path in the client.
 ### Window, mouse & camera
 
 **Windowed mode by default** *(No. 62, off by default, Author: St0ny)*
+
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
 **Maximized window by default** *(No. 63, off by default, Author: St0ny)*
+
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
 **No black screen when switching to windowed mode** *(No. 64, Author: Robinsch)*
+
 Switching to windowed mode while in-game no longer results in a black
 screen.
 
 **Mouse flicker / camera jump fix** *(No. 65, Author: Robinsch)*
+
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 **CameraReforged [BETA]: camera height, shoulder offset, zoom limits** *(No. 66, off by default, Author: Stormhand / St0ny)*
-Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by **Stormhand** into this patcher, so everything
+
+Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
+**Stormhand** into this patcher, so everything
 runs in one pass – included with his explicit permission ("Of course! Take
 whatever you need. I appreciate your work."). The port and its adjustments were
 made by St0ny. The client gets two brand-new CVars and new default values for
@@ -1117,6 +1200,7 @@ overwrites the table of the slider patch.
 ### Sound
 
 **Optimize sound settings** *(No. 67, off by default, Author: St0ny)*
+
 Includes the following changes:
 
 - Sound channel hardware limit raised to 126
@@ -1133,20 +1217,23 @@ Includes the following changes:
 
 These five patches by MacWarrior (ported from his Python scripts
 `edit_version.py`, `edit_revision.py`, `edit_title.py`, `edit_date.py` and
-`edit_icon.py`) change how the client identifies itself. When selected, **the patcher asks for
-the desired values after the selection**. A suggestion is shown in square
-brackets, ENTER accepts it. Invalid input is asked again with a message, and all
-values are checked before anything is written. The patcher remembers the values
-in `patcher_selection.ini` (`value.<Id>=…`); with `-Unattended` the remembered
-values or the original values are used. If a patch is already in `Wow.exe`,
-its current value is the suggestion. When asking, it is also shown after the
-patch name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
+`edit_icon.py`) change how the client identifies itself. When selected, **the
+patcher asks for the desired values after the selection**. A suggestion is
+shown in square brackets, ENTER accepts it. Invalid input is rejected with a
+message and asked for again, and all values are checked before anything is
+written. The patcher remembers the values in `patcher_selection.ini`
+(`value.<Id>=…`); with `-Unattended` the remembered values are used, otherwise
+the original values – exceptions: build date (today's date) and icon (the
+patcher aborts), see No. 71 and 72. If a patch is already in `Wow.exe`, its
+current value is the suggestion. When asking, it is also shown after the patch
+name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 
 > [!NOTE]
 > Servers may check the client version or build number, so a changed value has
 > to match the server.
 
 **Change client version (original 3.3.5)** *(No. 68, off by default, Author: MacWarrior)*
+
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
 ProductVersion (`Version x.y`) of the version resource and `VS_FIXEDFILEINFO`.
@@ -1154,6 +1241,7 @@ The build number is kept. Major and minor version together must fit into the
 ProductVersion field (e.g. `3.3`).
 
 **Change build number (original 12340)** *(No. 69, off by default, Author: MacWarrior)*
+
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion. The
 patcher does not allow builds up to 6141: servers like AzerothCore or
@@ -1178,19 +1266,23 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 **Change program title in the file properties** *(No. 70, off by default, Author: MacWarrior)*
+
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
 
 **Change build date (original Jun 24 2010)** *(No. 71, off by default, Author: MacWarrior)*
+
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice. Input as `YYYY-MM-DD`, optionally followed by
 `FR` for French month names (e.g. `2026-09-28 FR` → `Sep 28 2026`). The
 suggestion in brackets is **today's date** (with `FR` if you chose it last
-time); with `-Unattended` the remembered value is used. If the patch is already
-applied, the current date of `Wow.exe` is suggested.
+time); with `-Unattended` the remembered value is used, or today's date if
+nothing is remembered. If the patch is already applied, the current date of
+`Wow.exe` is suggested.
 
 **Change program icon (icon of Wow.exe)** *(No. 72, off by default, Author: MacWarrior / St0ny)*
+
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or
 relative to the WoW folder. From that file it builds the four sizes stored in
@@ -1236,7 +1328,7 @@ patcher aborts with a message.
   `0x72DE20`), is never loaded into memory and does not change the file size.
   Removing all patches removes it again. As a side effect you can always
   check whether a `Wow.exe` was made with this patcher – e.g. with a hex editor
-  or in the command prompt with `findstr /m "St0nys AIO" Wow.exe` (prints the
+  or in the command prompt with `findstr /m /c:"St0nys AIO" Wow.exe` (prints the
   file name if it is there).
 - **Restoring the original:** run the patcher, press `N` and ENTER – with or
   without `patcher_state.ini`. Alternatively delete the patched `Wow.exe` and
@@ -1255,7 +1347,7 @@ A very special thank you goes to **Billy Hoyle** – for all his help and tips
 over the past months and for helping to collect the patches. His patch set is
 included as the preset "Billy's_Wow.exe" and is the default selection.
 
-**MacWarrior** also helped collecting the patches and contributed some of his
+**MacWarrior** also helped collect the patches and contributed some of his
 own – thank you as well!
 
 Thanks also to **Stormhand** for the permission to include his CameraReforged
