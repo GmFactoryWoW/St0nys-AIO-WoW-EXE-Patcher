@@ -112,7 +112,7 @@ dem Namen; der Link dazu steht direkt darunter.
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
-| `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) (**sicher** auf öffentlichen Servern) |
+| `B`                | Preset „Billy's_Wow.exe“ laden (= Standard) (**Sicher** auf öffentlichen Servern) |
 | `S`                | Preset „St0nys_Wow.exe“ laden (**Nicht sicher**, nur auf eigenen Servern verwenden) |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
 | `ENTER`            | Auswahl übernehmen und weiter               |
