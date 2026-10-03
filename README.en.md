@@ -264,7 +264,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 34 | Unlimited race/class combinations *(server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
 | 35 | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) / St0ny | – | – |
 | 36 | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
-| 37 | Custom Item Fix (BETA) v2 by St0ny *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm | – | – |
+| 37 | Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm | – | – |
 | 38 | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
 | 39 | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
 | 40 | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) / St0ny | – | – |
@@ -562,7 +562,7 @@ Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
-**Custom Item Fix (BETA) v2 by St0ny** *(No. 37, off by default, Author: Kebabstorm)*
+**Custom Item Fix (BETA) by Kebabstorm, v2 by St0ny** *(No. 37, off by default, Author: Kebabstorm)*
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
 sheath of an item only from `Item.dbc`. Items that only exist in the server's
