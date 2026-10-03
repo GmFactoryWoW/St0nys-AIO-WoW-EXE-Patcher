@@ -4113,6 +4113,13 @@ try {
     Exit-Patcher 1
 }
 
+# Download-Markierung (Zone.Identifier, "aus dem Internet") entfernen - wie das
+# Haekchen "Zulassen" in den Dateieigenschaften. Ersetzen per File.Replace
+# uebernimmt sie sonst von der alten Wow.exe. Nur unter Windows vorhanden.
+if (Get-Command Unblock-File -ErrorAction SilentlyContinue) {
+    try { Unblock-File -LiteralPath $file -ErrorAction Stop } catch { }
+}
+
 # --- 9. Zustand uebernehmen (ohne Patches ist die Wow.exe original, dann weg damit) ---
 try {
     if ($total -gt 0 -and $stateWarn) {

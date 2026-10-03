@@ -1453,7 +1453,10 @@ Meldung ab.
   den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
   Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
   Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das
-  Original samt Signatur wieder her.
+  Original samt Signatur wieder her. Eine Download-Markierung („Diese Datei
+  stammt von einem anderen Computer“) entfernt der Patcher unter Windows nach
+  dem Schreiben von der `Wow.exe`, wie das Häkchen „Zulassen“ in den
+  Dateieigenschaften.
 - **Wasserzeichen:** Jede gepatchte `Wow.exe` enthält den Text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   Daran erkennt der Patcher eine `Wow.exe` eindeutig als seine eigene: So

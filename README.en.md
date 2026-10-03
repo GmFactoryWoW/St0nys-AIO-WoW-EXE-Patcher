@@ -1418,7 +1418,9 @@ patcher aborts with a message.
   signature from the header: the new section lies behind the signature, and
   some tools would otherwise report the file as damaged. The signature bytes
   themselves stay untouched, and removing the patches restores the original
-  including its signature.
+  including its signature. On Windows the patcher removes a download mark
+  ("This file came from another computer") from `Wow.exe` after writing it,
+  like the "Unblock" checkbox in the file properties.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   This is how the patcher identifies a `Wow.exe` unambiguously as its own: it
