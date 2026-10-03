@@ -323,7 +323,7 @@ Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 <a id="patch-ghostattack"></a>
-**Fix "ghost" attack when NPCs evade from combat** *(No. 28, Author: Robinsch)*
+**Fix "ghost" attack when NPCs evade from combat** *(No. 28, Author: Robinsch / St0ny)*
 
 Before the client shows a new melee result, it plays the last stored swing on
 the target once more. If an NPC has evaded from combat in the meantime, that is
@@ -336,7 +336,7 @@ string helper function and would have turned it into an endless loop. Here it
 is corrected to `0x3555BF`.
 
 <a id="patch-naked"></a>
-**Fix naked character bug** *(No. 29, Author: Robinsch)*
+**Fix naked character bug** *(No. 29, Author: Robinsch / St0ny)*
 
 Fixes characters shown naked, as happens on private servers when new items are
 only distributed via `ItemDisplayInfo`. The patch disables `SPELL_AURA_X_RAY`:

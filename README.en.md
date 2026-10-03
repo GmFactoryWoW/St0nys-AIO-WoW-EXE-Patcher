@@ -283,8 +283,8 @@ Click the number of a patch to jump to its description.
 | [25](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
 | [26](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
 | [27](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
-| [28](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat | Robinsch | ✅ | – |
-| [29](PATCHES.en.md#patch-naked) | Fix naked character bug | Robinsch | ✅ | – |
+| [28](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat | Robinsch / St0ny | ✅ | – |
+| [29](PATCHES.en.md#patch-naked) | Fix naked character bug | Robinsch / St0ny | ✅ | – |
 | [30](PATCHES.en.md#patch-forcereaction) | Keep force reaction on /reload | Robinsch | ✅ | ✅ |
 | [31](PATCHES.en.md#patch-mail) | New mail without the 60-second wait | Robinsch | ✅ | ✅ |
 | [32](PATCHES.en.md#patch-deadchat) | Allow chat commands while dead | Robinsch | ✅ | ✅ |
@@ -399,17 +399,21 @@ clicking the number of a patch takes you straight to its description.
 
 ## Acknowledgements
 
-- A very special thank you goes to **Billy Hoyle** – for all his help and tips
-  over the past months and for helping to collect the patches. His patch set is
-  included as the preset "Billy's_Wow.exe" and is the default selection.
-- **MacWarrior** also helped collect the patches and contributed some of his
-  own – thank you as well!
-- Thanks also to **Stormhand** for the permission to include his
-  CameraReforged patch.
-- Thanks to **Moroes**, who tracked down patch
-  [#21](PATCHES.en.md#patch-globalsv) and passed it on to me.
-- And of course thanks to all patch authors named in the
-  [patch overview](#patch-overview).
+A very special thank you goes to **Billy Hoyle** – for all his help and tips
+over the past months and for helping to collect the patches. His patch set is
+included as the preset "Billy's_Wow.exe" and is the default selection.
+
+**MacWarrior** also helped collect the patches and contributed some of his
+own – thank you as well!
+
+Thanks also to **Stormhand** for the permission to include his CameraReforged
+patch.
+
+Thanks to **Moroes**, who tracked down patch [#21](PATCHES.en.md#patch-globalsv) and passed it
+on to me.
+
+And of course thanks to all patch authors named in the
+[patch overview](#patch-overview).
 
 ## License
 
