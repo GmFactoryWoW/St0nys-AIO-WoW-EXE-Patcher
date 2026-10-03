@@ -350,6 +350,21 @@ function New-PortraitMask([int]$N) {
     return , $m
 }
 
+# ============================================================
+#  Signatur-Verweis entfernen (fuer alle Patches, die eine Sektion anhaengen)
+#  Die originale Wow.exe traegt am Dateiende eine Authenticode-Signatur
+#  (Datenverzeichnis 4 "Security", Datei 0x757C00, 0x1298 Byte). Angehaengte
+#  Sektionen landen dahinter, die Signatur steht dann nicht mehr am Ende und
+#  manche Werkzeuge melden die Datei als beschaedigt. Gueltig ist sie nach
+#  jedem Patch ohnehin nicht mehr. Der Verweis im Header wird daher geleert;
+#  die Signatur-Bytes selbst bleiben unangetastet als ungenutzte Daten liegen,
+#  so stellt die Ruecknahme das Original Byte fuer Byte wieder her.
+# ============================================================
+function Clear-CertificateTable {
+    $e = RU32 $script:f 0x3C
+    Patch ($e + 24 + 96 + 4 * 8) ([byte[]](0, 0, 0, 0, 0, 0, 0, 0))
+}
+
 function Add-HdPortraits([int]$SIZE) {
     # --- Engine-Adressen (VA, build 12340) ---
     $TEX_LOW = 0x4B8C80; $TEX_WRP = 0x4B9200; $MASKFN = 0x6176A0; $MASKFN_CONT = 0x6176A9
@@ -430,6 +445,7 @@ function Add-HdPortraits([int]$SIZE) {
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $vsize) $SA)))
+    Clear-CertificateTable
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.hdp'), 0, $sh, 0, 4)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$vsize), 0, $sh, 8, 4)
@@ -632,6 +648,7 @@ function Add-CameraReforged([double]$Height, [double]$Shoulder, [double]$MaxFact
     # --- PE-Header anpassen (NumberOfSections, SizeOfImage, neuer Sektionsheader) ---
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $SEC_SIZE) $SA)))
+    Clear-CertificateTable
     $sh = New-Object byte[] 40
     [Array]::Copy([System.Text.Encoding]::ASCII.GetBytes('.camr'), 0, $sh, 0, 5)
     [Array]::Copy([BitConverter]::GetBytes([uint32]$SEC_SIZE), 0, $sh, 8, 4)
@@ -1288,6 +1305,7 @@ function Add-CodeSection([string]$Name, [int]$Size, [switch]$Writable) {
 
     Patch ($e + 6) ([BitConverter]::GetBytes([uint16]($nsec + 1)))
     Patch ($e + 24 + 56) ([BitConverter]::GetBytes([uint32](AlignUp ($new_rva + $Size) $SA)))
+    Clear-CertificateTable
     $sh = New-Object byte[] 40
     $nm = [System.Text.Encoding]::ASCII.GetBytes($Name)
     [Array]::Copy($nm, 0, $sh, 0, [Math]::Min(8, $nm.Length))
@@ -1586,7 +1604,8 @@ function Get-DoubleJumpFromExe {
 #  und merkt sich je
 #  Patch alle Stellen im Original, die er beschreibt. Stellen, die nur ein
 #  Patch beschreibt, bekommen die Markierung 1 (fuer die Erkennung).
-#  Dazu kommt der Pseudo-Eintrag "pe": NumberOfSections, SizeOfImage und die
+#  Dazu kommt der Pseudo-Eintrag "pe": NumberOfSections, SizeOfImage, das
+#  Security-Verzeichnis (Signatur-Verweis) und die
 #  freien Sektionsheader-Slots. Welcher Patch seine Sektion in welchem Slot
 #  anlegt, haengt von der Kombination ab - so werden alle Slots unabhaengig
 #  davon zurueckgesetzt und gelten fuer keinen Patch als eigene Stelle.
@@ -1627,6 +1646,7 @@ function Invoke-BuildTable {
     $ranges['pe'] = New-Object System.Collections.Generic.List[object]
     $ranges['pe'].Add(@(($e + 6), ($e + 8)))
     $ranges['pe'].Add(@(($e + 24 + 56), ($e + 24 + 60)))
+    $ranges['pe'].Add(@(($e + 24 + 96 + 4 * 8), ($e + 24 + 96 + 5 * 8)))   # Security-Verzeichnis (Signatur)
     $ranges['pe'].Add(@(($sectBase + 40 * $nsec), $firstRaw))
     # je Patch sortieren und zusammenfassen
     $merged = @{}
@@ -3147,6 +3167,7 @@ airlateral;587FEF;0F85AC010000;1
 airturn;588F97;7512;1
 doublejump;116;0600;0
 doublejump;160;00D09F00;0
+doublejump;1A8;007C750098120000;0
 doublejump;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 doublejump;58782A;8B7E44F7C7001800027544;1
 farclip;63CF0C;ABEA4544ABEAC544;1
@@ -3172,6 +3193,7 @@ nofade;3431A3;8B068B5040;1
 nofade;5DD7D9;00000000000000000000000000000000000000000000000000000000000000000000000000;1
 hdportraits;116;0600;0
 hdportraits;160;00D09F00;0
+hdportraits;1A8;007C750098120000;0
 hdportraits;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 hdportraits;21620A;40000000;1
 hdportraits;216AA0;558BEC81EC04050000;1
@@ -3194,6 +3216,7 @@ mouse;469A2C;8B45F08B15EC13D4008B1DF0;1
 mouse;528AA2;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 camera;116;0600;0
 camera;160;00D09F00;0
+camera;1A8;007C750098120000;0
 camera;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;11CDB0;558BEC81EC80000000;1
@@ -3231,6 +3254,7 @@ clienticon;74ED84;28000000300000006000000001002000000000000000000000000000000000
 watermark;72DE20;00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;1
 pe;116;0600;0
 pe;160;00D09F00;0
+pe;1A8;007C750098120000;0
 pe;2F8;000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 '@
 # END ORIGINAL-BYTES

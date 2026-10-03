@@ -1447,6 +1447,13 @@ Meldung ab.
   Gruppen sind in der Übersicht mit „Bann-Gefahr“ markiert, und der Patcher
   zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
   ändern die Dateigröße nicht.
+- **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
+  Patch macht diese Signatur ungültig, WoW startet trotzdem ganz normal. Die
+  Patches, die eine Sektion anhängen (Nr. 42, 54 und 65), entfernen zusätzlich
+  den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
+  Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
+  Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das
+  Original samt Signatur wieder her.
 - **Wasserzeichen:** Jede gepatchte `Wow.exe` enthält den Text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   Daran erkennt der Patcher eine `Wow.exe` eindeutig als seine eigene: So

@@ -1412,6 +1412,13 @@ patcher aborts with a message.
   tolerate a changed file size. Both groups are marked "ban risk" in the
   overview, and the patcher shows a red warning before the confirmation prompt.
   All other patches do not change the file size.
+- **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every
+  patch invalidates this signature, WoW still starts normally. The patches that
+  append a section (No. 42, 54 and 65) also remove the reference to the
+  signature from the header: the new section lies behind the signature, and
+  some tools would otherwise report the file as damaged. The signature bytes
+  themselves stay untouched, and removing the patches restores the original
+  including its signature.
 - **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
   This is how the patcher identifies a `Wow.exe` unambiguously as its own: it
