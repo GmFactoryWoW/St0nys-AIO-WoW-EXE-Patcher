@@ -249,7 +249,7 @@ the user or because no more input is possible).
 | 12 | Disable HTTP requests to Battle.net | Kebabstorm | – | ✅ |
 | 13 | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – |
 |    | **Modding: interface, MPQs & addons** |  |  |  |
-| 14 | Allow custom GlueXML | Alastor StrixEfuartus / Kebabstorm | ✅ | ✅ |
+| 14 | Allow custom GlueXML | Alastor StrixEfuartus / Kebabstorm / St0ny | ✅ | ✅ |
 | 15 | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | ✅ |
 | 16 | Allow extended MPQ names |  | ✅ | ✅ |
 | 17 | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
@@ -310,7 +310,7 @@ the user or because no more input is possible).
 |    | **Client info: version, build, title, date, icon** |  |  |  |
 | 66 | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
 | 67 | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
-| 68 | Change program title in the file properties *(asks for the value)* | MacWarrior | – | – |
+| 68 | Change program title in the file properties *(asks for the value)* | MacWarrior / St0ny | – | – |
 | 69 | Change build date (original Jun 24 2010) *(asks for the value)* | MacWarrior | – | – |
 | 70 | Change program icon (icon of Wow.exe) *(asks for the value)* | MacWarrior / St0ny | – | – |
 
@@ -429,7 +429,7 @@ logout after 30 minutes without input.
 
 ### Modding: interface, MPQs & addons
 
-**Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm)*
+**Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm / St0ny)*
 
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding): the signature check of the interface files
@@ -1325,7 +1325,7 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > accepts the build in `realmlist.gamebuild`; players with an older client see
 > it as offline.
 
-**Change program title in the file properties** *(No. 68, off by default, Author: MacWarrior)*
+**Change program title in the file properties** *(No. 68, off by default, Author: MacWarrior / St0ny)*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17

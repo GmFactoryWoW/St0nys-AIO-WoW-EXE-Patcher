@@ -255,7 +255,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 | 12 | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – | ✅ |
 | 13 | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – |
 |    | **Modding: Interface, MPQs & Addons** |  |  |  |
-| 14 | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm | ✅ | ✅ |
+| 14 | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm / St0ny | ✅ | ✅ |
 | 15 | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | ✅ |
 | 16 | Erweiterte MPQ-Namen erlauben |  | ✅ | ✅ |
 | 17 | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
@@ -316,7 +316,7 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 |    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |
 | 66 | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – |
 | 67 | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – |
-| 68 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior | – | – |
+| 68 | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
 | 69 | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – | – |
 | 70 | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
 
@@ -438,7 +438,7 @@ unverändert: AFK-Status nach 5 Minuten, Logout nach 30 Minuten ohne Eingabe.
 
 ### Modding: Interface, MPQs & Addons
 
-**Custom Glue-XML erlauben** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm)*
+**Custom Glue-XML erlauben** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm / St0ny)*
 
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding): Die Signaturprüfung der Interface-Dateien
@@ -1356,7 +1356,7 @@ den Server.
 > Build aus `realmlist.gamebuild` an; Spieler mit älterem Client sehen ihn als
 > offline.
 
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 68, standardmäßig aus, Autor: MacWarrior)*
+**Programmtitel in den Dateieigenschaften ändern** *(Nr. 68, standardmäßig aus, Autor: MacWarrior / St0ny)*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.

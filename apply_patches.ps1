@@ -1847,7 +1847,7 @@ $patches = @(
     # --- Modding: Interface, MPQs & Addons ---
 
     @{ Id = 'glue'; Cat = 'modding'; On = $true
-       Author = 'Alastor StrixEfuartus / Kebabstorm'
+       Author = 'Alastor StrixEfuartus / Kebabstorm / St0ny'
        De = 'Custom Glue-XML erlauben'
        En = 'Allow custom GlueXML'
        Code = {
@@ -2867,7 +2867,7 @@ $patches = @(
     }}
 
     @{ Id = 'clienttitle'; Cat = 'client'; On = $false
-       Author = 'MacWarrior'
+       Author = 'MacWarrior / St0ny'
        De = 'Programmtitel in den Dateieigenschaften aendern'
        En = 'Change program title in the file properties'
        PromptDe = 'Neuer Titel, max. 17 Zeichen, nur ASCII'
