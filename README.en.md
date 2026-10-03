@@ -384,11 +384,11 @@ the buffer and the client crashes. The patch checks the three indices of the
 first triangle beforehand and skips the function in that case. Compared to the
 original, the three jump distances have been corrected and the code is shorter.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > The code lives in the free gap at the end of `.text`, which No. 53 uses as
 > well. Both fit in there together, the file size does not change.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > A heuristic fix, as the author himself calls it: only the first triangle of
 > each call is checked. It does no harm when everything is fine, but does not
 > catch every conceivable case.
@@ -406,7 +406,7 @@ packets: the `.zdata` section loses its execute permission and Warden modules
 are no longer loaded from the local cache. Warden itself keeps working, so
 servers with active Warden are not a problem.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > "Disable Warden completely" (No. 6) closes the hole as well and makes this
 > patch unnecessary. If you select both, the patcher points it out; together
 > they do no harm.
@@ -422,7 +422,7 @@ Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
 (No. 5) unnecessary; both together do no harm, the patcher just points it out.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > The client no longer answers Warden. Servers with active Warden (e.g.
 > AzerothCore or TrinityCore with default settings) may therefore kick you.
 
@@ -511,7 +511,7 @@ XML/Lua files (glue screen modding): the signature check of the interface files
 always reports "valid", and local `Interface\GlueXML` and `Interface\FrameXML`
 folders are no longer renamed to `*.old`.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > Side effect that every version of this patch has: addons without a signature
 > file are treated as "secure" (like Blizzard code) as well and may call
 > protected functions – similar in effect to the LUA unlock (No. 18). Servers
@@ -566,7 +566,7 @@ functions. Not unlocked, because they have their own checks in the code:
 `TargetUnit`, `FocusUnit`, `InteractUnit`, `ReloadUI`; `AttackTarget` still
 prints an error. No. 19 unlocks these and all others.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > This enables automation. Servers with anti-cheat may treat it as botting –
 > this can lead to a ban.
 
@@ -593,7 +593,7 @@ on protected frames) and `RegisterForSave` – they do not concern game actions.
 Makes No. 18 unnecessary; both together do no harm, the patcher only points it
 out.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > This enables automation to the full extent. Servers with anti-cheat may treat
 > it as botting – this can lead to a ban.
 
@@ -608,7 +608,7 @@ afterwards – it no longer reaches the key bindings. With the patch every key
 continues to the key bindings after the OnKeyDown script. This lets addons see
 all key presses without blocking the normal controls.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > Addons that rely on OnKeyDown "swallowing" a key will additionally trigger the
 > bound action.
 
@@ -630,7 +630,7 @@ following are merged:
 Macros, key bindings as well as chat and game settings stay separate per
 account as before.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > The patch does not move existing addon data. To keep it, copy the contents of
 > `WTF\Account\<ACCOUNT>\` to `WTF\Account\global\` before the first start. If
 > the patch is reverted, WoW uses the folders of the individual accounts again;
@@ -664,7 +664,7 @@ that; the Lua function `ScanDLLStart` becomes a no-op and the Scan.dll flag is
 set to "passed". As a side effect the patch disables the Scan.dll mechanism
 (like No. 7). If the DLL is missing, WoW simply starts normally.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > The patch itself is harmless, it only loads a DLL that is not included here.
 > Only the loaded `AwesomeWotlkLib.dll` may be noticed by servers with
 > anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
@@ -680,7 +680,7 @@ Loads `voice.dll` from the WoW folder at startup – the client part of
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
 module for AzerothCore. If the DLL is missing, WoW starts normally.
 
-> [!CAUTION]
+> 🛑 **Caution:**
 > **ALPHA** – the mod-voicechat module is not finished yet. That is why this
 > patch is deselected by default. The patch itself has been tested in game.
 
@@ -782,7 +782,7 @@ worst case the client crashes. The patch clamps the row to the last one of the
 column: level 101+ gets the values for level 100, everything below stays
 unchanged.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > The widespread version from the 12th Generation EXE removes the level from
 > the calculation entirely instead – so *all* characters show the values for
 > level 1 (ratings, critical strike chance, regeneration …). Here the two
@@ -814,7 +814,7 @@ names – but all other client rules (length, allowed characters etc.) are gone 
 well. The original (0x539wowmod) uses a detour with the wrong calling
 convention, here it is done directly in the function (`mov eax, 57h` / `ret`).
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > The server still checks names itself and has to allow them as well, otherwise
 > it rejects the character.
 
@@ -855,7 +855,7 @@ does not store the item cache on disk and fetches changed custom items fresh
 from the server at every start. If No. 2 is not selected, the patcher points
 this out.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > v2 has been tested in game. The v1 patch list this patch was taken from
 > contained two errors that would have crashed the client: one line was missing
 > a byte (turning the function for the item class into garbage), another was a
@@ -876,7 +876,7 @@ The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
 at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect this as a climb hack – this can lead to a
 > ban.
 
@@ -893,7 +893,7 @@ value, the higher the jump; the height grows with the square, i.e. `-11.25`
 gives about double and `-15.91` about four times the jump height. The value is
 remembered like those of the client info patches.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect this as a jump hack – this can lead to a
 > ban.
 
@@ -911,7 +911,7 @@ jumps (do not stop in the air, recalculate the speed), which are changed directl
 in the EXE here – without DLL and without a code cave. Added to this is the
 byte patch from 0x539wowmod that updates the movement in the air.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
@@ -925,7 +925,7 @@ Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
 the movement early while the falling flag is set.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
@@ -940,7 +940,7 @@ direction in the original. With the patch the client sets the movement direction
 in the air as well, like the 0x539wowmod DLL does. Works best together with the
 two previous patches.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect changed movement in the air – this can
 > lead to a ban.
 
@@ -969,7 +969,7 @@ The counter is a byte the client has to write. That is why the patch gets a smal
 section `.djump` of its own at the end of the file (the gap in `.text` is not
 writable); this makes `Wow.exe` slightly larger.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Servers with anti-cheat may detect jumps in the air – this can lead to a ban.
 >
 > This patch appends a section of its own, which makes `Wow.exe` larger.
@@ -1107,7 +1107,7 @@ clamp – values above the maximum down, values below the minimum up. Both apply
 per CVar to all six quality levels at once; a single level cannot be
 addressed.
 
-> [!CAUTION]
+> 🛑 **Caution:**
 > Tempting dead end: you could pull Ultra up via the minimum
 > (`GetCVarMin("farclip")` is the double at `0x9F5798`, originally 177.0), but
 > then ALL six levels are pulled to that value – Low just like Ultra – and the
@@ -1129,7 +1129,7 @@ there is nothing to raise. The value can still only be set via `Config.wtf`,
 `/console horizonFarclipScale 12` or a CVar addon (it is unlocked up to 12,
 see above).
 
-> [!NOTE]
+> ℹ️ **Note:**
 > The file size does not change: the small search routine lives in a free gap
 > between two functions, the table with the maximums in the unused rest of
 > `.rdata`. There is no overlap with No. 4 and No. 53.
@@ -1313,7 +1313,7 @@ slowly. With the patch, NPCs for which the server sets the flag
 matching the missing fade-in. Players and NPCs without the flag behave as
 before.
 
-> [!IMPORTANT]
+> ❗ **Important:**
 > Only takes effect if the server sets the flag. Without server support nothing
 > changes.
 >
@@ -1340,7 +1340,7 @@ Only the 3D model path is raised; the icon/file path (fixed 64×64 images for
 item/spell icons) deliberately stays at 64, because its copy loop would
 otherwise read past the source.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > This patch appends a new PE section `.hdp` to `Wow.exe` (generated 256px alpha
 > mask + code caves + detour of the mask builder), the file grows by about
 > 69 KB. **Many servers do not tolerate a changed file size of `Wow.exe` – this
@@ -1390,7 +1390,7 @@ read the value at runtime, and there is no second hard-coded 170 anywhere. The
 patch raises the emblem count to retail's 196, which removes the limit
 completely.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > **Additional MPQ patch archive required.** This patch only raises the counter
 > in the EXE, it does not ship any graphics. The 26 new emblems (index 170 to
 > 195) have to be provided as a separate MPQ archive in the `Data` folder.
@@ -1491,7 +1491,7 @@ whatever you need. I appreciate your work."). The port and its adjustments were
 made by St0ny. The client gets two brand-new CVars and new default values for
 two existing ones.
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > **BETA** – this patch does not work 100% yet, more work is going into it.
 > That is why it is deselected by default. The shoulder offset
 > (`test_cameraOverShoulder`) currently has no effect: the four read sites the
@@ -1546,7 +1546,7 @@ overwrites the table of the slider patch.
 
 </details>
 
-> [!WARNING]
+> ⚠️ **Warning:**
 > Like the HD portraits, this patch appends a section of its own (about +1 KB),
 > which makes `Wow.exe` larger. **Many servers do not tolerate a changed file
 > size of `Wow.exe` – this can lead to a ban.**
@@ -1571,7 +1571,7 @@ The channel limit of 126 is hard-coded in the initialisation code; the default
 of 64 for `Sound_NumChannels` only applies at the second place where the client
 reads the CVar.
 
-> [!IMPORTANT]
+> ❗ **Important:**
 > **OpenAL** is required for these settings to take effect at all, e.g.
 > [OpenAL Soft](https://github.com/kcat/openal-soft).
 
@@ -1621,7 +1621,7 @@ patcher does not allow builds up to 6141: servers like AzerothCore or
 TrinityCore then treat the client as a Classic client (pre-BC) and use a
 different login protocol – a 3.3.5 client can no longer get onto the server.
 
-> [!TIP]
+> 💡 **Tip:**
 > **AzerothCore:** the authserver only accepts builds listed in the `build_info`
 > table of the auth database. For a build of your own, e.g. `12341`:
 >
@@ -1691,7 +1691,7 @@ interlaced) by itself, without extra modules. The path is remembered in
 `patcher_selection.ini`; with `-Unattended` it has to be there, otherwise the
 patcher aborts with a message.
 
-> [!NOTE]
+> ℹ️ **Note:**
 > If Explorer still shows the old icon afterwards, that is the Windows icon
 > cache: rename `Wow.exe` briefly or copy it to another folder, recreate
 > shortcuts or restart Explorer. The icon in the game itself (window title)

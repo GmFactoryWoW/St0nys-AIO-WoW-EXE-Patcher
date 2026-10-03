@@ -394,11 +394,11 @@ drei Indizes des ersten Dreiecks und überspringt die Funktion in diesem Fall.
 Gegenüber dem Original sind die drei Sprungweiten korrigiert und der Code ist
 kürzer.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Der Code liegt in der freien Lücke am Ende von `.text`, die auch Nr. 53 nutzt.
 > Beide passen zusammen hinein, die Dateigröße ändert sich nicht.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Ein heuristischer Fix, wie ihn auch der Autor nennt: Geprüft wird nur das erste
 > Dreieck jedes Aufrufs. Er stört nicht, wenn alles stimmt, fängt aber nicht jeden
 > denkbaren Fall ab.
@@ -416,7 +416,7 @@ Pakete ermöglichen konnte: Die Sektion `.zdata` verliert ihr Ausführungsrecht,
 und Warden-Module werden nicht mehr aus dem lokalen Cache geladen. Warden selbst
 läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > „Warden komplett abschalten“ (Nr. 6) schließt die Lücke ebenfalls und macht
 > diesen Patch überflüssig. Wählst du beide, weist der Patcher darauf hin;
 > schaden tun sie zusammen nicht.
@@ -433,7 +433,7 @@ Patch ist das überhaupt nicht mehr möglich, auch nicht über künftige Tricks.
 Macht den RCE-Fix (Nr. 5) überflüssig; beide zusammen schaden nicht, der
 Patcher weist dann nur darauf hin.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Der Client antwortet danach nicht mehr auf Warden. Server mit aktivem Warden
 > (z. B. AzerothCore oder TrinityCore in der Standardeinstellung) können dich
 > deshalb kicken.
@@ -523,7 +523,7 @@ XML/Lua-Dateien (Glue-Screen-Modding): Die Signaturprüfung der Interface-Dateie
 meldet immer „gültig“, und lokale Ordner `Interface\GlueXML` und
 `Interface\FrameXML` werden nicht mehr in `*.old` umbenannt.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Nebenwirkung, die jede Fassung dieses Patches hat: Auch Addons ohne
 > Signaturdatei gelten damit als „sicher“ (wie Blizzard-Code) und dürfen
 > geschützte Funktionen aufrufen – in der Wirkung ähnlich dem LUA Unlock
@@ -579,7 +579,7 @@ GM-Ticket-Funktionen. Nicht freigegeben, weil sie eigene Prüfungen im Code
 haben: `TargetUnit`, `FocusUnit`, `InteractUnit`, `ReloadUI`; `AttackTarget`
 meldet weiterhin einen Fehler. Diese und alle übrigen gibt Nr. 19 frei.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Das ermöglicht Automatisierung. Server mit Anti-Cheat können das als Botting
 > werten – das kann zu einem Bann führen.
 
@@ -606,7 +606,7 @@ Nicht angetastet bleiben die Frame-Schutzprüfung (`SetAttribute`, `Show`,
 Spielaktionen. Macht Nr. 18 überflüssig; beide zusammen schaden nicht, der
 Patcher weist dann nur darauf hin.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Das ermöglicht Automatisierung in vollem Umfang. Server mit Anti-Cheat können
 > das als Botting werten – das kann zu einem Bann führen.
 
@@ -621,7 +621,7 @@ erledigt – sie erreicht die Tastenbelegungen dann nicht mehr. Mit dem Patch l�
 jede Taste nach dem OnKeyDown-Skript weiter zu den Tastenbelegungen. So können
 Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Addons, die sich darauf verlassen, dass OnKeyDown eine Taste „schluckt“, lösen
 > damit zusätzlich die belegte Aktion aus.
 
@@ -643,7 +643,7 @@ seine Addons so nur einmal ein. Zusammengelegt werden:
 Makros, Tastenbelegungen sowie Chat- und Spieleinstellungen bleiben wie bisher
 pro Account getrennt.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Vorhandene Addon-Daten zieht der Patch nicht um. Wer sie behalten will,
 > kopiert vor dem ersten Start den Inhalt von `WTF\Account\<ACCOUNT>\` nach
 > `WTF\Account\global\`. Nimmt man den Patch zurück, nutzt WoW wieder die
@@ -678,7 +678,7 @@ Der Lader sitzt am Start der Haupt-Fiber des Clients (kurz vor `WinMain`) und
 Der Patch schaltet damit nebenbei den Scan.dll-Mechanismus ab (wie Nr. 7).
 Fehlt die DLL, startet WoW normal weiter.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Der Patch selbst ist unkritisch, er lädt nur eine DLL, die hier nicht
 > enthalten ist. Erst die geladene `AwesomeWotlkLib.dll` kann auf Servern mit
 > Anti-Cheat auffallen – also nur dort einsetzen, wo awesome_wotlk erlaubt ist.
@@ -694,7 +694,7 @@ Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem
 Voice-Chat-Modul für AzerothCore. Fehlt die DLL, startet WoW ganz normal.
 
-> [!CAUTION]
+> 🛑 **Achtung:**
 > **ALPHA** – das Modul mod-voicechat ist noch nicht fertig. Deshalb ist dieser
 > Patch standardmäßig abgewählt. Der Patch selbst ist im Spiel getestet.
 
@@ -796,7 +796,7 @@ nicht, im schlimmsten Fall stürzt der Client ab. Der Patch begrenzt die Zeile
 auf die letzte der Spalte: Level 101+ bekommt die Werte für Level 100, alles
 darunter bleibt unverändert.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Die verbreitete Fassung aus der 12th Generation EXE entfernt stattdessen das
 > Level komplett aus der Rechnung – damit zeigen *alle* Charaktere die Werte
 > für Level 1 (Wertungen, kritische Trefferchance, Regeneration …). Hier sind
@@ -830,7 +830,7 @@ Zahlen im Namen möglich – es entfallen aber auch alle anderen Regeln des Clie
 (Länge, erlaubte Zeichen usw.). Im Original (0x539wowmod) per Detour mit falscher
 Aufrufkonvention gelöst, hier direkt in der Funktion (`mov eax, 57h` / `ret`).
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Der Server prüft Namen weiterhin selbst und muss sie ebenfalls erlauben, sonst
 > lehnt er den Charakter ab.
 
@@ -872,7 +872,7 @@ speichert WoW den Item-Cache nicht auf der Festplatte und holt geänderte
 Custom-Items bei jedem Start frisch vom Server. Fehlt Nr. 2 in der Auswahl,
 weist der Patcher darauf hin.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > v2 ist im Spiel getestet. Die Patch-Liste von v1, aus der dieser Patch
 > übernommen wurde, enthielt zwei Fehler, mit denen der Client abgestürzt wäre:
 > In einer Zeile fehlte ein Byte (die Funktion für die Item-Klasse wurde dadurch
@@ -894,7 +894,7 @@ Der Charakter kommt jeden Hang hoch, egal wie steil. Im Original ist bei 50°
 Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
 (`0.6427876` bei VA `0xA37F0C`). Der Patch setzt ihn auf `0.0` = cos 90°.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können das als Climb-Hack erkennen – das kann zu einem
 > Bann führen.
 
@@ -911,7 +911,7 @@ kleiner der Wert, desto höher der Sprung; die Höhe wächst mit dem Quadrat, d.
 `-11.25` ergibt etwa die doppelte, `-15.91` etwa die vierfache Sprunghöhe. Der
 Wert wird wie bei den Client-Info-Patches gemerkt.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können das als Jump-Hack erkennen – das kann zu einem
 > Bann führen.
 
@@ -929,7 +929,7 @@ Sprüngen ab (in der Luft nicht abbrechen, Geschwindigkeit neu berechnen), die
 hier direkt in der EXE geändert werden – ohne DLL und ohne Code-Höhle. Dazu kommt
 der Byte-Patch aus 0x539wowmod, der die Bewegung in der Luft aktualisiert.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
@@ -943,7 +943,7 @@ Wie der vorige Patch, nur für seitliche Bewegung (Strafen): zwei Sprünge in de
 Seitwärts-Eingabe des Clients plus der Byte-Patch aus 0x539wowmod, der die
 Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
@@ -958,7 +958,7 @@ seine Flugrichtung. Mit dem Patch setzt der Client die Bewegungsrichtung auch in
 der Luft neu, wie es die DLL von 0x539wowmod tut. Passt am besten zusammen mit
 den beiden vorigen Patches.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können veränderte Bewegung in der Luft erkennen – das
 > kann zu einem Bann führen.
 
@@ -988,7 +988,7 @@ Der Zähler ist ein Byte, das der Client beschreiben muss. Darum bekommt der Pat
 eine eigene kleine Sektion `.djump` am Dateiende (die Lücke in `.text` ist nicht
 beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Server mit Anti-Cheat können Sprünge in der Luft erkennen – das kann zu einem
 > Bann führen.
 >
@@ -1131,7 +1131,7 @@ klemmen – Werte über dem Maximum runter, Werte unter dem Minimum hoch. Beides
 gilt pro CVar für alle sechs Qualitätsstufen gleichzeitig, eine einzelne Stufe
 ist nicht ansprechbar.
 
-> [!CAUTION]
+> 🛑 **Achtung:**
 > Verlockende Sackgasse: Über das Minimum ließe sich Ultra zwar hochziehen
 > (`GetCVarMin("farclip")` ist der double bei `0x9F5798`, original 177.0), aber
 > dann werden ALLE sechs Stufen auf diesen Wert gezogen – Niedrig wie Ultra –
@@ -1154,7 +1154,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 `Config.wtf`, `/console horizonFarclipScale 12` oder ein CVar-Addon setzen
 (entsperrt ist er bis 12, siehe oben).
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Die Dateigröße ändert sich nicht: Die kleine Such-Routine liegt in einer
 > freien Lücke zwischen zwei Funktionen, die Tabelle mit den Maxima im
 > ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 53 gibt es keine Überschneidung.
@@ -1344,7 +1344,7 @@ Server in `UNIT_FIELD_FLAGS_2` das Flag `UNIT_FLAG2_DO_NOT_FADE_IN` (`0x20`) set
 passend zum fehlenden Einblenden. Spieler und NPCs ohne das Flag verhalten sich
 wie bisher.
 
-> [!IMPORTANT]
+> ❗ **Wichtig:**
 > Wirkt nur, wenn der Server das Flag setzt. Ohne Unterstützung durch den Server
 > ändert sich nichts.
 >
@@ -1371,7 +1371,7 @@ Nur der 3D-Modell-Pfad wird angehoben; der Icon-/Datei-Pfad (feste
 64×64-Bilder für Item-/Zauber-Icons) bleibt bewusst auf 64, da dessen
 Kopierschleife sonst über die Quelle hinaus liest.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Dieser Patch hängt eine neue PE-Sektion `.hdp` an die `Wow.exe` an (generierte
 > 256er-Alphamaske + Code-Höhlen + Detour des Masken-Builders), die Datei wächst
 > dadurch um ca. 69 KB. **Viele Server tolerieren eine veränderte Dateigröße der
@@ -1421,7 +1421,7 @@ schaltet mit „Index modulo Zähler“ durch, das Zufalls-Tabard zieht
 verdrahtete 170 gibt es nirgends. Der Patch hebt den Emblem-Zähler auf die 196
 von Retail an, damit fällt die Grenze vollständig.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > **Zusätzliches MPQ-Patch-Archiv nötig.** Dieser Patch hebt ausschließlich
 > den Zähler in der EXE an, er bringt keine Grafiken mit. Die 26 neuen Wappen
 > (Index 170 bis 195) müssen als eigenes MPQ-Archiv im `Data`-Ordner liegen.
@@ -1524,7 +1524,7 @@ alles in einem Durchgang läuft – eingebaut mit seiner ausdrücklichen Erlaubn
 und ihre Anpassungen stammen von St0ny. Der Client bekommt zwei komplett neue
 CVars eingebaut, zwei vorhandene bekommen neue Startwerte.
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > **BETA** – dieser Patch funktioniert noch nicht zu 100 %, hier fließt noch
 > Arbeit hinein. Deshalb ist er standardmäßig abgewählt. Der Schulterversatz
 > (`test_cameraOverShoulder`) hat derzeit keine Wirkung: Die vier Lesestellen,
@@ -1578,7 +1578,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 
 </details>
 
-> [!WARNING]
+> ⚠️ **Warnung:**
 > Dieser Patch hängt wie die HD-Portraits eine eigene Sektion an (etwa +1 KB),
 > die `Wow.exe` wird dadurch größer. **Viele Server tolerieren eine veränderte
 > Dateigröße der `Wow.exe` nicht – das kann zu einem Bann führen.**
@@ -1603,7 +1603,7 @@ Das Kanal-Limit von 126 steht fest im Initialisierungscode; der Startwert 64
 für `Sound_NumChannels` gilt nur an der zweiten Stelle, an der der Client das
 CVar liest.
 
-> [!IMPORTANT]
+> ❗ **Wichtig:**
 > Damit diese Einstellungen überhaupt greifen, wird **OpenAL** benötigt, z. B.
 > [OpenAL Soft](https://github.com/kcat/openal-soft).
 
@@ -1655,7 +1655,7 @@ TrinityCore halten den Client dann für einen Classic-Client (Pre-BC) und
 verwenden ein anderes Login-Protokoll – ein 3.3.5-Client kommt so nicht mehr auf
 den Server.
 
-> [!TIP]
+> 💡 **Tipp:**
 > **AzerothCore:** Der Authserver lässt nur Builds zu, die in der Tabelle
 > `build_info` der Auth-Datenbank stehen. Für einen eigenen Build, z. B. `12341`:
 >
@@ -1727,7 +1727,7 @@ Zusatzmodule. Der Pfad wird in `patcher_selection.ini` gemerkt;
 mit `-Unattended` muss er dort stehen, sonst bricht der Patcher mit einer
 Meldung ab.
 
-> [!NOTE]
+> ℹ️ **Hinweis:**
 > Zeigt der Explorer danach noch das alte Icon, liegt das am Icon-Cache von
 > Windows: `Wow.exe` kurz umbenennen oder in einen anderen Ordner kopieren,
 > Verknüpfungen neu anlegen oder den Explorer neu starten. Das Icon im Spiel
