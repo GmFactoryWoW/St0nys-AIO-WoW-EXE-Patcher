@@ -254,6 +254,9 @@ abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
 
 Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 
+<details>
+<summary><b>Übersicht aller Patches mit Autor und Preset-Zuordnung anzeigen</b></summary>
+
 | Nr. | Patch | Autor | Standard | St0ny |
 |----:|-------|-------|:--------:|:-----:|
 |    | **System & Leistung** |  |  |  |
@@ -340,6 +343,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [71](PATCHES.md#patch-clienttitle) | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
 | [72](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | MacWarrior | – | – |
 | [73](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | MacWarrior / St0ny | – | – |
+
+</details>
 
 > [!NOTE]
 > **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der

@@ -245,6 +245,9 @@ the user or because no more input is possible).
 
 Click the number of a patch to jump to its description.
 
+<details>
+<summary><b>Show all patches with author and preset assignment</b></summary>
+
 | No. | Patch | Author | Default | St0ny |
 |----:|-------|-------|:--------:|:-----:|
 |    | **System & performance** |  |  |  |
@@ -331,6 +334,8 @@ Click the number of a patch to jump to its description.
 | [71](PATCHES.en.md#patch-clienttitle) | Change program title in the file properties *(asks for the value)* | MacWarrior / St0ny | – | – |
 | [72](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | MacWarrior | – | – |
 | [73](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | MacWarrior / St0ny | – | – |
+
+</details>
 
 > [!NOTE]
 > **Authors wanted:** For patches without an entry in the "Author" column, the
