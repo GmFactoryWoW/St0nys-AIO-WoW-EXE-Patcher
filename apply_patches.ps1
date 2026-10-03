@@ -1917,12 +1917,12 @@ $patches = @(
        Author = 'St0ny'
        De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
        En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
-       NoteDe = 'Modul ungetestet und unfertig'
-       NoteEn = 'module untested and unfinished'
+       NoteDe = 'Modul noch unfertig'
+       NoteEn = 'module not finished yet'
        Url = 'https://github.com/Raz0r1337/mod-voicechat'
        Code = {
-        # ALPHA - das Modul mod-voicechat ist noch komplett ungetestet und nicht
-        # fertig. Laedt beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
+        # ALPHA - das Modul mod-voicechat ist noch nicht fertig. Laedt
+        # beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
         # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
         Add-VoiceLoader 'voice.dll'
     }}
@@ -2074,7 +2074,7 @@ $patches = @(
        NoteDe = 'Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten'
        NoteEn = 'custom items without DBC changes: model, icon and item type from the server data'
        Code = {
-        # BETA - im Spiel noch ungetestet. Viele Stellen im Client lesen Display-
+        # Im Spiel getestet. Viele Stellen im Client lesen Display-
         # ID, Inventartyp, Klasse, Unterklasse und Scheide eines Items nur aus der
         # Item.dbc. Custom-Items, die nur in der Datenbank des Servers stehen,
         # fehlen dort - kein Modell am Charakter, kein Icon. Die Wow.exe hat aber

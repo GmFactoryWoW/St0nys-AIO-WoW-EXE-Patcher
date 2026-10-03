@@ -254,7 +254,7 @@ Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` = abgebroc
 | 20 | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | boredatom / St0ny | – | – |
 |    | **DLL-Loader** |  |  |  |
 | 21 | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| 22 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul ungetestet und unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
+| 22 | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 |    | **Gameplay-Fixes** |  |  |  |
 | 23 | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | ✅ | ✅ |
 | 24 | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
@@ -494,9 +494,8 @@ Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
 startet WoW ganz normal.
 
 > [!CAUTION]
-> **ALPHA** – das Modul mod-voicechat ist noch komplett ungetestet und nicht
-> fertig. Es ist nicht zum Spielen freigegeben. Deshalb ist dieser Patch
-> standardmäßig abgewählt.
+> **ALPHA** – das Modul mod-voicechat ist noch nicht fertig. Deshalb ist dieser
+> Patch standardmäßig abgewählt. Der Patch selbst ist im Spiel getestet.
 
 Dateigröße und PE-Header bleiben unverändert: Der Sprung am Einstiegspunkt
 (VA `0x401005`) wird in eine freie 27-Byte-Lücke zwischen zwei Funktionen
@@ -599,14 +598,14 @@ speichert WoW den Item-Cache nicht auf der Festplatte und holt geänderte
 Custom-Items bei jedem Start frisch vom Server. Fehlt Nr. 2 in der Auswahl,
 weist der Patcher darauf hin.
 
-> [!CAUTION]
-> **BETA** – im Spiel noch nicht getestet. Die Patch-Liste von v1, aus der
-> dieser Patch übernommen wurde, enthielt zwei Fehler, mit denen der Client
-> abgestürzt wäre: In einer Zeile fehlte ein Byte (die Funktion für die
-> Item-Klasse wurde dadurch zu Datenmüll), eine andere war eine Kopie der Zeile
-> davor (ein Aufruf landete mitten in einer fremden Funktion). v2 behebt beides.
-> Alle umgebauten Stellen wurden per Emulation mit Test-Items geprüft: nur im
-> Cache, nur in der `Item.dbc`, in beiden und in keinem.
+> [!NOTE]
+> v2 ist im Spiel getestet. Die Patch-Liste von v1, aus der dieser Patch
+> übernommen wurde, enthielt zwei Fehler, mit denen der Client abgestürzt wäre:
+> In einer Zeile fehlte ein Byte (die Funktion für die Item-Klasse wurde dadurch
+> zu Datenmüll), eine andere war eine Kopie der Zeile davor (ein Aufruf landete
+> mitten in einer fremden Funktion). v2 behebt beides. Alle umgebauten Stellen
+> wurden per Emulation mit Test-Items geprüft: nur im Cache, nur in der
+> `Item.dbc`, in beiden und in keinem.
 
 Aus v1 nicht übernommen: die PE-Prüfsumme (Windows prüft sie bei Programmen
 nicht) und die Änderung `Cache` → `||che` – das ist genau Patch Nr. 2.

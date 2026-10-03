@@ -248,7 +248,7 @@ Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by t
 | 20 | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | boredatom / St0ny | – | – |
 |    | **DLL loaders** |  |  |  |
 | 21 | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| 22 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module untested and unfinished, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
+| 22 | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
 |    | **Gameplay fixes** |  |  |  |
 | 23 | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
 | 24 | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
@@ -481,9 +481,8 @@ Loads `voice.dll` from the WoW folder at startup – the client part of
 missing, WoW starts normally.
 
 > [!CAUTION]
-> **ALPHA** – the mod-voicechat module is still completely untested and not
-> finished. It is not released for playing. That is why this patch is
-> deselected by default.
+> **ALPHA** – the mod-voicechat module is not finished yet. That is why this
+> patch is deselected by default. The patch itself has been tested in game.
 
 File size and PE header stay unchanged: the jump at the entry point (VA
 `0x401005`) is redirected into a free 27-byte gap between two functions (VA
@@ -584,8 +583,8 @@ does not store the item cache on disk and fetches changed custom items fresh
 from the server at every start. If No. 2 is not selected, the patcher points
 this out.
 
-> [!CAUTION]
-> **BETA** – not tested in game yet. The v1 patch list this patch was taken from
+> [!NOTE]
+> v2 has been tested in game. The v1 patch list this patch was taken from
 > contained two errors that would have crashed the client: one line was missing
 > a byte (turning the function for the item class into garbage), another was a
 > copy of the line before it (a call landed in the middle of an unrelated
