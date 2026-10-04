@@ -38,7 +38,7 @@ Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes)** *(Nr. 4, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) – ungetestet** *(Nr. 4, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Verhindert einen Absturz in einer Funktion der Weltdarstellung (VA `0x81D510`).
 Sie läuft über Dreiecke aus je drei Vertex-Indizes und rechnet „Index minus
@@ -140,7 +140,7 @@ unverändert: AFK-Status nach 5 Minuten, Logout nach 30 Minuten ohne Eingabe.
 ## Modding: Interface, MPQs & Addons
 
 <a id="patch-glue"></a>
-**Custom Glue-XML erlauben** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
+**Custom Glue-XML erlauben – ungetestet** *(Nr. 14, Autor: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
 
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding): Die Signaturprüfung der Interface-Dateien
@@ -328,7 +328,7 @@ Behebt einen Bug, bei dem nach dem Abbrechen eines kanalisierten Zaubers die
 Vorbereitungsanimation hängen blieb.
 
 <a id="patch-ghostattack"></a>
-**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 28, Autor: Robinsch (fixed by St0ny))*
+**„Geister“-Angriff von NPCs beim Evade behoben – ungetestet** *(Nr. 28, Autor: Robinsch (fixed by St0ny))*
 
 Bevor der Client ein neues Nahkampf-Ergebnis anzeigt, spielt er den zuletzt
 gespeicherten Schlag noch einmal auf dem Ziel ab. Hat ein NPC inzwischen den
@@ -342,7 +342,7 @@ In Robinschs Liste steht der Offset `0x355BF` – dort fehlt eine 5. Er traf ein
 gemacht. Hier ist er auf `0x3555BF` korrigiert.
 
 <a id="patch-naked"></a>
-**Nackter-Charakter-Bug behoben** *(Nr. 29, Autor: Robinsch (fixed by St0ny))*
+**Nackter-Charakter-Bug behoben – ungetestet** *(Nr. 29, Autor: Robinsch (fixed by St0ny))*
 
 Behebt nackt dargestellte Charaktere, wie sie auf privaten Servern vorkommen,
 wenn neue Items nur über `ItemDisplayInfo` verteilt werden. Der Patch schaltet
@@ -384,7 +384,7 @@ stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
 <a id="patch-level101"></a>
-**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) – ungetestet** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus (fixed by St0ny))*
 
 Die Spielwert-Tabellen des Clients (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – elf Tabellen) haben je Spalte
@@ -414,7 +414,7 @@ vergrößert es auf 30 Plätze. Welche Rasse welche Klasse darf, prüft weiterhi
 der Server – mehr macht dieser Patch nicht.
 
 <a id="patch-namecheck"></a>
-**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen)** *(Nr. 36, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) – ungetestet** *(Nr. 36, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Schaltet die komplette clientseitige Namensprüfung bei der Charaktererstellung
 ab: Die Prüffunktion (VA `0x6B0F90`) meldet immer „Name gültig“. Damit sind z. B.
@@ -435,7 +435,7 @@ Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(Nr. 38, standardmäßig aus, Autor: Kebabstorm (fixed by St0ny))*
+**Custom Item Fix (BETA) v2 – ungetestet** *(Nr. 38, standardmäßig aus, Autor: Kebabstorm (fixed by St0ny))*
 
 Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
 Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
@@ -1014,7 +1014,7 @@ hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 67, standardmäßig aus, Autor: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen – ungetestet** *(Nr. 67, standardmäßig aus, Autor: Stormhand (fixed by St0ny))*
 
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged)
 von **Stormhand** in diesen Patcher, damit
@@ -1163,7 +1163,7 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 71, standardmäßig aus, Autor: MacWarrior (fixed by St0ny))*
+**Programmtitel in den Dateieigenschaften ändern – ungetestet** *(Nr. 71, standardmäßig aus, Autor: MacWarrior (fixed by St0ny))*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.

@@ -38,7 +38,7 @@ Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame crash fix (invalid triangle indices)** *(No. 4, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**WorldFrame crash fix (invalid triangle indices) – untested** *(No. 4, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Prevents a crash in a world rendering function (VA `0x81D510`). It walks over
 triangles made of three vertex indices each and turns "index minus base" into a
@@ -137,7 +137,7 @@ logout after 30 minutes without input.
 ## Modding: interface, MPQs & addons
 
 <a id="patch-glue"></a>
-**Allow custom GlueXML** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
+**Allow custom GlueXML – untested** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
 
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding): the signature check of the interface files
@@ -323,7 +323,7 @@ Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 <a id="patch-ghostattack"></a>
-**Fix "ghost" attack when NPCs evade from combat** *(No. 28, Author: Robinsch (fixed by St0ny))*
+**Fix "ghost" attack when NPCs evade from combat – untested** *(No. 28, Author: Robinsch (fixed by St0ny))*
 
 Before the client shows a new melee result, it plays the last stored swing on
 the target once more. If an NPC has evaded from combat in the meantime, that is
@@ -336,7 +336,7 @@ string helper function and would have turned it into an endless loop. Here it
 is corrected to `0x3555BF`.
 
 <a id="patch-naked"></a>
-**Fix naked character bug** *(No. 29, Author: Robinsch (fixed by St0ny))*
+**Fix naked character bug – untested** *(No. 29, Author: Robinsch (fixed by St0ny))*
 
 Fixes characters shown naked, as happens on private servers when new items are
 only distributed via `ItemDisplayInfo`. The patch disables `SPELL_AURA_X_RAY`:
@@ -377,7 +377,7 @@ unconditional instead – a single byte, same effect, and the patches work
 together.
 
 <a id="patch-level101"></a>
-**Level 101+ fix (game tables, barber chair, base stats)** *(No. 34, off by default, Author: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ fix (game tables, barber chair, base stats) – untested** *(No. 34, off by default, Author: Alastor StrixEfuartus (fixed by St0ny))*
 
 The client's game tables (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – eleven tables) have 100 rows per
@@ -405,7 +405,7 @@ in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 pick which class is still checked by the server – this patch does nothing more.
 
 <a id="patch-namecheck"></a>
-**Disable the name check in character creation (e.g. digits in names)** *(No. 36, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**Disable the name check in character creation (e.g. digits in names) – untested** *(No. 36, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -425,7 +425,7 @@ has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(No. 38, off by default, Author: Kebabstorm (fixed by St0ny))*
+**Custom Item Fix (BETA) v2 – untested** *(No. 38, off by default, Author: Kebabstorm (fixed by St0ny))*
 
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
@@ -988,7 +988,7 @@ A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 67, off by default, Author: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: camera height and zoom limits – untested** *(No. 67, off by default, Author: Stormhand (fixed by St0ny))*
 
 Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
 **Stormhand** into this patcher, so everything
@@ -1136,7 +1136,7 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title in the file properties** *(No. 71, off by default, Author: MacWarrior (fixed by St0ny))*
+**Change program title in the file properties – untested** *(No. 71, off by default, Author: MacWarrior (fixed by St0ny))*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17

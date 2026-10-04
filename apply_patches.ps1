@@ -125,7 +125,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresets   = 'B = Preset Billy''s_Wow.exe (sicher)    S = Preset St0nys_Wow.exe (unsicher)'
+        MenuPresets   = 'B = Preset Billy''s_Wow.exe (erprobte Basis, teils ungetestet)    S = Preset St0nys_Wow.exe (unsicher)'
         StonyWarning  = 'Achtung: Das Preset St0nys_Wow.exe sollte unter keinen Umstaenden auf oeffentlichen Servern verwendet werden - das fuehrt wahrscheinlich zu einem Bann!'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
         MenuHelp3     = 'ENTER = Auswahl uebernehmen, speichern und weiter'
@@ -216,7 +216,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresets   = 'B = preset Billy''s_Wow.exe (safe)    S = preset St0nys_Wow.exe (unsafe)'
+        MenuPresets   = 'B = preset Billy''s_Wow.exe (proven base, partly untested)    S = preset St0nys_Wow.exe (unsafe)'
         StonyWarning  = 'Warning: the preset St0nys_Wow.exe should never be used on public servers under any circumstances - it will most likely get you banned!'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
         MenuHelp3     = 'ENTER = accept and save selection, continue'
@@ -1845,8 +1845,8 @@ $patches = @(
 
     @{ Id = 'worldcrash'; Cat = 'system'; On = $false
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
-       De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
-       En = 'WorldFrame crash fix (invalid triangle indices)'
+       De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes) - ungetestet'
+       En = 'WorldFrame crash fix (invalid triangle indices) - untested'
        Code = {
         # Code-Hoehle am Ende von .text, siehe Get-CodeCave / Add-WorldFrameCrashFix.
         Add-WorldFrameCrashFix
@@ -1957,8 +1957,8 @@ $patches = @(
 
     @{ Id = 'glue'; Cat = 'modding'; On = $true
        Author = 'Alastor StrixEfuartus / Kebabstorm (fixed by St0ny)'
-       De = 'Custom Glue-XML erlauben'
-       En = 'Allow custom GlueXML'
+       De = 'Custom Glue-XML erlauben - ungetestet'
+       En = 'Allow custom GlueXML - untested'
        Code = {
         # Signaturpruefung der Interface-Dateien (VA 0x8165E0, liefert 0 = keine
         # Signatur, 1 = kaputt, 2 = veraendert, 3 = gueltig) immer "gueltig"
@@ -2165,8 +2165,8 @@ $patches = @(
 
     @{ Id = 'ghostattack'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch (fixed by St0ny)'
-       De = '"Geister"-Angriff von NPCs beim Evade behoben'
-       En = 'Fix "ghost" attack when NPCs evade from combat'
+       De = '"Geister"-Angriff von NPCs beim Evade behoben - ungetestet'
+       En = 'Fix "ghost" attack when NPCs evade from combat - untested'
        Code = {
         # Vor jedem neuen Nahkampf-Ergebnis (SMSG_ATTACKERSTATEUPDATE) spielt
         # der Client den zuletzt gespeicherten Schlag noch einmal auf dem Ziel
@@ -2180,8 +2180,8 @@ $patches = @(
 
     @{ Id = 'naked'; Cat = 'gameplay'; On = $true
        Author = 'Robinsch (fixed by St0ny)'
-       De = 'Nackter-Charakter-Bug behoben'
-       En = 'Fix naked character bug'
+       De = 'Nackter-Charakter-Bug behoben - ungetestet'
+       En = 'Fix naked character bug - untested'
        Code = {
         # Die Abfrage, ob der eigene Spieler die X-Ray-Aura hat (VA 0x6DE840,
         # Bit 1 von [Spieler+0xF42]), meldet immer "nein": je -> jmp bei
@@ -2236,8 +2236,8 @@ $patches = @(
 
     @{ Id = 'level101'; Cat = 'gameplay'; On = $false; Needs = @('glue')
        Author = 'Alastor StrixEfuartus (fixed by St0ny)'
-       De = 'Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)'
-       En = 'Level 101+ fix (game tables, barber chair, base stats)'
+       De = 'Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) - ungetestet'
+       En = 'Level 101+ fix (game tables, barber chair, base stats) - untested'
        Code = {
         # Die Spielwert-Tabellen (gtCombatRatings, gtBarberShopCostBase,
         # gtOCTRegenHP/MP, gtChanceToMeleeCrit, ... - elf Tabellen) sind je
@@ -2280,8 +2280,8 @@ $patches = @(
 
     @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
-       De = 'Namenspruefung bei der Charaktererstellung abschalten (z.B. Zahlen im Namen)'
-       En = 'Disable the name check in character creation (e.g. digits in names)'
+       De = 'Namenspruefung bei der Charaktererstellung abschalten (z.B. Zahlen im Namen) - ungetestet'
+       En = 'Disable the name check in character creation (e.g. digits in names) - untested'
        NoteDe = 'Server muss die Namen ebenfalls erlauben'
        NoteEn = 'server must allow the names as well'
        Code = {
@@ -2301,8 +2301,8 @@ $patches = @(
 
     @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache')
        Author = 'Kebabstorm (fixed by St0ny)'
-       De = 'Custom Item Fix (BETA) v2'
-       En = 'Custom Item Fix (BETA) v2'
+       De = 'Custom Item Fix (BETA) v2 - ungetestet'
+       En = 'Custom Item Fix (BETA) v2 - untested'
        NoteDe = 'Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten'
        NoteEn = 'custom items without DBC changes: model, icon and item type from the server data'
        Code = {
@@ -2930,8 +2930,8 @@ $patches = @(
 
     @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
        Author = 'Stormhand (fixed by St0ny)'
-       De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen'
-       En = 'CameraReforged [BETA]: camera height and zoom limits'
+       De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen - ungetestet'
+       En = 'CameraReforged [BETA]: camera height and zoom limits - untested'
        NoteDe = 'Schulterversatz noch ohne Wirkung; Exe wird groesser - Bann-Gefahr'
        NoteEn = 'shoulder offset has no effect yet; exe grows - ban risk'
        Code = {
@@ -3040,8 +3040,8 @@ $patches = @(
 
     @{ Id = 'clienttitle'; Cat = 'client'; On = $false
        Author = 'MacWarrior (fixed by St0ny)'
-       De = 'Programmtitel in den Dateieigenschaften aendern'
-       En = 'Change program title in the file properties'
+       De = 'Programmtitel in den Dateieigenschaften aendern - ungetestet'
+       En = 'Change program title in the file properties - untested'
        PromptDe = 'Neuer Titel, max. 17 Zeichen, nur ASCII'
        PromptEn = 'New title, max. 17 characters, ASCII only'
        Default = 'World of Warcraft'
