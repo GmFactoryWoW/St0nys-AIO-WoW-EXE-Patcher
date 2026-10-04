@@ -1152,15 +1152,14 @@ as the timestamp in the program header, which analysis tools show as the build
 time of `Wow.exe` (original 2010-06-25 06:55:58 UTC). Date and time are taken
 as local time of the computer you patch on.
 
-Input as `YYYY-MM-DD HH:MM` or `YYYY-MM-DD HH:MM:SS`, optionally followed by
-`FR` for French month names (e.g. `2026-09-28 14:30 FR` →
-`Sep 28 2026 14:30:00`). The time is required; a remembered value from an older
-version without a time gets the original `23:54:57`. The
-suggestion in brackets is the **computer's current date and time** (with `FR`
-if you chose it last time) – ENTER accepts it. With `-Unattended` the
-remembered value is used, or the current time if nothing is remembered. If the
-patch is already applied, the current date and time of `Wow.exe` are
-suggested.
+Input as `YYYY-MM-DD HH:MM:SS`, optionally followed by `FR` for French month
+names (e.g. `2026-09-28 14:30:15 FR` → `Sep 28 2026 14:30:15`). Without seconds
+(`14:30`) the patcher uses `00`. The suggestion in brackets is **"time of
+confirming with Y"** (with `FR` if you chose it last time): if you accept it
+with ENTER, the patcher uses the computer's date and time at the moment you
+confirm patching with `Y`. With `-Unattended` the remembered value is used, or
+the time of patching if nothing is remembered. If the patch is already applied,
+the current date and time of `Wow.exe` are suggested.
 
 <a id="patch-clienticon"></a>
 **Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
