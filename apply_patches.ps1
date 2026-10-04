@@ -3492,13 +3492,12 @@ function ConvertFrom-Hex([string]$hex) {
 function Read-State {
     if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) { return $null }
     try { $lines = [System.IO.File]::ReadAllLines($stateFile) } catch { return $null }
-    $st = @{ Hash = $null; Size = [int64]-1; Ids = @(); Values = @{}; Created = $null; Undo = New-Object System.Collections.Generic.List[object] }
+    $st = @{ Hash = $null; Size = [int64]-1; Ids = @(); Values = @{}; Undo = New-Object System.Collections.Generic.List[object] }
     foreach ($l in $lines) {
         if ($l -match '^hash=([0-9A-Fa-f]{64})$') { $st.Hash = $matches[1].ToUpperInvariant() }
         elseif ($l -match '^size=(\d+)$') { $st.Size = [int64]$matches[1] }
         elseif ($l -match '^patches=(.*)$') { $st.Ids = @($matches[1] -split ',' | Where-Object { $_ -ne '' }) }
         elseif ($l -match '^value\.([A-Za-z0-9_]+)=(.*)$') { $st.Values[$matches[1]] = $matches[2] }
-        elseif ($l -match '^created=(\d+)$') { $st.Created = [int64]$matches[1] }
         elseif ($l -match '^undo=0x([0-9A-Fa-f]+):((?:[0-9A-Fa-f]{2})+)$') {
             $st.Undo.Add(@([Convert]::ToInt64($matches[1], 16), (ConvertFrom-Hex $matches[2])))
         }
@@ -3542,7 +3541,7 @@ function Get-UndoEntries([byte[]]$orig) {
 }
 
 # Zustandsdatei schreiben. Liefert $null oder die Fehlermeldung.
-function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, $undo, $created) {
+function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, $undo) {
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add('# St0nys-AIO-WoW-EXE-Patcher - Zustand der gepatchten Wow.exe / state of the patched Wow.exe')
     $lines.Add('# Nicht von Hand aendern! Nur zur Beschleunigung - ohne diese Datei ermittelt der Patcher den Patchstand ueber das Wasserzeichen.')
@@ -3551,7 +3550,6 @@ function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, 
     $lines.Add("size=$size")
     $lines.Add("patches=$($ids -join ',')")
     foreach ($k in ($values.Keys | Sort-Object)) { $lines.Add("value.$k=$($values[$k])") }
-    if ($null -ne $created) { $lines.Add("created=$created") }   # originales Erstelldatum der Wow.exe (UTC-Ticks)
     foreach ($u in $undo) {
         $lines.Add(('undo=0x{0:X}:{1}' -f $u[0], ([BitConverter]::ToString($u[1])).Replace('-', '')))
     }
@@ -3561,26 +3559,6 @@ function Write-State([string]$path, [string]$hash, [int64]$size, $ids, $values, 
     } catch {
         return $_.Exception.Message
     }
-}
-
-# Originales Erstelldatum der Wow.exe (Dateisystem, UTC-Ticks) fuer den
-# Build-Datum-Patch, der "Erstellt" aendert: aus patcher_state.ini; ist der
-# Patch gerade nicht eingespielt, das der Wow.exe selbst; sonst das von
-# Wow.exe.ORI (dorthin uebertraegt der Patcher es beim Sichern). $null, wenn
-# nichts davon lesbar ist.
-function Get-OriginalCreated {
-    if ($null -ne $script:state -and $null -ne $script:state.Created) { return [int64]$script:state.Created }
-    try {
-        if (-not ($script:patchedMode -and ($script:appliedIds -contains 'clientdate'))) {
-            return [System.IO.File]::GetCreationTimeUtc($file).Ticks
-        }
-        if (Test-Path -LiteralPath $backup -PathType Leaf) { return [System.IO.File]::GetCreationTimeUtc($backup).Ticks }
-    } catch { }
-    return $null
-}
-function Set-CreatedTicks([string]$path, $ticks) {
-    if ($null -eq $ticks) { return }
-    try { [System.IO.File]::SetCreationTimeUtc($path, [datetime]::new([int64]$ticks, [System.DateTimeKind]::Utc)) } catch { }
 }
 
 # Hinweis auf Wow.exe.ORI bzw. Wow.exe.BAK, wenn eine davon das Original enthaelt
@@ -4051,7 +4029,7 @@ if (-not $patchedMode) {
         Say (T 'NoChange') 'Green'
         if ($state.Scanned -and $null -ne (Restore-Original $origPatched $state)) {
             # Patchstand kam ueber das Wasserzeichen - jetzt merken, dann geht es beim naechsten Mal schneller.
-            if ($null -eq (Write-State $stateFile $state.Hash $state.Size $state.Ids $state.Values $state.Undo (Get-OriginalCreated))) { Say (T 'StateSaved') 'DarkGray' }
+            if ($null -eq (Write-State $stateFile $state.Hash $state.Size $state.Ids $state.Values $state.Undo)) { Say (T 'StateSaved') 'DarkGray' }
         }
         Exit-Patcher 0
     }
@@ -4166,18 +4144,15 @@ if ($atConfirm.Count -gt 0) {
 # aus einer aelteren Patcher-Version liegt. Danach wird die bisherige
 # (gepatchte) Wow.exe als Wow.exe.BAK gesichert, man kann also immer einen
 # Schritt zurueck.
-$origCreated = Get-OriginalCreated
 try {
     if (-not $patchedMode) {
         Copy-Item -LiteralPath $file -Destination $backup -Force
-        Set-CreatedTicks $backup $origCreated     # .ORI traegt auch das originale Erstelldatum
         Say (T 'BackupOk' $backup)
     } else {
         if (Test-Path -LiteralPath $backup -PathType Leaf) {
             Say (T 'BackupSkip')
         } else {
             [System.IO.File]::WriteAllBytes($backup, $f)
-            Set-CreatedTicks $backup $origCreated
             Say (T 'BackupRedo' $backup)
         }
         Copy-Item -LiteralPath $file -Destination $backupPrev -Force
@@ -4233,7 +4208,7 @@ if ($total -gt 0) {
     if ($null -eq (Restore-FromTable $f)) { Write-Host ''; Say (T 'TableWarn') 'Yellow' }
     # Die Zustandsdatei ist nur eine Beschleunigung - ein Schreibfehler
     # verhindert das Patchen nicht (Hinweis am Ende).
-    $stateWarn = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo $origCreated
+    $stateWarn = Write-State $stateTmp (Get-Sha256 $f) $origBytes.Length $chosenIds $VALUES $undo
 }
 
 # --- 8. Datei einmal zurueckschreiben ---
@@ -4264,21 +4239,6 @@ try {
 # uebernimmt sie sonst von der alten Wow.exe. Nur unter Windows vorhanden.
 if (Get-Command Unblock-File -ErrorAction SilentlyContinue) {
     try { Unblock-File -LiteralPath $file -ErrorAction Stop } catch { }
-}
-
-# Build-Datum-Patch aktiv: "Erstellt" der Wow.exe (Explorer-Eigenschaften und
-# Tooltip) auf das Build-Datum mit Uhrzeit setzen, bei jedem Lauf. Wird der
-# Patch abgewaehlt, bekommt sie ihr originales Erstelldatum zurueck (gemerkt in
-# patcher_state.ini bzw. von Wow.exe.ORI). "Geaendert" setzt Windows beim
-# Schreiben selbst auf den Zeitpunkt des Patchens.
-if (($chosenIds -contains 'clientdate') -and $VALUES.ContainsKey('clientdate')) {
-    $parts = Get-ClientDateParts $VALUES['clientdate']
-    if ($null -ne $parts) {
-        $stamp = [datetime]::SpecifyKind($parts[0], [System.DateTimeKind]::Local)
-        try { [System.IO.File]::SetCreationTime($file, $stamp) } catch { }
-    }
-} elseif ($patchedMode -and ($appliedIds -contains 'clientdate')) {
-    Set-CreatedTicks $file $origCreated
 }
 
 # --- 9. Zustand uebernehmen (ohne Patches ist die Wow.exe original, dann weg damit) ---

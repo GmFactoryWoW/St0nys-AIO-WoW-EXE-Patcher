@@ -1161,15 +1161,6 @@ confirm patching with `Y`. With `-Unattended` the remembered value is used, or
 the time of patching if nothing is remembered. If the patch is already applied,
 the current date and time of `Wow.exe` are suggested.
 
-In addition, on every run with the patch active the patcher sets the
-**"Created"** date of `Wow.exe`, which Windows shows in the properties and in
-the tooltip, to the build date and time. Windows sets "Modified" itself to the
-time of patching, as usual. These times are stored in the file system, not in
-the exe. The patcher remembers the original creation date in
-`patcher_state.ini` the first time and also copies it to `Wow.exe.ORI`. When the
-patch is deselected, `Wow.exe` gets it back – like with every other patch, the
-original state is restored.
-
 <a id="patch-clienticon"></a>
 **Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
 
