@@ -1170,7 +1170,7 @@ das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
 Höchstens 17 Zeichen, nur ASCII.
 
 <a id="patch-clientdate"></a>
-**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 72, standardmäßig aus, Autor: MacWarrior)*
+**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 72, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
 
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk, dazu die Uhrzeit. Die steht an zwei Stellen:
@@ -1179,14 +1179,15 @@ Zeitstempel im Programmkopf, den Analyse-Werkzeuge als Erstellungszeit der
 `Wow.exe` anzeigen (Original 25.06.2010 06:55:58 UTC). Datum und Uhrzeit gelten
 als Ortszeit des Rechners, auf dem du patchst.
 
-Eingabe als `JJJJ-MM-TT HH:MM` oder `JJJJ-MM-TT HH:MM:SS`, optional mit `FR`
-dahinter für französische Monatsnamen (z. B. `2026-09-28 14:30 FR` →
-`Sep 28 2026 14:30:00`). Die Uhrzeit ist Pflicht; ein gemerkter Wert aus einer
-älteren Version ohne Uhrzeit bekommt die originale `23:54:57`. Als
-Vorschlag stehen **Datum und Uhrzeit des Rechners** in den Klammern (mit `FR`,
-wenn du das zuletzt gewählt hast) – ENTER übernimmt sie. Mit `-Unattended` gilt
-der gemerkte Wert, ohne gemerkten Wert der aktuelle Zeitpunkt. Ist der Patch
-schon eingespielt, steht dort das aktuelle Datum samt Uhrzeit der `Wow.exe`.
+Eingabe als `JJJJ-MM-TT HH:MM:SS`, optional mit `FR` dahinter für französische
+Monatsnamen (z. B. `2026-09-28 14:30:15 FR` → `Sep 28 2026 14:30:15`). Ohne
+Sekunden (`14:30`) nimmt der Patcher `00`. Als Vorschlag steht in den Klammern
+**„Zeitpunkt der Bestätigung mit J“** (mit `FR`, wenn du das zuletzt gewählt
+hast): Übernimmst du ihn mit ENTER, setzt der Patcher Datum und Uhrzeit des
+Rechners in dem Moment, in dem du das Patchen mit `J` bestätigst. Mit
+`-Unattended` gilt der gemerkte Wert, ohne gemerkten Wert der Zeitpunkt des
+Patchens. Ist der Patch schon eingespielt, steht dort das aktuelle Datum samt
+Uhrzeit der `Wow.exe`.
 
 Zusätzlich setzt der Patcher bei jedem Lauf mit aktivem Patch das Datum
 **„Erstellt“** der `Wow.exe`, das Windows in den Eigenschaften und im Tooltip

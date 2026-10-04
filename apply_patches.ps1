@@ -135,6 +135,8 @@ $TEXT = @{
         MarkRemove    = '(wird zurueckgenommen)'
         ValueSuggest  = '-> Vorschlag: {0}'
         ValueNow      = '-> aktuell: {0}'
+        ValueAtYes    = 'Zeitpunkt der Bestaetigung mit J'
+        ValueAtStart  = 'Zeitpunkt des Patchens'
         Saved         = 'Auswahl fuer den naechsten Start gespeichert.'
         SaveFail      = 'HINWEIS: Auswahl konnte nicht gespeichert werden: {0}'
         Prompt        = 'Eingabe'
@@ -224,6 +226,8 @@ $TEXT = @{
         MarkRemove    = '(will be removed)'
         ValueSuggest  = '-> suggestion: {0}'
         ValueNow      = '-> current: {0}'
+        ValueAtYes    = 'time of confirming with Y'
+        ValueAtStart  = 'time of patching'
         Saved         = 'Selection saved for next time.'
         SaveFail      = 'NOTE: Could not save the selection: {0}'
         Prompt        = 'Input'
@@ -794,9 +798,8 @@ function Set-ClientTitle([string]$v) {
     PatchU16 0x757942 ($v.Length + 1)
 }
 
-# Wert: "JJJJ-MM-TT HH:MM" bzw. "JJJJ-MM-TT HH:MM:SS", optional mit " FR" fuer
-# franzoesische Monatsnamen. Die Uhrzeit ist Pflicht. Liefert
-# @(Datum mit Uhrzeit, 'EN'|'FR').
+# Wert: "JJJJ-MM-TT HH:MM:SS" (ohne Sekunden: 00), optional mit " FR" fuer
+# franzoesische Monatsnamen. Liefert @(Datum mit Uhrzeit, 'EN'|'FR').
 $CLIENT_TIME_ORIG = '23:54:57'
 function Get-ClientDateParts([string]$v) {
     if ($v -notmatch '^\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s+(EN|FR|en|fr))?\s*$') { return $null }
@@ -3051,7 +3054,7 @@ $patches = @(
     }}
 
     @{ Id = 'clientdate'; Cat = 'client'; On = $false
-       Author = 'MacWarrior'
+       Author = 'St0ny (original by MacWarrior)'
        De = 'Build-Datum aendern (Original Jun 24 2010)'
        En = 'Change build date (original Jun 24 2010)'
        PromptDe = 'Neues Build-Datum mit Uhrzeit JJJJ-MM-TT HH:MM[:SS], optional mit FR fuer franzoesische Monatsnamen'
@@ -3626,6 +3629,23 @@ function Get-ValueSuggestion($p) {
     return $def
 }
 
+# Kommt der Vorschlag aus Suggest (Build-Datum: jetzt)? Dann gilt beim
+# Uebernehmen der Zeitpunkt, an dem das Patchen mit J bestaetigt wird.
+function Test-SuggestNow($p) {
+    $saved = $script:savedValues[$p.Id]
+    return [bool]($p.Suggest -and -not (Test-ValueActive $p) -and -not ($Unattended -and $saved))
+}
+# Wert fuer die Anzeige: bei "Zeitpunkt der Bestaetigung" dieser Text (mit FR).
+function Get-ValueText($p) {
+    $v = $script:VALUES[$p.Id]
+    if ($script:atConfirm -contains $p.Id) {
+        $t = T 'ValueAtYes'; if ($Unattended) { $t = T 'ValueAtStart' }
+        if ($v -match '\sFR\s*$') { $t += ' FR' }
+        return $t
+    }
+    return $v
+}
+
 function Get-SelectedCount($sel) {
     $n = 0
     foreach ($s in $sel) { if ($s) { $n++ } }
@@ -3955,11 +3975,14 @@ if ($chosen.Count -eq 0 -and -not $patchedMode) {
 
 # --- 3b. Werte fuer Patches mit eigener Eingabe (Vorschlag: Get-ValueSuggestion) ---
 $VALUES = @{}
+$atConfirm = @()      # Ids, deren Wert erst beim Bestaetigen mit J feststeht (Build-Datum: jetzt)
 $asked = $false
 foreach ($p in $chosen) {
     if (-not $p.Check) { continue }
     $def = Get-ValueSuggestion $p
+    $useNow = Test-SuggestNow $p
     if ($Unattended) {
+        if ($useNow) { $atConfirm += $p.Id }
         $err = & $p.Check $def
         if ($err) {
             Say (T 'BadValue' (PatchName $p) $def) 'Red'
@@ -3978,16 +4001,20 @@ foreach ($p in $chosen) {
     # Vorschlag bzw. aktuellen Wert hinter den Namen mit dem Originalwert schreiben
     $label = 'ValueSuggest'; if (Test-ValueActive $p) { $label = 'ValueNow' }
     Write-Host ''
-    if ($def -ne '') { Say "$(PatchName $p) $(T $label $def)" } else { Say (PatchName $p) }
+    $shown = $def
+    if ($useNow) { $shown = T 'ValueAtYes'; if ($def -match '\sFR\s*$') { $shown += ' FR' } }
+    if ($def -ne '') { Say "$(PatchName $p) $(T $label $shown)" } else { Say (PatchName $p) }
     while ($true) {
-        $hint = ''; if ($def -ne '') { $hint = " [$def]" }
+        $hint = ''; if ($def -ne '') { $hint = " [$shown]" }
         $v = Ask "  $(L $p.PromptDe $p.PromptEn)$hint"
-        if ($v -eq '') { $v = $def }
+        $takeNow = $false
+        if ($v -eq '') { $v = $def; $takeNow = $useNow }
         $err = & $p.Check $v
         if (-not $err) { break }
         Say $err 'Yellow'
     }
     if ($p.Normalize) { $v = & $p.Normalize $v }
+    if ($takeNow) { $atConfirm += $p.Id }
     $VALUES[$p.Id] = $v
 }
 
@@ -4010,7 +4037,7 @@ $added = @(); $changed = @(); $removed = @(); $kept = 0
 if (-not $patchedMode) {
     Say (T 'Summary' $chosen.Count) 'Cyan'
     foreach ($p in $chosen) {
-        if ($VALUES.ContainsKey($p.Id)) { Say "  - $(PatchName $p): $($VALUES[$p.Id])" } else { Say "  - $(PatchName $p)" }
+        if ($VALUES.ContainsKey($p.Id)) { Say "  - $(PatchName $p): $(Get-ValueText $p)" } else { Say "  - $(PatchName $p)" }
         if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
     }
 } else {
@@ -4031,7 +4058,7 @@ if (-not $patchedMode) {
     if ($added.Count -gt 0) {
         Say (T 'SumAdd' $added.Count) 'Cyan'
         foreach ($p in $added) {
-            if ($VALUES.ContainsKey($p.Id)) { Say "  + $(PatchName $p): $($VALUES[$p.Id])" 'Green' } else { Say "  + $(PatchName $p)" 'Green' }
+            if ($VALUES.ContainsKey($p.Id)) { Say "  + $(PatchName $p): $(Get-ValueText $p)" 'Green' } else { Say "  + $(PatchName $p)" 'Green' }
             if ($p.Url) { Say "    $($p.Url)" 'DarkCyan' }
         }
     }
@@ -4039,7 +4066,7 @@ if (-not $patchedMode) {
         Say (T 'SumChange' $changed.Count) 'Cyan'
         foreach ($p in $changed) {
             $old = $state.Values[$p.Id]; if (-not $old) { $old = '?' }
-            Say "  ~ $(PatchName $p): $old -> $($VALUES[$p.Id])" 'Green'
+            Say "  ~ $(PatchName $p): $old -> $(Get-ValueText $p)" 'Green'
         }
     }
     if ($removed.Count -gt 0) {
@@ -4116,6 +4143,19 @@ if (-not $Unattended) {
         Exit-Patcher 2
     }
     Write-Host ''
+}
+
+# Werte "Zeitpunkt der Bestaetigung" jetzt festlegen (ohne Rueckfragen: beim
+# Start des Patchens) und gemerkt ablegen.
+if ($atConfirm.Count -gt 0) {
+    foreach ($p in $chosen) {
+        if ($atConfirm -notcontains $p.Id) { continue }
+        $v = & $p.Suggest $VALUES[$p.Id]
+        if ($p.Normalize) { $v = & $p.Normalize $v }
+        $VALUES[$p.Id] = $v
+        $allValues[$p.Id] = $v
+    }
+    Save-Values $allValues
 }
 
 # --- 5. Backup ---
