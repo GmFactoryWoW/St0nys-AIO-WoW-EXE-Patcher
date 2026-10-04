@@ -3098,7 +3098,7 @@ $PRESET_STONY = @(
     'skipbnet', 'skiprdp', 'nohttp', 'afk',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
     'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
-    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'customitem',
+    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars', 'customitem',
     'airforward', 'airlateral', 'airturn', 'doublejump',
     'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
     'bluemoon', 'notransparency', 'hdportraits',

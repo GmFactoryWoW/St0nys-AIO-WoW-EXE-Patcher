@@ -293,7 +293,7 @@ Click the number of a patch to jump to its description.
 | [34](PATCHES.en.md#patch-level101) | Level 101+ fix (game tables, barber chair, base stats) | Alastor StrixEfuartus (fixed by St0ny) | – | ✅ |
 | [35](PATCHES.en.md#patch-raceclass) | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
 | [36](PATCHES.en.md#patch-namecheck) | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – |
-| [37](PATCHES.en.md#patch-maxchars) | Max characters per realm raised to 255 | St0ny | ✅ | – |
+| [37](PATCHES.en.md#patch-maxchars) | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
 | [38](PATCHES.en.md#patch-customitem) | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm (fixed by St0ny) | – | ✅ |
 | [39](PATCHES.en.md#patch-climb) | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
 | [40](PATCHES.en.md#patch-jump) | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
