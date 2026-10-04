@@ -1143,7 +1143,7 @@ i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
 
 <a id="patch-clientdate"></a>
-**Change build date (original Jun 24 2010)** *(No. 72, off by default, Author: MacWarrior)*
+**Change build date (original Jun 24 2010)** *(No. 72, off by default, Author: St0ny (original by MacWarrior))*
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice, plus the time. The time is stored in two

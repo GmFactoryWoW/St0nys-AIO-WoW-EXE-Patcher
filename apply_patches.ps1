@@ -3054,7 +3054,7 @@ $patches = @(
     }}
 
     @{ Id = 'clientdate'; Cat = 'client'; On = $false
-       Author = 'MacWarrior'
+       Author = 'St0ny (original by MacWarrior)'
        De = 'Build-Datum aendern (Original Jun 24 2010)'
        En = 'Change build date (original Jun 24 2010)'
        PromptDe = 'Neues Build-Datum mit Uhrzeit JJJJ-MM-TT HH:MM[:SS], optional mit FR fuer franzoesische Monatsnamen'
