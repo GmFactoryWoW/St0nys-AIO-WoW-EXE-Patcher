@@ -2148,11 +2148,28 @@ $patches = @(
     }}
 
     @{ Id = 'npcanim'; Cat = 'gameplay'; On = $true
-       Author = 'Robinsch'
-       De = 'NPC-Angriffsanimation beim Drehen unterdrueckt'
-       En = 'Suppress NPC attack animation when turning'
+       Author = 'Robinsch (fixed by St0ny)'
+       De = 'NPC-Angriffsanimation beim Drehen unterdrueckt - ungetestet'
+       En = 'Suppress NPC attack animation when turning - untested'
        Code = {
-        Patch 0x33D7C9 @(0xEB)
+        # Dreht sich eine Einheit auf der Stelle, startet der Client die
+        # Schritt-Animation (ShuffleLeft/-Right) ueber "Animation neu
+        # bestimmen" (VA 0x73AC30). Bei NPCs kam dabei die Angriffsanimation
+        # heraus, deshalb schaltete Robinschs Patch (je -> jmp bei VA
+        # 0x73E3C9) den Aufruf ab - aber fuer ALLE Einheiten, also auch fuer
+        # Spieler: deren Beine machten beim Drehen keine Schritte mehr, nur der
+        # Oberkoerper verdrehte sich. Der Block VA 0x73E385-0x73E3D5 ist hier
+        # kompakter neu geschrieben (gleiche Logik) und prueft vor dem Aufruf
+        # zusaetzlich TYPEMASK_PLAYER (Deskriptor-Feld OBJECT_FIELD_TYPE):
+        # Spieler wie im Original, NPCs wie bei Robinsch.
+        Patch 0x33D785 @(
+            0x75, 0x28, 0x8B, 0x96, 0x38, 0x0A, 0x00, 0x00, 0xF6, 0xC6, 0x08, 0x75, 0x1D, 0xF6, 0xC1, 0x20,
+            0x75, 0x13, 0xF6, 0xC6, 0x10, 0x75, 0x0E, 0x83, 0xF8, 0x0B, 0x74, 0x05, 0x83, 0xF8, 0x0C, 0x75,
+            0x30, 0x33, 0xC9, 0xEB, 0x08, 0x6A, 0x0C, 0x59, 0xEB, 0x03, 0x6A, 0x0B, 0x59, 0x3B, 0xC1, 0x74,
+            0x20, 0x8B, 0xCE, 0xE8, 0xD3, 0xFA, 0xFD, 0xFF, 0x85, 0xC0, 0x74, 0x15, 0x8B, 0x46, 0x08, 0xF6,
+            0x40, 0x08, 0x10, 0x74, 0x0C, 0x6A, 0xFF, 0x6A, 0x00, 0x8B, 0xCE, 0xE8, 0x5B, 0xC8, 0xFF, 0xFF,
+            0x90
+        )
     }}
 
     @{ Id = 'spellanim'; Cat = 'gameplay'; On = $true
@@ -3163,7 +3180,7 @@ voicedll;406;91AA0000;1
 voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
-npcanim;33D7C9;74;1
+npcanim;33D785;75308B96380A0000F7C2000800007522F6C1207516F7C200100000750E83F80B740583F80C752A33C9EB0CB90C000000EB05B90B0000003BC174168BCEE8C9FAFDFF85C0740B6AFF6A008BCEE85AC8FFFF;1
 spellanim;33E0D6;6AFF6A008BCEE84FBFFFFF8D8D58FDFFFFE884FEEAFF;1
 ghostattack;3555BF;74;1
 naked;2DDC5D;74;1

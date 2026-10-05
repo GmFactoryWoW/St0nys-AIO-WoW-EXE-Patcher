@@ -316,10 +316,22 @@ Verhindert den fehlerhaften Auto-Attack-Swing, der beim Rechtsklick auf ein
 Ziel ausgelöst wurde.
 
 <a id="patch-npcanim"></a>
-**NPC-Angriffsanimation beim Drehen unterdrückt** *(Nr. 26, Autor: Robinsch)*
+**NPC-Angriffsanimation beim Drehen unterdrückt – ungetestet** *(Nr. 26, Autor: Robinsch (fixed by St0ny))*
 
 Unterdrückt die Angriffsanimation von NPCs beim Drehen, wenn kein echter
 Angriff stattfindet.
+
+Dreht sich eine Einheit auf der Stelle, verdreht der Client zuerst Oberkörper
+und Kopf; die Beine ziehen mit der Schritt-Animation (ShuffleLeft/-Right) nach.
+Diese Animation startet der Client, indem er die Animation der Einheit neu
+bestimmt – bei NPCs kam dabei die Angriffsanimation heraus. Robinschs Patch
+(bedingter Sprung → fester Sprung bei VA `0x73E3C9`) schaltete diesen Aufruf
+aber für **alle** Einheiten ab, also auch für Spieler: Beim Drehen machten ihre
+Beine keine Schritte mehr, nur der Oberkörper verdrehte sich seltsam.
+
+Hier ist der Block bei VA `0x73E385`–`0x73E3D5` kompakter neu geschrieben
+(gleiche Logik) und prüft zusätzlich, ob die Einheit ein Spieler ist: Spieler
+drehen sich wie im Original, NPCs verhalten sich wie mit Robinschs Patch.
 
 <a id="patch-spellanim"></a>
 **Zauber-Animation nach Abbruch repariert** *(Nr. 27, Autor: Robinsch)*

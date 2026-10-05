@@ -151,7 +151,7 @@ selection. It is defined in `apply_patches.ps1`: every patch has an entry
 
 It is based on Billy's `Wow.exe`, which was in use on public servers for a long
 time. Some of its patches have since been fixed because they could crash the
-client. They are marked "untested" in the overview. The fixed patches should
+client or break animations. They are marked "untested" in the overview. The fixed patches should
 still be safe, but nobody can guarantee that – use at your own risk.
 
 If you can confirm that one or more of these patches are safe and work on
@@ -288,7 +288,7 @@ Click the number of a patch to jump to its description.
 |    | **Gameplay fixes** |  |  |  |
 | [24](PATCHES.en.md#patch-areatrigger) | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
 | [25](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
-| [26](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning | Robinsch | ✅ | ✅ |
+| [26](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |
 | [27](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
 | [28](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |
 | [29](PATCHES.en.md#patch-naked) | Fix naked character bug – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |

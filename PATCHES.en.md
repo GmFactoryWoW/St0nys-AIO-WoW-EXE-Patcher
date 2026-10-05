@@ -311,10 +311,22 @@ Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
 <a id="patch-npcanim"></a>
-**Suppress NPC attack animation when turning** *(No. 26, Author: Robinsch)*
+**Suppress NPC attack animation when turning – untested** *(No. 26, Author: Robinsch (fixed by St0ny))*
 
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
+
+When a unit turns on the spot, the client first twists the upper body and the
+head; the legs follow with the step animation (ShuffleLeft/-Right). The client
+starts this animation by re-evaluating the unit's animation – for NPCs this
+produced the attack animation. Robinsch's patch (conditional jump → fixed jump
+at VA `0x73E3C9`) disabled that call for **all** units, including players: when
+turning, their legs no longer took steps and only the upper body twisted
+oddly.
+
+Here the block at VA `0x73E385`–`0x73E3D5` is rewritten more compactly (same
+logic) and additionally checks whether the unit is a player: players turn as in
+the original, NPCs behave as with Robinsch's patch.
 
 <a id="patch-spellanim"></a>
 **Fix spell animation after cancelled channel** *(No. 27, Author: Robinsch)*

@@ -158,7 +158,7 @@ einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
 
 Es basiert auf Billys `Wow.exe`, die lange auf öffentlichen Servern im Einsatz
 war. Einige Patches daraus wurden inzwischen korrigiert, weil sie Abstürze des
-Clients verursachen konnten. In der Übersicht sind sie mit „ungetestet“
+Clients oder fehlerhafte Animationen verursachen konnten. In der Übersicht sind sie mit „ungetestet“
 markiert. Die korrigierten Patches sollten weiterhin sicher sein, garantieren
 kann das aber niemand – Benutzung auf eigene Gefahr.
 
@@ -298,7 +298,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 |    | **Gameplay-Fixes** |  |  |  |
 | [24](PATCHES.md#patch-areatrigger) | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | ✅ | ✅ |
 | [25](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | ✅ | ✅ |
-| [26](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch | ✅ | ✅ |
+| [26](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt – ungetestet | Robinsch (fixed by St0ny) | ✅ | ✅ |
 | [27](PATCHES.md#patch-spellanim) | Zauber-Animation nach Abbruch repariert | Robinsch | ✅ | ✅ |
 | [28](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben – ungetestet | Robinsch (fixed by St0ny) | ✅ | ✅ |
 | [29](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben – ungetestet | Robinsch (fixed by St0ny) | ✅ | ✅ |
