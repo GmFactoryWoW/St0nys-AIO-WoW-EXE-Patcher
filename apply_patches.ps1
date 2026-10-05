@@ -1852,6 +1852,23 @@ $patches = @(
         Add-WorldFrameCrashFix
     }}
 
+    @{ Id = 'timer'; Cat = 'system'; On = $false
+       Author = 'St0ny'
+       De = 'Genauen Timer immer nutzen (Ruckeln beim Drehen behoben)'
+       En = 'Always use the precise timer (fixes turning stutter)'
+       Code = {
+        # Beim Start waehlt TimeManager (VA 0x86AB30) die Zeitquelle: QPC
+        # (genau) oder GetTickCount (~16-ms-Schritte). Dazu vergleicht er 250 ms
+        # lang QPC mit GetTickCount; weichen beide um 5 ms oder mehr ab (z.B.
+        # wenn ein Treiber den Thread kurz aufhaelt), faellt er fuer die ganze
+        # Sitzung auf GetTickCount zurueck (timingTestError 3). Mit dem groben
+        # Timer ruckelt u.a. das Nachdrehen des Unterkoerpers beim Drehen.
+        # jne -> jmp bei VA 0x86AC8E: der 250-ms-Vergleich entfaellt. Die
+        # Pruefung, ob QPC ueber alle CPU-Kerne vorwaerts laeuft (Fehler 4),
+        # und die CVar timingMethod bleiben erhalten.
+        Patch 0x46A08E @(0xE9, 0x83, 0x00, 0x00, 0x00, 0x90)
+    }}
+
     # --- Sicherheit & Datenschutz ---
 
     @{ Id = 'rce'; Cat = 'security'; On = $false
@@ -3110,7 +3127,7 @@ $patches = @(
 # Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
 # mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
 $PRESET_STONY = @(
-    'laa', 'itemcache', 'worldcrash', 'rce',
+    'laa', 'itemcache', 'worldcrash', 'timer', 'rce',
     'scandll', 'noserverpatch', 'nosurvey',
     'skipbnet', 'skiprdp', 'nohttp', 'afk',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
@@ -3135,6 +3152,7 @@ itemcache;2689FD;3075;1
 worldcrash;210;B3D35D00;0
 worldcrash;41C91B;0F834D010000;1
 worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
+timer;46A08E;0F8582000000;1
 rce;2A7;E0;1
 rce;3D9D7C;750A;1
 wardenoff;3D9C5B;7406;1

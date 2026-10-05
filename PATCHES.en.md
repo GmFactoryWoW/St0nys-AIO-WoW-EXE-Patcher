@@ -48,7 +48,7 @@ first triangle beforehand and skips the function in that case. Compared to the
 original, the three jump distances have been corrected and the code is shorter.
 
 > [!NOTE]
-> The code lives in the free gap at the end of `.text`, which No. 55 uses as
+> The code lives in the free gap at the end of `.text`, which No. 56 uses as
 > well. Both fit in there together, the file size does not change.
 
 > [!NOTE]
@@ -56,10 +56,41 @@ original, the three jump distances have been corrected and the code is shorter.
 > each call is checked. It does no harm when everything is fine, but does not
 > catch every conceivable case.
 
+<a id="patch-timer"></a>
+**Always use the precise timer (fixes turning stutter)** *(No. 5, off by default, Author: St0ny)*
+
+Fixes an old Blizzard bug: when you turn your character, the lower body jerks
+into the new direction instead of following smoothly – sometimes right after
+starting the game, sometimes not at all.
+
+At startup the client picks its time source. To do so, it compares the precise
+timer (QueryPerformanceCounter) with the coarse Windows timer (GetTickCount) for
+250 ms. If the two differ by 5 ms or more – a driver briefly holding up the
+thread is enough – the client uses GetTickCount for the whole session, which
+only counts in steps of about 16 ms.
+
+When turning, the client first twists the upper body and the head and then
+pulls the lower body along. How far depends on the time since the last change
+of direction – usually only a few milliseconds. With the coarse timer this time
+is almost always 0 and then jumps to 16 ms: the lower body stands still and
+then jumps a large step ahead.
+
+The patch drops the 250 ms comparison (conditional jump → fixed jump at VA
+`0x86AC8E`), so the client always uses the precise timer when it is available.
+The check whether the precise timer runs forward on all CPU cores and the CVar
+`timingMethod` are kept: with `SET timingMethod "1"` in `Config.wtf` you still
+get GetTickCount. As a side effect the client starts about a quarter of a second
+faster.
+
+> [!TIP]
+> In game, `/run print(GetCVar("timingTestError"))` shows whether the coarse
+> timer is active: `3` means the test failed at startup. Without the patch,
+> `SET timingMethod "2"` in `Config.wtf` helps as well.
+
 ## Security & privacy
 
 <a id="patch-rce"></a>
-**Remote code execution exploit fix** *(No. 5, off by default, Author: Robinsch)*
+**Remote code execution exploit fix** *(No. 6, off by default, Author: Robinsch)*
 
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
@@ -67,24 +98,24 @@ are no longer loaded from the local cache. Warden itself keeps working, so
 servers with active Warden are not a problem.
 
 > [!NOTE]
-> "Disable Warden completely" (No. 6) closes the hole as well and makes this
+> "Disable Warden completely" (No. 7) closes the hole as well and makes this
 > patch unnecessary. If you select both, the patcher points it out; together
 > they do no harm.
 
 <a id="patch-wardenoff"></a>
-**Disable Warden completely, RCE fix** *(No. 6, off by default, Author: Robinsch)*
+**Disable Warden completely, RCE fix** *(No. 7, off by default, Author: Robinsch)*
 
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
 that is no longer possible at all, including future tricks. Makes the RCE fix
-(No. 5) unnecessary; both together do no harm, the patcher just points it out.
+(No. 6) unnecessary; both together do no harm, the patcher just points it out.
 
 > [!WARNING]
 > The client no longer answers Warden. Servers with active Warden (e.g.
 > AzerothCore or TrinityCore with default settings) may therefore kick you.
 
 <a id="patch-scandll"></a>
-**Disable Scan.dll** *(No. 7, off by default, Author: Alastor StrixEfuartus)*
+**Disable Scan.dll** *(No. 8, off by default, Author: Alastor StrixEfuartus)*
 
 Prevents loading of `Scan.dll`, which the login server can push with its
 "Scan" command (a check module of the login server, independent of Warden):
@@ -92,13 +123,13 @@ Prevents loading of `Scan.dll`, which the login server can push with its
 file names, so loading is guaranteed to fail.
 
 <a id="patch-noserverpatch"></a>
-**Disallow client patches from the server** *(No. 8, off by default, Author: Kebabstorm)*
+**Disallow client patches from the server** *(No. 9, off by default, Author: Kebabstorm)*
 
 The server can no longer send patch files to the client and have them
 installed.
 
 <a id="patch-nosurvey"></a>
-**Disallow hardware surveys from the server** *(No. 9, off by default, Author: Kebabstorm)*
+**Disallow hardware surveys from the server** *(No. 10, off by default, Author: Kebabstorm)*
 
 The server can no longer request a hardware survey (information about your PC)
 from the client.
@@ -106,25 +137,25 @@ from the client.
 ## Login & connection
 
 <a id="patch-skipbnet"></a>
-**Skip Battle.net login** *(No. 10, off by default, Author: Kebabstorm)*
+**Skip Battle.net login** *(No. 11, off by default, Author: Kebabstorm)*
 
 The client skips the Battle.net login step and goes straight to the classic
 login.
 
 <a id="patch-skiprdp"></a>
-**Skip Remote Desktop check** *(No. 11, off by default, Author: Kebabstorm)*
+**Skip Remote Desktop check** *(No. 12, off by default, Author: Kebabstorm)*
 
 The client no longer checks whether it runs over a Remote Desktop connection –
 so WoW can be played via RDP, for example.
 
 <a id="patch-nohttp"></a>
-**Disable HTTP requests to Battle.net** *(No. 12, off by default, Author: Kebabstorm)*
+**Disable HTTP requests to Battle.net** *(No. 13, off by default, Author: Kebabstorm)*
 
 The client no longer fetches news, help articles and terms of use from
 Blizzard's servers – they no longer exist for 3.3.5 anyway.
 
 <a id="patch-afk"></a>
-**Prevent the idle kick after character auto-login** *(No. 13, off by default, Author: St0ny)*
+**Prevent the idle kick after character auto-login** *(No. 14, off by default, Author: St0ny)*
 
 After an auto-login without any keyboard or mouse input the timestamp of the
 last input is still 0 – the client immediately considers the player idle and
@@ -137,7 +168,7 @@ logout after 30 minutes without input.
 ## Modding: interface, MPQs & addons
 
 <a id="patch-glue"></a>
-**Allow custom GlueXML – untested** *(No. 14, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
+**Allow custom GlueXML – untested** *(No. 15, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
 
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding): the signature check of the interface files
@@ -147,7 +178,7 @@ folders are no longer renamed to `*.old`.
 > [!NOTE]
 > Side effect that every version of this patch has: addons without a signature
 > file are treated as "secure" (like Blizzard code) as well and may call
-> protected functions – similar in effect to the LUA unlock (No. 18). Servers
+> protected functions – similar in effect to the LUA unlock (No. 19). Servers
 > with anti-cheat may judge it the same way.
 
 The widespread version (Alastor/Kebabstorm) continues with uninitialised
@@ -156,45 +187,45 @@ the way (undefined behaviour). Here the error exit returns "valid" directly
 instead – same effect, without the wild memory access.
 
 <a id="patch-mpqsig"></a>
-**Allow unsigned / incorrectly signed MPQs** *(No. 15, off by default, Author: Alastor StrixEfuartus)*
+**Allow unsigned / incorrectly signed MPQs** *(No. 16, off by default, Author: Alastor StrixEfuartus)*
 
 The signature check for MPQ archives always reports "valid". The client only
 checks archives sent by the server with it: `wow-patch.mpq` (client patch from
 the server) and `Cache\Survey.mpq` (hardware survey). The regular `Data\*.MPQ`
 are loaded without any signature check anyway – so this patch is not needed for
-your own patch MPQs. Together with No. 8 and No. 9 it has no effect any more,
+your own patch MPQs. Together with No. 9 and No. 10 it has no effect any more,
 because neither path runs then.
 
 <a id="patch-mpqnames"></a>
-**Allow extended MPQ names** *(No. 16)*
+**Allow extended MPQ names** *(No. 17)*
 
 Allows wildcard names for MPQ archives (`patch-*.MPQ` and
 `patch-locale-*.MPQ`).
 
 <a id="patch-localdata"></a>
-**Load data directly from the Data folder (no MPQ)** *(No. 17, Author: Alastor StrixEfuartus)*
+**Load data directly from the Data folder (no MPQ)** *(No. 18, Author: Alastor StrixEfuartus)*
 
 The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
 
 <a id="patch-luaunlock"></a>
-**LUA unlock (spells, movement, macros)** *(No. 18, off by default, Author: Alastor StrixEfuartus)*
+**LUA unlock (spells, movement, macros)** *(No. 19, off by default, Author: Alastor StrixEfuartus)*
 
 Addons and macros may call protected functions: movement functions
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,
 `UseAction`, `PetAttack`, `RunMacro`/`RunMacroText` and the GM ticket
 functions. Not unlocked, because they have their own checks in the code:
 `TargetUnit`, `FocusUnit`, `InteractUnit`, `ReloadUI`; `AttackTarget` still
-prints an error. No. 19 unlocks these and all others.
+prints an error. No. 20 unlocks these and all others.
 
 > [!WARNING]
 > This enables automation. Servers with anti-cheat may treat it as botting –
 > this can lead to a ban.
 
 <a id="patch-luaunlockfull"></a>
-**LUA unlock (complete): allow all protected functions** *(No. 19, off by default, Author: St0ny)*
+**LUA unlock (complete): allow all protected functions** *(No. 20, off by default, Author: St0ny)*
 
-Extends No. 18 to all protected functions. The client's central protection
+Extends No. 19 to all protected functions. The client's central protection
 check knows 24 protection types in three classes (always forbidden, allowed only
 after a hardware event, allowed only while attribute changes are permitted) –
 with this patch it reports "allowed" for all of them. In addition, the own
@@ -208,7 +239,7 @@ block list for spells cast from insecure code is no longer checked either.
 
 Left untouched are the frame protection check (`SetAttribute`, `Show`, `Hide`
 on protected frames) and `RegisterForSave` – they do not concern game actions.
-Makes No. 18 unnecessary; both together do no harm, the patcher only points it
+Makes No. 19 unnecessary; both together do no harm, the patcher only points it
 out.
 
 > [!WARNING]
@@ -216,7 +247,7 @@ out.
 > it as botting – this can lead to a ban.
 
 <a id="patch-keyprop"></a>
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 20, off by default, Author: Alyst3r (0x539wowmod))*
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 21, off by default, Author: Alyst3r (0x539wowmod))*
 
 If a frame has an OnKeyDown script, the client reports the key as handled
 afterwards – it no longer reaches the key bindings. With the patch every key
@@ -228,7 +259,7 @@ all key presses without blocking the normal controls.
 > bound action.
 
 <a id="patch-globalsv"></a>
-**Merge addon data of all accounts (SavedVariables)** *(No. 21, off by default, Author: St0ny (original by boredatom))*
+**Merge addon data of all accounts (SavedVariables)** *(No. 22, off by default, Author: St0ny (original by boredatom))*
 
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
@@ -259,7 +290,7 @@ not included.
 ## DLL loaders
 
 <a id="patch-awesome"></a>
-**Enable AwesomeWotlkLib.dll support** *(No. 22, Author: FrostAtom)*
+**Enable AwesomeWotlkLib.dll support** *(No. 23, Author: FrostAtom)*
 
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
@@ -271,7 +302,7 @@ The loader sits at the start of the client's main fiber (right before
 `WinMain`) and overwrites the beginning of the Scan.dll start function for
 that; the Lua function `ScanDLLStart` becomes a no-op and the Scan.dll flag is
 set to "passed". As a side effect the patch disables the Scan.dll mechanism
-(like No. 7). If the DLL is missing, WoW simply starts normally.
+(like No. 8). If the DLL is missing, WoW simply starts normally.
 
 > [!NOTE]
 > The patch itself is harmless, it only loads a DLL that is not included here.
@@ -280,7 +311,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > a yellow note for this.
 
 <a id="patch-voicedll"></a>
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 23, off by default, Author: St0ny)*
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 24, off by default, Author: St0ny)*
 
 Loads `voice.dll` from the WoW folder at startup – the client part of
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
@@ -299,19 +330,19 @@ the `LoadLibraryA` import.
 ## Gameplay fixes
 
 <a id="patch-areatrigger"></a>
-**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 24, Author: Robinsch)*
+**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 25, Author: Robinsch)*
 
 Increases the area trigger check frequency from 100 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
 <a id="patch-swing"></a>
-**Remove melee swing on right-click** *(No. 25, Author: Robinsch)*
+**Remove melee swing on right-click** *(No. 26, Author: Robinsch)*
 
 Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
 <a id="patch-npcanim"></a>
-**Suppress NPC attack animation when turning – untested** *(No. 26, Author: Robinsch (fixed by St0ny))*
+**Suppress NPC attack animation when turning – untested** *(No. 27, Author: Robinsch (fixed by St0ny))*
 
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
@@ -329,13 +360,13 @@ logic) and additionally checks whether the unit is a player: players turn as in
 the original, NPCs behave as with Robinsch's patch.
 
 <a id="patch-spellanim"></a>
-**Fix spell animation after cancelled channel** *(No. 27, Author: Robinsch)*
+**Fix spell animation after cancelled channel** *(No. 28, Author: Robinsch)*
 
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 <a id="patch-ghostattack"></a>
-**Fix "ghost" attack when NPCs evade from combat – untested** *(No. 28, Author: Robinsch (fixed by St0ny))*
+**Fix "ghost" attack when NPCs evade from combat – untested** *(No. 29, Author: Robinsch (fixed by St0ny))*
 
 Before the client shows a new melee result, it plays the last stored swing on
 the target once more. If an NPC has evaded from combat in the meantime, that is
@@ -348,7 +379,7 @@ string helper function and would have turned it into an endless loop. Here it
 is corrected to `0x3555BF`.
 
 <a id="patch-naked"></a>
-**Fix naked character bug – untested** *(No. 29, Author: Robinsch (fixed by St0ny))*
+**Fix naked character bug – untested** *(No. 30, Author: Robinsch (fixed by St0ny))*
 
 Fixes characters shown naked, as happens on private servers when new items are
 only distributed via `ItemDisplayInfo`. The patch disables `SPELL_AURA_X_RAY`:
@@ -361,35 +392,35 @@ For this patch Robinsch calculated with the base address `0x500C00` instead of
 `0x2DDC5D`.
 
 <a id="patch-forcereaction"></a>
-**Keep force reaction on /reload** *(No. 30, Author: Robinsch)*
+**Keep force reaction on /reload** *(No. 31, Author: Robinsch)*
 
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
 <a id="patch-mail"></a>
-**New mail without the 60-second wait** *(No. 31, Author: Robinsch)*
+**New mail without the 60-second wait** *(No. 32, Author: Robinsch)*
 
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
 <a id="patch-deadchat"></a>
-**Allow chat commands while dead** *(No. 32, Author: Robinsch)*
+**Allow chat commands while dead** *(No. 33, Author: Robinsch)*
 
 Slash commands also work while the character is dead.
 
 <a id="patch-follow"></a>
-**Allow /follow on NPCs** *(No. 33, off by default, Author: St0ny (original by Alastor StrixEfuartus))*
+**Allow /follow on NPCs** *(No. 34, off by default, Author: St0ny (original by Alastor StrixEfuartus))*
 
 `/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
 the original redirects the check into a code cave that ignores its result.
 That cave, however, would sit exactly in the gap at the end of `.text` that
-No. 4 and No. 55 use. Here the conditional jump after the check is made
+No. 4 and No. 56 use. Here the conditional jump after the check is made
 unconditional instead – a single byte, same effect, and the patches work
 together.
 
 <a id="patch-level101"></a>
-**Level 101+ fix (game tables, barber chair, base stats) – untested** *(No. 34, off by default, Author: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ fix (game tables, barber chair, base stats) – untested** *(No. 35, off by default, Author: Alastor StrixEfuartus (fixed by St0ny))*
 
 The client's game tables (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – eleven tables) have 100 rows per
@@ -405,11 +436,11 @@ unchanged.
 > level 1 (ratings, critical strike chance, regeneration …). Here the two
 > accessor functions (VA `0x7F69B0` and `0x7F69E0`) are rewritten for this.
 
-**Requires** the patch "Allow custom GlueXML" (No. 14) according to the
+**Requires** the patch "Allow custom GlueXML" (No. 15) according to the
 source. There it is called "Disable XML SIG MD5", hence the note "Use XML MD5".
 
 <a id="patch-raceclass"></a>
-**Character creation: more than 10 classes (random class)** *(No. 35, off by default, Author: Alastor StrixEfuartus / Robinsch)*
+**Character creation: more than 10 classes (random class)** *(No. 36, off by default, Author: Alastor StrixEfuartus / Robinsch)*
 
 The random class selection in character creation collects the allowed classes
 in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
@@ -417,7 +448,7 @@ in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 pick which class is still checked by the server – this patch does nothing more.
 
 <a id="patch-namecheck"></a>
-**Disable the name check in character creation (e.g. digits in names) – untested** *(No. 36, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**Disable the name check in character creation (e.g. digits in names) – untested** *(No. 37, off by default, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -430,21 +461,21 @@ convention, here it is done directly in the function (`mov eax, 57h` / `ret`).
 this patch the client rejects names containing a space. The project ships the
 same exe patch itself (`tools/patch_wow_safe.py`, same bytes at the same
 place). It also needs the server module and the project's GlueXML files as a
-patch MPQ, and for the changed interface files "Allow custom GlueXML" (No. 14).
+patch MPQ, and for the changed interface files "Allow custom GlueXML" (No. 15).
 
 > [!WARNING]
 > The server still checks names itself and has to allow them as well, otherwise
 > it rejects the character.
 
 <a id="patch-maxchars"></a>
-**Max characters per realm raised to 255** *(No. 37, Author: St0ny)*
+**Max characters per realm raised to 255** *(No. 38, Author: St0ny)*
 
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2 – untested** *(No. 38, off by default, Author: Kebabstorm (fixed by St0ny))*
+**Custom Item Fix (BETA) v2 – untested** *(No. 39, off by default, Author: Kebabstorm (fixed by St0ny))*
 
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
@@ -479,7 +510,7 @@ Not taken over from v1: the PE checksum (Windows does not check it for
 programs) and the change `Cache` → `||che` – that is exactly patch No. 2.
 
 <a id="patch-climb"></a>
-**Remove the climb angle limit (walk up any slope)** *(No. 39, off by default, Author: Alastor StrixEfuartus)*
+**Remove the climb angle limit (walk up any slope)** *(No. 40, off by default, Author: Alastor StrixEfuartus)*
 
 The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
@@ -490,7 +521,7 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > ban.
 
 <a id="patch-jump"></a>
-**Change jump height (original -7.9555473)** *(No. 40, off by default, Author: Alastor StrixEfuartus)*
+**Change jump height (original -7.9555473)** *(No. 41, off by default, Author: Alastor StrixEfuartus)*
 
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
@@ -504,7 +535,7 @@ remembered like those of the client info patches.
 > ban.
 
 <a id="patch-airforward"></a>
-**Steer forward/backward while jumping** *(No. 41, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Steer forward/backward while jumping** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
@@ -519,7 +550,7 @@ byte patch from 0x539wowmod that updates the movement in the air.
 > lead to a ban.
 
 <a id="patch-airlateral"></a>
-**Steer sideways while jumping** *(No. 42, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Steer sideways while jumping** *(No. 43, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
@@ -530,7 +561,7 @@ the movement early while the falling flag is set.
 > lead to a ban.
 
 <a id="patch-airturn"></a>
-**Turning while jumping changes the flight direction** *(No. 43, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Turning while jumping changes the flight direction** *(No. 44, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
@@ -542,7 +573,7 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 44, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Double jump (more jumps in the air)** *(No. 45, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
@@ -554,7 +585,7 @@ charges. Here the same happens in a small code cave: a jump from the ground
 sets a counter to the selected number, and in the air a jump is allowed as long
 as the counter is not 0. Rooted or flying still blocks jumping. Every air jump
 uses the same jump height as a normal jump (so also the value from "Change jump
-height", No. 40). The separate second jump height of 0x539wowmod's double jump
+height", No. 41). The separate second jump height of 0x539wowmod's double jump
 is not included. The counter is only reset by the next jump from the ground,
 not on landing: if you land after a jump and then walk off a ledge, you have the
 chosen number of jumps in the air again.
@@ -573,7 +604,7 @@ writable); this makes `Wow.exe` slightly larger.
 ## Graphics & view distance
 
 <a id="patch-farclip"></a>
-**CVar farclip unlock (max 10000)** *(No. 45, Author: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(No. 46, Author: Alastor StrixEfuartus)*
 
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
@@ -585,16 +616,16 @@ The lower limit of 183 yards stays untouched, and there is no separate input
 limit for the CVar – this clamp is the limit.
 Not to be confused with the 1277 from the video menu: that is the maximum of
 the view distance slider and a completely different location in the EXE (see
-patch No. 49 "Graphics options: extend slider maximums").
+patch No. 50 "Graphics options: extend slider maximums").
 
 <a id="patch-horizon"></a>
-**CVar horizonFarclipScale unlock (max 12)** *(No. 46, Author: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(No. 47, Author: St0ny)*
 
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
 <a id="patch-envdetail"></a>
-**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 47, Author: St0ny)*
+**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 48, Author: St0ny)*
 
 Removes the upper limit of the CVar `environmentDetail` entirely. Originally
 the value is clamped to the range 0.5 to 1.5; the patch replaces the clamped
@@ -602,18 +633,18 @@ value with the raw value at the shared exit of the check – so the lower limit
 0.5 goes away as well, any value is passed through (sensible values start at
 0.5).
 Important: this CVar does nothing but multiply the GameObject view distances
-(see patch No. 50) – in the original only for categories 1 to 3, with patch
-No. 50 for all five. That makes it the most convenient FPS lever for object
+(see patch No. 51) – in the original only for categories 1 to 3, with patch
+No. 51 for all five. That makes it the most convenient FPS lever for object
 rendering, since it works in-game without re-patching.
 
 <a id="patch-grounddist"></a>
-**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 48)*
+**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 49)*
 
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
 <a id="patch-sliders"></a>
-**Graphics options: extend slider maximums** *(No. 49, off by default, Author: St0ny)*
+**Graphics options: extend slider maximums** *(No. 50, off by default, Author: St0ny)*
 
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
@@ -667,8 +698,8 @@ without any visible sign.
 
 - The slider only sets the CVar. Without the unlock patches the client clamps
   the value back to its original immediately – so the patches "CVar farclip
-  unlock" (No. 45), "CVar environmentDetail unlock" (No. 47) and "CVar
-  groundEffectDist unlock" (No. 48) belong with it. If they are missing from
+  unlock" (No. 46), "CVar environmentDetail unlock" (No. 48) and "CVar
+  groundEffectDist unlock" (No. 49) belong with it. If they are missing from
   the selection, the patcher points this out.
 - For `groundEffectDensity` nothing changes above 64: the vertex buffer for
   ground clutter is hard-clamped in the client to density × 64 ≤ 4096. The
@@ -711,10 +742,10 @@ see above).
 > [!NOTE]
 > The file size does not change: the small search routine lives in a free gap
 > between two functions, the table with the maximums in the unused rest of
-> `.rdata`. There is no overlap with No. 4 and No. 55.
+> `.rdata`. There is no overlap with No. 4 and No. 56.
 
 <a id="patch-goscale"></a>
-**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 50, off by default, Author: St0ny)*
+**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 51, off by default, Author: St0ny)*
 
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
@@ -732,12 +763,12 @@ distances stay at Blizzard's values; everything is controlled via the CVar:
 | 2.0               | 60    | 200   | 400   | 1500  | 2500  |
 | 10 | 300   | 1000  | 2000  | 7500  | 12500 |
 
-With patch No. 51, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
+With patch No. 52, Cat 0 is at 50 instead of 30 yards (so 50 / 100 / 500 in
 the table above). Values above 1.5 require the patch "CVar environmentDetail
-unlock" (No. 47).
+unlock" (No. 48).
 
 <a id="patch-cat0"></a>
-**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 51, off by default, Author: St0ny)*
+**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 52, off by default, Author: St0ny)*
 
 The patch costs performance: noticeably more small clutter is visible at the
 same time, and the number of drawn objects is the performance lever. If you
@@ -747,7 +778,7 @@ tools. In the original, Cat 0 is so tight at 30 yards that small clutter
 disappears much earlier than everything else; 50 improves the ratio to Cat 1
 from 1:3.3 to 1:2, and the `environmentDetail` slider scales it
 proportionally. Cat 1 to 4 are not touched – the view distance is controlled
-via the CVar, which, together with the code patch No. 50, stretches all five
+via the CVar, which, together with the code patch No. 51, stretches all five
 categories evenly.
 
 Five related values are changed:
@@ -800,7 +831,7 @@ environmentDetail" adds it, so all five categories grow evenly.
 Important when doing the math: the two factors **multiply**. Base value ×2 at
 CVar 1.5 results in ×3, not ×2. To reach a target factor Z at CVar value E,
 enter Z/E as the base value.
-Without patch No. 50 this only applies to Cat 1–3, and the categories drift
+Without patch No. 51 this only applies to Cat 1–3, and the categories drift
 apart at high CVar values: Cat 3 would eventually overtake Cat 4, so
 medium-sized objects would be visible further away than huge ones.
 
@@ -844,7 +875,7 @@ you can widen them independently of the distances.
 </details>
 
 <a id="patch-occluder"></a>
-**Occluder fix for Stormwind (Open Azeroth)** *(No. 52, off by default, Author: Robinsch)*
+**Occluder fix for Stormwind (Open Azeroth)** *(No. 53, off by default, Author: Robinsch)*
 
 Disables the occluders (view blockers) for Stormwind that are hard-coded in the
 client: the map key of the table entry for the Eastern Kingdoms is set to
@@ -852,13 +883,13 @@ client: the map key of the table entry for the Eastern Kingdoms is set to
 hidden incorrectly on custom servers with a rebuilt Stormwind.
 
 <a id="patch-bluemoon"></a>
-**Re-enable the blue moon in the night sky** *(No. 53, Author: Robinsch)*
+**Re-enable the blue moon in the night sky** *(No. 54, Author: Robinsch)*
 
 Restores a removed legacy feature: the blue moon that used to be visible in
 the night sky.
 
 <a id="patch-notransparency"></a>
-**No character transparency when zooming in** *(No. 54, Author: Alastor StrixEfuartus)*
+**No character transparency when zooming in** *(No. 55, Author: Alastor StrixEfuartus)*
 
 Your own character no longer becomes transparent when the camera is zoomed in
 close. The patch removes the transparency assignment for the normal case; if
@@ -866,7 +897,7 @@ the character sits in a vehicle or is attached to another object, it can still
 become transparent when zooming in (same as in the original patch).
 
 <a id="patch-nofade"></a>
-**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 55, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 56, off by default, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
@@ -882,7 +913,7 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 56, off by default, Author: St0ny (original by Badgermilk0))*
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 57, off by default, Author: St0ny (original by Badgermilk0))*
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -907,26 +938,26 @@ otherwise read past the source.
 ## Interface & comfort
 
 <a id="patch-tracker"></a>
-**Auto-sort quest tracker** *(No. 57, off by default)*
+**Auto-sort quest tracker** *(No. 58, off by default)*
 
 Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
 sorted automatically.
 
 <a id="patch-worldmap"></a>
-**Advanced world map enabled by default** *(No. 58, off by default)*
+**Advanced world map enabled by default** *(No. 59, off by default)*
 
 Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
 enabled from the start.
 
 <a id="patch-castbars"></a>
-**Cast bars on all frames** *(No. 59, Author: Kebabstorm)*
+**Cast bars on all frames** *(No. 60, Author: Kebabstorm)*
 
 Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
 <a id="patch-emblems"></a>
-**Retail guild emblems: selection extended from 170 to 196** *(No. 60, off by default, Author: MacWarrior)*
+**Retail guild emblems: selection extended from 170 to 196** *(No. 61, off by default, Author: MacWarrior)*
 
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
@@ -956,10 +987,10 @@ Textures\GuildEmblems\Emblem_<Index>_<Color>_TL_U   (lower half)
 The texture loader appends the `.blp` extension. That is 17 colors × 2 halves
 = 34 files per emblem, 884 files for all 26 new emblems. The archive name is
 up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
-(No. 16).
+(No. 17).
 
 <a id="patch-flash"></a>
-**FlashWindow patch** *(No. 61, Author: Kebabstorm)*
+**FlashWindow patch** *(No. 62, Author: Kebabstorm)*
 
 Makes the WoW window flash in the taskbar when a relevant event occurs while
 the game is in the background. For this the Lua function `BNRemoveFriend`,
@@ -969,10 +1000,10 @@ can call (Windows API `FlashWindow(hwnd, FALSE)`, exactly like the version in
 **Requires** an addon that calls `FlashWindow()`, e.g. the
 [Flash addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash) from awesome_wotlk –
 which additionally needs `IsWindowFocused()` from `AwesomeWotlkLib.dll`
-(No. 22).
+(No. 23).
 
 <a id="patch-charrandom"></a>
-**Character creation: do not randomize the appearance automatically** *(No. 62, off by default, Author: Alyst3r (0x539wowmod))*
+**Character creation: do not randomize the appearance automatically** *(No. 63, off by default, Author: Alyst3r (0x539wowmod))*
 
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
@@ -982,18 +1013,18 @@ keeps working – it uses a separate path in the client.
 ## Window, mouse & camera
 
 <a id="patch-window"></a>
-**Windowed mode by default** *(No. 63, off by default, Author: St0ny)*
+**Windowed mode by default** *(No. 64, off by default, Author: St0ny)*
 
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
 <a id="patch-maximize"></a>
-**Maximized window by default** *(No. 64, off by default, Author: St0ny)*
+**Maximized window by default** *(No. 65, off by default, Author: St0ny)*
 
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
 <a id="patch-windowfix"></a>
-**No black screen when switching to windowed mode** *(No. 65, Author: Robinsch)*
+**No black screen when switching to windowed mode** *(No. 66, Author: Robinsch)*
 
 Switching to windowed mode while in-game no longer results in a black
 screen. Technically the callback of the CVar `DesktopGamma` always takes the
@@ -1001,13 +1032,13 @@ game-gamma path; the desktop-gamma path and with it the CVar `DesktopGamma`
 have no effect.
 
 <a id="patch-mouse"></a>
-**Mouse flicker / camera jump fix** *(No. 66, Author: Robinsch)*
+**Mouse flicker / camera jump fix** *(No. 67, Author: Robinsch)*
 
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits – untested** *(No. 67, off by default, Author: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: camera height and zoom limits – untested** *(No. 68, off by default, Author: Stormhand (fixed by St0ny))*
 
 Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
 **Stormhand** into this patcher, so everything
@@ -1079,7 +1110,7 @@ overwrites the table of the slider patch.
 ## Sound
 
 <a id="patch-sound"></a>
-**Optimize sound settings** *(No. 68, off by default, Author: St0ny)*
+**Optimize sound settings** *(No. 69, off by default, Author: St0ny)*
 
 Includes the following changes:
 
@@ -1108,7 +1139,7 @@ message and asked for again, and all values are checked before anything is
 written. The patcher remembers the values in `patcher_selection.ini`
 (`value.<Id>=…`); with `-Unattended` the remembered values are used, otherwise
 the original values – exceptions: build date (current time) and icon (the
-patcher aborts), see No. 72 and 73. If a patch is already in `Wow.exe`, its
+patcher aborts), see No. 73 and 74. If a patch is already in `Wow.exe`, its
 current value is the suggestion. When asking, it is also shown after the patch
 name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 
@@ -1117,7 +1148,7 @@ name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 > to match the server.
 
 <a id="patch-clientversion"></a>
-**Change client version (original 3.3.5)** *(No. 69, off by default, Author: MacWarrior)*
+**Change client version (original 3.3.5)** *(No. 70, off by default, Author: MacWarrior)*
 
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
@@ -1127,7 +1158,7 @@ The build number in `VS_FIXEDFILEINFO` is kept; the FileVersion text
 together must fit into the ProductVersion field (e.g. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Change build number (original 12340)** *(No. 70, off by default, Author: MacWarrior)*
+**Change build number (original 12340)** *(No. 71, off by default, Author: MacWarrior)*
 
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion in
@@ -1155,14 +1186,14 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title in the file properties – untested** *(No. 71, off by default, Author: MacWarrior (fixed by St0ny))*
+**Change program title in the file properties – untested** *(No. 72, off by default, Author: MacWarrior (fixed by St0ny))*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
 
 <a id="patch-clientdate"></a>
-**Change build date (original Jun 24 2010)** *(No. 72, off by default, Author: St0ny (original by MacWarrior))*
+**Change build date (original Jun 24 2010)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice, plus the time. The time is stored in two
@@ -1181,7 +1212,7 @@ the time of patching if nothing is remembered. If the patch is already applied,
 the current date and time of `Wow.exe` are suggested.
 
 <a id="patch-clienticon"></a>
-**Change program icon (icon of Wow.exe)** *(No. 73, off by default, Author: St0ny (original by MacWarrior))*
+**Change program icon (icon of Wow.exe)** *(No. 74, off by default, Author: St0ny (original by MacWarrior))*
 
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or
