@@ -413,6 +413,13 @@ names – but all other client rules (length, allowed characters etc.) are gone 
 well. The original (0x539wowmod) uses a detour with the wrong calling
 convention, here it is done directly in the function (`mov eax, 57h` / `ret`).
 
+**Required for [mod-two-names](https://github.com/lightninjay/mod-two-names)**
+(AzerothCore module for first and last names, e.g. "Arthas Menethil"): without
+this patch the client rejects names containing a space. The project ships the
+same exe patch itself (`tools/patch_wow_safe.py`, same bytes at the same
+place). It also needs the server module and the project's GlueXML files as a
+patch MPQ, and for the changed interface files "Allow custom GlueXML" (No. 14).
+
 > [!WARNING]
 > The server still checks names itself and has to allow them as well, otherwise
 > it rejects the character.

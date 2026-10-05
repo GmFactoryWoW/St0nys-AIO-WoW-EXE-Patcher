@@ -422,6 +422,14 @@ Zahlen im Namen möglich – es entfallen aber auch alle anderen Regeln des Clie
 (Länge, erlaubte Zeichen usw.). Im Original (0x539wowmod) per Detour mit falscher
 Aufrufkonvention gelöst, hier direkt in der Funktion (`mov eax, 57h` / `ret`).
 
+**Wird benötigt für [mod-two-names](https://github.com/lightninjay/mod-two-names)**
+(AzerothCore-Modul für Vor- und Nachnamen, z. B. „Arthas Menethil“): Ohne diesen
+Patch lehnt der Client Namen mit Leerzeichen ab. Das Projekt bringt selbst
+denselben Exe-Patch mit (`tools/patch_wow_safe.py`, gleiche Bytes an derselben
+Stelle). Dazu gehören das Server-Modul und die GlueXML-Dateien des Projekts als
+Patch-MPQ, für die geänderten Interface-Dateien außerdem „Custom Glue-XML
+erlauben“ (Nr. 14).
+
 > [!WARNING]
 > Der Server prüft Namen weiterhin selbst und muss sie ebenfalls erlauben, sonst
 > lehnt er den Charakter ab.
