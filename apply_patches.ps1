@@ -295,6 +295,13 @@ function PatchName($p) {
     return $n
 }
 
+# Name mit Patch-Nummer davor ("Nr. 64 ..."), fuer Hinweise auf andere Patches.
+function PatchRef($p) {
+    $nr = [array]::IndexOf($patches, $p) + 1
+    if ($script:lang -eq 'en') { return "No. $nr $(PatchName $p)" }
+    return "Nr. $nr $(PatchName $p)"
+}
+
 # Eingabe lesen. Read-Host liefert bei Strg+Z bzw. geschlossener Eingabe $null -
 # dann gibt es keine Antwort mehr, also abbrechen (Exit-Code 2, nichts geaendert).
 function Ask([string]$prompt) {
@@ -2944,14 +2951,18 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 65'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 65'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
 
-    @{ Id = 'maximize'; Cat = 'window'; On = $false
+    @{ Id = 'maximize'; Cat = 'window'; On = $false; Needs = @('window')
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
+       NoteDe = 'wirkt nur zusammen mit Nr. 64'
+       NoteEn = 'only works together with No. 64'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -4134,12 +4145,12 @@ foreach ($p in $chosen) {
     $missing = @()
     foreach ($id in $p.Needs) {
         if ($chosenIds -notcontains $id) {
-            foreach ($q in $patches) { if ($q.Id -eq $id) { $missing += PatchName $q } }
+            foreach ($q in $patches) { if ($q.Id -eq $id) { $missing += PatchRef $q } }
         }
     }
     if ($missing.Count -gt 0) {
         Write-Host ''
-        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'HintHead' (PatchRef $p)) 'Yellow'
         Say (T 'Hint') 'Yellow'
         foreach ($m in $missing) { Say "  - $m" 'Yellow' }
     }
@@ -4149,12 +4160,12 @@ foreach ($p in $chosen) {
     $both = @()
     foreach ($id in $p.Obsoletes) {
         if ($chosenIds -contains $id) {
-            foreach ($q in $patches) { if ($q.Id -eq $id) { $both += PatchName $q } }
+            foreach ($q in $patches) { if ($q.Id -eq $id) { $both += PatchRef $q } }
         }
     }
     if ($both.Count -gt 0) {
         Write-Host ''
-        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'HintHead' (PatchRef $p)) 'Yellow'
         Say (T 'Obsolete') 'Yellow'
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
     }
@@ -4162,12 +4173,12 @@ foreach ($p in $chosen) {
 foreach ($p in $chosen) {
     if ($p.DllHint) {
         Write-Host ''
-        Say (T 'HintHead' (PatchName $p)) 'Yellow'
+        Say (T 'HintHead' (PatchRef $p)) 'Yellow'
         Say (T 'DllHint') 'Yellow'
     }
 }
 $cheat = @()
-foreach ($p in $chosen) { if ($p.BanRisk) { $cheat += PatchName $p } }
+foreach ($p in $chosen) { if ($p.BanRisk) { $cheat += PatchRef $p } }
 if ($cheat.Count -gt 0) {
     Write-Host ''
     Say (T 'CheatHead') 'Yellow'
@@ -4175,7 +4186,7 @@ if ($cheat.Count -gt 0) {
     Say (T 'CheatBan') 'Red'
 }
 $grow = @()
-foreach ($p in $chosen) { if ($p.GrowsExe) { $grow += PatchName $p } }
+foreach ($p in $chosen) { if ($p.GrowsExe) { $grow += PatchRef $p } }
 if ($grow.Count -gt 0) {
     Write-Host ''
     Say (T 'GrowHead') 'Yellow'

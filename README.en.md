@@ -339,8 +339,8 @@ Click the number of a patch to jump to its description.
 | [62](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [63](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – | – |
 |    | **Window, mouse & camera** |  |  |  |  |
-| [64](PATCHES.en.md#patch-window) | Windowed mode by default | St0ny | – | – | ✅ |
-| [65](PATCHES.en.md#patch-maximize) | Maximized window by default | St0ny | – | – | ✅ |
+| [64](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 65)* | St0ny | – | – | ✅ |
+| [65](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 64)* | St0ny | – | – | ✅ |
 | [66](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
 | [67](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
 | [68](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |

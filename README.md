@@ -347,8 +347,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [62](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [63](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – | – |
 |    | **Fenster, Maus & Kamera** |  |  |  |  |
-| [64](PATCHES.md#patch-window) | Fenstermodus als Standard setzen | St0ny | – | – | ✅ |
-| [65](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen | St0ny | – | – | ✅ |
+| [64](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 65)* | St0ny | – | – | ✅ |
+| [65](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 64)* | St0ny | – | – | ✅ |
 | [66](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
 | [67](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
 | [68](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |

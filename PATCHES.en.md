@@ -1022,10 +1022,28 @@ keeps working – it uses a separate path in the client.
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
+> [!TIP]
+> **No. 64 and No. 65 belong together:** No. 64 enables windowed mode, No. 65
+> maximizes the window.
+> - **Both selected:** WoW starts as a maximized window covering the whole
+>   screen.
+> - **Only No. 64:** WoW starts as a small window in the middle of the desktop.
+> - **Only No. 65:** no effect, WoW starts in fullscreen. The option "Maximize
+>   window" is active, but greyed out.
+
 <a id="patch-maximize"></a>
 **Maximized window by default** *(No. 65, Author: St0ny)*
 
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
+
+> [!TIP]
+> **No. 64 and No. 65 belong together:** No. 64 enables windowed mode, No. 65
+> maximizes the window.
+> - **Both selected:** WoW starts as a maximized window covering the whole
+>   screen.
+> - **Only No. 64:** WoW starts as a small window in the middle of the desktop.
+> - **Only No. 65:** no effect, WoW starts in fullscreen. The option "Maximize
+>   window" is active, but greyed out.
 
 <a id="patch-windowfix"></a>
 **No black screen when switching to windowed mode** *(No. 66, Author: Robinsch)*

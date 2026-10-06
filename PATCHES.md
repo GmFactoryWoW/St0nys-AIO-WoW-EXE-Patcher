@@ -1047,11 +1047,29 @@ Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 Setzt das CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
+> [!TIP]
+> **Nr. 64 und Nr. 65 gehören zusammen:** Nr. 64 schaltet den Fenstermodus ein,
+> Nr. 65 maximiert das Fenster.
+> - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
+>   Bildschirm.
+> - **Nur Nr. 64:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 65:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+>   maximieren“ ist zwar aktiv, aber ausgegraut.
+
 <a id="patch-maximize"></a>
 **Fenstermodus maximiert als Standard setzen** *(Nr. 65, Autor: St0ny)*
 
 Setzt das CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
+
+> [!TIP]
+> **Nr. 64 und Nr. 65 gehören zusammen:** Nr. 64 schaltet den Fenstermodus ein,
+> Nr. 65 maximiert das Fenster.
+> - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
+>   Bildschirm.
+> - **Nur Nr. 64:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 65:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+>   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-windowfix"></a>
 **Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 66, Autor: Robinsch)*
