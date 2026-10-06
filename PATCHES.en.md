@@ -1190,11 +1190,20 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title in the file properties** *(No. 72, Author: MacWarrior (fixed by St0ny))*
+**Change program title (file properties and window title)** *(No. 72, Author: MacWarrior (fixed by St0ny))*
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
 characters, ASCII only.
+
+The patch also changes the title of the game window: WoW creates its window
+with the text "World of Warcraft" (file offset `0x5E0288`) and then sets the
+title twice more (calls at VA `0x76A119` and `0x76B204`). The patch writes the
+custom title to the first place and disables the two calls so that it stays.
+
+> [!NOTE]
+> The text at `0x5E0288` is also used elsewhere in the client, e.g. probably
+> as the title of error messages – the custom title appears there as well.
 
 <a id="patch-clientdate"></a>
 **Change build date (original Jun 24 2010)** *(No. 73, Author: St0ny (original by MacWarrior))*

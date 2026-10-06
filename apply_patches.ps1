@@ -799,6 +799,14 @@ function Set-ClientTitle([string]$v) {
     PatchU16 0x757836 ($v.Length + 1)
     PatchUtf16 0x757960 36 $v                         # ProductName (Kopf 0x757940)
     PatchU16 0x757942 ($v.Length + 1)
+    # Fenstertitel: Text, mit dem WoW sein Hauptfenster anlegt (CreateWindowExA),
+    # 20 Byte ASCII inkl. Nullterminator.
+    PatchText 0x5E0288 20 $v ([System.Text.Encoding]::ASCII)
+    # Danach setzt WoW den Titel zweimal neu (SetWindowTextW-Wrapper bei
+    # VA 0x86C650, Aufrufe bei VA 0x76A119 und 0x76B204) - beide Aufrufe
+    # werden zu NOPs, damit der eigene Titel stehen bleibt.
+    Patch 0x369519 @(0x90, 0x90, 0x90, 0x90, 0x90)
+    Patch 0x36A604 @(0x90, 0x90, 0x90, 0x90, 0x90)
 }
 
 # Wert: "JJJJ-MM-TT HH:MM:SS" (ohne Sekunden: 00), optional mit " FR" fuer
@@ -3079,8 +3087,8 @@ $patches = @(
 
     @{ Id = 'clienttitle'; Cat = 'client'; On = $false
        Author = 'MacWarrior (fixed by St0ny)'
-       De = 'Programmtitel in den Dateieigenschaften aendern'
-       En = 'Change program title in the file properties'
+       De = 'Programmtitel aendern (Dateieigenschaften und Fenstertitel)'
+       En = 'Change program title (file properties and window title)'
        PromptDe = 'Neuer Titel, max. 17 Zeichen, nur ASCII'
        PromptEn = 'New title, max. 17 characters, ASCII only'
        Default = 'World of Warcraft'
@@ -3088,7 +3096,8 @@ $patches = @(
        Decode = { Read-Utf16Z 0x7577C0 50 }
        Code = {
         # Portierung von edit_title.py (MacWarrior): FileDescription,
-        # InternalName und ProductName der Versionsressource.
+        # InternalName und ProductName der Versionsressource, dazu der
+        # Fenstertitel des Spiels.
         Set-ClientTitle $script:VALUES['clienttitle']
     }}
 
@@ -3365,6 +3374,9 @@ clientversion;7579A8;560065007200730069006F006E00200033002E0033000000;1
 clientbuild;4C99F0;3430;1
 clientbuild;5F3A00;313233343000;1
 clientbuild;7576CC;3430;1
+clienttitle;369519;E832251000;1
+clienttitle;36A604;E847141000;1
+clienttitle;5E0288;576F726C64206F66205761726372616674000000;1
 clienttitle;75779A;1900;1
 clienttitle;7577C0;57006F0072006C00640020006F0066002000570061007200630072006100660074002000520065007400610069006C000000;1
 clienttitle;757836;1200;1

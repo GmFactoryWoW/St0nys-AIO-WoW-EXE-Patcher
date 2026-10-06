@@ -349,7 +349,7 @@ Click the number of a patch to jump to its description.
 |    | **Client info: version, build, title, date, icon** |  |  |  |  |
 | [70](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
 | [71](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
-| [72](PATCHES.en.md#patch-clienttitle) | Change program title in the file properties *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [72](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
 | [74](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
 

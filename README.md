@@ -357,7 +357,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 |    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |  |
 | [70](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
 | [71](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
-| [72](PATCHES.md#patch-clienttitle) | Programmtitel in den Dateieigenschaften ändern *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [72](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
 | [74](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
 

@@ -1218,11 +1218,22 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel in den Dateieigenschaften ändern** *(Nr. 72, Autor: MacWarrior (fixed by St0ny))*
+**Programmtitel ändern (Dateieigenschaften und Fenstertitel)** *(Nr. 72, Autor: MacWarrior (fixed by St0ny))*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
 Höchstens 17 Zeichen, nur ASCII.
+
+Dazu ändert der Patch den Titel des Spielfensters: WoW legt sein Fenster mit
+dem Text „World of Warcraft“ an (Datei-Offset `0x5E0288`) und setzt den Titel
+danach noch zweimal neu (Aufrufe bei VA `0x76A119` und `0x76B204`). Der Patch
+schreibt den eigenen Titel an die erste Stelle und schaltet die beiden Aufrufe
+ab, damit er stehen bleibt.
+
+> [!NOTE]
+> Der Text bei `0x5E0288` wird im Client auch an anderen Stellen benutzt, z. B.
+> wohl als Titel von Fehlermeldungen – dort erscheint dann ebenfalls der eigene
+> Titel.
 
 <a id="patch-clientdate"></a>
 **Build-Datum ändern (Original Jun 24 2010)** *(Nr. 73, Autor: St0ny (original by MacWarrior))*
