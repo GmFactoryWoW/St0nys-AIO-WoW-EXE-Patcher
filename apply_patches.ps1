@@ -4253,7 +4253,7 @@ try {
         Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p)"
         & $p.Code
     }
-    if ($total -gt 0) { #Add-Watermark }
+    #if ($total -gt 0) { Add-Watermark }
 } catch {
     Write-Host ''
     Say (T 'PatchFail') 'Red'
