@@ -1889,8 +1889,8 @@ $patches = @(
 
     @{ Id = 'year2031'; Cat = 'system'; On = $false
        Author = 'St0ny (original by Alyst3r)'
-       De = 'Jahr-2031-Fix (Datum und Kalender bis Ende 2031)'
-       En = 'Year 2031 fix (date and calendar until the end of 2031)'
+       De = 'Jahr-2031-Fix (Datum und Kalender bis Ende 2031) - ungetestet'
+       En = 'Year 2031 fix (date and calendar until the end of 2031) - untested'
        Code = {
         # WoW packt Datumswerte in 32 Bit, das Jahr in 5 Bit (2000 + 0..31).
         # Der Wert 31 heisst im Original "nicht gesetzt". Ab dem 1.1.2031
@@ -1946,6 +1946,73 @@ $patches = @(
         Patch 0x1BF8C1 @(0x20)
         Patch 0x1C1A83 @(0x20)
         Patch 0x1C1C93 @(0x20)
+    }}
+
+    @{ Id = 'nothrottle'; Cat = 'system'; On = $false
+       Author = 'Hour of Twilight (ported by St0ny)'
+       De = 'Server-Abfragen nicht drosseln (Item- und Quest-Infos schneller) - ungetestet'
+       En = 'Do not throttle server queries (item and quest info loads faster) - untested'
+       Code = {
+        # Die 15 Datenbank-Caches (Items, Kreaturen, Quests, Namen ...) begrenzen
+        # die Anfragen an den Server pro 30-Sekunden-Fenster ([Cache+48h], aus
+        # "Anfragen pro Minute" im Konstruktor berechnet). 0 heisst unbegrenzt
+        # (Pruefung "test eax,eax / je"). Im Konstruktor wird statt des
+        # berechneten Werts (edx) ecx gespeichert, das dort 0 ist:
+        # mov [esi+48h],edx -> mov [esi+48h],ecx. Je ein Byte in allen 15.
+        Patch 0x2750EE @(0x4E)   # VA 0x675CEE
+        Patch 0x27521E @(0x4E)   # VA 0x675E1E
+        Patch 0x27534E @(0x4E)   # VA 0x675F4E
+        Patch 0x27547E @(0x4E)   # VA 0x67607E
+        Patch 0x2755AE @(0x4E)   # VA 0x6761AE
+        Patch 0x2756DE @(0x4E)   # VA 0x6762DE
+        Patch 0x27580E @(0x4E)   # VA 0x67640E
+        Patch 0x27593E @(0x4E)   # VA 0x67653E
+        Patch 0x275A6E @(0x4E)   # VA 0x67666E
+        Patch 0x275B9E @(0x4E)   # VA 0x67679E
+        Patch 0x275CCE @(0x4E)   # VA 0x6768CE
+        Patch 0x275DFE @(0x4E)   # VA 0x6769FE
+        Patch 0x275F2E @(0x4E)   # VA 0x676B2E
+        Patch 0x27605E @(0x4E)   # VA 0x676C5E
+        Patch 0x27618E @(0x4E)   # VA 0x676D8E
+    }}
+
+    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false
+       Author = 'Hour of Twilight (ported by St0ny)'
+       De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) - ungetestet'
+       En = 'Mirror Image crash fix (memory leak with mirror images) - untested'
+       Code = {
+        # Blizzard-Fehler: Der Handler fuer SMSG_MIRRORIMAGE_DATA (VA 0x730290)
+        # legt fuer das Aussehen einer Spiegelbild-Einheit eine neue
+        # Charakter-Komponente an ([Einheit+B4Ch]), ohne eine noch vorhandene
+        # alte freizugeben. Die alte bleibt mit ihrer Textur am Grafikgeraet
+        # haengen; beim Beenden greift der Client dann auf schon freigegebenen
+        # Speicher zu (Absturz). Haeufig bei Server-Kopien von Spielern (Eluna
+        # "Mirror Image"-Kreaturen), die ihr Modell oft neu laden.
+        # Beide Aufrufe des Allokators (VA 0x4F0980) im Handler gehen jetzt an
+        # einen Stub, der eine alte Komponente erst mit der Original-Freigabe
+        # (VA 0x4F16C0) loest und dann zum Allokator springt. Der Stub (29 Byte)
+        # liegt in einer toten Funktion bei VA 0x86BF10 (nirgends aufgerufen
+        # oder referenziert). Die Dateigroesse aendert sich nicht.
+        Patch 0x46B310 @(
+            0x8B, 0x86, 0x4C, 0x0B, 0x00, 0x00, 0x85, 0xC0, 0x74, 0x0E, 0x50, 0xE8, 0xA0, 0x57, 0xC8, 0xFF,
+            0x59, 0x83, 0xA6, 0x4C, 0x0B, 0x00, 0x00, 0x00, 0xE9, 0x53, 0x4A, 0xC8, 0xFF, 0xCC, 0xCC, 0xCC
+        )
+        Patch 0x32F729 @(0xE8, 0xE2, 0xBB, 0x13, 0x00)
+        Patch 0x32F8CA @(0xE8, 0x41, 0xBA, 0x13, 0x00)
+    }}
+
+    @{ Id = 'wmocube'; Cat = 'system'; On = $false
+       Author = 'Alyst3r (ported by St0ny)'
+       De = 'Fehlende WMO-Datei: Fehlerwuerfel statt ERROR #134 - ungetestet'
+       En = 'Missing WMO file: error cube instead of ERROR #134 - untested'
+       Code = {
+        # CMap::SafeOpen (VA 0x7BD480) oeffnet WMO-Dateien (Gebaeude, Dungeons).
+        # Klappt das zehnmal nicht, bricht der Client mit "ERROR #134 Fatal
+        # Condition: CMap::SafeOpen() failed" ab. Statt der Fehlermeldung oeffnet
+        # der Fehlerausgang jetzt "Spells\ErrorCube.mdx" (der Text steht schon in
+        # der Exe) und gibt dessen Ergebnis zurueck - wie in WotLK-Extensions:
+        # push ebx / push "Spells\ErrorCube.mdx" / call SFile::Open / Epilog.
+        Patch 0x3BC8AF @(0x53, 0x68, 0x60, 0x4B, 0xA3, 0x00, 0xE8, 0xC6, 0x7A, 0xC6, 0xFF, 0x5F, 0x5E, 0x5B, 0x5D, 0xC3)
     }}
 
     # --- Sicherheit & Datenschutz ---
@@ -2228,8 +2295,8 @@ $patches = @(
 
     @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa'); DllHint = 'WotLK-Extensions'
        Author = 'St0ny (original by Alyst3r)'
-       De = 'WotLKExtensions.dll Unterstuetzung aktivieren'
-       En = 'Enable WotLKExtensions.dll support'
+       De = 'WotLKExtensions.dll Unterstuetzung aktivieren - ungetestet'
+       En = 'Enable WotLKExtensions.dll support - untested'
        NoteDe = 'benoetigt WotLK-Extensions'
        NoteEn = 'requires WotLK-Extensions'
        Url = 'https://github.com/Alyst3r/WotLK-Extensions'
@@ -2636,6 +2703,21 @@ $patches = @(
         Add-DoubleJump ([int]$script:VALUES['doublejump'])
     }}
 
+    @{ Id = 'noammo'; Cat = 'gameplay'; On = $false
+       Author = 'Alyst3r (ported by St0ny)'
+       De = 'Fernkampf ohne Munition - ungetestet'
+       En = 'Ranged attacks without ammo - untested'
+       NoteDe = 'Server muss mitspielen, sonst meldet er weiter "Keine Munition"'
+       NoteEn = 'the server has to support it, otherwise it still reports "no ammo"'
+       Code = {
+        # Spell_C_HaveEquippedSpellItems (VA 0x8093D0): Bei Zaubern, die
+        # Munition verlangen (Schiessen, Automatischer Schuss ...), prueft der
+        # Client ab VA 0x809540 die Munition. Ein Sprung zum Erfolgsausgang
+        # (VA 0x8095FF) laesst diese Pruefung weg. Der Server prueft selbst -
+        # ohne Anpassung am Server bleibt es bei seiner Fehlermeldung.
+        Patch 0x408940 @(0xE9, 0xBA, 0x00, 0x00, 0x00)
+    }}
+
     # --- Grafik & Sichtweite ---
 
     @{ Id = 'farclip'; Cat = 'graphics'; On = $true
@@ -3035,14 +3117,50 @@ $patches = @(
         Patch 0xE087B @(0xEB)
     }}
 
+    @{ Id = 'lootopen'; Cat = 'ui'; On = $false
+       Author = 'Hour of Twilight (ported by St0ny)'
+       De = 'Lootfenster bleibt beim Laufen offen - ungetestet'
+       En = 'Loot window stays open while moving - untested'
+       Code = {
+        # Zehn Bewegungs-Handler (Laufen, Seitwaerts, Drehen, Neigen ...) der
+        # eigenen Figur schliessen das Lootfenster (Aufruf VA 0x523640). Das
+        # "je" vor dem Aufruf wird zu "jmp", der Aufruf entfaellt.
+        Patch 0x32A347 @(0xEB)   # VA 0x72AF47
+        Patch 0x32C62E @(0xEB)   # VA 0x72D22E
+        Patch 0x32DA4B @(0xEB)   # VA 0x72E64B
+        Patch 0x32DAFB @(0xEB)   # VA 0x72E6FB
+        Patch 0x32DBAB @(0xEB)   # VA 0x72E7AB
+        Patch 0x32DCBD @(0xEB)   # VA 0x72E8BD
+        Patch 0x32DD7B @(0xEB)   # VA 0x72E97B
+        Patch 0x32DE2B @(0xEB)   # VA 0x72EA2B
+        Patch 0x32DF4B @(0xEB)   # VA 0x72EB4B
+        Patch 0x32DFCA @(0xEB)   # VA 0x72EBCA
+    }}
+
+    @{ Id = 'showlevel'; Cat = 'ui'; On = $false
+       Author = 'Hour of Twilight (ported by St0ny)'
+       De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir - ungetestet'
+       En = 'Real level instead of "??" for enemies 10+ levels above you - untested'
+       NoteDe = 'Bosse zeigen weiter "??"'
+       NoteEn = 'bosses still show "??"'
+       Code = {
+        # Lua UnitLevel (VA 0x60F9E0), Tooltip (VA 0x620EE0) und Namensplakette
+        # (VA 0x98EF10) zeigen "??" (bzw. -1 / Totenkopf), wenn ein feindliches
+        # Ziel 10 oder mehr Level ueber dir ist. Diese Pruefung ("jle") faellt
+        # weg; die Boss-Pruefung direkt dahinter bleibt.
+        Patch 0x20EEB2 @(0x90, 0x90)
+        Patch 0x220B66 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+        Patch 0x58E3B9 @(0x90, 0x90)
+    }}
+
     # --- Fenster, Maus & Kamera ---
 
     @{ Id = 'window'; Cat = 'window'; On = $false
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 67'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 67'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 73'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 73'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -3051,8 +3169,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 66'
-       NoteEn = 'only works together with No. 66'
+       NoteDe = 'wirkt nur zusammen mit Nr. 72'
+       NoteEn = 'only works together with No. 72'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -3291,6 +3409,25 @@ year2031;1BF8C1;1F;1
 year2031;1C1A83;1F;1
 year2031;1C1C93;1F;1
 year2031;36BE1B;75;1
+nothrottle;2750EE;56;1
+nothrottle;27521E;56;1
+nothrottle;27534E;56;1
+nothrottle;27547E;56;1
+nothrottle;2755AE;56;1
+nothrottle;2756DE;56;1
+nothrottle;27580E;56;1
+nothrottle;27593E;56;1
+nothrottle;275A6E;56;1
+nothrottle;275B9E;56;1
+nothrottle;275CCE;56;1
+nothrottle;275DFE;56;1
+nothrottle;275F2E;56;1
+nothrottle;27605E;56;1
+nothrottle;27618E;56;1
+mirrorfix;32F729;E85206DCFF;1
+mirrorfix;32F8CA;E8B104DCFF;1
+mirrorfix;46B310;558BEC8B4508687026870050E89FFFFFFF83C4085DC3CCCCCCCCCCCCCCCCCCCC;1
+wmocube;3BC8AF;56681802A400E8E655FBFF83C4085F5E;1
 rce;2A7;E0;1
 rce;3D9D7C;750A;1
 wardenoff;3D9C5B;7406;1
@@ -3423,6 +3560,7 @@ doublejump;160;00D09F00;0
 doublejump;1A8;007C750098120000;0
 doublejump;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 doublejump;58782A;8B7E44F7C7001800027544;1
+noammo;408940;F64710100F;1
 farclip;63CF0C;ABEA4544ABEAC544;1
 horizon;38CBDF;F88C9E00;1
 envdetail;38D08E;D9;1
@@ -3460,6 +3598,19 @@ emblems;613108;AA;1
 flash;1342D5;0C56E8B4BA17008BF085F60F84860000008B068B90C80000008BCEFFD283F80175758B068B90AC000000;1
 flash;606EE4;424E52656D6F7665467269656E64;1
 charrandom;E087B;74;1
+lootopen;32A347;74;1
+lootopen;32C62E;74;1
+lootopen;32DA4B;74;1
+lootopen;32DAFB;74;1
+lootopen;32DBAB;74;1
+lootopen;32DCBD;74;1
+lootopen;32DD7B;74;1
+lootopen;32DE2B;74;1
+lootopen;32DF4B;74;1
+lootopen;32DFCA;74;1
+showlevel;20EEB2;7E0B;1
+showlevel;220B66;0F8EDD000000;1
+showlevel;58E3B9;7E9F;1
 window;369A7D;A0149E;1
 maximize;369AB2;A0149E;1
 windowfix;E94;74;1
