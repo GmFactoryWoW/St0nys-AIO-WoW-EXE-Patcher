@@ -156,12 +156,11 @@ Sicherheitsabfrage abgebrochen hast.
 
 Das Preset „Project Reforged“ (Taste `R`) ist das offizielle Preset des
 Projekts [Project Reforged](https://projectreforged.github.io/wotlk/),
-zusammengestellt von Stormhand, und die Standard-Auswahl. Es enthält nur vier
-Patches: den 4GB-Patch (Nr. 1), „Item-Cache sofort aktualisieren“ (Nr. 3),
-„Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus“ (Nr. 65) und
-„Mausflackern / Kamerasprünge Fix“ (Nr. 66). Keiner davon hat Bann-Gefahr oder
-vergrößert die `Wow.exe` – **das Preset ist sicher** und kann auch auf
-öffentlichen Servern verwendet werden. Im Skript steht die Liste unter
+zusammengestellt von Stormhand, und die Standard-Auswahl. Es enthält nur
+Patches ohne Bann-Gefahr, die die `Wow.exe` nicht vergrößern – **das Preset ist
+sicher** und kann auch auf öffentlichen Servern verwendet werden. Welche Patches
+dazugehören, zeigt die Spalte „Reforged“ in der
+[Patch-Übersicht](#patch-übersicht); im Skript steht die Liste unter
 `$PRESET_REFORGED`.
 
 Das Preset „Billy's_Wow.exe“ (Taste `B`) ist das Patch-Set von Billy Hoyle.

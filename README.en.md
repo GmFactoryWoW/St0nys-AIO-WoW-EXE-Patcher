@@ -149,12 +149,11 @@ prompt.
 
 The preset "Project Reforged" (key `R`) is the official preset of the
 [Project Reforged](https://projectreforged.github.io/wotlk/) project, put
-together by Stormhand, and the default selection. It contains only four
-patches: the 4GB patch (No. 1), "Refresh item cache immediately" (No. 3), "No
-black screen when switching to windowed mode" (No. 65) and "Mouse flicker /
-camera jump fix" (No. 66). None of them carries a ban risk or makes `Wow.exe`
-larger – **the preset is safe** and can be used on public servers as well. In
-the script the list is `$PRESET_REFORGED`.
+together by Stormhand, and the default selection. It contains only patches
+without ban risk that do not make `Wow.exe` larger – **the preset is safe** and
+can be used on public servers as well. The "Reforged" column in the
+[patch overview](#patch-overview) shows which patches belong to it; in the
+script the list is `$PRESET_REFORGED`.
 
 The preset "Billy's_Wow.exe" (key `B`) is Billy Hoyle's patch set. It is
 defined in `apply_patches.ps1`: every patch has an entry
