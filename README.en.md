@@ -127,7 +127,8 @@ Before the confirmation prompt the patcher shows **notes** – nothing is blocke
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
 completely replaces the RCE fix) and – as a red line – when selected patches
-can lead to a ban (anti-cheat or changed file size, see [Notes](#notes)).
+can lead to a ban (anti-cheat, interfering with Warden or changed file size,
+see [Notes](#notes)).
 
 ### The selection is remembered
 

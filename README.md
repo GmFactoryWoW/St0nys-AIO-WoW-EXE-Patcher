@@ -131,8 +131,8 @@ Vor der Sicherheitsabfrage zeigt der Patcher **Hinweise** an, gesperrt wird
 nichts: wenn ein Ergänzungs-Patch fehlt (z. B. brauchen die erweiterten
 Slider-Maxima die CVar-Unlocks), wenn ein Patch einen anderen überflüssig macht
 (Warden komplett abschalten ersetzt den RCE-Fix) und – als rote Zeile – wenn
-gewählte Patches zu einem Bann führen können (Anti-Cheat oder veränderte
-Dateigröße, siehe [Hinweise](#hinweise)).
+gewählte Patches zu einem Bann führen können (Anti-Cheat, Eingriff in Warden
+oder veränderte Dateigröße, siehe [Hinweise](#hinweise)).
 
 ### Auswahl wird gespeichert
 
@@ -390,8 +390,7 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   der RCE-Fix (Nr. 6) und „Warden komplett abschalten“ (Nr. 7) – öffentliche
   Server können das erkennen. Alle drei Gruppen sind in der Übersicht mit
   „Bann-Gefahr“ markiert, und der Patcher zeigt vor der Sicherheitsabfrage eine
-  rote Warnung. Alle anderen Patches
-  ändern die Dateigröße nicht.
+  rote Warnung. Alle anderen Patches ändern die Dateigröße nicht.
 - **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
   Patch macht diese Signatur ungültig. Windows warnt deshalb wahrscheinlich
   beim Start vor einer nicht signierten, möglicherweise schädlichen App; mit
