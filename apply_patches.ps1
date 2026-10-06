@@ -1688,7 +1688,7 @@ function Invoke-BuildTable {
             Add-BuildRanges $ranges $p.Id $start $orig.Length
         }
         $start = $script:writes.Count
-        Add-Watermark
+        #Add-Watermark
         Add-BuildRanges $ranges 'watermark' $start $orig.Length
     }
     # PE-Header: NumberOfSections, SizeOfImage, freie Sektionsheader-Slots bis zu den ersten Rohdaten
@@ -4253,7 +4253,7 @@ try {
         Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p)"
         & $p.Code
     }
-    if ($total -gt 0) { Add-Watermark }
+    if ($total -gt 0) { #Add-Watermark }
 } catch {
     Write-Host ''
     Say (T 'PatchFail') 'Red'
