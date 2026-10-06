@@ -27,7 +27,7 @@ Ermöglicht der `Wow.exe`, bis zu 4 GB RAM zu nutzen statt der
 standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 
 <a id="patch-cache"></a>
-**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, standardmäßig aus, Autor: Alastor StrixEfuartus / Kebabstorm)*
+**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, Autor: Alastor StrixEfuartus / Kebabstorm)*
 
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
@@ -38,7 +38,7 @@ Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) – ungetestet** *(Nr. 4, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) – ungetestet** *(Nr. 4, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Verhindert einen Absturz in einer Funktion der Weltdarstellung (VA `0x81D510`).
 Sie läuft über Dreiecke aus je drei Vertex-Indizes und rechnet „Index minus
@@ -60,7 +60,7 @@ kürzer.
 ## Sicherheit & Datenschutz
 
 <a id="patch-rce"></a>
-**Remote Code Execution Exploit Fix** *(Nr. 5, standardmäßig aus, Autor: Robinsch)*
+**Remote Code Execution Exploit Fix** *(Nr. 5, Autor: Robinsch)*
 
 Schließt eine Sicherheitslücke, die Remote-Code-Ausführung über manipulierte
 Pakete ermöglichen konnte: Die Sektion `.zdata` verliert ihr Ausführungsrecht,
@@ -73,7 +73,7 @@ läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
 > schaden tun sie zusammen nicht.
 
 <a id="patch-wardenoff"></a>
-**Warden komplett abschalten, RCE-Fix** *(Nr. 6, standardmäßig aus, Autor: Robinsch)*
+**Warden komplett abschalten, RCE-Fix** *(Nr. 6, Autor: Robinsch)*
 
 Der Client verwirft alle Warden-Pakete des Servers (`SMSG_WARDEN_DATA`).
 Warden-Module sind Code, den der Server im Client ausführen lässt – mit diesem
@@ -87,7 +87,7 @@ Patcher weist dann nur darauf hin.
 > deshalb kicken.
 
 <a id="patch-scandll"></a>
-**Scan.dll deaktivieren** *(Nr. 7, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Scan.dll deaktivieren** *(Nr. 7, Autor: Alastor StrixEfuartus)*
 
 Verhindert das Laden der `Scan.dll`, die der Login-Server per „Scan“-Befehl
 nachladen kann (ein Prüfmodul des Login-Servers, unabhängig von Warden): Aus
@@ -95,13 +95,13 @@ nachladen kann (ein Prüfmodul des Login-Servers, unabhängig von Warden): Aus
 verboten, das Laden schlägt damit garantiert fehl.
 
 <a id="patch-noserverpatch"></a>
-**Client-Patches vom Server verbieten** *(Nr. 8, standardmäßig aus, Autor: Kebabstorm)*
+**Client-Patches vom Server verbieten** *(Nr. 8, Autor: Kebabstorm)*
 
 Der Server kann dem Client keine Patch-Dateien mehr schicken und installieren
 lassen.
 
 <a id="patch-nosurvey"></a>
-**Hardware-Umfragen vom Server verbieten** *(Nr. 9, standardmäßig aus, Autor: Kebabstorm)*
+**Hardware-Umfragen vom Server verbieten** *(Nr. 9, Autor: Kebabstorm)*
 
 Der Server kann keine Hardware-Umfrage (Informationen über deinen PC) mehr beim
 Client anfordern.
@@ -109,25 +109,25 @@ Client anfordern.
 ## Login & Verbindung
 
 <a id="patch-skipbnet"></a>
-**Battle.net-Login überspringen** *(Nr. 10, standardmäßig aus, Autor: Kebabstorm)*
+**Battle.net-Login überspringen** *(Nr. 10, Autor: Kebabstorm)*
 
 Der Client überspringt den Battle.net-Login-Schritt und nutzt direkt den
 klassischen Login.
 
 <a id="patch-skiprdp"></a>
-**Remote-Desktop-Prüfung überspringen** *(Nr. 11, standardmäßig aus, Autor: Kebabstorm)*
+**Remote-Desktop-Prüfung überspringen** *(Nr. 11, Autor: Kebabstorm)*
 
 Der Client prüft nicht mehr, ob er über eine Remote-Desktop-Verbindung läuft –
 WoW lässt sich damit z. B. per RDP spielen.
 
 <a id="patch-nohttp"></a>
-**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 12, standardmäßig aus, Autor: Kebabstorm)*
+**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 12, Autor: Kebabstorm)*
 
 Der Client ruft keine News, Hilfe-Artikel und Nutzungsbedingungen mehr von
 Blizzards Servern ab – die gibt es für 3.3.5 ohnehin nicht mehr.
 
 <a id="patch-afk"></a>
-**Idle-Kick nach Character-Autologin verhindern** *(Nr. 13, standardmäßig aus, Autor: St0ny)*
+**Idle-Kick nach Character-Autologin verhindern** *(Nr. 13, Autor: St0ny)*
 
 Nach einem Autologin ohne jede Tastatur- oder Mauseingabe steht der
 Zeitstempel der letzten Eingabe noch auf 0 – der Client hält den Spieler sofort
@@ -159,7 +159,7 @@ frei (undefiniertes Verhalten). Hier gibt der Fehlerausgang stattdessen direkt
 „gültig“ zurück – gleiche Wirkung, ohne wilden Speicherzugriff.
 
 <a id="patch-mpqsig"></a>
-**Falsch/Nicht signierte MPQs zulassen** *(Nr. 15, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Falsch/Nicht signierte MPQs zulassen** *(Nr. 15, Autor: Alastor StrixEfuartus)*
 
 Die Signaturprüfung für MPQ-Archive meldet immer „gültig“. Der Client prüft
 damit nur Archive, die der Server schickt: `wow-patch.mpq` (Client-Patch vom
@@ -182,7 +182,7 @@ gepackt werden müssen – z. B. `Data\DBFilesClient\ItemDisplayInfo.dbc`.
 Praktisch für Modder.
 
 <a id="patch-luaunlock"></a>
-**LUA Unlock (Zauber, Bewegung, Makros)** *(Nr. 18, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**LUA Unlock (Zauber, Bewegung, Makros)** *(Nr. 18, Autor: Alastor StrixEfuartus)*
 
 Addons und Makros dürfen geschützte Funktionen aufrufen: Bewegungsfunktionen
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,
@@ -196,7 +196,7 @@ meldet weiterhin einen Fehler. Diese und alle übrigen gibt Nr. 19 frei.
 > werten – das kann zu einem Bann führen.
 
 <a id="patch-luaunlockfull"></a>
-**LUA Unlock (vollständig): alle geschützten Funktionen freigeben** *(Nr. 19, standardmäßig aus, Autor: St0ny)*
+**LUA Unlock (vollständig): alle geschützten Funktionen freigeben** *(Nr. 19, Autor: St0ny)*
 
 Erweitert Nr. 18 auf alle geschützten Funktionen. Die zentrale Schutzprüfung
 des Clients kennt 24 Schutztypen in drei Klassen (immer verboten, nur nach
@@ -220,7 +220,7 @@ Patcher weist dann nur darauf hin.
 > das als Botting werten – das kann zu einem Bann führen.
 
 <a id="patch-keyprop"></a>
-**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 20, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
+**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 20, Autor: Alyst3r (0x539wowmod))*
 
 Hat ein Frame ein OnKeyDown-Skript, meldet der Client die Taste danach als
 erledigt – sie erreicht die Tastenbelegungen dann nicht mehr. Mit dem Patch läuft
@@ -232,7 +232,7 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 > damit zusätzlich die belegte Aktion aus.
 
 <a id="patch-globalsv"></a>
-**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 21, standardmäßig aus, Autor: St0ny (original by boredatom))*
+**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 21, Autor: St0ny (original by boredatom))*
 
 WoW speichert die Daten der Addons normalerweise pro Account unter
 `WTF\Account\<ACCOUNT>\`. Mit dem Patch nutzen alle Accounts dafür den
@@ -285,7 +285,7 @@ Fehlt die DLL, startet WoW normal weiter.
 > Der Patcher zeigt dazu einen gelben Hinweis.
 
 <a id="patch-voicedll"></a>
-**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 23, standardmäßig aus, Autor: St0ny)*
+**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 23, Autor: St0ny)*
 
 Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem
@@ -373,7 +373,7 @@ Relog, um neue Post zu bekommen.
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
 <a id="patch-follow"></a>
-**/follow auch bei NPCs erlauben** *(Nr. 33, standardmäßig aus, Autor: St0ny (original by Alastor StrixEfuartus))*
+**/follow auch bei NPCs erlauben** *(Nr. 33, Autor: St0ny (original by Alastor StrixEfuartus))*
 
 Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem `/follow`-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
@@ -384,7 +384,7 @@ stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
 <a id="patch-level101"></a>
-**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) – ungetestet** *(Nr. 34, standardmäßig aus, Autor: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) – ungetestet** *(Nr. 34, Autor: Alastor StrixEfuartus (fixed by St0ny))*
 
 Die Spielwert-Tabellen des Clients (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – elf Tabellen) haben je Spalte
@@ -405,7 +405,7 @@ darunter bleibt unverändert.
 Quelle heißt er „Disable XML SIG MD5“, daher der dortige Hinweis „Use XML MD5“.
 
 <a id="patch-raceclass"></a>
-**Charaktererstellung: mehr als 10 Klassen (Zufallsklasse)** *(Nr. 35, standardmäßig aus, Autor: Alastor StrixEfuartus / Robinsch)*
+**Charaktererstellung: mehr als 10 Klassen (Zufallsklasse)** *(Nr. 35, Autor: Alastor StrixEfuartus / Robinsch)*
 
 Die Zufallsauswahl der Klasse bei der Charaktererstellung sammelt die
 erlaubten Klassen in einem Feld mit 10 Plätzen. Mit eigenen Klassen
@@ -414,7 +414,7 @@ vergrößert es auf 30 Plätze. Welche Rasse welche Klasse darf, prüft weiterhi
 der Server – mehr macht dieser Patch nicht.
 
 <a id="patch-namecheck"></a>
-**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) – ungetestet** *(Nr. 36, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) – ungetestet** *(Nr. 36, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))*
 
 Schaltet die komplette clientseitige Namensprüfung bei der Charaktererstellung
 ab: Die Prüffunktion (VA `0x6B0F90`) meldet immer „Name gültig“. Damit sind z. B.
@@ -443,7 +443,7 @@ Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2 – ungetestet** *(Nr. 38, standardmäßig aus, Autor: Kebabstorm (fixed by St0ny))*
+**Custom Item Fix (BETA) v2 – ungetestet** *(Nr. 38, Autor: Kebabstorm (fixed by St0ny))*
 
 Macht Custom-Items möglich, ohne die `Item.dbc` des Clients anzupassen. Viele
 Stellen im Client lesen Display-ID, Inventartyp, Klasse, Unterklasse und Scheide
@@ -479,7 +479,7 @@ Aus v1 nicht übernommen: die PE-Prüfsumme (Windows prüft sie bei Programmen
 nicht) und die Änderung `Cache` → `||che` – das ist genau Patch Nr. 2.
 
 <a id="patch-climb"></a>
-**Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)** *(Nr. 39, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)** *(Nr. 39, Autor: Alastor StrixEfuartus)*
 
 Der Charakter kommt jeden Hang hoch, egal wie steil. Im Original ist bei 50°
 Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
@@ -490,7 +490,7 @@ Schluss: Der Client vergleicht die Neigung mit dem Kosinus dieses Winkels
 > Bann führen.
 
 <a id="patch-jump"></a>
-**Sprunghöhe ändern (Original -7.9555473)** *(Nr. 40, standardmäßig aus, Autor: Alastor StrixEfuartus)*
+**Sprunghöhe ändern (Original -7.9555473)** *(Nr. 40, Autor: Alastor StrixEfuartus)*
 
 Ändert die Anfangsgeschwindigkeit des Sprungs (VA `0xAA33DC`, Original
 `-7.9555473`). Der Patcher fragt den Wert nach der Auswahl ab: eine negative
@@ -504,7 +504,7 @@ Wert wird wie bei den Client-Info-Patches gemerkt.
 > Bann führen.
 
 <a id="patch-airforward"></a>
-**Im Sprung vorwärts/rückwärts steuern** *(Nr. 41, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Im Sprung vorwärts/rückwärts steuern** *(Nr. 41, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Normalerweise ignoriert der Client Vorwärts- und Rückwärts-Eingaben, solange der
 Charakter springt oder fällt. Mit dem Patch lässt sich die Richtung auch in der
@@ -519,7 +519,7 @@ der Byte-Patch aus 0x539wowmod, der die Bewegung in der Luft aktualisiert.
 > kann zu einem Bann führen.
 
 <a id="patch-airlateral"></a>
-**Im Sprung seitwärts steuern** *(Nr. 42, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Im Sprung seitwärts steuern** *(Nr. 42, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Wie der vorige Patch, nur für seitliche Bewegung (Strafen): zwei Sprünge in der
 Seitwärts-Eingabe des Clients plus der Byte-Patch aus 0x539wowmod, der die
@@ -530,7 +530,7 @@ Bewegung bei gesetztem Fall-Flag nicht mehr vorzeitig abbricht.
 > kann zu einem Bann führen.
 
 <a id="patch-airturn"></a>
-**Im Sprung drehen ändert die Flugrichtung** *(Nr. 43, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Im Sprung drehen ändert die Flugrichtung** *(Nr. 43, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Dreht man sich im Sprung (Maus oder Tasten), behält der Charakter im Original
 seine Flugrichtung. Mit dem Patch setzt der Client die Bewegungsrichtung auch in
@@ -542,7 +542,7 @@ den beiden vorigen Patches.
 > kann zu einem Bann führen.
 
 <a id="patch-doublejump"></a>
-**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 44, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 44, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Erlaubt weitere Sprünge, während der Charakter in der Luft ist. Der Patcher fragt
 nach der Auswahl, wie viele zusätzliche Sprünge es sein sollen (1 bis 9, `1` =
@@ -616,7 +616,7 @@ Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
 <a id="patch-sliders"></a>
-**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 49, standardmäßig aus, Autor: St0ny)*
+**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 49, Autor: St0ny)*
 
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
@@ -721,7 +721,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 > ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 55 gibt es keine Überschneidung.
 
 <a id="patch-goscale"></a>
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 50, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 50, Autor: St0ny)*
 
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
@@ -745,7 +745,7 @@ Mit Patch Nr. 51 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 unlock“ (Nr. 47) voraus.
 
 <a id="patch-cat0"></a>
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 51, standardmäßig aus, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 51, Autor: St0ny)*
 
 Der Patch kostet Leistung: Es ist deutlich mehr Kleinkram gleichzeitig
 sichtbar, und die Anzahl der gezeichneten Objekte ist der Performance-Hebel.
@@ -855,7 +855,7 @@ sie unabhängig von den Distanzen verbreitern.
 </details>
 
 <a id="patch-occluder"></a>
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 52, standardmäßig aus, Autor: Robinsch)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 52, Autor: Robinsch)*
 
 Schaltet die fest in den Client eingebauten Occluder (Sichtblocker) für
 Stormwind ab: Der Karten-Schlüssel des Tabelleneintrags für die Östlichen
@@ -879,7 +879,7 @@ Objekt, kann er beim Heranzoomen weiterhin durchsichtig werden (so auch im
 Original-Patch).
 
 <a id="patch-nofade"></a>
-**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 55, standardmäßig aus, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 55, Autor: Alyst3r (0x539wowmod) (ported by St0ny))*
 
 Beim Entfernen eines NPCs (z. B. Despawn) blendet der Client das Modell
 normalerweise langsam aus. Mit dem Patch verschwinden NPCs sofort, bei denen der
@@ -895,7 +895,7 @@ wie bisher.
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 <a id="patch-hdportraits"></a>
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 56, standardmäßig aus, Autor: St0ny (original by Badgermilk0))*
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 56, Autor: St0ny (original by Badgermilk0))*
 
 Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
 Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
@@ -920,13 +920,13 @@ Kopierschleife sonst über die Quelle hinaus liest.
 ## Interface & Komfort
 
 <a id="patch-tracker"></a>
-**Quest-Tracker automatisch sortieren** *(Nr. 57, standardmäßig aus)*
+**Quest-Tracker automatisch sortieren** *(Nr. 57)*
 
 Setzt das CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
 <a id="patch-worldmap"></a>
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 58, standardmäßig aus)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 58)*
 
 Setzt das CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
@@ -939,7 +939,7 @@ Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
 <a id="patch-emblems"></a>
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 60, standardmäßig aus, Autor: MacWarrior)*
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 60, Autor: MacWarrior)*
 
 Der Client hält die Anzahl der wählbaren Tabard-Varianten in einer kleinen
 Tabelle (VA `0xA14908`, Datei-Offset `0x613108`): 170 Embleme, 17 Emblemfarben,
@@ -985,7 +985,7 @@ das braucht zusätzlich `IsWindowFocused()` aus der `AwesomeWotlkLib.dll`
 (Nr. 22).
 
 <a id="patch-charrandom"></a>
-**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 62, standardmäßig aus, Autor: Alyst3r (0x539wowmod))*
+**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 62, Autor: Alyst3r (0x539wowmod))*
 
 Beim Öffnen der Charaktererstellung (Klick auf „Neuer Charakter“) und beim
 Wechsel von Volk oder Geschlecht würfelt der Client Gesicht, Haut, Frisur usw.
@@ -995,13 +995,13 @@ Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 ## Fenster, Maus & Kamera
 
 <a id="patch-window"></a>
-**Fenstermodus als Standard setzen** *(Nr. 63, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 63, Autor: St0ny)*
 
 Setzt das CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
 <a id="patch-maximize"></a>
-**Fenstermodus maximiert als Standard setzen** *(Nr. 64, standardmäßig aus, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 64, Autor: St0ny)*
 
 Setzt das CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
@@ -1022,7 +1022,7 @@ hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen – ungetestet** *(Nr. 67, standardmäßig aus, Autor: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen – ungetestet** *(Nr. 67, Autor: Stormhand (fixed by St0ny))*
 
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged)
 von **Stormhand** in diesen Patcher, damit
@@ -1093,7 +1093,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 ## Sound
 
 <a id="patch-sound"></a>
-**Sound-Einstellungen optimieren** *(Nr. 68, standardmäßig aus, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 68, Autor: St0ny)*
 
 Umfasst folgende Änderungen:
 
@@ -1132,7 +1132,7 @@ bereits eingespielten Patch `-> aktuell: …`).
 > muss also zum Server passen.
 
 <a id="patch-clientversion"></a>
-**Client-Version ändern (Original 3.3.5)** *(Nr. 69, standardmäßig aus, Autor: MacWarrior)*
+**Client-Version ändern (Original 3.3.5)** *(Nr. 69, Autor: MacWarrior)*
 
 Setzt eine neue Version im Format `x.y.z` (z. B. `3.3.6` oder `3.3.123`, höchstens
 7 Zeichen). Geändert werden die Version, die der Client im Spiel anzeigt, die
@@ -1142,7 +1142,7 @@ FileVersion-Text (`3, 3, 5, 12340`) wird zur reinen Version (`3.3.6`). Haupt-
 und Nebenversion müssen zusammen in das ProductVersion-Feld passen (z. B. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Build-Nummer ändern (Original 12340)** *(Nr. 70, standardmäßig aus, Autor: MacWarrior)*
+**Build-Nummer ändern (Original 12340)** *(Nr. 70, Autor: MacWarrior)*
 
 Setzt eine neue Build-Nummer (6142 bis 65535, Original `12340`): die interne
 Build-Nummer, die sichtbare Build-Nummer und den vierten Teil der FileVersion
@@ -1171,14 +1171,14 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel in den Dateieigenschaften ändern – ungetestet** *(Nr. 71, standardmäßig aus, Autor: MacWarrior (fixed by St0ny))*
+**Programmtitel in den Dateieigenschaften ändern – ungetestet** *(Nr. 71, Autor: MacWarrior (fixed by St0ny))*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
 Höchstens 17 Zeichen, nur ASCII.
 
 <a id="patch-clientdate"></a>
-**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 72, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
+**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 72, Autor: St0ny (original by MacWarrior))*
 
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk, dazu die Uhrzeit. Die steht an zwei Stellen:
@@ -1198,7 +1198,7 @@ Patchens. Ist der Patch schon eingespielt, steht dort das aktuelle Datum samt
 Uhrzeit der `Wow.exe`.
 
 <a id="patch-clienticon"></a>
-**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, standardmäßig aus, Autor: St0ny (original by MacWarrior))*
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 73, Autor: St0ny (original by MacWarrior))*
 
 Tauscht das Icon aus, das Windows für die `Wow.exe` anzeigt (Explorer,
 Taskleiste, Verknüpfungen). Der Patcher fragt nach dem Pfad einer `.ico`-

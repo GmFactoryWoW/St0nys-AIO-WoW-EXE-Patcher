@@ -16,14 +16,15 @@
 #  Optionale Parameter fuer den unbeaufsichtigten Betrieb:
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
-#                             "saved" (gespeicherte Auswahl), "billy" (Preset
-#                             Billy's_Wow.exe = Standard), "stony" (Preset
+#                             "saved" (gespeicherte Auswahl), "reforged"
+#                             (Preset Project Reforged = Standard), "billy"
+#                             (Preset Billy's_Wow.exe), "stony" (Preset
 #                             St0nys_Wow.exe), "all", "none"
 #                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
-#                             gespeicherte Auswahl bzw. das Preset Billy's_Wow.exe
+#                             gespeicherte Auswahl bzw. das Preset Project Reforged
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 #
 #  Fuer Entwickler:
@@ -125,6 +126,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
+        MenuPresetR   = 'R = Preset Project Reforged (Standard, sicher)'
         MenuPresets   = 'B = Preset Billy''s_Wow.exe (erprobte Basis, teils ungetestet)    S = Preset St0nys_Wow.exe (unsicher)'
         StonyWarning  = 'Achtung: Das Preset St0nys_Wow.exe sollte unter keinen Umstaenden auf oeffentlichen Servern verwendet werden - das fuehrt wahrscheinlich zu einem Bann!'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
@@ -216,6 +218,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
+        MenuPresetR   = 'R = preset Project Reforged (default, safe)'
         MenuPresets   = 'B = preset Billy''s_Wow.exe (proven base, partly untested)    S = preset St0nys_Wow.exe (unsafe)'
         StonyWarning  = 'Warning: the preset St0nys_Wow.exe should never be used on public servers under any circumstances - it will most likely get you banned!'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
@@ -1768,10 +1771,10 @@ function Test-JumpValue([string]$v) {
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
 #    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
-#    On    - Teil des Presets "Billy's_Wow.exe", das zugleich die Standard-
-#            Auswahl ist: vorausgewaehlt ($true) oder nicht ($false). Das
-#            zweite Preset "St0nys_Wow.exe" steht als
-#            Id-Liste in $PRESET_STONY hinter den Patches
+#    On    - Teil des Presets "Billy's_Wow.exe" ($true) oder nicht ($false).
+#            Die Standard-Auswahl ist das Preset "Project Reforged"
+#            ($PRESET_REFORGED), das Preset "St0nys_Wow.exe" steht in
+#            $PRESET_STONY - beide als Id-Listen hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
 #            zusaetzlich benoetigt wird
 #    Url   - optional: Link zum Hinweis, wird im Menue unter dem Namen gezeigt
@@ -3088,7 +3091,15 @@ $patches = @(
     }}
 )
 
-# Zweites Preset "St0nys_Wow.exe" - Billys Patch-Set plus
+# Standard-Preset "Project Reforged" - das offizielle Preset des Projekts
+# Project Reforged (https://projectreforged.github.io/wotlk/), zusammengestellt
+# von Stormhand. Nur sichere Patches ohne Bann-Gefahr. Im Menue mit R, ueber
+# -Select reforged; gilt beim ersten Start und fuer neue Patches.
+$PRESET_REFORGED = @(
+    'laa', 'itemcache', 'windowfix', 'mouse'
+)
+
+# Preset "St0nys_Wow.exe" - Billys Patch-Set plus
 # Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
 # Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
 # mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
@@ -3362,7 +3373,15 @@ function ConvertTo-Indices([string]$text, [int]$max) {
     return , $result.ToArray()
 }
 
+# Standard-Auswahl = Preset "Project Reforged"
 function Get-DefaultSelection {
+    $sel = New-Object bool[] $patches.Count
+    for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_REFORGED -contains $patches[$i].Id }
+    return , $sel
+}
+
+# Preset "Billy's_Wow.exe" aus den On-Eintraegen der Patches
+function Get-BillySelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = [bool]$patches[$i].On }
     return , $sel
@@ -3378,7 +3397,7 @@ function Get-StonySelection {
 # Gespeicherte Auswahl aus patcher_selection.ini lesen. Liefert $null, wenn es
 # keine gibt. Gespeichert wird pro Patch-Id, nicht pro Nummer: Patches, die in
 # der Datei fehlen (z.B. in einer neueren Version hinzugekommen), bekommen
-# ihren On-Wert, unbekannte Eintraege werden ignoriert.
+# ihren Standardwert (Preset Project Reforged), unbekannte Eintraege werden ignoriert.
 function Get-SavedSelection {
     if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $null }
     try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $null }
@@ -3663,6 +3682,7 @@ function Show-Menu($sel, [string]$message) {
     Say ('=' * 70) 'Cyan'
     Say (T 'MenuHelp1')
     Say (T 'MenuHelp2')
+    Say (T 'MenuPresetR')
     Say (T 'MenuPresets')
     Say (T 'MenuHelp3')
     if ($message) {
@@ -3687,7 +3707,8 @@ function Select-Patches([bool[]]$sel, [string]$message) {
             }
             '^[aA]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $true };  break }
             '^[nN]$'   { for ($i = 0; $i -lt $sel.Length; $i++) { $sel[$i] = $false }; break }
-            '^[bB]$'   { $sel = Get-DefaultSelection; break }
+            '^[rR]$'   { $sel = Get-DefaultSelection; break }
+            '^[bB]$'   { $sel = Get-BillySelection; break }
             '^[sS]$'   { $sel = Get-StonySelection; $message = T 'StonyWarning'; break }
             '^[lL]$'   {
                 if ($script:lang -eq 'de') { $script:lang = 'en' } else { $script:lang = 'de' }
@@ -3707,7 +3728,8 @@ function Select-Patches([bool[]]$sel, [string]$message) {
 # Nicht-interaktive Auswahl ueber -Select. Liefert $null bei ungueltigem Wert.
 function Get-SelectionFromParam([string]$value) {
     $v = $value.Trim().ToLowerInvariant()
-    if ($v -eq 'billy' -or $v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
+    if ($v -eq 'reforged' -or $v -eq 'default' -or $v -eq 'standard') { return , (Get-DefaultSelection) }
+    if ($v -eq 'billy') { return , (Get-BillySelection) }
     if ($v -eq 'stony' -or $v -eq 'st0ny') { return , (Get-StonySelection) }
     if ($v -eq 'saved' -or $v -eq 'gespeichert') {
         $sel = Get-SavedSelection
