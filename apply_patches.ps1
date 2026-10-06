@@ -2487,67 +2487,6 @@ $patches = @(
         Patch 0x46A08E @(0xE9, 0x83, 0x00, 0x00, 0x00, 0x90)
     }}
 
-    @{ Id = 'year2031'; Cat = 'system'; On = $false
-       Author = 'St0ny (original by Alyst3r)'
-       De = 'Jahr-2031-Fix (Datum und Kalender bis Ende 2031) - ungetestet'
-       En = 'Year 2031 fix (date and calendar until the end of 2031) - untested'
-       Code = {
-        # WoW packt Datumswerte in 32 Bit, das Jahr in 5 Bit (2000 + 0..31).
-        # Der Wert 31 heisst im Original "nicht gesetzt". Ab dem 1.1.2031
-        # schickt der Server aber genau 31: Der Client haelt das Datum fuer
-        # ungesetzt, Kalender und Datumsanzeigen laufen falsch (laut
-        # WotLK-Extensions bis hin zu Abstuerzen). Idee aus WotLK-Extensions
-        # (Alyst3r, dort Teil der DLL) - hier direkt in der Exe, ohne neuen
-        # Platz und mit zwei Korrekturen (siehe 2 und 3).
-        # 1) Entpacker (VA 0x76C970): Jahr 31 bleibt 2031 (jne -> jmp).
-        Patch 0x36BE1B @(0xEB)
-        # 2) Feiertage: In Holidays.dbc (und den Feiertagsdaten vom Server)
-        #    heisst Jahr 31 weiter "jedes Jahr", ein Wochentag ohne Datum
-        #    "jede Woche". Die Feiertags-Auswertung (VA 0x5BFAB0) setzt Jahr 31
-        #    nach dem Entpacken deshalb wieder auf "nicht gesetzt". Platz dafuer
-        #    schafft ein kuerzerer Schleifen-Prolog (imul statt shl/sub/add),
-        #    "add esp,8" nach dem Entpacken springt in den Stub (pop ecx x2,
-        #    cmp [ebx+14h],1Fh / jne / or [ebx+14h],-1). In WotLK-Extensions
-        #    fehlt das - dort fallen jaehrliche und woechentliche Feiertage aus
-        #    dem Kalender.
-        Patch 0x1BEF0F @(
-            0x75, 0x03, 0x6A, 0x18, 0x59, 0x6B, 0xC1, 0x3C, 0x89, 0x45, 0xEC, 0x33, 0xC0, 0x89, 0x45, 0xF0,
-            0xEB, 0x0F, 0x59, 0x59, 0x83, 0x7B, 0x14, 0x1F, 0x75, 0x25, 0x83, 0x4B, 0x14, 0xFF, 0xEB, 0x1F,
-            0x90
-        )
-        Patch 0x1BEF4B @(0xEB, 0xD4, 0x90)
-        # 3) Kalendergrenzen von Ende 2030 auf Ende 2031 (2032 passt nicht mehr
-        #    in die 5 Bit des Protokolls). CalendarGetMaxDate (VA 0x5B82BD):
-        #    1.1.2032 minus 1 Tag. Spaetestes Datum fuer neue Termine (VA
-        #    0x5B7A80): "Monatsende in 12 Monaten", aber hoechstens 31.12.2031 -
-        #    das Original klemmt nur das Jahr und liesse 2031 nur noch den
-        #    laufenden Monat zu, WotLK-Extensions laesst Termine bis 2032 zu.
-        Patch 0x1B76C0 @(0x20)
-        Patch 0x1B6E83 @(
-            0x56, 0x8B, 0x75, 0x08, 0xA1, 0xAC, 0x7F, 0xD3, 0x00, 0x6B, 0xC0, 0x0C, 0x03, 0x05, 0xA8, 0x7F,
-            0xD3, 0x00, 0x83, 0xC0, 0x0D, 0x3D, 0x80, 0x01, 0x00, 0x00, 0x7E, 0x05, 0xB8, 0x80, 0x01, 0x00,
-            0x00, 0x99, 0x6A, 0x0C, 0x59, 0xF7, 0xF9, 0x89, 0x46, 0x14, 0x89, 0x56, 0x10, 0x6A, 0x00, 0x6A,
-            0xFF, 0x8B, 0xCE, 0xC7, 0x46, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90,
-            0x90
-        )
-        #    Jahres-Klemmen beim Blaettern (VA 0x5B8EC0, 0x5B8F70, 0x5BFF30):
-        #    hoechstens 2031 statt 2030.
-        Patch 0x1B8333 @(0x1F)
-        Patch 0x1B8338 @(0x1F)
-        Patch 0x1B839B @(0x1F)
-        Patch 0x1B839F @(0x1F)
-        Patch 0x1BF346 @(0x1F)
-        Patch 0x1BF35B @(0x1F)
-        #    Schleifen ueber Monate und Feiertage (VA 0x5C01F9, 0x5C04BF,
-        #    0x5C2680, 0x5C2890): laufen bis Ende 2031 statt Ende 2030.
-        #    (0x5C2680 ist die Schleife der woechentlichen Feiertage - auch die
-        #    fehlt in WotLK-Extensions.)
-        Patch 0x1BF5FB @(0x20)
-        Patch 0x1BF8C1 @(0x20)
-        Patch 0x1C1A83 @(0x20)
-        Patch 0x1C1C93 @(0x20)
-    }}
-
     @{ Id = 'nothrottle'; Cat = 'system'; On = $false
        Author = 'Hour of Twilight (ported by St0ny)'
        De = 'Server-Abfragen nicht drosseln (Item- und Quest-Infos schneller) - ungetestet'
@@ -3797,8 +3736,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 76'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 76'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 75'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 75'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -3807,8 +3746,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 75'
-       NoteEn = 'only works together with No. 75'
+       NoteDe = 'wirkt nur zusammen mit Nr. 74'
+       NoteEn = 'only works together with No. 74'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -4032,21 +3971,6 @@ worldcrash;210;B3D35D00;0
 worldcrash;41C91B;0F834D010000;1
 worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
 timer;46A08E;0F8582000000;1
-year2031;1B6E83;8B0DA87FD30083C10DB8ABAAAA2AF7E9D1FA8BC2C1E81F03C28D144003D2568B750803D22BCA894E108B0DAC7FD30003C86A00894E146AFF8BCEC7460C00000000;1
-year2031;1B76C0;1F;1
-year2031;1B8333;1E;1
-year2031;1B8338;1E;1
-year2031;1B839B;1E;1
-year2031;1B839F;1E;1
-year2031;1BEF0F;7505B9180000008BC1C1E0042BC103C003C08945EC33C08945F08DA42400000000;1
-year2031;1BEF4B;83C408;1
-year2031;1BF346;1E;1
-year2031;1BF35B;1E;1
-year2031;1BF5FB;1F;1
-year2031;1BF8C1;1F;1
-year2031;1C1A83;1F;1
-year2031;1C1C93;1F;1
-year2031;36BE1B;75;1
 nothrottle;2750EE;56;1
 nothrottle;27521E;56;1
 nothrottle;27534E;56;1
