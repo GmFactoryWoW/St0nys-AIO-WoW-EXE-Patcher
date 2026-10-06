@@ -94,8 +94,11 @@ faster.
 
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
-are no longer loaded from the local cache. Warden itself keeps working, so
-servers with active Warden are not a problem.
+are no longer loaded from the local cache. Warden itself keeps working.
+
+> [!WARNING]
+> Public servers can detect the change through Warden – there is a risk of a
+> ban on public servers.
 
 > [!NOTE]
 > "Disable Warden completely" (No. 7) closes the hole as well and makes this
@@ -112,7 +115,8 @@ that is no longer possible at all, including future tricks. Makes the RCE fix
 
 > [!WARNING]
 > The client no longer answers Warden. Servers with active Warden (e.g.
-> AzerothCore or TrinityCore with default settings) may therefore kick you.
+> AzerothCore or TrinityCore with default settings) may therefore kick you. On
+> public servers there is also a risk of a ban.
 
 <a id="patch-scandll"></a>
 **Disable Scan.dll** *(No. 8, Author: Alastor StrixEfuartus)*

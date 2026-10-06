@@ -96,7 +96,11 @@ Client etwa eine Viertelsekunde schneller.
 Schließt eine Sicherheitslücke, die Remote-Code-Ausführung über manipulierte
 Pakete ermöglichen konnte: Die Sektion `.zdata` verliert ihr Ausführungsrecht,
 und Warden-Module werden nicht mehr aus dem lokalen Cache geladen. Warden selbst
-läuft weiter, auf Servern mit aktivem Warden gibt es also keine Probleme.
+läuft weiter.
+
+> [!WARNING]
+> Öffentliche Server können die Änderung über Warden erkennen – auf
+> öffentlichen Servern besteht Bann-Gefahr.
 
 > [!NOTE]
 > „Warden komplett abschalten“ (Nr. 7) schließt die Lücke ebenfalls und macht
@@ -115,7 +119,7 @@ Patcher weist dann nur darauf hin.
 > [!WARNING]
 > Der Client antwortet danach nicht mehr auf Warden. Server mit aktivem Warden
 > (z. B. AzerothCore oder TrinityCore in der Standardeinstellung) können dich
-> deshalb kicken.
+> deshalb kicken. Auf öffentlichen Servern besteht außerdem Bann-Gefahr.
 
 <a id="patch-scandll"></a>
 **Scan.dll deaktivieren** *(Nr. 8, Autor: Alastor StrixEfuartus)*

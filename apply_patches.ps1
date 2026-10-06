@@ -1874,21 +1874,23 @@ $patches = @(
 
     # --- Sicherheit & Datenschutz ---
 
-    @{ Id = 'rce'; Cat = 'security'; On = $false
+    @{ Id = 'rce'; Cat = 'security'; On = $false; BanRisk = $true
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
+       NoteDe = 'auf oeffentlichen Servern ueber Warden erkennbar - Bann-Gefahr'
+       NoteEn = 'detectable through Warden on public servers - ban risk'
        Code = {
         Patch 0x2A7 @(0xC0)
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; BanRisk = $true; Obsoletes = @('rce')
        Author = 'Robinsch'
        De = 'Warden komplett abschalten, RCE-Fix'
        En = 'Disable Warden completely, RCE fix'
-       NoteDe = 'Kick-Gefahr bei aktivem Warden'
-       NoteEn = 'may get you kicked if Warden is active'
+       NoteDe = 'Kick-Gefahr bei aktivem Warden, auf oeffentlichen Servern Bann-Gefahr'
+       NoteEn = 'may get you kicked if Warden is active, ban risk on public servers'
        Code = {
         # Verwirft SMSG_WARDEN_DATA (Opcode 0x2E6) direkt am Eingang des
         # Paket-Handlers (VA 0x7DA850): je -> nop, der Handler kehrt sofort mit 0

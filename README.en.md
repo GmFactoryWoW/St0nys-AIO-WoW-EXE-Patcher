@@ -273,8 +273,8 @@ Click the number of a patch to jump to its description.
 | [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) | St0ny | – | – | ✅ |
 |    | **Security & privacy** |  |  |  |  |
-| [6](PATCHES.en.md#patch-rce) | Remote code execution exploit fix | Robinsch | – | – | ✅ |
-| [7](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – | – | – |
+| [6](PATCHES.en.md#patch-rce) | Remote code execution exploit fix *(detectable through Warden on public servers – ban risk)* | Robinsch | – | – | ✅ |
+| [7](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active, ban risk on public servers)* | Robinsch | – | – | – |
 | [8](PATCHES.en.md#patch-scandll) | Disable Scan.dll | Alastor StrixEfuartus | – | – | ✅ |
 | [9](PATCHES.en.md#patch-noserverpatch) | Disallow client patches from the server | Kebabstorm | – | – | ✅ |
 | [10](PATCHES.en.md#patch-nosurvey) | Disallow hardware surveys from the server | Kebabstorm | – | – | ✅ |
@@ -371,12 +371,14 @@ clicking the number of a patch takes you straight to its description.
 
 ## Notes
 
-- **Ban risk:** two groups of patches can lead to a ban on many servers. First,
+- **Ban risk:** three groups of patches can lead to a ban on many servers. First,
   patches that servers with anti-cheat may treat as cheating or botting: LUA
   unlock (No. 19 and 20), climb angle (40), jump height (41), the air steering
   (42–44) and the double jump (45). Second, patches that append a section to `Wow.exe`
   and thus make the file larger: No. 45, 57 and 68 – many servers do not
-  tolerate a changed file size. Both groups are marked "ban risk" in the
+  tolerate a changed file size. Third, patches that interfere with the Warden
+  anti-cheat: the RCE fix (No. 6) and "Disable Warden completely" (No. 7) –
+  public servers can detect this. All three groups are marked "ban risk" in the
   overview, and the patcher shows a red warning before the confirmation prompt.
   All other patches do not change the file size.
 - **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every

@@ -283,8 +283,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [4](PATCHES.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) | St0ny | – | – | ✅ |
 |    | **Sicherheit & Datenschutz** |  |  |  |  |
-| [6](PATCHES.md#patch-rce) | Remote Code Execution Exploit Fix | Robinsch | – | – | ✅ |
-| [7](PATCHES.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden)* | Robinsch | – | – | – |
+| [6](PATCHES.md#patch-rce) | Remote Code Execution Exploit Fix *(auf öffentlichen Servern über Warden erkennbar – Bann-Gefahr)* | Robinsch | – | – | ✅ |
+| [7](PATCHES.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden, auf öffentlichen Servern Bann-Gefahr)* | Robinsch | – | – | – |
 | [8](PATCHES.md#patch-scandll) | Scan.dll deaktivieren | Alastor StrixEfuartus | – | – | ✅ |
 | [9](PATCHES.md#patch-noserverpatch) | Client-Patches vom Server verbieten | Kebabstorm | – | – | ✅ |
 | [10](PATCHES.md#patch-nosurvey) | Hardware-Umfragen vom Server verbieten | Kebabstorm | – | – | ✅ |
@@ -381,14 +381,17 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
 
 ## Hinweise
 
-- **Bann-Gefahr:** Zwei Gruppen von Patches können auf vielen Servern zu einem
+- **Bann-Gefahr:** Drei Gruppen von Patches können auf vielen Servern zu einem
   Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder Botting
   werten können: LUA Unlock (Nr. 19 und 20), Steigwinkel (40), Sprunghöhe
   (41), die Sprungsteuerung (42–44) und der Doppelsprung (45). Zweitens
   Patches, die eine Sektion an die `Wow.exe` anhängen und die Datei damit
-  größer machen: Nr. 45, 57 und 68 – viele Server tolerieren eine veränderte Dateigröße nicht. Beide
-  Gruppen sind in der Übersicht mit „Bann-Gefahr“ markiert, und der Patcher
-  zeigt vor der Sicherheitsabfrage eine rote Warnung. Alle anderen Patches
+  größer machen: Nr. 45, 57 und 68 – viele Server tolerieren eine veränderte
+  Dateigröße nicht. Drittens Patches, die in den Anti-Cheat Warden eingreifen:
+  der RCE-Fix (Nr. 6) und „Warden komplett abschalten“ (Nr. 7) – öffentliche
+  Server können das erkennen. Alle drei Gruppen sind in der Übersicht mit
+  „Bann-Gefahr“ markiert, und der Patcher zeigt vor der Sicherheitsabfrage eine
+  rote Warnung. Alle anderen Patches
   ändern die Dateigröße nicht.
 - **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
   Patch macht diese Signatur ungültig. Windows warnt deshalb wahrscheinlich
