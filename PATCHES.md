@@ -319,6 +319,11 @@ Fehlt die DLL, startet WoW normal weiter.
 > Anti-Cheat auffallen – also nur dort einsetzen, wo awesome_wotlk erlaubt ist.
 > Der Patcher zeigt dazu einen gelben Hinweis.
 
+> [!NOTE]
+> Ist zusätzlich Nr. 57 (HD-Portraits) eingespielt, hat die CVar
+> `portraitResolution` von awesome_wotlk keine Wirkung – es gilt immer die
+> Auflösung des Exe-Patches.
+
 <a id="patch-voicedll"></a>
 **voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 24, Autor: St0ny)*
 
@@ -963,6 +968,13 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > 256er-Alphamaske + Code-Höhlen + Detour des Masken-Builders), die Datei wächst
 > dadurch um ca. 69 KB. **Viele Server tolerieren eine veränderte Dateigröße der
 > `Wow.exe` nicht – das kann zu einem Bann führen.**
+
+> [!NOTE]
+> **Zusammen mit awesome_wotlk (Nr. 23):** Die `AwesomeWotlkLib.dll` bringt mit
+> der CVar `portraitResolution` eine eigene Einstellung für die
+> Portrait-Auflösung mit. Ist Nr. 57 eingespielt, ist diese Funktion von
+> awesome_wotlk blockiert – es gilt immer die Auflösung des Exe-Patches (256),
+> egal was in `portraitResolution` steht.
 
 ## Interface & Komfort
 

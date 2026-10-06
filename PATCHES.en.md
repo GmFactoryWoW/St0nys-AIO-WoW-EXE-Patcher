@@ -314,6 +314,11 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
 > a yellow note for this.
 
+> [!NOTE]
+> If No. 57 (HD portraits) is applied as well, awesome_wotlk's CVar
+> `portraitResolution` has no effect – the resolution of the exe patch always
+> wins.
+
 <a id="patch-voicedll"></a>
 **Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 24, Author: St0ny)*
 
@@ -938,6 +943,12 @@ otherwise read past the source.
 > mask + code caves + detour of the mask builder), the file grows by about
 > 69 KB. **Many servers do not tolerate a changed file size of `Wow.exe` – this
 > can lead to a ban.**
+
+> [!NOTE]
+> **Together with awesome_wotlk (No. 23):** `AwesomeWotlkLib.dll` brings its own
+> setting for the portrait resolution, the CVar `portraitResolution`. With
+> No. 57 applied, this awesome_wotlk feature is blocked – the resolution of the
+> exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 ## Interface & comfort
 
