@@ -102,9 +102,10 @@ To **change or remove** patches just run `patcher.bat` again, see
 The menu lists every patch with a number. `[X]` = will be applied,
 `[ ]` = will be skipped. The menu is grouped into the same categories as the
 [patch overview](#patch-overview). On the first start the
-**preset "Billy's_Wow.exe"** is preselected (see the "Default" column in the
+**preset "Project Reforged"** is preselected (see the "Reforged" column in the
 overview), after that the saved selection or the patches currently in
-`Wow.exe`. `S` loads the second preset **"St0nys_Wow.exe"** (column "St0ny").
+`Wow.exe`. `B` loads the preset **"Billy's_Wow.exe"** (column "Billy"), `S` the
+preset **"St0nys_Wow.exe"** (column "St0ny").
 Patches that need something additional say so in parentheses
 after their name, with the link right below.
 
@@ -116,7 +117,8 @@ after their name, with the link right below.
 | `A`                | all patches on                             |
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
-| `B`                | load preset "Billy's_Wow.exe" (= default) (based on Billy's proven exe, contains **untested** fixes) |
+| `R`                | load preset "Project Reforged" (= default) (**Safe** – official preset of [Project Reforged](https://projectreforged.github.io/wotlk/)) |
+| `B`                | load preset "Billy's_Wow.exe" (based on Billy's proven exe, contains **untested** fixes) |
 | `S`                | load preset "St0nys_Wow.exe" (**Not safe**, use only on your own servers) |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
 | `ENTER`            | accept the selection and continue          |
@@ -141,12 +143,20 @@ prompt.
   hand. It also holds the entered values of the value patches – client info,
   jump height, double jump (`value.clientversion=3.3.6` etc.).
 - The language is remembered there as well (`language=de` or `en`).
-- **Reset:** press `B` in the menu or delete `patcher_selection.ini` – then
-  the preset "Billy's_Wow.exe" applies again (deleting the file also forgets the
+- **Reset:** press `R` in the menu or delete `patcher_selection.ini` – then
+  the preset "Project Reforged" applies again (deleting the file also forgets the
   language and the remembered values, they are asked for again).
 
-The preset "Billy's_Wow.exe" is Billy Hoyle's patch set and also the default
-selection. It is defined in `apply_patches.ps1`: every patch has an entry
+The preset "Project Reforged" (key `R`) is the official preset of the
+[Project Reforged](https://projectreforged.github.io/wotlk/) project, put
+together by Stormhand, and the default selection. It contains only patches
+without ban risk that do not make `Wow.exe` larger – **the preset is safe** and
+can be used on public servers as well. The "Reforged" column in the
+[patch overview](#patch-overview) shows which patches belong to it; in the
+script the list is `$PRESET_REFORGED`.
+
+The preset "Billy's_Wow.exe" (key `B`) is Billy Hoyle's patch set. It is
+defined in `apply_patches.ps1`: every patch has an entry
 `On = $true` (in the preset) or `On = $false` (not in the preset).
 
 It is based on Billy's `Wow.exe`, which was in use on public servers for a long
@@ -217,8 +227,8 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | set the language for this run. Together with `-Select` the remembered language stays unchanged; if you accept a selection in the menu with ENTER, it is saved along with it. |
-| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `billy` (preset "Billy's_Wow.exe", also `default`), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
-| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Billy's_Wow.exe". |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `reforged` (preset "Project Reforged", also `default`), `billy` (preset "Billy's_Wow.exe"), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
+| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Project Reforged". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
 Example:
@@ -255,93 +265,93 @@ Click the number of a patch to jump to its description.
 <details>
 <summary><b>Show all patches with author and preset assignment</b></summary>
 
-| No. | Patch | Author | Default | St0ny |
-|----:|-------|-------|:--------:|:-----:|
-|    | **System & performance** |  |  |  |
-| [1](PATCHES.en.md#patch-laa) | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ |
-| [2](PATCHES.en.md#patch-cache) | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – |
-| [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately | Robinsch | ✅ | ✅ |
-| [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) – untested | Alyst3r (0x539wowmod) (fixed by St0ny) | – | ✅ |
-| [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) | St0ny | – | ✅ |
-|    | **Security & privacy** |  |  |  |
-| [6](PATCHES.en.md#patch-rce) | Remote code execution exploit fix | Robinsch | – | ✅ |
-| [7](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – | – |
-| [8](PATCHES.en.md#patch-scandll) | Disable Scan.dll | Alastor StrixEfuartus | – | ✅ |
-| [9](PATCHES.en.md#patch-noserverpatch) | Disallow client patches from the server | Kebabstorm | – | ✅ |
-| [10](PATCHES.en.md#patch-nosurvey) | Disallow hardware surveys from the server | Kebabstorm | – | ✅ |
-|    | **Login & connection** |  |  |  |
-| [11](PATCHES.en.md#patch-skipbnet) | Skip Battle.net login | Kebabstorm | – | ✅ |
-| [12](PATCHES.en.md#patch-skiprdp) | Skip Remote Desktop check | Kebabstorm | – | ✅ |
-| [13](PATCHES.en.md#patch-nohttp) | Disable HTTP requests to Battle.net | Kebabstorm | – | ✅ |
-| [14](PATCHES.en.md#patch-afk) | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | ✅ |
-|    | **Modding: interface, MPQs & addons** |  |  |  |
-| [15](PATCHES.en.md#patch-glue) | Allow custom GlueXML – untested | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | ✅ | ✅ |
-| [16](PATCHES.en.md#patch-mpqsig) | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | ✅ |
-| [17](PATCHES.en.md#patch-mpqnames) | Allow extended MPQ names |  | ✅ | ✅ |
-| [18](PATCHES.en.md#patch-localdata) | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | ✅ | ✅ |
-| [19](PATCHES.en.md#patch-luaunlock) | LUA unlock (spells, movement, macros) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – |
-| [20](PATCHES.en.md#patch-luaunlockfull) | LUA unlock (complete): allow all protected functions *(may be treated as botting – ban risk)* | St0ny | – | – |
-| [21](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – |
-| [22](PATCHES.en.md#patch-globalsv) | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | St0ny (original by boredatom) | – | – |
-|    | **DLL loaders** |  |  |  |
-| [23](PATCHES.en.md#patch-awesome) | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | ✅ | ✅ |
-| [24](PATCHES.en.md#patch-voicedll) | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – |
-|    | **Gameplay fixes** |  |  |  |
-| [25](PATCHES.en.md#patch-areatrigger) | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | ✅ | ✅ |
-| [26](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | ✅ | ✅ |
-| [27](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |
-| [28](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | ✅ | ✅ |
-| [29](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |
-| [30](PATCHES.en.md#patch-naked) | Fix naked character bug – untested | Robinsch (fixed by St0ny) | ✅ | ✅ |
-| [31](PATCHES.en.md#patch-forcereaction) | Keep force reaction on /reload | Robinsch | ✅ | ✅ |
-| [32](PATCHES.en.md#patch-mail) | New mail without the 60-second wait | Robinsch | ✅ | ✅ |
-| [33](PATCHES.en.md#patch-deadchat) | Allow chat commands while dead | Robinsch | ✅ | ✅ |
-| [34](PATCHES.en.md#patch-follow) | Allow /follow on NPCs | St0ny (original by Alastor StrixEfuartus) | – | ✅ |
-| [35](PATCHES.en.md#patch-level101) | Level 101+ fix (game tables, barber chair, base stats) – untested | Alastor StrixEfuartus (fixed by St0ny) | – | ✅ |
-| [36](PATCHES.en.md#patch-raceclass) | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – |
-| [37](PATCHES.en.md#patch-namecheck) | Disable the name check in character creation (e.g. digits in names) – untested *(server must allow the names as well)* | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – |
-| [38](PATCHES.en.md#patch-maxchars) | Max characters per realm raised to 255 | St0ny | ✅ | ✅ |
-| [39](PATCHES.en.md#patch-customitem) | Custom Item Fix (BETA) v2 – untested *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm (fixed by St0ny) | – | ✅ |
-| [40](PATCHES.en.md#patch-climb) | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
-| [41](PATCHES.en.md#patch-jump) | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – |
-| [42](PATCHES.en.md#patch-airforward) | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | ✅ |
-| [43](PATCHES.en.md#patch-airlateral) | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | ✅ |
-| [44](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | ✅ |
-| [45](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | ✅ |
-|    | **Graphics & view distance** |  |  |  |
-| [46](PATCHES.en.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | ✅ | ✅ |
-| [47](PATCHES.en.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | ✅ | ✅ |
-| [48](PATCHES.en.md#patch-envdetail) | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | ✅ | ✅ |
-| [49](PATCHES.en.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 instead of 140) |  | ✅ | ✅ |
-| [50](PATCHES.en.md#patch-sliders) | Graphics options: extend slider maximums | St0ny | – | ✅ |
-| [51](PATCHES.en.md#patch-goscale) | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | ✅ |
-| [52](PATCHES.en.md#patch-cat0) | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | ✅ |
-| [53](PATCHES.en.md#patch-occluder) | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | ✅ |
-| [54](PATCHES.en.md#patch-bluemoon) | Re-enable the blue moon in the night sky | Robinsch | ✅ | ✅ |
-| [55](PATCHES.en.md#patch-notransparency) | No character transparency when zooming in | Alastor StrixEfuartus | ✅ | ✅ |
-| [56](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – |
-| [57](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | St0ny (original by Badgermilk0) | – | ✅ |
-|    | **Interface & comfort** |  |  |  |
-| [58](PATCHES.en.md#patch-tracker) | Auto-sort quest tracker |  | – | ✅ |
-| [59](PATCHES.en.md#patch-worldmap) | Advanced world map enabled by default |  | – | ✅ |
-| [60](PATCHES.en.md#patch-castbars) | Cast bars on all frames | Kebabstorm | ✅ | ✅ |
-| [61](PATCHES.en.md#patch-emblems) | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | ✅ |
-| [62](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | ✅ | ✅ |
-| [63](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – |
-|    | **Window, mouse & camera** |  |  |  |
-| [64](PATCHES.en.md#patch-window) | Windowed mode by default | St0ny | – | ✅ |
-| [65](PATCHES.en.md#patch-maximize) | Maximized window by default | St0ny | – | ✅ |
-| [66](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ |
-| [67](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ |
-| [68](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits – untested *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – |
-|    | **Sound** |  |  |  |
-| [69](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | ✅ |
-|    | **Client info: version, build, title, date, icon** |  |  |  |
-| [70](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – |
-| [71](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – |
-| [72](PATCHES.en.md#patch-clienttitle) | Change program title in the file properties – untested *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – |
-| [73](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – |
-| [74](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – |
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
+|    | **System & performance** |  |  |  |  |
+| [1](PATCHES.en.md#patch-laa) | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
+| [2](PATCHES.en.md#patch-cache) | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – | – |
+| [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately | Robinsch | ✅ | ✅ | ✅ |
+| [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) – untested | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
+| [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) | St0ny | – | – | ✅ |
+|    | **Security & privacy** |  |  |  |  |
+| [6](PATCHES.en.md#patch-rce) | Remote code execution exploit fix | Robinsch | – | – | ✅ |
+| [7](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active)* | Robinsch | – | – | – |
+| [8](PATCHES.en.md#patch-scandll) | Disable Scan.dll | Alastor StrixEfuartus | – | – | ✅ |
+| [9](PATCHES.en.md#patch-noserverpatch) | Disallow client patches from the server | Kebabstorm | – | – | ✅ |
+| [10](PATCHES.en.md#patch-nosurvey) | Disallow hardware surveys from the server | Kebabstorm | – | – | ✅ |
+|    | **Login & connection** |  |  |  |  |
+| [11](PATCHES.en.md#patch-skipbnet) | Skip Battle.net login | Kebabstorm | – | – | ✅ |
+| [12](PATCHES.en.md#patch-skiprdp) | Skip Remote Desktop check | Kebabstorm | – | – | ✅ |
+| [13](PATCHES.en.md#patch-nohttp) | Disable HTTP requests to Battle.net | Kebabstorm | – | – | ✅ |
+| [14](PATCHES.en.md#patch-afk) | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
+|    | **Modding: interface, MPQs & addons** |  |  |  |  |
+| [15](PATCHES.en.md#patch-glue) | Allow custom GlueXML – untested | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
+| [16](PATCHES.en.md#patch-mpqsig) | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | – | ✅ |
+| [17](PATCHES.en.md#patch-mpqnames) | Allow extended MPQ names |  | – | ✅ | ✅ |
+| [18](PATCHES.en.md#patch-localdata) | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [19](PATCHES.en.md#patch-luaunlock) | LUA unlock (spells, movement, macros) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [20](PATCHES.en.md#patch-luaunlockfull) | LUA unlock (complete): allow all protected functions *(may be treated as botting – ban risk)* | St0ny | – | – | – |
+| [21](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
+| [22](PATCHES.en.md#patch-globalsv) | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
+|    | **DLL loaders** |  |  |  |  |
+| [23](PATCHES.en.md#patch-awesome) | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
+| [24](PATCHES.en.md#patch-voicedll) | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
+|    | **Gameplay fixes** |  |  |  |  |
+| [25](PATCHES.en.md#patch-areatrigger) | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | – | ✅ | ✅ |
+| [26](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | – | ✅ | ✅ |
+| [27](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning – untested | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [28](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | – | ✅ | ✅ |
+| [29](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat – untested | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [30](PATCHES.en.md#patch-naked) | Fix naked character bug – untested | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [31](PATCHES.en.md#patch-forcereaction) | Keep force reaction on /reload | Robinsch | – | ✅ | ✅ |
+| [32](PATCHES.en.md#patch-mail) | New mail without the 60-second wait | Robinsch | – | ✅ | ✅ |
+| [33](PATCHES.en.md#patch-deadchat) | Allow chat commands while dead | Robinsch | – | ✅ | ✅ |
+| [34](PATCHES.en.md#patch-follow) | Allow /follow on NPCs | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
+| [35](PATCHES.en.md#patch-level101) | Level 101+ fix (game tables, barber chair, base stats) – untested | Alastor StrixEfuartus (fixed by St0ny) | – | – | ✅ |
+| [36](PATCHES.en.md#patch-raceclass) | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – | – |
+| [37](PATCHES.en.md#patch-namecheck) | Disable the name check in character creation (e.g. digits in names) – untested *(server must allow the names as well)* | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
+| [38](PATCHES.en.md#patch-maxchars) | Max characters per realm raised to 255 | St0ny | – | ✅ | ✅ |
+| [39](PATCHES.en.md#patch-customitem) | Custom Item Fix (BETA) v2 – untested *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm (fixed by St0ny) | – | – | ✅ |
+| [40](PATCHES.en.md#patch-climb) | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [41](PATCHES.en.md#patch-jump) | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [42](PATCHES.en.md#patch-airforward) | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [43](PATCHES.en.md#patch-airlateral) | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [44](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [45](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+|    | **Graphics & view distance** |  |  |  |  |
+| [46](PATCHES.en.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [47](PATCHES.en.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
+| [48](PATCHES.en.md#patch-envdetail) | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | – | ✅ | ✅ |
+| [49](PATCHES.en.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 instead of 140) |  | – | ✅ | ✅ |
+| [50](PATCHES.en.md#patch-sliders) | Graphics options: extend slider maximums | St0ny | – | – | ✅ |
+| [51](PATCHES.en.md#patch-goscale) | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | – | ✅ |
+| [52](PATCHES.en.md#patch-cat0) | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – | ✅ |
+| [53](PATCHES.en.md#patch-occluder) | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – | ✅ |
+| [54](PATCHES.en.md#patch-bluemoon) | Re-enable the blue moon in the night sky | Robinsch | – | ✅ | ✅ |
+| [55](PATCHES.en.md#patch-notransparency) | No character transparency when zooming in | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [56](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
+| [57](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | St0ny (original by Badgermilk0) | – | – | ✅ |
+|    | **Interface & comfort** |  |  |  |  |
+| [58](PATCHES.en.md#patch-tracker) | Auto-sort quest tracker |  | – | – | ✅ |
+| [59](PATCHES.en.md#patch-worldmap) | Advanced world map enabled by default |  | – | – | ✅ |
+| [60](PATCHES.en.md#patch-castbars) | Cast bars on all frames | Kebabstorm | – | ✅ | ✅ |
+| [61](PATCHES.en.md#patch-emblems) | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
+| [62](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
+| [63](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – | – |
+|    | **Window, mouse & camera** |  |  |  |  |
+| [64](PATCHES.en.md#patch-window) | Windowed mode by default | St0ny | – | – | ✅ |
+| [65](PATCHES.en.md#patch-maximize) | Maximized window by default | St0ny | – | – | ✅ |
+| [66](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
+| [67](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
+| [68](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits – untested *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |
+|    | **Sound** |  |  |  |  |
+| [69](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – | ✅ |
+|    | **Client info: version, build, title, date, icon** |  |  |  |  |
+| [70](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
+| [71](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
+| [72](PATCHES.en.md#patch-clienttitle) | Change program title in the file properties – untested *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [73](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
+| [74](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -409,11 +419,13 @@ clicking the number of a patch takes you straight to its description.
 
 - A very special thank you goes to **Billy Hoyle** – for all his help and tips
   over the past months and for helping to collect the patches. His patch set is
-  included as the preset "Billy's_Wow.exe" and is the default selection.
+  included as the preset "Billy's_Wow.exe".
 - **MacWarrior** also helped collect the patches and contributed some of his
   own – thank you as well!
 - Thanks also to **Stormhand** for the permission to include his
-  CameraReforged patch.
+  CameraReforged patch, and for the preset "Project Reforged", the official
+  preset of his [Project Reforged](https://projectreforged.github.io/wotlk/)
+  project.
 - Thanks to **Moroes**, who tracked down patch
   [#22](PATCHES.en.md#patch-globalsv) and passed it on to me.
 - And of course thanks to all patch authors named in the
