@@ -161,7 +161,7 @@ $TEXT = @{
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
         CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
-        DllHint       = 'HINWEIS: Der Patch selbst ist unkritisch. Erst die geladene DLL kann auf Servern mit Anti-Cheat auffallen - nur dort einsetzen, wo awesome_wotlk erlaubt ist.'
+        DllHint       = 'HINWEIS: Der Patch selbst ist unkritisch. Erst die geladene DLL kann auf Servern mit Anti-Cheat auffallen - nur dort einsetzen, wo {0} erlaubt ist.'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
@@ -253,7 +253,7 @@ $TEXT = @{
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
         CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
-        DllHint       = 'NOTE: The patch itself is harmless. Only the loaded DLL may be noticed by servers with anti-cheat - use it only where awesome_wotlk is allowed.'
+        DllHint       = 'NOTE: The patch itself is harmless. Only the loaded DLL may be noticed by servers with anti-cheat - use it only where {0} is allowed.'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
@@ -1800,8 +1800,8 @@ function Test-JumpValue([string]$v) {
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
 #    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
 #            oder Botting werten koennen (erzeugt einen roten Bann-Hinweis)
-#    DllHint - optional: $true fuer den DLL-Loader - dezenter gelber Hinweis,
-#            dass erst die geladene DLL auffallen kann
+#    DllHint - optional: Name des DLL-Projekts fuer den DLL-Loader - dezenter
+#            gelber Hinweis, dass erst die geladene DLL auffallen kann
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -1885,6 +1885,67 @@ $patches = @(
         # Pruefung, ob QPC ueber alle CPU-Kerne vorwaerts laeuft (Fehler 4),
         # und die CVar timingMethod bleiben erhalten.
         Patch 0x46A08E @(0xE9, 0x83, 0x00, 0x00, 0x00, 0x90)
+    }}
+
+    @{ Id = 'year2031'; Cat = 'system'; On = $false
+       Author = 'St0ny (original by Alyst3r)'
+       De = 'Jahr-2031-Fix (Datum und Kalender bis Ende 2031)'
+       En = 'Year 2031 fix (date and calendar until the end of 2031)'
+       Code = {
+        # WoW packt Datumswerte in 32 Bit, das Jahr in 5 Bit (2000 + 0..31).
+        # Der Wert 31 heisst im Original "nicht gesetzt". Ab dem 1.1.2031
+        # schickt der Server aber genau 31: Der Client haelt das Datum fuer
+        # ungesetzt, Kalender und Datumsanzeigen laufen falsch (laut
+        # WotLK-Extensions bis hin zu Abstuerzen). Idee aus WotLK-Extensions
+        # (Alyst3r, dort Teil der DLL) - hier direkt in der Exe, ohne neuen
+        # Platz und mit zwei Korrekturen (siehe 2 und 3).
+        # 1) Entpacker (VA 0x76C970): Jahr 31 bleibt 2031 (jne -> jmp).
+        Patch 0x36BE1B @(0xEB)
+        # 2) Feiertage: In Holidays.dbc (und den Feiertagsdaten vom Server)
+        #    heisst Jahr 31 weiter "jedes Jahr", ein Wochentag ohne Datum
+        #    "jede Woche". Die Feiertags-Auswertung (VA 0x5BFAB0) setzt Jahr 31
+        #    nach dem Entpacken deshalb wieder auf "nicht gesetzt". Platz dafuer
+        #    schafft ein kuerzerer Schleifen-Prolog (imul statt shl/sub/add),
+        #    "add esp,8" nach dem Entpacken springt in den Stub (pop ecx x2,
+        #    cmp [ebx+14h],1Fh / jne / or [ebx+14h],-1). In WotLK-Extensions
+        #    fehlt das - dort fallen jaehrliche und woechentliche Feiertage aus
+        #    dem Kalender.
+        Patch 0x1BEF0F @(
+            0x75, 0x03, 0x6A, 0x18, 0x59, 0x6B, 0xC1, 0x3C, 0x89, 0x45, 0xEC, 0x33, 0xC0, 0x89, 0x45, 0xF0,
+            0xEB, 0x0F, 0x59, 0x59, 0x83, 0x7B, 0x14, 0x1F, 0x75, 0x25, 0x83, 0x4B, 0x14, 0xFF, 0xEB, 0x1F,
+            0x90
+        )
+        Patch 0x1BEF4B @(0xEB, 0xD4, 0x90)
+        # 3) Kalendergrenzen von Ende 2030 auf Ende 2031 (2032 passt nicht mehr
+        #    in die 5 Bit des Protokolls). CalendarGetMaxDate (VA 0x5B82BD):
+        #    1.1.2032 minus 1 Tag. Spaetestes Datum fuer neue Termine (VA
+        #    0x5B7A80): "Monatsende in 12 Monaten", aber hoechstens 31.12.2031 -
+        #    das Original klemmt nur das Jahr und liesse 2031 nur noch den
+        #    laufenden Monat zu, WotLK-Extensions laesst Termine bis 2032 zu.
+        Patch 0x1B76C0 @(0x20)
+        Patch 0x1B6E83 @(
+            0x56, 0x8B, 0x75, 0x08, 0xA1, 0xAC, 0x7F, 0xD3, 0x00, 0x6B, 0xC0, 0x0C, 0x03, 0x05, 0xA8, 0x7F,
+            0xD3, 0x00, 0x83, 0xC0, 0x0D, 0x3D, 0x80, 0x01, 0x00, 0x00, 0x7E, 0x05, 0xB8, 0x80, 0x01, 0x00,
+            0x00, 0x99, 0x6A, 0x0C, 0x59, 0xF7, 0xF9, 0x89, 0x46, 0x14, 0x89, 0x56, 0x10, 0x6A, 0x00, 0x6A,
+            0xFF, 0x8B, 0xCE, 0xC7, 0x46, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90,
+            0x90
+        )
+        #    Jahres-Klemmen beim Blaettern (VA 0x5B8EC0, 0x5B8F70, 0x5BFF30):
+        #    hoechstens 2031 statt 2030.
+        Patch 0x1B8333 @(0x1F)
+        Patch 0x1B8338 @(0x1F)
+        Patch 0x1B839B @(0x1F)
+        Patch 0x1B839F @(0x1F)
+        Patch 0x1BF346 @(0x1F)
+        Patch 0x1BF35B @(0x1F)
+        #    Schleifen ueber Monate und Feiertage (VA 0x5C01F9, 0x5C04BF,
+        #    0x5C2680, 0x5C2890): laufen bis Ende 2031 statt Ende 2030.
+        #    (0x5C2680 ist die Schleife der woechentlichen Feiertage - auch die
+        #    fehlt in WotLK-Extensions.)
+        Patch 0x1BF5FB @(0x20)
+        Patch 0x1BF8C1 @(0x20)
+        Patch 0x1C1A83 @(0x20)
+        Patch 0x1C1C93 @(0x20)
     }}
 
     # --- Sicherheit & Datenschutz ---
@@ -2130,7 +2191,7 @@ $patches = @(
 
     # --- DLL-Loader ---
 
-    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa'); DllHint = $true
+    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa'); DllHint = 'awesome_wotlk'
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
@@ -2163,6 +2224,35 @@ $patches = @(
         # beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
         # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
         Add-VoiceLoader 'voice.dll'
+    }}
+
+    @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa'); DllHint = 'WotLK-Extensions'
+       Author = 'St0ny (original by Alyst3r)'
+       De = 'WotLKExtensions.dll Unterstuetzung aktivieren'
+       En = 'Enable WotLKExtensions.dll support'
+       NoteDe = 'benoetigt WotLK-Extensions'
+       NoteEn = 'requires WotLK-Extensions'
+       Url = 'https://github.com/Alyst3r/WotLK-Extensions'
+       Code = {
+        # Laedt beim Start die WotLKExtensions.dll aus dem WoW-Ordner. Der
+        # Original-Patcher von WotLK-Extensions haengt seinen Lader wie der
+        # awesome-Lader an den Start der Haupt-Fiber (VA 0x40B7D0) - beide
+        # zusammen gingen nicht. Dieser Lader sitzt stattdessen am Anfang der
+        # Funktion, die die Haupt-Fiber dort aufruft (VA 0x406D70, einziger
+        # Aufrufer): jmp -> Lader bei VA 0x4E5D00 im toten Teil der
+        # Scan.dll-Startfunktion (hinter dem awesome-Lader) -> Scan.dll-Flag
+        # "Pruefung bestanden" setzen (sonst blockiert DefaultServerLogin),
+        # LoadLibraryA("WotLKExtensions.dll"), ersten Befehl (push 5EEB70h)
+        # nachholen, zurueck. Lua ScanDLLStart (VA 0x4DCCF0) wird wie beim
+        # awesome-Lader zu "return 0" (gleiche Bytes). Mit dem awesome-Lader
+        # zusammen werden beide DLLs geladen. Fehlt die DLL, startet WoW normal.
+        Patch 0x6170 @(0xE9, 0x8B, 0xEF, 0x0D, 0x00)
+        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
+        Patch 0xE5100 @(
+            0xC6, 0x05, 0x74, 0xB4, 0xB6, 0x00, 0x01, 0x68, 0x1C, 0x5D, 0x4E, 0x00, 0xFF, 0x15, 0x48, 0xF2,
+            0x9D, 0x00, 0x68, 0x70, 0xEB, 0x5E, 0x00, 0xE9, 0x59, 0x10, 0xF2, 0xFF, 0x57, 0x6F, 0x74, 0x4C,
+            0x4B, 0x45, 0x78, 0x74, 0x65, 0x6E, 0x73, 0x69, 0x6F, 0x6E, 0x73, 0x2E, 0x64, 0x6C, 0x6C, 0x00
+        )
     }}
 
     # --- Gameplay-Fixes ---
@@ -2951,8 +3041,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 65'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 65'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 67'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 67'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -2961,8 +3051,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 64'
-       NoteEn = 'only works together with No. 64'
+       NoteDe = 'wirkt nur zusammen mit Nr. 66'
+       NoteEn = 'only works together with No. 66'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -3186,6 +3276,21 @@ worldcrash;210;B3D35D00;0
 worldcrash;41C91B;0F834D010000;1
 worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
 timer;46A08E;0F8582000000;1
+year2031;1B6E83;8B0DA87FD30083C10DB8ABAAAA2AF7E9D1FA8BC2C1E81F03C28D144003D2568B750803D22BCA894E108B0DAC7FD30003C86A00894E146AFF8BCEC7460C00000000;1
+year2031;1B76C0;1F;1
+year2031;1B8333;1E;1
+year2031;1B8338;1E;1
+year2031;1B839B;1E;1
+year2031;1B839F;1E;1
+year2031;1BEF0F;7505B9180000008BC1C1E0042BC103C003C08945EC33C08945F08DA42400000000;1
+year2031;1BEF4B;83C408;1
+year2031;1BF346;1E;1
+year2031;1BF35B;1E;1
+year2031;1BF5FB;1F;1
+year2031;1BF8C1;1F;1
+year2031;1C1A83;1F;1
+year2031;1C1C93;1F;1
+year2031;36BE1B;75;1
 rce;2A7;E0;1
 rce;3D9D7C;750A;1
 wardenoff;3D9C5B;7406;1
@@ -3225,10 +3330,13 @@ luaunlockfull;40259C;74;1
 keyprop;8EFD9;01;1
 globalsv;1F8488;8B4508680005000050;1
 awesome;ABD0;558BECE898B5FFFF;1
-awesome;DC0F0;558BEC568B75;1
+awesome;DC0F0;558BEC568B75;0
 awesome;E50B0;558BEC5633F639356CB4B6000F85DB010000393568B4B6000F85CF01000033C0B968B4B6008701566A5468F8659F006A18E85A8828006860659F00A380B4B600E81BBEF7;1
 voicedll;406;91AA0000;1
 voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
+wotlkext;6170;6870EB5E00;1
+wotlkext;DC0F0;558BEC568B75;0
+wotlkext;E5100;B6006A18526860659F00E881561D0083C40C84C074206854659F00E8C0BFF7FF6854659F006860659F00E841BFF7FF83;1
 areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
 npcanim;33D785;75308B96380A0000F7C2000800007522F6C1207516F7C200100000750E83F80B740583F80C752A33C9EB0CB90C000000EB05B90B0000003BC174168BCEE8C9FAFDFF85C0740B6AFF6A008BCEE85AC8FFFF;1
@@ -4174,7 +4282,7 @@ foreach ($p in $chosen) {
     if ($p.DllHint) {
         Write-Host ''
         Say (T 'HintHead' (PatchRef $p)) 'Yellow'
-        Say (T 'DllHint') 'Yellow'
+        Say (T 'DllHint' $p.DllHint) 'Yellow'
     }
 }
 $cheat = @()
