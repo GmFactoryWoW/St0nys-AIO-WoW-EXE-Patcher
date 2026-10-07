@@ -4048,21 +4048,19 @@ $PRESET_REFORGED = @(
     'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
 
-# Preset "St0nys_Wow.exe" - Billys Patch-Set plus
-# Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
-# Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
+# Preset "St0nys_Wow.exe" - St0nys eigene Auswahl fuer eigene Server (enthaelt
+# auch unsichere Patches wie Warden aus und die Sprungsteuerung). Im Menue
 # mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
 $PRESET_STONY = @(
-    'laa', 'itemcache', 'worldcrash', 'timer', 'rce',
-    'scandll', 'noserverpatch', 'nosurvey',
-    'skipbnet', 'skiprdp', 'nohttp', 'afk',
-    'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
-    'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
-    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars', 'customitem',
-    'airforward', 'airlateral', 'airturn', 'doublejump',
-    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
-    'bluemoon', 'notransparency', 'hdportraits',
-    'tracker', 'worldmap', 'castbars', 'emblems', 'flash',
+    'laa', 'itemcache', 'worldcrash', 'timer', 'nothrottle', 'mirrorfix',
+    'wmocube', 'glyphfix', 'wardenoff', 'scandll', 'noserverpatch', 'nosurvey',
+    'skipbnet', 'skiprdp', 'nohttp', 'afk', 'glue', 'mpqsig',
+    'mpqnames', 'localdata', 'awesome', 'areatrigger', 'swing', 'npcanim',
+    'spellanim', 'ghostattack', 'naked', 'forcereaction', 'mail', 'deadchat',
+    'follow', 'level101', 'airforward', 'airlateral', 'airturn', 'doublejump',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
+    'cat0', 'occluder', 'bluemoon', 'notransparency', 'iconsnap', 'tracker',
+    'worldmap', 'castbars', 'emblems', 'flash', 'holdrepeat', 'bubblerange',
     'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
 
