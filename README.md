@@ -1,454 +1,443 @@
 # St0nys-AIO-WoW-EXE-Patcher
 
-🇩🇪 Deutsch | [🇬🇧 English](README.en.md)
+[🇩🇪 Deutsch](README.de.md) | 🇬🇧 English
 
-Ein All-in-One-Patcher (AIO) für die `Wow.exe` von **World of Warcraft 3.3.5a
-(Build 12340)**.
-Er spielt Bugfixes, Performance-Optimierungen, erweiterte Sichtweiten,
-verbesserte Sound-Einstellungen und einige Komfort-Funktionen direkt in die
-EXE ein – in einem Durchgang, ohne zusätzliche Tools oder DLL-Injector.
+An all-in-one (AIO) patcher for the `Wow.exe` of **World of Warcraft 3.3.5a
+(build 12340)**. It applies bug fixes, performance optimizations, extended view
+distances, improved sound settings and a few quality-of-life features directly
+to the executable – in a single pass, without extra tools or DLL injectors.
 
-Beim Start wählst du die **Sprache** (Deutsch / English) und danach in einem
-Menü, **welche Patches** eingespielt werden sollen. Eingespielte Patches lassen
-sich später jederzeit wieder **abwählen oder ergänzen** – bis zurück zur
-originalen `Wow.exe`.
+On start you choose the **language** (Deutsch / English) and then pick
+**which patches** to apply from a menu. Applied patches can be **deselected or
+extended** at any time later – all the way back to the original `Wow.exe`.
 
 > [!IMPORTANT]
-> Dieses Repository enthält **keine** `Wow.exe` und keine anderen Dateien von
-> Blizzard. Du brauchst deine eigene, unveränderte `Wow.exe` 3.3.5a (12340).
+> This repository does **not** contain a `Wow.exe` or any other Blizzard files.
+> You need your own unmodified `Wow.exe` 3.3.5a (12340).
 
 > [!WARNING]
-> **Benutzung auf eigene Gefahr.** Die meisten Patches sind im Spiel getestet.
-> Solange du keinen Patch wählst, der als **Bann-Gefahr** markiert ist oder die
-> `Wow.exe` vergrößert, sollte auch auf öffentlichen Servern nichts passieren –
-> eine 100-%-Garantie gibt es aber nicht: Was ein Server erkennt und duldet,
-> entscheidet er selbst und ändert es auch mal. Im Zweifel prüfe die
-> Richtlinien deines Servers, bevor du eine gepatchte `Wow.exe` dort benutzt.
-> Der Patcher zeigt diesen Hinweis auch bei jedem Start an.
+> **Use at your own risk.** Most patches have been tested in game. As long as
+> you don't select a patch that is marked as a **ban risk** or makes `Wow.exe`
+> larger, nothing should happen on public servers either – but there is no
+> 100 % guarantee: what a server detects and tolerates is up to the server and
+> changes from time to time. If in doubt, check the rules of your server before
+> using a patched `Wow.exe` there. The patcher also shows this note on every
+> start.
 
 ---
 
-## Inhalt
+## Contents
 
-- [Voraussetzungen](#voraussetzungen)
-- [Benutzung](#benutzung)
-- [Ablauf](#ablauf)
-- [Patch-Auswahl](#patch-auswahl)
-- [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen)
-- [Parameter für den unbeaufsichtigten Betrieb](#parameter-für-den-unbeaufsichtigten-betrieb)
-- [Dateien](#dateien)
-- [Patch-Übersicht](#patch-übersicht)
-- [Patch-Beschreibungen](#patch-beschreibungen)
-- [Hinweise](#hinweise)
-- [Danksagung](#danksagung)
-- [Lizenz](#lizenz)
+- [Requirements](#requirements)
+- [Usage](#usage)
+- [Workflow](#workflow)
+- [Patch selection](#patch-selection)
+- [Changing or removing patches](#changing-or-removing-patches)
+- [Parameters for unattended use](#parameters-for-unattended-use)
+- [Files](#files)
+- [Patch overview](#patch-overview)
+- [Patch descriptions](#patch-descriptions)
+- [Notes](#notes)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
 ---
 
-## Voraussetzungen
+## Requirements
 
-- Windows mit PowerShell (Windows PowerShell 5.1 ist ab Windows 10 vorinstalliert)
-- Eine **originale, unmodifizierte** `Wow.exe` 3.3.5a, Build 12340 mit
+- Windows with PowerShell (Windows PowerShell 5.1 ships with Windows 10 and later)
+- An **original, unmodified** `Wow.exe` 3.3.5a, build 12340 with
   SHA256 `AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8`
-  (nur beim ersten Start; danach genügt eine mit diesem Patcher gepatchte
-  `Wow.exe`)
+  (only on the first start; after that a `Wow.exe` patched with this patcher is
+  enough)
 
-## Benutzung
+## Usage
 
-1. `patcher.bat` und `apply_patches.ps1` in den WoW-Ordner kopieren
-   (dorthin, wo die `Wow.exe` liegt).
-2. WoW beenden, falls es noch läuft.
-3. `patcher.bat` per Doppelklick starten.
-4. Sprache wählen (nur beim ersten Start), Patches auswählen, bestätigen – fertig.
+1. Copy `patcher.bat` and `apply_patches.ps1` into your WoW folder
+   (next to `Wow.exe`).
+2. Close WoW if it is still running.
+3. Double-click `patcher.bat`.
+4. Choose the language (first start only), select patches, confirm – done.
 
-Patches **ändern oder zurücknehmen:** `patcher.bat` einfach erneut starten,
-siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
-
-> [!NOTE]
-> Windows warnt beim Start der gepatchten `Wow.exe` wahrscheinlich vor einer
-> nicht signierten, möglicherweise schädlichen App. Das ist bei jeder
-> veränderten `Wow.exe` so: Jede Änderung macht Blizzards digitale Signatur
-> ungültig, und eine neue, von Windows anerkannte Signatur lässt sich für eine
-> veränderte Blizzard-Datei nicht erstellen. Starten lässt sie sich trotzdem,
-> z. B. über „Weitere Informationen“ → „Trotzdem ausführen“. Mehr dazu unter
-> [Hinweise](#hinweise).
-
-## Ablauf
-
-1. ASCII-Banner wird angezeigt.
-2. **Sprachauswahl:** `1` = Deutsch, `2` = English. Nur beim ersten Start – danach
-   ist die Sprache gemerkt und lässt sich im Menü mit `L` umschalten.
-3. Begrüßung, ENTER zum Starten.
-4. Prüfung, ob eine `Wow.exe` im Ordner vorhanden ist.
-5. Prüfung der `Wow.exe`: Beim ersten Start muss sie original und unmodifiziert
-   sein (SHA256). Danach erkennt der Patcher eine von ihm gepatchte `Wow.exe` am
-   Wasserzeichen und ermittelt, welche Patches darin stecken. Alles andere führt
-   zum Abbruch.
-6. **Patch-Auswahl** im Menü (siehe unten). Vorausgewählt ist die Auswahl vom
-   letzten Mal bzw. bei einer gepatchten `Wow.exe` die Patches, die gerade
-   darin stecken.
-7. Bei Patches mit eigenem Wert (Sprunghöhe, Doppelsprung, Client-Infos) fragt
-   der Patcher die Werte ab; danach speichert er die Auswahl.
-8. Zusammenfassung der gewählten Patches (bei einer gepatchten `Wow.exe`: was
-   neu dazukommt, was zurückgenommen wird), Hinweise (fehlende oder
-   überflüssige Ergänzungs-Patches, Bann-Gefahr) und Sicherheitsabfrage (J/N).
-9. Backup: Beim ersten Patchen wird das Original als `Wow.exe.ORI` gesichert,
-   bei jedem weiteren Lauf die bisherige `Wow.exe` als `Wow.exe.BAK`.
-10. Alle gewählten Patches werden im Speicher eingespielt (mit
-    Fortschrittsanzeige) und die `Wow.exe` danach **einmal** zurückgeschrieben.
-    Tritt dabei ein Fehler auf, bleibt die `Wow.exe` unverändert.
-11. Der Patcher merkt sich den Hash der neuen `Wow.exe` samt Original-Bytes in
-    `patcher_state.ini` (für einen schnelleren nächsten Start) und zeigt eine
-    Abschlussmeldung.
-
-## Patch-Auswahl
-
-Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
-`[ ]` = wird übersprungen. Das Menü ist in dieselben Kategorien gegliedert wie
-die [Patch-Übersicht](#patch-übersicht). Beim ersten Start ist das
-**Preset „Project Reforged“** vorausgewählt (Spalte „Reforged“ in der
-Übersicht), danach die gespeicherte Auswahl bzw. die Patches, die gerade in der
-`Wow.exe` stecken. Mit `B` lädst du das Preset **„Billy's_Wow.exe“** (Spalte
-„Billy“), mit `S` das Preset **„St0nys_Wow.exe“** (Spalte „St0ny“). Patches,
-die zusätzlich etwas benötigen, zeigen das in Klammern hinter dem Namen; der
-Link dazu steht direkt darunter.
-
-| Eingabe            | Wirkung                                     |
-|--------------------|---------------------------------------------|
-| `5`                | Patch 5 an-/abwählen                        |
-| `3 7 12` / `3,7,12`| mehrere Patches an-/abwählen                |
-| `10-15`            | einen Bereich an-/abwählen                  |
-| `A`                | alle Patches an                             |
-| `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
-| `L`                | Sprache umschalten (Deutsch ↔ English)      |
-| `R`                | Preset „Project Reforged“ laden (= Standard) (**Sicher** – offizielles Preset von [Project Reforged](https://projectreforged.github.io/wotlk/)) |
-| `B`                | Preset „Billy's_Wow.exe“ laden (**Sicher** – basiert auf Billys erprobter Exe) |
-| `S`                | Preset „St0nys_Wow.exe“ laden (**Nicht sicher**, nur auf eigenen Servern verwenden) |
-| `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
-| `ENTER`            | Auswahl übernehmen und weiter               |
-
-Vor der Sicherheitsabfrage zeigt der Patcher **Hinweise** an, gesperrt wird
-nichts: wenn ein Ergänzungs-Patch fehlt (z. B. brauchen die erweiterten
-Slider-Maxima die CVar-Unlocks), wenn ein Patch einen anderen überflüssig macht
-(Warden komplett abschalten ersetzt den RCE-Fix) und – als rote Zeile – wenn
-gewählte Patches zu einem Bann führen können (Anti-Cheat, Eingriff in Warden
-oder veränderte Dateigröße, siehe [Hinweise](#hinweise)).
-
-### Auswahl wird gespeichert
-
-Sobald du die Auswahl mit ENTER übernimmst, speichert der Patcher sie in der
-Datei `patcher_selection.ini` neben dem Skript. Beim nächsten Start ist genau
-diese Auswahl wieder vorausgewählt – auch wenn du vorher bei der
-Sicherheitsabfrage abgebrochen hast.
-
-- Gespeichert wird pro Patch (über eine interne Kennung), nicht pro Nummer.
-  Kommen in einer neueren Version Patches hinzu, bleibt deine Auswahl korrekt,
-  und die neuen Patches starten mit ihrer Standard-Einstellung.
-- Die Datei ist eine einfache Textdatei (`laa=1`, `cache=0`, …) und kann auch
-  von Hand bearbeitet werden. Dort stehen auch die eingegebenen Werte der
-  Patches mit eigenem Wert – Client-Infos, Sprunghöhe, Doppelsprung
-  (`value.clientversion=3.3.6` usw.).
-- Auch die Sprache wird dort gemerkt (`language=de` bzw. `en`).
-- **Zurücksetzen:** im Menü `R` drücken oder `patcher_selection.ini` löschen –
-  dann gilt wieder das Preset „Project Reforged“ (beim Löschen der Datei werden
-  auch Sprache und gemerkte Werte wieder abgefragt).
-
-Das Preset „Project Reforged“ (Taste `R`) ist das offizielle Preset des
-Projekts [Project Reforged](https://projectreforged.github.io/wotlk/),
-zusammengestellt von Stormhand, und die Standard-Auswahl. Es enthält nur
-Patches ohne Bann-Gefahr, die die `Wow.exe` nicht vergrößern – **das Preset ist
-sicher** und kann auch auf öffentlichen Servern verwendet werden. Welche Patches
-dazugehören, zeigt die Spalte „Reforged“ in der
-[Patch-Übersicht](#patch-übersicht); im Skript steht die Liste unter
-`$PRESET_REFORGED`.
-
-Das Preset „Billy's_Wow.exe“ (Taste `B`) ist das Patch-Set von Billy Hoyle.
-Es ist in `apply_patches.ps1` festgelegt: Jeder Patch hat dort
-einen Eintrag `On = $true` (im Preset) bzw. `On = $false` (nicht im Preset).
-
-Es basiert auf Billys `Wow.exe`, die lange auf öffentlichen Servern im Einsatz
-war. Einige Patches daraus wurden inzwischen korrigiert, weil sie Abstürze des
-Clients oder fehlerhafte Animationen verursachen konnten. In der Übersicht
-erkennst du sie am Zusatz „fixed by St0ny“ beim Autor. Die korrigierten Patches
-sind im Spiel getestet und funktionieren – **das Preset ist sicher**.
-
-Solltest du trotzdem auf Probleme stoßen, melde dich bitte über ein
-[Issue](https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher/issues).
-
-Das zweite Preset „St0nys_Wow.exe“ (Taste `S`) ist St0nys eigene Auswahl für
-eigene Server. Es enthält auch Patches mit Bann-Gefahr und solche, die die
-`Wow.exe` vergrößern – **nur auf eigenen Servern verwenden**. Welche Patches
-dazugehören, zeigt die Spalte „St0ny“ in der
-[Patch-Übersicht](#patch-übersicht); im Skript steht die Liste unter
-`$PRESET_STONY`. **Achtung: Dieses Preset sollte unter keinen Umständen
-auf öffentlichen Servern verwendet werden – das führt wahrscheinlich zu einem
-Bann!** Der Patcher zeigt das beim Laden mit `S` als gelben Hinweis an.
-
-## Patches ändern oder zurücknehmen
-
-Eingespielte Patches sind nicht endgültig. Starte `patcher.bat` einfach erneut:
-Im Menü sind dann genau die Patches angehakt, die gerade in der `Wow.exe`
-stecken. Neu angehakte Patches sind mit **(neu)** markiert, abgewählte mit
-**(wird zurückgenommen)**. So kannst du beliebig Patches dazunehmen, abwählen
-oder Werte ändern (Sprunghöhe, Doppelsprung, Client-Infos). Mit `N` und ENTER
-nimmst du alle Patches zurück – danach ist die `Wow.exe` wieder **byte-genau
-das Original**.
-
-So funktioniert es:
-
-- **Erster Start:** Die `Wow.exe` muss original sein (SHA256-Prüfung), sonst
-  bricht der Patcher ab. Beim Patchen wird das Original als `Wow.exe.ORI`
-  gesichert, und jede gepatchte `Wow.exe` bekommt ein [Wasserzeichen](#hinweise).
-- **Jeder weitere Start:** Ob die `Wow.exe` mit diesem Patcher gepatcht wurde,
-  erkennt er am Wasserzeichen. Fehlt es (und ist die Datei nicht original),
-  bricht er ab – etwa bei einer Exe, die mit einem anderen Tool gepatcht wurde.
-- **Patchstand ermitteln:** Passt der Hash aus `patcher_state.ini` (dort merkt
-  sich der Patcher nach jedem Lauf Hash, Patches, Werte und Original-Bytes),
-  geht es über diese Datei – das ist der schnelle Weg. Sonst, z. B. wenn die
-  Datei fehlt oder die `Wow.exe` von einem anderen Rechner stammt, prüft der
-  Patcher alle Patch-Stellen in der Exe selbst: Welche Patches sind drin, und
-  mit welchen Werten (Sprunghöhe, Build-Datum usw.)? Dafür enthält das Skript
-  eine kleine Tabelle mit den Original-Bytes an allen Patch-Stellen. Gibt es
-  danach nichts zu tun, legt der Patcher die `patcher_state.ini` trotzdem neu
-  an, damit der nächste Start wieder den schnellen Weg nimmt.
-- **Original wiederherstellen:** Aus der gepatchten Exe baut der Patcher im
-  Speicher das Original wieder auf, prüft es per SHA256 und spielt darauf die
-  neue Auswahl ein. Klappt das nicht exakt – etwa weil die Exe nach dem
-  Patchen noch anderweitig verändert wurde –, bricht er ab.
-- Vor dem Schreiben prüft der Patcher außerdem, dass sich das neue Ergebnis
-  wieder sauber zum Original zurücknehmen lässt.
-- `Wow.exe.ORI` bleibt bei weiteren Läufen unangetastet und ist immer das
-  Original. Fehlt es, legt der Patcher es aus dem rekonstruierten Original neu
-  an. Zusätzlich sichert er bei jedem weiteren Lauf die bisherige `Wow.exe` als
-  `Wow.exe.BAK` – ein Schritt zurück ist also immer möglich.
+To **change or remove** patches just run `patcher.bat` again, see
+[Changing or removing patches](#changing-or-removing-patches).
 
 > [!NOTE]
-> Ein Patch mit einem Wert, der genau dem Original entspricht (z. B. die
-> Sprunghöhe `-7.9555473`), ändert keine Bytes und wird bei der Prüfung der Exe
-> deshalb nicht als eingespielt erkannt – er ist dann ja auch wirkungslos.
+> Windows will probably warn about an unsigned, potentially harmful app when
+> you start the patched `Wow.exe`. This happens with every modified `Wow.exe`:
+> any change invalidates Blizzard's digital signature, and a new signature that
+> Windows accepts cannot be created for a modified Blizzard file. It still
+> starts, e.g. via "More info" → "Run anyway". More on this under
+> [Notes](#notes).
 
-## Parameter für den unbeaufsichtigten Betrieb
+## Workflow
 
-Alle Parameter sind optional und werden von `patcher.bat` an
-`apply_patches.ps1` durchgereicht.
+1. The ASCII banner is shown.
+2. **Language selection:** `1` = Deutsch, `2` = English. First start only – after
+   that the language is remembered and can be switched with `L` in the menu.
+3. Welcome message, press ENTER to start.
+4. Check that a `Wow.exe` exists in the folder.
+5. Checking `Wow.exe`: on the first start it must be original and unmodified
+   (SHA256). After that the patcher recognizes a `Wow.exe` it patched itself
+   by the watermark and determines which patches are in it. Anything else
+   aborts.
+6. **Patch selection** menu (see below). Your selection from last time is
+   preselected, or for a patched `Wow.exe` the patches currently in it.
+7. For patches with their own value (jump height, double jump, client info) the
+   patcher asks for the values; then it saves the selection.
+8. Summary of the selected patches (for a patched `Wow.exe`: what is added and
+   what is removed), notes (missing or redundant companion patches, ban risk)
+   and a confirmation prompt (Y/N).
+9. Backup: on the first patch run the original is saved as `Wow.exe.ORI`, on
+   every later run the previous `Wow.exe` is saved as `Wow.exe.BAK`.
+10. All selected patches are applied in memory (with progress output) and
+    `Wow.exe` is written back **once**. If anything fails, `Wow.exe` stays
+    untouched.
+11. The patcher remembers the hash of the new `Wow.exe` together with the
+    original bytes in `patcher_state.ini` (for a faster next start) and shows a
+    final message.
 
-| Parameter              | Bedeutung                                                                   |
-|------------------------|-----------------------------------------------------------------------------|
-| `-Language de\|en`     | Sprache für diesen Lauf festlegen. Zusammen mit `-Select` bleibt die gemerkte Sprache unverändert; wird die Auswahl im Menü mit ENTER übernommen, wird sie mitgespeichert. |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `reforged` (Preset „Project Reforged“, auch `default`), `billy` (Preset „Billy's_Wow.exe“), `stony` (Preset „St0nys_Wow.exe“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
-| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Project Reforged“. |
-| `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
+## Patch selection
 
-Beispiel:
+The menu lists every patch with a number. `[X]` = will be applied,
+`[ ]` = will be skipped. The menu is grouped into the same categories as the
+[patch overview](#patch-overview). On the first start the
+**preset "Project Reforged"** is preselected (see the "Reforged" column in the
+overview), after that the saved selection or the patches currently in
+`Wow.exe`. `B` loads the preset **"Billy's_Wow.exe"** (column "Billy"), `S` the
+preset **"St0nys_Wow.exe"** (column "St0ny").
+Patches that need something additional say so in parentheses
+after their name, with the link right below.
+
+| Input              | Effect                                     |
+|--------------------|--------------------------------------------|
+| `5`                | toggle patch 5                             |
+| `3 7 12` / `3,7,12` | toggle several patches                    |
+| `10-15`            | toggle a range                             |
+| `A`                | all patches on                             |
+| `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
+| `L`                | switch language (Deutsch ↔ English)        |
+| `R`                | load preset "Project Reforged" (= default) (**Safe** – official preset of [Project Reforged](https://projectreforged.github.io/wotlk/)) |
+| `B`                | load preset "Billy's_Wow.exe" (**Safe** – based on Billy's proven exe) |
+| `S`                | load preset "St0nys_Wow.exe" (**Not safe**, use only on your own servers) |
+| `Q`                | quit, `Wow.exe` stays unmodified           |
+| `ENTER`            | accept the selection and continue          |
+
+Before the confirmation prompt the patcher shows **notes** – nothing is blocked:
+when a companion patch is missing (e.g. the extended slider maximums need the
+CVar unlocks), when one patch makes another unnecessary (disabling Warden
+completely replaces the RCE fix) and – as a red line – when selected patches
+can lead to a ban (anti-cheat, interfering with Warden or changed file size,
+see [Notes](#notes)).
+
+### The selection is remembered
+
+As soon as you accept the selection with ENTER, the patcher saves it to
+`patcher_selection.ini` next to the script. On the next start exactly this
+selection is preselected again – even if you cancelled at the confirmation
+prompt.
+
+- The selection is stored per patch (by an internal ID), not by number. If a
+  newer version adds patches, your selection stays correct and the new patches
+  start with their default setting.
+- The file is plain text (`laa=1`, `cache=0`, …) and can also be edited by
+  hand. It also holds the entered values of the value patches – client info,
+  jump height, double jump (`value.clientversion=3.3.6` etc.).
+- The language is remembered there as well (`language=de` or `en`).
+- **Reset:** press `R` in the menu or delete `patcher_selection.ini` – then
+  the preset "Project Reforged" applies again (deleting the file also forgets the
+  language and the remembered values, they are asked for again).
+
+The preset "Project Reforged" (key `R`) is the official preset of the
+[Project Reforged](https://projectreforged.github.io/wotlk/) project, put
+together by Stormhand, and the default selection. It contains only patches
+without ban risk that do not make `Wow.exe` larger – **the preset is safe** and
+can be used on public servers as well. The "Reforged" column in the
+[patch overview](#patch-overview) shows which patches belong to it; in the
+script the list is `$PRESET_REFORGED`.
+
+The preset "Billy's_Wow.exe" (key `B`) is Billy Hoyle's patch set. It is
+defined in `apply_patches.ps1`: every patch has an entry
+`On = $true` (in the preset) or `On = $false` (not in the preset).
+
+It is based on Billy's `Wow.exe`, which was in use on public servers for a long
+time. Some of its patches have since been fixed because they could crash the
+client or break animations. In the overview you can recognize them by the
+addition "fixed by St0ny" to the author. The fixed patches have been tested in
+game and work – **the preset is safe**.
+
+If you still run into problems, please let me know via an
+[issue](https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher/issues).
+
+The second preset "St0nys_Wow.exe" (key `S`) is St0ny's own selection for
+private servers. It also contains patches with a ban risk and patches that make
+`Wow.exe` larger – **use it only on your own servers**. The "St0ny" column in
+the [patch overview](#patch-overview) shows which patches belong to it; in the
+script the list is `$PRESET_STONY`. **Warning: this preset should never be used on
+public servers under any circumstances – it will most likely get you banned!**
+The patcher shows this as a yellow note when you load it with `S`.
+
+## Changing or removing patches
+
+Applied patches are not final. Just run `patcher.bat` again: the menu then has
+exactly the patches checked that are currently in `Wow.exe`. Newly checked
+patches are marked **(new)**, deselected ones **(will be removed)**. This way
+you can add patches, deselect them or change values (jump height, double
+jump, client info) as you like. `N` plus ENTER removes every patch – afterwards
+`Wow.exe` is **byte-for-byte the original** again.
+
+How it works:
+
+- **First start:** `Wow.exe` must be original (SHA256 check), otherwise the
+  patcher aborts. Patching saves the original as `Wow.exe.ORI`, and every
+  patched `Wow.exe` gets a [watermark](#notes).
+- **Every later start:** the patcher recognizes a `Wow.exe` it patched itself
+  by the watermark. If it is missing (and the file is not original), it aborts
+  – e.g. for an exe patched with another tool.
+- **Determining the patch state:** if the hash in `patcher_state.ini` matches
+  (the patcher stores hash, patches, values and original bytes there after
+  every run), it uses that file – the fast way. Otherwise, e.g. if the file is
+  missing or the `Wow.exe` comes from another computer, the patcher checks all
+  patch locations in the exe itself: which patches are in it, and with which
+  values (jump height, build date etc.)? For this the script contains a small
+  table with the original bytes at all patch locations. If there is nothing to
+  do afterwards, the patcher still recreates `patcher_state.ini` so that the
+  next start takes the fast way again.
+- **Restoring the original:** from the patched exe the patcher rebuilds the
+  original in memory, verifies it by SHA256 and applies the new selection on
+  top. If that does not work exactly – e.g. because the exe was changed in
+  some other way after patching – it aborts.
+- Before writing, the patcher also checks that the new result can be reverted
+  cleanly to the original.
+- `Wow.exe.ORI` is not touched on later runs and is always the original. If
+  it is missing, the patcher recreates it from the reconstructed original. In
+  addition, every later run saves the previous `Wow.exe` as `Wow.exe.BAK`, so
+  one step back is always possible.
+
+> [!NOTE]
+> A patch with a value exactly matching the original (e.g. the jump height
+> `-7.9555473`) changes no bytes and is therefore not detected as applied when
+> the exe is checked – it has no effect then anyway.
+
+## Parameters for unattended use
+
+All parameters are optional and are passed through from `patcher.bat` to
+`apply_patches.ps1`.
+
+| Parameter              | Meaning                                                                    |
+|------------------------|----------------------------------------------------------------------------|
+| `-Language de\|en`     | set the language for this run. Together with `-Select` the remembered language stays unchanged; if you accept a selection in the menu with ENTER, it is saved along with it. |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `reforged` (preset "Project Reforged", also `default`), `billy` (preset "Billy's_Wow.exe"), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
+| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Project Reforged". |
+| `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
+
+Example:
 
 ```bat
-patcher.bat -Language de -Select saved -Unattended
+patcher.bat -Language en -Select saved -Unattended
 ```
 
-Exit-Codes: `0` = erfolgreich (oder nichts zu tun), `1` = Fehler, `2` =
-abgebrochen (vom Benutzer oder weil keine Eingabe mehr möglich ist).
+Exit codes: `0` = success (or nothing to do), `1` = error, `2` = cancelled (by
+the user or because no more input is possible).
 
-## Dateien
+## Files
 
-| Datei               | Zweck |
-|---------------------|-------|
-| `patcher.bat`       | Startdatei, ruft `apply_patches.ps1` auf |
-| `apply_patches.ps1` | Patch-Engine: Sprachwahl, Prüfungen, Auswahlmenü, Backup; liest die EXE einmal, patcht im Speicher, schreibt einmal zurück |
-| `README.md`         | Diese Datei |
-| `README.en.md`      | Englische Anleitung |
-| `PATCHES.md`        | Ausführliche Beschreibungen aller Patches |
-| `PATCHES.en.md`     | Patch-Beschreibungen auf Englisch |
-| `patcher_selection.ini` | Wird beim ersten Start angelegt (gemerkte Sprache) und speichert die übernommene Auswahl samt eingegebenen Werten |
-| `patcher_state.ini` | Wird beim Patchen angelegt: Hash der gepatchten `Wow.exe`, eingespielte Patches, Werte und Original-Bytes – beschleunigt den nächsten Start, ist aber nicht zwingend nötig |
-| `Wow.exe.ORI`       | Sicherung der originalen `Wow.exe`, angelegt beim ersten Patchen |
-| `Wow.exe.BAK`       | Sicherung der bisherigen `Wow.exe` vor dem letzten Lauf |
-| `LICENSE`           | MIT-Lizenz |
+| File                | Purpose |
+|---------------------|---------|
+| `patcher.bat`       | Launcher, calls `apply_patches.ps1` |
+| `apply_patches.ps1` | Patch engine: language selection, checks, selection menu, backup; reads the EXE once, patches in memory, writes it back once |
+| `README.md`         | This file |
+| `README.de.md`      | German documentation |
+| `PATCHES.md`        | Detailed patch descriptions in German |
+| `PATCHES.en.md`     | Detailed descriptions of all patches |
+| `patcher_selection.ini` | Created on the first start (remembered language), stores the accepted selection and the entered values |
+| `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches, values and original bytes – speeds up the next start, but is not strictly required |
+| `Wow.exe.ORI`       | Backup of the original `Wow.exe`, created on the first patch run |
+| `Wow.exe.BAK`       | Backup of the previous `Wow.exe` from before the last run |
+| `LICENSE`           | MIT license |
 
 ---
 
-## Patch-Übersicht
+## Patch overview
 
-Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
+Click the number of a patch to jump to its description.
 
 <details>
-<summary><b>Übersicht aller Patches mit Autor und Preset-Zuordnung anzeigen</b></summary>
+<summary><b>Show all patches with author and preset assignment</b></summary>
 
-| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+| No. | Patch | Author | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-|    | **System & Leistung** |  |  |  |  |
-| [1](PATCHES.md#patch-laa) | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
-| [2](PATCHES.md#patch-cache) | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – | – | – |
-| [3](PATCHES.md#patch-itemcache) | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ | ✅ |
-| [4](PATCHES.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
-| [5](PATCHES.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) | St0ny | – | – | ✅ |
-|    | **Sicherheit & Datenschutz** |  |  |  |  |
-| [6](PATCHES.md#patch-rce) | Remote Code Execution Exploit Fix *(auf öffentlichen Servern über Warden erkennbar – Bann-Gefahr)* | Robinsch | – | – | ✅ |
-| [7](PATCHES.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden, auf öffentlichen Servern Bann-Gefahr)* | Robinsch | – | – | – |
-| [8](PATCHES.md#patch-scandll) | Scan.dll deaktivieren | Alastor StrixEfuartus | – | – | ✅ |
-| [9](PATCHES.md#patch-noserverpatch) | Client-Patches vom Server verbieten | Kebabstorm | – | – | ✅ |
-| [10](PATCHES.md#patch-nosurvey) | Hardware-Umfragen vom Server verbieten | Kebabstorm | – | – | ✅ |
-|    | **Login & Verbindung** |  |  |  |  |
-| [11](PATCHES.md#patch-skipbnet) | Battle.net-Login überspringen | Kebabstorm | – | – | ✅ |
-| [12](PATCHES.md#patch-skiprdp) | Remote-Desktop-Prüfung überspringen | Kebabstorm | – | – | ✅ |
-| [13](PATCHES.md#patch-nohttp) | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – | – | ✅ |
-| [14](PATCHES.md#patch-afk) | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
-|    | **Modding: Interface, MPQs & Addons** |  |  |  |  |
-| [15](PATCHES.md#patch-glue) | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
-| [16](PATCHES.md#patch-mpqsig) | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | – | ✅ |
-| [17](PATCHES.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben |  | – | ✅ | ✅ |
-| [18](PATCHES.md#patch-localdata) | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | Alastor StrixEfuartus | – | ✅ | ✅ |
-| [19](PATCHES.md#patch-luaunlock) | LUA Unlock (Zauber, Bewegung, Makros) *(kann als Botting gewertet werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – | – |
-| [20](PATCHES.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben *(kann als Botting gewertet werden – Bann-Gefahr)* | St0ny | – | – | – |
-| [21](PATCHES.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
-| [22](PATCHES.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
-|    | **DLL-Loader** |  |  |  |  |
-| [23](PATCHES.md#patch-awesome) | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
-| [24](PATCHES.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
-|    | **Gameplay-Fixes** |  |  |  |  |
-| [25](PATCHES.md#patch-areatrigger) | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | – | ✅ | ✅ |
-| [26](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | – | ✅ | ✅ |
-| [27](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
-| [28](PATCHES.md#patch-spellanim) | Zauber-Animation nach Abbruch repariert | Robinsch | – | ✅ | ✅ |
-| [29](PATCHES.md#patch-ghostattack) | „Geister“-Angriff von NPCs beim Evade behoben | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
-| [30](PATCHES.md#patch-naked) | Nackter-Charakter-Bug behoben | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
-| [31](PATCHES.md#patch-forcereaction) | Force-Reaction bei /reload erhalten | Robinsch | – | ✅ | ✅ |
-| [32](PATCHES.md#patch-mail) | Neue Post ohne 60 Sekunden Wartezeit | Robinsch | – | ✅ | ✅ |
-| [33](PATCHES.md#patch-deadchat) | Chat-Befehle auch im Tod erlauben | Robinsch | – | ✅ | ✅ |
-| [34](PATCHES.md#patch-follow) | /follow auch bei NPCs erlauben | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
-| [35](PATCHES.md#patch-level101) | Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) | Alastor StrixEfuartus (fixed by St0ny) | – | – | ✅ |
-| [36](PATCHES.md#patch-raceclass) | Charaktererstellung: mehr als 10 Klassen (Zufallsklasse) *(für eigene Klassen; Server muss es unterstützen)* | Alastor StrixEfuartus / Robinsch | – | – | – |
-| [37](PATCHES.md#patch-namecheck) | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
-| [38](PATCHES.md#patch-maxchars) | Max. Charaktere pro Server auf 255 erhöht | St0ny | – | ✅ | ✅ |
-| [39](PATCHES.md#patch-customitem) | Custom Item Fix (BETA) v2 *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | Kebabstorm (fixed by St0ny) | – | – | ✅ |
-| [40](PATCHES.md#patch-climb) | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – | – |
-| [41](PATCHES.md#patch-jump) | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alastor StrixEfuartus | – | – | – |
-| [42](PATCHES.md#patch-airforward) | Im Sprung vorwärts/rückwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [43](PATCHES.md#patch-airlateral) | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [44](PATCHES.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [45](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-|    | **Grafik & Sichtweite** |  |  |  |  |
-| [46](PATCHES.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
-| [47](PATCHES.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
-| [48](PATCHES.md#patch-envdetail) | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | – | ✅ | ✅ |
-| [49](PATCHES.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 statt 140) |  | – | ✅ | ✅ |
-| [50](PATCHES.md#patch-sliders) | Grafikoptionen: Slider-Maxima erweitern | St0ny | – | – | ✅ |
-| [51](PATCHES.md#patch-goscale) | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | St0ny | – | – | ✅ |
-| [52](PATCHES.md#patch-cat0) | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | St0ny | – | – | ✅ |
-| [53](PATCHES.md#patch-occluder) | Occluder Fix für Stormwind (Open Azeroth) | Robinsch | – | – | ✅ |
-| [54](PATCHES.md#patch-bluemoon) | Blauer Mond am Nachthimmel reaktiviert | Robinsch | – | ✅ | ✅ |
-| [55](PATCHES.md#patch-notransparency) | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | – | ✅ | ✅ |
-| [56](PATCHES.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
-| [57](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | St0ny (original by Badgermilk0) | – | – | ✅ |
-|    | **Interface & Komfort** |  |  |  |  |
-| [58](PATCHES.md#patch-tracker) | Quest-Tracker automatisch sortieren |  | – | – | ✅ |
-| [59](PATCHES.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv |  | – | – | ✅ |
-| [60](PATCHES.md#patch-castbars) | Cast Bars auf allen Frames | Kebabstorm | – | ✅ | ✅ |
-| [61](PATCHES.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
-| [62](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
-| [63](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – | – |
-|    | **Fenster, Maus & Kamera** |  |  |  |  |
-| [64](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 65)* | St0ny | – | – | ✅ |
-| [65](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 64)* | St0ny | – | – | ✅ |
-| [66](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
-| [67](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
-| [68](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |
+|    | **System & performance** |  |  |  |  |
+| [1](PATCHES.en.md#patch-laa) | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
+| [2](PATCHES.en.md#patch-cache) | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – | – |
+| [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately | Robinsch | ✅ | ✅ | ✅ |
+| [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
+| [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) | St0ny | – | – | ✅ |
+|    | **Security & privacy** |  |  |  |  |
+| [6](PATCHES.en.md#patch-rce) | Remote code execution exploit fix *(detectable through Warden on public servers – ban risk)* | Robinsch | – | – | ✅ |
+| [7](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active, ban risk on public servers)* | Robinsch | – | – | – |
+| [8](PATCHES.en.md#patch-scandll) | Disable Scan.dll | Alastor StrixEfuartus | – | – | ✅ |
+| [9](PATCHES.en.md#patch-noserverpatch) | Disallow client patches from the server | Kebabstorm | – | – | ✅ |
+| [10](PATCHES.en.md#patch-nosurvey) | Disallow hardware surveys from the server | Kebabstorm | – | – | ✅ |
+|    | **Login & connection** |  |  |  |  |
+| [11](PATCHES.en.md#patch-skipbnet) | Skip Battle.net login | Kebabstorm | – | – | ✅ |
+| [12](PATCHES.en.md#patch-skiprdp) | Skip Remote Desktop check | Kebabstorm | – | – | ✅ |
+| [13](PATCHES.en.md#patch-nohttp) | Disable HTTP requests to Battle.net | Kebabstorm | – | – | ✅ |
+| [14](PATCHES.en.md#patch-afk) | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
+|    | **Modding: interface, MPQs & addons** |  |  |  |  |
+| [15](PATCHES.en.md#patch-glue) | Allow custom GlueXML | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
+| [16](PATCHES.en.md#patch-mpqsig) | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | – | ✅ |
+| [17](PATCHES.en.md#patch-mpqnames) | Allow extended MPQ names |  | – | ✅ | ✅ |
+| [18](PATCHES.en.md#patch-localdata) | Load data directly from the Data folder (no MPQ) | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [19](PATCHES.en.md#patch-luaunlock) | LUA unlock (spells, movement, macros) *(may be treated as botting – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [20](PATCHES.en.md#patch-luaunlockfull) | LUA unlock (complete): allow all protected functions *(may be treated as botting – ban risk)* | St0ny | – | – | – |
+| [21](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
+| [22](PATCHES.en.md#patch-globalsv) | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
+|    | **DLL loaders** |  |  |  |  |
+| [23](PATCHES.en.md#patch-awesome) | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
+| [24](PATCHES.en.md#patch-voicedll) | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
+|    | **Gameplay fixes** |  |  |  |  |
+| [25](PATCHES.en.md#patch-areatrigger) | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | – | ✅ | ✅ |
+| [26](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | – | ✅ | ✅ |
+| [27](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [28](PATCHES.en.md#patch-spellanim) | Fix spell animation after cancelled channel | Robinsch | – | ✅ | ✅ |
+| [29](PATCHES.en.md#patch-ghostattack) | Fix "ghost" attack when NPCs evade from combat | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [30](PATCHES.en.md#patch-naked) | Fix naked character bug | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
+| [31](PATCHES.en.md#patch-forcereaction) | Keep force reaction on /reload | Robinsch | – | ✅ | ✅ |
+| [32](PATCHES.en.md#patch-mail) | New mail without the 60-second wait | Robinsch | – | ✅ | ✅ |
+| [33](PATCHES.en.md#patch-deadchat) | Allow chat commands while dead | Robinsch | – | ✅ | ✅ |
+| [34](PATCHES.en.md#patch-follow) | Allow /follow on NPCs | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
+| [35](PATCHES.en.md#patch-level101) | Level 101+ fix (game tables, barber chair, base stats) | Alastor StrixEfuartus (fixed by St0ny) | – | – | ✅ |
+| [36](PATCHES.en.md#patch-raceclass) | Character creation: more than 10 classes (random class) *(for custom classes; server must support it)* | Alastor StrixEfuartus / Robinsch | – | – | – |
+| [37](PATCHES.en.md#patch-namecheck) | Disable the name check in character creation (e.g. digits in names) *(server must allow the names as well)* | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
+| [38](PATCHES.en.md#patch-maxchars) | Max characters per realm raised to 255 | St0ny | – | ✅ | ✅ |
+| [39](PATCHES.en.md#patch-customitem) | Custom Item Fix (BETA) v2 *(custom items without DBC changes: model, icon and item type from the server data)* | Kebabstorm (fixed by St0ny) | – | – | ✅ |
+| [40](PATCHES.en.md#patch-climb) | Remove the climb angle limit (walk up any slope) *(may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [41](PATCHES.en.md#patch-jump) | Change jump height (original -7.9555473) *(asks for the value, may be detected as cheating by the server – ban risk)* | Alastor StrixEfuartus | – | – | – |
+| [42](PATCHES.en.md#patch-airforward) | Steer forward/backward while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [43](PATCHES.en.md#patch-airlateral) | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [44](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [45](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+|    | **Graphics & view distance** |  |  |  |  |
+| [46](PATCHES.en.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [47](PATCHES.en.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
+| [48](PATCHES.en.md#patch-envdetail) | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | – | ✅ | ✅ |
+| [49](PATCHES.en.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 instead of 140) |  | – | ✅ | ✅ |
+| [50](PATCHES.en.md#patch-sliders) | Graphics options: extend slider maximums | St0ny | – | – | ✅ |
+| [51](PATCHES.en.md#patch-goscale) | GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail | St0ny | – | – | ✅ |
+| [52](PATCHES.en.md#patch-cat0) | GameObject view distance: Cat 0 from 30 to 50 yards *(costs performance, more small objects visible)* | St0ny | – | – | ✅ |
+| [53](PATCHES.en.md#patch-occluder) | Occluder fix for Stormwind (Open Azeroth) | Robinsch | – | – | ✅ |
+| [54](PATCHES.en.md#patch-bluemoon) | Re-enable the blue moon in the night sky | Robinsch | – | ✅ | ✅ |
+| [55](PATCHES.en.md#patch-notransparency) | No character transparency when zooming in | Alastor StrixEfuartus | – | ✅ | ✅ |
+| [56](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
+| [57](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | St0ny (original by Badgermilk0) | – | – | ✅ |
+|    | **Interface & comfort** |  |  |  |  |
+| [58](PATCHES.en.md#patch-tracker) | Auto-sort quest tracker |  | – | – | ✅ |
+| [59](PATCHES.en.md#patch-worldmap) | Advanced world map enabled by default |  | – | – | ✅ |
+| [60](PATCHES.en.md#patch-castbars) | Cast bars on all frames | Kebabstorm | – | ✅ | ✅ |
+| [61](PATCHES.en.md#patch-emblems) | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
+| [62](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
+| [63](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – | – |
+|    | **Window, mouse & camera** |  |  |  |  |
+| [64](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 65)* | St0ny | – | – | ✅ |
+| [65](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 64)* | St0ny | – | – | ✅ |
+| [66](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
+| [67](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
+| [68](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |
 |    | **Sound** |  |  |  |  |
-| [69](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – | ✅ |
-|    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |  |
-| [70](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
-| [71](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
-| [72](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
-| [73](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
-| [74](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
+| [69](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – | ✅ |
+|    | **Client info: version, build, title, date, icon** |  |  |  |  |
+| [70](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
+| [71](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
+| [72](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [73](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
+| [74](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
 > [!NOTE]
-> **Urheber gesucht:** Bei Patches ohne Eintrag in der Spalte „Autor“ ist der
-> Urheber noch nicht bekannt. Wenn du weißt, von wem einer dieser Patches
-> stammt, schreib es bitte als [Issue](https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher/issues) – dann wird es nachgetragen.
+> **Authors wanted:** For patches without an entry in the "Author" column, the
+> author is not known yet. If you know who made one of these patches, please
+> open an [issue](https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher/issues) – it will be added.
 
 ---
 
-## Patch-Beschreibungen
+## Patch descriptions
 
-Die ausführlichen Beschreibungen aller Patches stehen in einer eigenen Datei:
-**[PATCHES.md](PATCHES.md)**. In der [Patch-Übersicht](#patch-übersicht) führt
-ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
+The detailed descriptions of all patches are in a separate file:
+**[PATCHES.en.md](PATCHES.en.md)**. In the [patch overview](#patch-overview),
+clicking the number of a patch takes you straight to its description.
 
 ---
 
-## Hinweise
+## Notes
 
-- **Bann-Gefahr:** Drei Gruppen von Patches können auf vielen Servern zu einem
-  Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder Botting
-  werten können: LUA Unlock (Nr. 19 und 20), Steigwinkel (40), Sprunghöhe
-  (41), die Sprungsteuerung (42–44) und der Doppelsprung (45). Zweitens
-  Patches, die eine Sektion an die `Wow.exe` anhängen und die Datei damit
-  größer machen: Nr. 45, 57 und 68 – viele Server tolerieren eine veränderte
-  Dateigröße nicht. Drittens Patches, die in den Anti-Cheat Warden eingreifen:
-  der RCE-Fix (Nr. 6) und „Warden komplett abschalten“ (Nr. 7) – öffentliche
-  Server können das erkennen. Alle drei Gruppen sind in der Übersicht mit
-  „Bann-Gefahr“ markiert, und der Patcher zeigt vor der Sicherheitsabfrage eine
-  rote Warnung. Alle anderen Patches ändern die Dateigröße nicht.
-- **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
-  Patch macht diese Signatur ungültig. Windows warnt deshalb wahrscheinlich
-  beim Start vor einer nicht signierten, möglicherweise schädlichen App; mit
-  „Weitere Informationen“ → „Trotzdem ausführen“ startet WoW ganz normal. Eine
-  neue Signatur, der Windows vertraut, gibt es nur von Zertifizierungsstellen
-  mit Identitätsprüfung – für eine veränderte Blizzard-Datei bekommt man sie
-  nicht. Die Patches, die eine Sektion anhängen (Nr. 45, 57 und 68), entfernen
-  zusätzlich den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
-  Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
-  Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das
-  Original samt Signatur wieder her. Eine Download-Markierung („Diese Datei
-  stammt von einem anderen Computer“) entfernt der Patcher unter Windows nach
-  dem Schreiben von der `Wow.exe`, wie das Häkchen „Zulassen“ in den
-  Dateieigenschaften.
-- **Wasserzeichen:** Jede gepatchte `Wow.exe` enthält den Text
+- **Ban risk:** three groups of patches can lead to a ban on many servers. First,
+  patches that servers with anti-cheat may treat as cheating or botting: LUA
+  unlock (No. 19 and 20), climb angle (40), jump height (41), the air steering
+  (42–44) and the double jump (45). Second, patches that append a section to `Wow.exe`
+  and thus make the file larger: No. 45, 57 and 68 – many servers do not
+  tolerate a changed file size. Third, patches that interfere with the Warden
+  anti-cheat: the RCE fix (No. 6) and "Disable Warden completely" (No. 7) –
+  public servers can detect this. All three groups are marked "ban risk" in the
+  overview, and the patcher shows a red warning before the confirmation prompt.
+  All other patches do not change the file size.
+- **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every
+  patch invalidates this signature. Windows will therefore probably warn about
+  an unsigned, potentially harmful app when it starts; with "More info" → "Run
+  anyway" WoW starts normally. A new signature that Windows trusts is only
+  issued by certificate authorities with identity verification – you cannot
+  get one for a modified Blizzard file. The patches that append a section
+  (No. 45, 57 and 68) also remove the reference to the
+  signature from the header: the new section lies behind the signature, and
+  some tools would otherwise report the file as damaged. The signature bytes
+  themselves stay untouched, and removing the patches restores the original
+  including its signature. On Windows the patcher removes a download mark
+  ("This file came from another computer") from `Wow.exe` after writing it,
+  like the "Unblock" checkbox in the file properties.
+- **Watermark:** every patched `Wow.exe` contains the text
   `Patched with St0nys AIO WoW.exe Patcher by St0ny (Raz0r1337) - https://github.com/Raz0r1337/St0nys-AIO-WoW-EXE-Patcher`.
-  Daran erkennt der Patcher eine `Wow.exe` eindeutig als seine eigene: So
-  vermischt er nie seine Patches mit denen anderer Patcher, und er kann seinen
-  Patchstand auch dann aus der Exe auslesen, wenn `patcher_state.ini` gelöscht
-  wurde. Der Text steht im ungenutzten Füllbereich hinter der `.tls`-Sektion
-  (Datei-Offset `0x72DE20`), wird nie in den Speicher geladen und ändert die
-  Dateigröße nicht. Beim Zurücknehmen aller Patches verschwindet er wieder.
-  Nebeneffekt: Man kann jederzeit nachsehen, ob eine `Wow.exe` mit diesem
-  Patcher erstellt wurde – z. B. per Hex-Editor oder in der Eingabeaufforderung
-  mit `findstr /m /c:"St0nys AIO" Wow.exe` (gibt den Dateinamen aus, wenn er drin
-  ist).
-- **Original wiederherstellen:** Patcher starten, `N` und ENTER drücken – mit
-  oder ohne `patcher_state.ini`. Alternativ gepatchte `Wow.exe` löschen und
-  `Wow.exe.ORI` in `Wow.exe` umbenennen. `Wow.exe.BAK` ist dagegen die `Wow.exe`
-  von vor dem letzten Lauf.
-- **Für Entwickler:** Die Original-Byte-Tabelle im Skript wird mit
-  `apply_patches.ps1 -BuildTable -Path <originale Wow.exe>` neu erzeugt. Das ist
-  nach jeder Änderung an einem Patch nötig; passt sie nicht mehr, weist der
-  Patcher nach dem Patchen darauf hin.
-- Nutzung auf eigene Gefahr. Dieses Projekt steht in keiner Verbindung zu
-  Blizzard Entertainment.
+  This is how the patcher identifies a `Wow.exe` unambiguously as its own: it
+  never mixes its patches with those of other patchers, and it can read its
+  patch state from the exe even if `patcher_state.ini` was deleted. The text
+  sits in the unused padding behind the `.tls` section (file offset
+  `0x72DE20`), is never loaded into memory and does not change the file size.
+  Removing all patches removes it again. As a side effect you can always
+  check whether a `Wow.exe` was made with this patcher – e.g. with a hex editor
+  or in the command prompt with `findstr /m /c:"St0nys AIO" Wow.exe` (prints the
+  file name if it is there).
+- **Restoring the original:** run the patcher, press `N` and ENTER – with or
+  without `patcher_state.ini`. Alternatively delete the patched `Wow.exe` and
+  rename `Wow.exe.ORI` to `Wow.exe`. `Wow.exe.BAK`, on the other hand, is the
+  `Wow.exe` from before the last run.
+- **For developers:** the original bytes table in the script is regenerated
+  with `apply_patches.ps1 -BuildTable -Path <original Wow.exe>`. This is needed
+  after every change to a patch; if it no longer matches, the patcher points it
+  out after patching.
+- Use at your own risk. This project is not affiliated with Blizzard
+  Entertainment.
 
-## Danksagung
+## Acknowledgements
 
-- Ein ganz besonderer Dank geht an **Billy Hoyle** – für all seine Hilfe und
-  seine Tipps in den letzten Monaten und für die Unterstützung beim
-  Zusammentragen der Patches. Sein Patch-Set steckt als Preset
-  „Billy's_Wow.exe“ in diesem Patcher.
-- Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen und dazu
-  einige eigene Patches beigesteuert – vielen Dank auch dafür!
-- Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
-  einzubauen, und für das Preset „Project Reforged“, das offizielle Preset
-  seines Projekts [Project Reforged](https://projectreforged.github.io/wotlk/).
-- Danke an **Moroes**, der den Patch [#22](PATCHES.md#patch-globalsv)
-  aufgespürt und mir zugespielt hat.
-- Und natürlich danke an alle Autoren der Patches, die in der
-  [Patch-Übersicht](#patch-übersicht) genannt sind.
+- A very special thank you goes to **Billy Hoyle** – for all his help and tips
+  over the past months and for helping to collect the patches. His patch set is
+  included as the preset "Billy's_Wow.exe".
+- **MacWarrior** also helped collect the patches and contributed some of his
+  own – thank you as well!
+- Thanks also to **Stormhand** for the permission to include his
+  CameraReforged patch, and for the preset "Project Reforged", the official
+  preset of his [Project Reforged](https://projectreforged.github.io/wotlk/)
+  project.
+- Thanks to **Moroes**, who tracked down patch
+  [#22](PATCHES.en.md#patch-globalsv) and passed it on to me.
+- And of course thanks to all patch authors named in the
+  [patch overview](#patch-overview).
 
-## Lizenz
+## License
 
-Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 Copyright (c) 2026 St0ny (Raz0r1337).
 
-Kurz gesagt: Jeder darf den Patcher nutzen, verändern und weitergeben – auch in
-eigenen Projekten –, solange der Copyright-Hinweis und der Lizenztext erhalten
-bleiben (Namensnennung).
+In short: anyone may use, modify and redistribute the patcher – including in
+their own projects – as long as the copyright notice and the license text are
+kept (attribution).

@@ -3,8 +3,8 @@
 🇩🇪 Deutsch | [🇬🇧 English](PATCHES.en.md)
 
 Ausführliche Beschreibungen aller Patches des
-[St0nys-AIO-WoW-EXE-Patcher](README.md). Die Übersicht mit Autoren und
-Preset-Zuordnung steht in der [README](README.md#patch-übersicht).
+[St0nys-AIO-WoW-EXE-Patcher](README.de.md). Die Übersicht mit Autoren und
+Preset-Zuordnung steht in der [README](README.de.md#patch-übersicht).
 
 - [System & Leistung](#system--leistung)
 - [Sicherheit & Datenschutz](#sicherheit--datenschutz)
