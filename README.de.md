@@ -411,32 +411,33 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* 🟡 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) 🟡 **[auf öffentlichen Servern ungetestet]** | St0ny | – | – | – |
 | [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen 🔴 **[Bann-Gefahr, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
+| [75](PATCHES.md#patch-bubblerange) | Sprechblasen-Reichweite erhöhen (Original 25 Meter) *(fragt den Wert ab)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | St0ny | – | – | – |
 
 #### Fenster, Maus & Kamera
 
 | Nr. | Patch | Autor | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [75](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 76)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
-| [76](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 75)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
-| [77](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [78](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [79](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
+| [76](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 77)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
+| [77](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 76)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
+| [78](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
+| [79](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
+| [80](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
 
 #### Sound
 
 | Nr. | Patch | Autor | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [80](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
+| [81](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
 
 #### Client-Infos: Version, Build, Titel, Datum, Icon
 
 | Nr. | Patch | Autor | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [81](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
-| [82](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
-| [83](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior (fixed by St0ny) | – | – | – |
-| [84](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
-| [85](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
+| [82](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
+| [83](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
+| [84](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | MacWarrior (fixed by St0ny) | – | – | – |
+| [85](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
+| [86](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -463,15 +464,15 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   gewählten Patches mit Warnung noch einmal auf:
   - 🟢 **sicher** – im Spiel getestet, im Patcher ohne Warnung.
   - 🔴 **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen: Nr. 10,
-    11, 23–25, 41, 42, 45–50, 74 und 81–85 (rote Warnung).
+    11, 23–25, 41, 42, 45–50, 74 und 82–86 (rote Warnung).
   - 🟡 **auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr, Vorsicht,
-    kann zu Kick/Bann führen: Nr. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73 und
-    79 (gelber Hinweis).
+    kann zu Kick/Bann führen: Nr. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73, 75 und
+    80 (gelber Hinweis).
   - 🟡 **im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
-    möglicherweise verbuggt: Nr. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68 und 70
+    möglicherweise verbuggt: Nr. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 und 75
     (gelber Hinweis).
   - **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
-    Nr. 9, 50, 63, 64, 74 und 79. Viele Server tolerieren eine veränderte
+    Nr. 9, 50, 63, 64, 74 und 80. Viele Server tolerieren eine veränderte
     Dateigröße nicht – das kann zu einem Bann führen (rote Warnung). Alle
     anderen Patches ändern die Dateigröße nicht.
 - **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
@@ -480,7 +481,7 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   „Weitere Informationen“ → „Trotzdem ausführen“ startet WoW ganz normal. Eine
   neue Signatur, der Windows vertraut, gibt es nur von Zertifizierungsstellen
   mit Identitätsprüfung – für eine veränderte Blizzard-Datei bekommt man sie
-  nicht. Die Patches, die eine Sektion anhängen (Nr. 9, 50, 63, 64, 74 und 79), entfernen
+  nicht. Die Patches, die eine Sektion anhängen (Nr. 9, 50, 63, 64, 74 und 80), entfernen
   zusätzlich den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
   Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
   Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das

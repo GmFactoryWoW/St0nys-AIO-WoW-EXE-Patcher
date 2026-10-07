@@ -2446,6 +2446,34 @@ function Test-JumpValue([string]$v) {
 }
 
 # ============================================================
+#  Helfer fuer die Sprechblasen-Reichweite
+#  Der Client zeigt Sprechblasen nur bis 25 Meter: Er vergleicht das Quadrat
+#  des Abstands mit der float-Konstante 625.0 (VA 0xA104B0), die auch die
+#  Fussspuren nutzen. Der Patch laesst die beiden Sprechblasen-Stellen auf
+#  eine andere, schon vorhandene Konstante in .rdata zeigen - erlaubt sind
+#  daher nur die Reichweiten, deren Quadrat es dort gibt (0 = unbegrenzt,
+#  FLT_MAX). Schluessel = Meter, Wert = VA der Konstante.
+# ============================================================
+$BUBBLE_RANGES = [ordered]@{
+    '50'  = 0xA12094    # 2500.0
+    '100' = 0x9EA4C8    # 10000.0
+    '150' = 0xA32904    # 22500.0
+    '200' = 0xA4062C    # 40000.0
+    '0'   = 0x9EA8FC    # FLT_MAX
+}
+
+function Test-BubbleRange([string]$v) {
+    if ($BUBBLE_RANGES.Contains($v.Trim())) { return $null }
+    return (L 'Erlaubt sind 50, 100, 150, 200 oder 0 (unbegrenzt).' 'Allowed are 50, 100, 150, 200 or 0 (unlimited).')
+}
+
+function Get-BubbleRangeFromExe {
+    $va = [BitConverter]::ToUInt32($script:f, 0x31F4D0)
+    foreach ($k in $BUBBLE_RANGES.Keys) { if ($BUBBLE_RANGES[$k] -eq $va) { return $k } }
+    return $null
+}
+
+# ============================================================
 #  PATCH-DEFINITIONEN
 #  Jeder Patch ist eine Hashtable:
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
@@ -3781,12 +3809,32 @@ $patches = @(
 
     # --- Fenster, Maus & Kamera ---
 
+    @{ Id = 'bubblerange'; Cat = 'ui'; On = $false; PublicUntested = $true; GameUntested = $true
+       Author = 'St0ny'
+       De = 'Sprechblasen-Reichweite erhoehen (Original 25 Meter)'
+       En = 'Increase the chat bubble range (original 25 yards)'
+       PromptDe = 'Reichweite in Metern: 50, 100, 150, 200 oder 0 = unbegrenzt'
+       PromptEn = 'Range in yards: 50, 100, 150, 200 or 0 = unlimited'
+       Default = '200'
+       Check = { param($v) Test-BubbleRange $v }
+       Decode = { Get-BubbleRangeFromExe }
+       Code = {
+        # Zwei Abstandspruefungen gegen 625.0 = 25 Meter im Quadrat:
+        # fcomp [0xA104B0] bei VA 0x7200CE (neue Blase nur in Reichweite, gilt
+        # fuer Sagen, Gruppe, Schreien und NPC-Sagen/-Schreien) und bei VA
+        # 0x56C5E9 (vorhandene Blase ausblenden, wenn der Sprecher zu weit weg
+        # ist). Beide lesen danach die gewaehlte Konstante, siehe $BUBBLE_RANGES.
+        $va = [BitConverter]::GetBytes([uint32]$BUBBLE_RANGES[$script:VALUES['bubblerange'].Trim()])
+        Patch 0x31F4D0 $va
+        Patch 0x16B9EB $va
+    }}
+
     @{ Id = 'window'; Cat = 'window'; On = $false
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 76'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 76'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 77'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 77'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -3795,8 +3843,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 75'
-       NoteEn = 'only works together with No. 75'
+       NoteDe = 'wirkt nur zusammen mit Nr. 76'
+       NoteEn = 'only works together with No. 76'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -4236,6 +4284,8 @@ holdrepeat;398;00000000000000000000000000000000000000000000000000000000000000000
 holdrepeat;F82A0;558BEC83EC34;1
 holdrepeat;162550;558BEC81ECC4000000;1
 holdrepeat;1AAFC0;558BEC83EC0C;1
+bubblerange;16B9EB;B004A100;1
+bubblerange;31F4D0;B004A100;1
 window;369A7D;A0149E;1
 maximize;369AB2;A0149E;1
 windowfix;E94;74;1

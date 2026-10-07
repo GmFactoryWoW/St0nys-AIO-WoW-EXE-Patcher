@@ -1371,40 +1371,70 @@ werden.
 > Server verbieten „ein Tastendruck = mehrere Aktionen“. Außerdem hängt der
 > Patch eine Sektion an – die `Wow.exe` wird größer (Bann-Gefahr).
 
+<a id="patch-bubblerange"></a>
+**Sprechblasen-Reichweite erhöhen (Original 25 Meter)** *(Nr. 75, Autor: St0ny)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+
+> [!WARNING]
+> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
+>
+> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+
+Der Client zeigt Sprechblasen (Sagen, Gruppe, Schreien, NPC-Sagen und
+NPC-Schreien) nur für Sprecher bis 25 Meter Entfernung. Schickt der Server
+zum Beispiel ein Schreien aus 100 Metern, steht es nur im Chat. Der Patch
+erhöht diese Grenze; der Patcher fragt die Reichweite ab: 50, 100, 150, 200
+(Vorschlag) oder 0 = unbegrenzt.
+
+Der Client vergleicht das Quadrat des Abstands an zwei Stellen mit der
+Konstante 625.0 (= 25²): beim Eintreffen der Nachricht (VA `0x7200CE`, sonst
+entsteht keine Blase) und beim Aktualisieren der Blase (VA `0x56C5E9`, sonst
+wird sie ausgeblendet). Dieselbe Konstante nutzen auch die Fußspuren, deshalb
+bleibt sie unverändert: Der Patch lässt nur die beiden Sprechblasen-Stellen auf
+eine andere, schon vorhandene Konstante zeigen (2500, 10000, 22500, 40000 oder
+den größten float-Wert). Daher gibt es nur diese festen Stufen; Dateigröße und
+PE-Header bleiben unverändert.
+
+> [!NOTE]
+> Eine Blase erscheint nur, wenn der Server die Nachricht schickt und der
+> Sprecher für dich sichtbar ist – die Sichtweite legt der Server fest (oft um
+> die 100 Meter). Sagen begrenzt der Server ohnehin auf 25 Meter, dort ändert
+> sich nichts. Gruppen-Blasen erscheinen dagegen auch über weiter entfernten
+> Gruppenmitgliedern.
+
 ## Fenster, Maus & Kamera
 
 <a id="patch-window"></a>
-**Fenstermodus als Standard setzen** *(Nr. 75, Autor: St0ny)* 🟢 **[sicher]**
+**Fenstermodus als Standard setzen** *(Nr. 76, Autor: St0ny)* 🟢 **[sicher]**
 
 Setzt das CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
 > [!TIP]
-> **Nr. 75 und Nr. 76 gehören zusammen:** Nr. 75 schaltet den Fenstermodus ein,
-> Nr. 76 maximiert das Fenster.
+> **Nr. 76 und Nr. 77 gehören zusammen:** Nr. 76 schaltet den Fenstermodus ein,
+> Nr. 77 maximiert das Fenster.
 > - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
 >   Bildschirm.
-> - **Nur Nr. 75:** WoW startet als kleines Fenster in der Mitte des Desktops.
-> - **Nur Nr. 76:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+> - **Nur Nr. 76:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 77:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-maximize"></a>
-**Fenstermodus maximiert als Standard setzen** *(Nr. 76, Autor: St0ny)* 🟢 **[sicher]**
+**Fenstermodus maximiert als Standard setzen** *(Nr. 77, Autor: St0ny)* 🟢 **[sicher]**
 
 Setzt das CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
 > [!TIP]
-> **Nr. 75 und Nr. 76 gehören zusammen:** Nr. 75 schaltet den Fenstermodus ein,
-> Nr. 76 maximiert das Fenster.
+> **Nr. 76 und Nr. 77 gehören zusammen:** Nr. 76 schaltet den Fenstermodus ein,
+> Nr. 77 maximiert das Fenster.
 > - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
 >   Bildschirm.
-> - **Nur Nr. 75:** WoW startet als kleines Fenster in der Mitte des Desktops.
-> - **Nur Nr. 76:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+> - **Nur Nr. 76:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 77:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-windowfix"></a>
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 77, Autor: Robinsch)* 🟢 **[sicher]**
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 78, Autor: Robinsch)* 🟢 **[sicher]**
 
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
@@ -1412,14 +1442,14 @@ schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
 damit das CVar `DesktopGamma` sind ohne Wirkung.
 
 <a id="patch-mouse"></a>
-**Mausflackern / Kamerasprünge Fix** *(Nr. 78, Autor: Robinsch)* 🟢 **[sicher]**
+**Mausflackern / Kamerasprünge Fix** *(Nr. 79, Autor: Robinsch)* 🟢 **[sicher]**
 
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 79, Autor: Stormhand (fixed by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]**
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 80, Autor: Stormhand (fixed by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1493,7 +1523,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 ## Sound
 
 <a id="patch-sound"></a>
-**Sound-Einstellungen optimieren** *(Nr. 80, Autor: St0ny)* 🟢 **[sicher]**
+**Sound-Einstellungen optimieren** *(Nr. 81, Autor: St0ny)* 🟢 **[sicher]**
 
 Umfasst folgende Änderungen:
 
@@ -1522,7 +1552,7 @@ einer Meldung neu abgefragt, und alle Werte werden geprüft, bevor irgendetwas
 geschrieben wird. Die Werte merkt sich der Patcher in `patcher_selection.ini`
 (`value.<Id>=…`); mit `-Unattended` gelten die gemerkten Werte, ohne gemerkten
 Wert die Originalwerte – Ausnahmen: Build-Datum (aktueller Zeitpunkt) und Icon
-(Abbruch), siehe Nr. 84 und 85. Steckt ein Patch schon in der `Wow.exe`, ist
+(Abbruch), siehe Nr. 85 und 86. Steckt ein Patch schon in der `Wow.exe`, ist
 sein aktueller Wert der Vorschlag.
 Bei der Abfrage steht er auch hinter dem Patchnamen (`-> Vorschlag: …`, bei einem
 bereits eingespielten Patch `-> aktuell: …`).
@@ -1532,7 +1562,7 @@ bereits eingespielten Patch `-> aktuell: …`).
 > muss also zum Server passen.
 
 <a id="patch-clientversion"></a>
-**Client-Version ändern (Original 3.3.5)** *(Nr. 81, Autor: MacWarrior)* 🔴 **[Bann-Gefahr]**
+**Client-Version ändern (Original 3.3.5)** *(Nr. 82, Autor: MacWarrior)* 🔴 **[Bann-Gefahr]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1545,7 +1575,7 @@ FileVersion-Text (`3, 3, 5, 12340`) wird zur reinen Version (`3.3.6`). Haupt-
 und Nebenversion müssen zusammen in das ProductVersion-Feld passen (z. B. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Build-Nummer ändern (Original 12340)** *(Nr. 82, Autor: MacWarrior)* 🔴 **[Bann-Gefahr]**
+**Build-Nummer ändern (Original 12340)** *(Nr. 83, Autor: MacWarrior)* 🔴 **[Bann-Gefahr]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1577,7 +1607,7 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel ändern (Dateieigenschaften und Fenstertitel)** *(Nr. 83, Autor: MacWarrior (fixed by St0ny))* 🔴 **[Bann-Gefahr]**
+**Programmtitel ändern (Dateieigenschaften und Fenstertitel)** *(Nr. 84, Autor: MacWarrior (fixed by St0ny))* 🔴 **[Bann-Gefahr]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1598,7 +1628,7 @@ ab, damit er stehen bleibt.
 > Titel.
 
 <a id="patch-clientdate"></a>
-**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 84, Autor: St0ny (original by MacWarrior))* 🔴 **[Bann-Gefahr]**
+**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 85, Autor: St0ny (original by MacWarrior))* 🔴 **[Bann-Gefahr]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1621,7 +1651,7 @@ Patchens. Ist der Patch schon eingespielt, steht dort das aktuelle Datum samt
 Uhrzeit der `Wow.exe`.
 
 <a id="patch-clienticon"></a>
-**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 85, Autor: St0ny (original by MacWarrior))* 🔴 **[Bann-Gefahr]**
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 86, Autor: St0ny (original by MacWarrior))* 🔴 **[Bann-Gefahr]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.

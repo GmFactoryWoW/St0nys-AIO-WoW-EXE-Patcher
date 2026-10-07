@@ -1332,39 +1332,67 @@ their own (`.hrep`). Up to 8 keys can be held at the same time.
 > servers forbid "one key press = several actions". In addition, the patch
 > appends a section – `Wow.exe` gets larger (ban risk).
 
+<a id="patch-bubblerange"></a>
+**Increase the chat bubble range (original 25 yards)** *(No. 75, Author: St0ny)* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+
+The client shows chat bubbles (say, party, yell, NPC say and NPC yell) only for
+speakers up to 25 yards away. If the server sends a yell from 100 yards, for
+example, it only appears in the chat. The patch raises this limit; the patcher
+asks for the range: 50, 100, 150, 200 (suggestion) or 0 = unlimited.
+
+The client compares the squared distance with the constant 625.0 (= 25²) in
+two places: when the message arrives (VA `0x7200CE`, otherwise no bubble is
+created) and when the bubble is updated (VA `0x56C5E9`, otherwise it is
+hidden). The footprints use the same constant, so it stays unchanged: the patch
+only points the two chat bubble places to another constant that already exists
+in the exe (2500, 10000, 22500, 40000 or the largest float value). That is why
+there are only these fixed steps; the file size and the PE header stay
+unchanged.
+
+> [!NOTE]
+> A bubble only appears if the server sends the message and the speaker is
+> visible to you – the view distance is set by the server (often around 100
+> yards). The server limits say to 25 yards anyway, nothing changes there.
+> Party bubbles, however, also appear above party members further away.
+
 ## Window, mouse & camera
 
 <a id="patch-window"></a>
-**Windowed mode by default** *(No. 75, Author: St0ny)* 🟢 **[safe]**
+**Windowed mode by default** *(No. 76, Author: St0ny)* 🟢 **[safe]**
 
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
 
 > [!TIP]
-> **No. 75 and No. 76 belong together:** No. 75 enables windowed mode, No. 76
+> **No. 76 and No. 77 belong together:** No. 76 enables windowed mode, No. 77
 > maximizes the window.
 > - **Both selected:** WoW starts as a maximized window covering the whole
 >   screen.
-> - **Only No. 75:** WoW starts as a small window in the middle of the desktop.
-> - **Only No. 76:** no effect, WoW starts in fullscreen. The option "Maximize
+> - **Only No. 76:** WoW starts as a small window in the middle of the desktop.
+> - **Only No. 77:** no effect, WoW starts in fullscreen. The option "Maximize
 >   window" is active, but greyed out.
 
 <a id="patch-maximize"></a>
-**Maximized window by default** *(No. 76, Author: St0ny)* 🟢 **[safe]**
+**Maximized window by default** *(No. 77, Author: St0ny)* 🟢 **[safe]**
 
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
 > [!TIP]
-> **No. 75 and No. 76 belong together:** No. 75 enables windowed mode, No. 76
+> **No. 76 and No. 77 belong together:** No. 76 enables windowed mode, No. 77
 > maximizes the window.
 > - **Both selected:** WoW starts as a maximized window covering the whole
 >   screen.
-> - **Only No. 75:** WoW starts as a small window in the middle of the desktop.
-> - **Only No. 76:** no effect, WoW starts in fullscreen. The option "Maximize
+> - **Only No. 76:** WoW starts as a small window in the middle of the desktop.
+> - **Only No. 77:** no effect, WoW starts in fullscreen. The option "Maximize
 >   window" is active, but greyed out.
 
 <a id="patch-windowfix"></a>
-**No black screen when switching to windowed mode** *(No. 77, Author: Robinsch)* 🟢 **[safe]**
+**No black screen when switching to windowed mode** *(No. 78, Author: Robinsch)* 🟢 **[safe]**
 
 Switching to windowed mode while in-game no longer results in a black
 screen. Technically the callback of the CVar `DesktopGamma` always takes the
@@ -1372,13 +1400,13 @@ game-gamma path; the desktop-gamma path and with it the CVar `DesktopGamma`
 have no effect.
 
 <a id="patch-mouse"></a>
-**Mouse flicker / camera jump fix** *(No. 78, Author: Robinsch)* 🟢 **[safe]**
+**Mouse flicker / camera jump fix** *(No. 79, Author: Robinsch)* 🟢 **[safe]**
 
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 79, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers, exe grows]**
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 80, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers, exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1453,7 +1481,7 @@ overwrites the table of the slider patch.
 ## Sound
 
 <a id="patch-sound"></a>
-**Optimize sound settings** *(No. 80, Author: St0ny)* 🟢 **[safe]**
+**Optimize sound settings** *(No. 81, Author: St0ny)* 🟢 **[safe]**
 
 Includes the following changes:
 
@@ -1482,7 +1510,7 @@ message and asked for again, and all values are checked before anything is
 written. The patcher remembers the values in `patcher_selection.ini`
 (`value.<Id>=…`); with `-Unattended` the remembered values are used, otherwise
 the original values – exceptions: build date (current time) and icon (the
-patcher aborts), see No. 84 and 85. If a patch is already in `Wow.exe`, its
+patcher aborts), see No. 85 and 86. If a patch is already in `Wow.exe`, its
 current value is the suggestion. When asking, it is also shown after the patch
 name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 
@@ -1491,7 +1519,7 @@ name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 > to match the server.
 
 <a id="patch-clientversion"></a>
-**Change client version (original 3.3.5)** *(No. 81, Author: MacWarrior)* 🔴 **[ban risk]**
+**Change client version (original 3.3.5)** *(No. 82, Author: MacWarrior)* 🔴 **[ban risk]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1504,7 +1532,7 @@ The build number in `VS_FIXEDFILEINFO` is kept; the FileVersion text
 together must fit into the ProductVersion field (e.g. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Change build number (original 12340)** *(No. 82, Author: MacWarrior)* 🔴 **[ban risk]**
+**Change build number (original 12340)** *(No. 83, Author: MacWarrior)* 🔴 **[ban risk]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1535,7 +1563,7 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title (file properties and window title)** *(No. 83, Author: MacWarrior (fixed by St0ny))* 🔴 **[ban risk]**
+**Change program title (file properties and window title)** *(No. 84, Author: MacWarrior (fixed by St0ny))* 🔴 **[ban risk]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1554,7 +1582,7 @@ custom title to the first place and disables the two calls so that it stays.
 > as the title of error messages – the custom title appears there as well.
 
 <a id="patch-clientdate"></a>
-**Change build date (original Jun 24 2010)** *(No. 84, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+**Change build date (original Jun 24 2010)** *(No. 85, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1576,7 +1604,7 @@ the time of patching if nothing is remembered. If the patch is already applied,
 the current date and time of `Wow.exe` are suggested.
 
 <a id="patch-clienticon"></a>
-**Change program icon (icon of Wow.exe)** *(No. 85, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+**Change program icon (icon of Wow.exe)** *(No. 86, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.

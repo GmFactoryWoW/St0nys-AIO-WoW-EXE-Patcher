@@ -400,32 +400,33 @@ Click the number of a patch to jump to its description.
 | [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* 🟡 **[untested on public servers]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) 🟡 **[untested on public servers]** | St0ny | – | – | – |
 | [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat 🔴 **[ban risk, exe grows]** | tb (ported by St0ny) | – | – | – |
+| [75](PATCHES.en.md#patch-bubblerange) | Increase the chat bubble range (original 25 yards) *(asks for the value)* 🟡 **[untested on public servers and in game]** | St0ny | – | – | – |
 
 #### Window, mouse & camera
 
 | No. | Patch | Author | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [75](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 76)* 🟢 **[safe]** | St0ny | – | – | ✅ |
-| [76](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 75)* 🟢 **[safe]** | St0ny | – | – | ✅ |
-| [77](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
-| [78](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
-| [79](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet)* 🟡 **[untested on public servers, exe grows]** | Stormhand (fixed by St0ny) | – | – | – |
+| [76](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 77)* 🟢 **[safe]** | St0ny | – | – | ✅ |
+| [77](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 76)* 🟢 **[safe]** | St0ny | – | – | ✅ |
+| [78](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
+| [79](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
+| [80](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet)* 🟡 **[untested on public servers, exe grows]** | Stormhand (fixed by St0ny) | – | – | – |
 
 #### Sound
 
 | No. | Patch | Author | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [80](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* 🟢 **[safe]** | St0ny | – | – | ✅ |
+| [81](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* 🟢 **[safe]** | St0ny | – | – | ✅ |
 
 #### Client info: version, build, title, date, icon
 
 | No. | Patch | Author | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-| [81](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior | – | – | – |
-| [82](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior | – | – | – |
-| [83](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior (fixed by St0ny) | – | – | – |
-| [84](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* 🔴 **[ban risk]** | St0ny (original by MacWarrior) | – | – | – |
-| [85](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* 🔴 **[ban risk]** | St0ny (original by MacWarrior) | – | – | – |
+| [82](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior | – | – | – |
+| [83](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior | – | – | – |
+| [84](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* 🔴 **[ban risk]** | MacWarrior (fixed by St0ny) | – | – | – |
+| [85](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* 🔴 **[ban risk]** | St0ny (original by MacWarrior) | – | – | – |
+| [86](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* 🔴 **[ban risk]** | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -452,15 +453,15 @@ clicking the number of a patch takes you straight to its description.
   selected patches with a warning once more:
   - 🟢 **safe** – tested in game, no warning in the patcher.
   - 🔴 **ban risk** – can lead to a ban on many servers: No. 10, 11, 23–25,
-    41, 42, 45–50, 74 and 81–85 (red warning).
+    41, 42, 45–50, 74 and 82–86 (red warning).
   - 🟡 **untested on public servers** – possible ban risk, careful, may get
-    you kicked or banned: No. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73 and
-    79 (yellow note).
+    you kicked or banned: No. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73, 75 and
+    80 (yellow note).
   - 🟡 **untested in game** – the function has not been checked in game yet,
-    possibly buggy: No. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68 and 70 (yellow
-    note).
+    possibly buggy: No. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 and 75
+    (yellow note).
   - **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
-    63, 64, 74 and 79. Many servers do not tolerate a changed file size – this
+    63, 64, 74 and 80. Many servers do not tolerate a changed file size – this
     can lead to a ban (red warning). All other patches do not change the file
     size.
 - **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every
@@ -469,7 +470,7 @@ clicking the number of a patch takes you straight to its description.
   anyway" WoW starts normally. A new signature that Windows trusts is only
   issued by certificate authorities with identity verification – you cannot
   get one for a modified Blizzard file. The patches that append a section
-  (No. 9, 50, 63, 64, 74 and 79) also remove the reference to the
+  (No. 9, 50, 63, 64, 74 and 80) also remove the reference to the
   signature from the header: the new section lies behind the signature, and
   some tools would otherwise report the file as damaged. The signature bytes
   themselves stay untouched, and removing the patches restores the original
