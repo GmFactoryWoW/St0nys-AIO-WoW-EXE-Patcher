@@ -102,7 +102,7 @@ $TEXT = @{
         StartWarn1    = 'HINWEIS: Patches ohne Warnung in eckigen Klammern sind im Spiel getestet und sollten auch'
         StartWarn2    = 'auf oeffentlichen Servern unbedenklich sein - eine 100%-Garantie gibt es aber nicht.'
         StartWarn3    = 'Warnungen: [Bann-Gefahr], [auf oeffentlichen Servern ungetestet] (Vorsicht, kann zu Kick/Bann'
-        StartWarn4    = 'fuehren), [im Spiel ungetestet] (moeglicherweise verbuggt), [Exe wird groesser] (Bann-Gefahr).'
+        StartWarn4    = 'fuehren), [im Spiel ungetestet] (moeglicherweise verbuggt), [Exe wird groesser] (Bann-Risiko).'
         StartWarn5    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
         StartWarn6    = 'Benutzung auf eigene Gefahr.'
         Thanks        = 'Danke an Billy Hoyle, MacWarrior und Stormhand fuer ihre Hilfe und die vielen Tests im Spiel!'
@@ -160,7 +160,7 @@ $TEXT = @{
         Hint          = 'wirkt nur vollstaendig zusammen mit:'
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
-        GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
+        GrowBan       = 'Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche Server pruefen die Groesse der Wow.exe.'
         CheatHead     = 'ACHTUNG - Bann-Gefahr: Diese Patches koennen von Servern als Cheat oder Botting gewertet werden:'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         PublicHead    = 'VORSICHT: Diese Patches sind nicht auf oeffentlichen Servern getestet - moegliche Bann-Gefahr:'
@@ -202,7 +202,7 @@ $TEXT = @{
         StartWarn1    = 'NOTE: Patches without a warning in square brackets have been tested in game and should be'
         StartWarn2    = 'harmless on public servers as well - but there is no 100% guarantee.'
         StartWarn3    = 'Warnings: [ban risk], [untested on public servers] (careful, may get you kicked/banned),'
-        StartWarn4    = '[untested in game] (possibly buggy), [exe grows] (ban risk).'
+        StartWarn4    = '[untested in game] (possibly buggy), [exe grows] (possible ban risk).'
         StartWarn5    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
         StartWarn6    = 'Use at your own risk.'
         Thanks        = 'Thanks to Billy Hoyle, MacWarrior and Stormhand for their help and all the testing in game!'
@@ -260,7 +260,7 @@ $TEXT = @{
         Hint          = 'only takes full effect together with:'
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
-        GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
+        GrowBan       = 'This does not mean a certain ban, but it is a risk: some servers check the size of Wow.exe.'
         CheatHead     = 'WARNING - ban risk: servers may treat these patches as cheating or botting:'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         PublicHead    = 'CAUTION: These patches have not been tested on public servers - possible ban risk:'
@@ -5119,7 +5119,7 @@ if ($grow.Count -gt 0) {
     Write-Host ''
     Say (T 'GrowHead') 'Yellow'
     foreach ($m in $grow) { Say "  - $m" 'Yellow' }
-    Say (T 'GrowBan') 'Red'
+    Say (T 'GrowBan') 'Yellow'
 }
 $public = @()
 foreach ($p in $chosen) { if ($p.PublicUntested) { $public += PatchRef $p } }

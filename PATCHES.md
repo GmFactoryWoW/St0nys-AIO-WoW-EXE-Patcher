@@ -178,8 +178,8 @@ per DLL. Hier stecken die vier Hooks in einer eigenen Sektion (`.glyph`,
 223 Byte), eine Funktion wird an Ort und Stelle neu geschrieben.
 
 > [!WARNING]
-> Der Patch hängt eine Sektion an – die `Wow.exe` wird größer. Viele Server
-> tolerieren das nicht (Bann-Gefahr).
+> Der Patch hängt eine Sektion an – die `Wow.exe` wird größer. Das ist keine
+> sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen die Dateigröße.
 
 > [!NOTE]
 > Verträgt sich mit awesome_wotlk: Dessen MSDF-Schriften hängen sich an
@@ -809,8 +809,8 @@ beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 > Bann führen.
 >
 > Dieser Patch hängt eine eigene Sektion an, die `Wow.exe` wird dadurch größer.
-> **Viele Server tolerieren eine veränderte Dateigröße der `Wow.exe` nicht – das
-> kann zu einem Bann führen.**
+> Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen die
+> Dateigröße der `Wow.exe`.
 
 <a id="patch-noammo"></a>
 **Fernkampf ohne Munition** *(Nr. 51, Autor: Alyst3r (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
@@ -1182,8 +1182,8 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > [!WARNING]
 > Dieser Patch hängt eine neue PE-Sektion `.hdp` an die `Wow.exe` an (generierte
 > 256er-Alphamaske + Code-Höhlen + Detour des Masken-Builders), die Datei wächst
-> dadurch um ca. 69 KB. **Viele Server tolerieren eine veränderte Dateigröße der
-> `Wow.exe` nicht – das kann zu einem Bann führen.**
+> dadurch um ca. 69 KB. Das ist keine sichere Bann-Gefahr, aber ein Risiko:
+> Manche Server prüfen die Dateigröße der `Wow.exe`.
 
 > [!NOTE]
 > **Zusammen mit awesome_wotlk (Nr. 27):** Die `AwesomeWotlkLib.dll` bringt mit
@@ -1211,7 +1211,8 @@ unverändert.
 
 > [!WARNING]
 > Der Patch hängt eine kleine Sektion an (`.isnap`, 179 Byte) – die `Wow.exe`
-> wird größer. Viele Server tolerieren das nicht (Bann-Gefahr).
+> wird größer. Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche
+> Server prüfen die Dateigröße.
 
 ## Interface & Komfort
 
@@ -1517,8 +1518,8 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 
 > [!WARNING]
 > Dieser Patch hängt wie die HD-Portraits eine eigene Sektion an (etwa +1 KB),
-> die `Wow.exe` wird dadurch größer. **Viele Server tolerieren eine veränderte
-> Dateigröße der `Wow.exe` nicht – das kann zu einem Bann führen.**
+> die `Wow.exe` wird dadurch größer. Das ist keine sichere Bann-Gefahr, aber
+> ein Risiko: Manche Server prüfen die Dateigröße der `Wow.exe`.
 
 ## Sound
 

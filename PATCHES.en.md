@@ -175,8 +175,8 @@ it in its DLL. Here the four hooks live in a section of their own (`.glyph`,
 223 bytes), and one function is rewritten in place.
 
 > [!WARNING]
-> The patch appends a section – `Wow.exe` gets larger. Many servers do not
-> tolerate that (ban risk).
+> The patch appends a section – `Wow.exe` gets larger. This does not mean a certain
+> ban, but it is a risk: some servers check the file size.
 
 > [!NOTE]
 > Compatible with awesome_wotlk: its MSDF fonts hook other places in the same
@@ -789,8 +789,8 @@ writable); this makes `Wow.exe` slightly larger.
 > Servers with anti-cheat may detect jumps in the air – this can lead to a ban.
 >
 > This patch appends a section of its own, which makes `Wow.exe` larger.
-> **Many servers do not tolerate a changed file size of `Wow.exe` – this can lead
-> to a ban.**
+> This does not mean a certain ban, but it is a risk: some servers check the file size
+> of `Wow.exe`.
 
 <a id="patch-noammo"></a>
 **Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))* 🟠 **[untested on public servers and in game]**
@@ -1150,8 +1150,8 @@ otherwise read past the source.
 > [!WARNING]
 > This patch appends a new PE section `.hdp` to `Wow.exe` (generated 256px alpha
 > mask + code caves + detour of the mask builder), the file grows by about
-> 69 KB. **Many servers do not tolerate a changed file size of `Wow.exe` – this
-> can lead to a ban.**
+> 69 KB. This does not mean a certain ban, but it is a risk: some servers check the
+> file size of `Wow.exe`.
 
 > [!NOTE]
 > **Together with awesome_wotlk (No. 27):** `AwesomeWotlkLib.dll` brings its own
@@ -1177,7 +1177,8 @@ which does it in its DLL. Icons at the font's original size stay unchanged.
 
 > [!WARNING]
 > The patch appends a small section (`.isnap`, 179 bytes) – `Wow.exe` gets
-> larger. Many servers do not tolerate that (ban risk).
+> larger. This does not mean a certain ban, but it is a risk: some servers check the
+> file size.
 
 ## Interface & comfort
 
@@ -1475,8 +1476,8 @@ overwrites the table of the slider patch.
 
 > [!WARNING]
 > Like the HD portraits, this patch appends a section of its own (about +1 KB),
-> which makes `Wow.exe` larger. **Many servers do not tolerate a changed file
-> size of `Wow.exe` – this can lead to a ban.**
+> which makes `Wow.exe` larger. This does not mean a certain ban, but it is a risk: some
+> servers check the file size of `Wow.exe`.
 
 ## Sound
 

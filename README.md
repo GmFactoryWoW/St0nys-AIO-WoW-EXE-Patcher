@@ -127,7 +127,7 @@ Before the confirmation prompt the patcher shows **notes** – nothing is blocke
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
 completely replaces the RCE fix) and when selected patches carry a warning –
-red for ban risk and a larger `Wow.exe`, yellow for patches that are still
+red for ban risk, yellow for a larger `Wow.exe` and for patches that are still
 untested on public servers or in game (see [Notes](#notes)).
 
 ### The selection is remembered
@@ -280,9 +280,9 @@ Click the number of a patch to jump to its description.
 > - 🟠 **[untested in game]** – **function untested in game**: the patch has
 >   not been checked in game yet and may be buggy. The patcher shows a yellow
 >   note before patching.
-> - 🟡 **[exe grows]** – the patch appends a section to `Wow.exe`. Many servers do
->   not tolerate a changed file size – this can lead to a ban. The patcher
->   shows a red warning before patching.
+> - 🟡 **[exe grows]** – the patch appends a section to `Wow.exe`. This does not
+>   mean a certain ban, but it is a risk: some servers check the file size of
+>   `Wow.exe`. The patcher shows a yellow note before patching.
 >
 > A patch can carry several warnings, e.g. 🟠 **[untested on public servers
 > and in game]** 🟡 **[exe grows]**.
@@ -461,9 +461,9 @@ clicking the number of a patch takes you straight to its description.
     possibly buggy: No. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 and 75
     (yellow note).
   - 🟡 **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
-    63, 64, 74 and 80. Many servers do not tolerate a changed file size – this
-    can lead to a ban (red warning). All other patches do not change the file
-    size.
+    63, 64, 74 and 80. This does not mean a certain ban, but it is a risk: some
+    servers check the file size (yellow note). All other patches do not change
+    the file size.
 - **Signature:** the original `Wow.exe` is digitally signed by Blizzard. Every
   patch invalidates this signature. Windows will therefore probably warn about
   an unsigned, potentially harmful app when it starts; with "More info" → "Run
