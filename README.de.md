@@ -132,9 +132,9 @@ Vor der Sicherheitsabfrage zeigt der Patcher **Hinweise** an, gesperrt wird
 nichts: wenn ein Ergänzungs-Patch fehlt (z. B. brauchen die erweiterten
 Slider-Maxima die CVar-Unlocks), wenn ein Patch einen anderen überflüssig macht
 (Warden komplett abschalten ersetzt den RCE-Fix) und wenn gewählte Patches eine
-Warnung tragen – rot bei Bann-Gefahr, gelb bei vergrößerter `Wow.exe` und bei
-Patches, die auf öffentlichen Servern oder im Spiel noch ungetestet sind (siehe
-[Hinweise](#hinweise)).
+Warnung tragen – mit roter Warnung bei Bann-Gefahr und bei Patches, die auf
+öffentlichen Servern oder im Spiel noch ungetestet sind, gelb bei vergrößerter
+`Wow.exe` (siehe [Hinweise](#hinweise)).
 
 ### Auswahl wird gespeichert
 
@@ -287,10 +287,12 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 >   erlauben. Der Patcher zeigt vor dem Patchen eine rote Warnung.
 > - 🟠 **[auf öffentlichen Servern ungetestet]** – **nicht auf öffentlichen
 >   Servern getestet, mögliche Bann-Gefahr**: Vorsicht, kann zu Kick/Bann
->   führen. Der Patcher zeigt vor dem Patchen einen gelben Hinweis.
+>   führen. Niemand kann vorhersagen, wie der Server darauf reagiert – der
+>   Patcher zeigt vor dem Patchen eine rote Warnung.
 > - 🟠 **[im Spiel ungetestet]** – **Funktion im Spiel ungetestet**: Der Patch
->   ist im Spiel noch nicht geprüft und möglicherweise verbuggt. Der Patcher
->   zeigt vor dem Patchen einen gelben Hinweis.
+>   ist im Spiel noch nicht geprüft und möglicherweise verbuggt. Niemand kann
+>   vorhersagen, wie das Spiel darauf reagiert – der Patcher zeigt vor dem
+>   Patchen eine rote Warnung.
 > - 🟡 **[Exe wird größer]** – der Patch hängt eine Sektion an die `Wow.exe` an.
 >   Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen
 >   die Dateigröße der `Wow.exe`. Der Patcher zeigt vor dem Patchen einen
@@ -468,10 +470,10 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
     11, 23–25, 41, 42, 45–50, 74 und 82–86 (rote Warnung).
   - 🟠 **auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr, Vorsicht,
     kann zu Kick/Bann führen: Nr. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73, 75 und
-    80 (gelber Hinweis).
+    80 (rote Warnung).
   - 🟠 **im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
     möglicherweise verbuggt: Nr. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 und 75
-    (gelber Hinweis).
+    (rote Warnung).
   - 🟡 **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
     Nr. 9, 50, 63, 64, 74 und 80. Das ist keine sichere Bann-Gefahr,
     aber ein Risiko: Manche Server prüfen die Dateigröße (gelber Hinweis). Alle

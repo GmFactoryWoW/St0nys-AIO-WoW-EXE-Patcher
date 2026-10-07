@@ -127,8 +127,8 @@ Before the confirmation prompt the patcher shows **notes** – nothing is blocke
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
 completely replaces the RCE fix) and when selected patches carry a warning –
-red for ban risk, yellow for a larger `Wow.exe` and for patches that are still
-untested on public servers or in game (see [Notes](#notes)).
+with a red warning for ban risk and for patches that are still untested on
+public servers or in game, yellow for a larger `Wow.exe` (see [Notes](#notes)).
 
 ### The selection is remembered
 
@@ -275,11 +275,12 @@ Click the number of a patch to jump to its description.
 >   many servers. Only use it on servers that allow it. The patcher shows a
 >   red warning before patching.
 > - 🟠 **[untested on public servers]** – **not tested on public servers,
->   possible ban risk**: careful, it may get you kicked or banned. The patcher
->   shows a yellow note before patching.
+>   possible ban risk**: careful, it may get you kicked or banned. Nobody can
+>   predict how the server will react – the patcher shows a red warning before
+>   patching.
 > - 🟠 **[untested in game]** – **function untested in game**: the patch has
->   not been checked in game yet and may be buggy. The patcher shows a yellow
->   note before patching.
+>   not been checked in game yet and may be buggy. Nobody can predict how the
+>   game will react – the patcher shows a red warning before patching.
 > - 🟡 **[exe grows]** – the patch appends a section to `Wow.exe`. This does not
 >   mean a certain ban, but it is a risk: some servers check the file size of
 >   `Wow.exe`. The patcher shows a yellow note before patching.
@@ -456,10 +457,10 @@ clicking the number of a patch takes you straight to its description.
     41, 42, 45–50, 74 and 82–86 (red warning).
   - 🟠 **untested on public servers** – possible ban risk, careful, may get
     you kicked or banned: No. 4, 7–9, 26, 29, 44, 51, 62–64, 68, 70–73, 75 and
-    80 (yellow note).
+    80 (red warning).
   - 🟠 **untested in game** – the function has not been checked in game yet,
     possibly buggy: No. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 and 75
-    (yellow note).
+    (red warning).
   - 🟡 **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
     63, 64, 74 and 80. This does not mean a certain ban, but it is a risk: some
     servers check the file size (yellow note). All other patches do not change

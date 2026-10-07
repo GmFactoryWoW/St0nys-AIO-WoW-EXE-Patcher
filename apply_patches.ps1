@@ -164,8 +164,9 @@ $TEXT = @{
         CheatHead     = 'ACHTUNG - Bann-Gefahr: Diese Patches koennen von Servern als Cheat oder Botting gewertet werden:'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
         PublicHead    = 'VORSICHT: Diese Patches sind nicht auf oeffentlichen Servern getestet - moegliche Bann-Gefahr:'
-        PublicBan     = 'Sie koennen zu einem Kick oder Bann fuehren.'
+        PublicBan     = 'ACHTUNG: Ungetestet - niemand kann vorhersagen, wie der Server darauf reagiert. Das kann zu einem Kick oder Bann fuehren!'
         UntestedHead  = 'HINWEIS: Die Funktion dieser Patches ist im Spiel ungetestet - moeglicherweise verbuggt:'
+        UntestedWarn  = 'ACHTUNG: Ungetestet - niemand kann vorhersagen, wie das Spiel darauf reagiert. Fehler oder Abstuerze sind moeglich!'
         TagBan        = 'Bann-Gefahr'
         TagPublic     = 'auf oeffentlichen Servern ungetestet'
         TagGame       = 'im Spiel ungetestet'
@@ -264,8 +265,9 @@ $TEXT = @{
         CheatHead     = 'WARNING - ban risk: servers may treat these patches as cheating or botting:'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
         PublicHead    = 'CAUTION: These patches have not been tested on public servers - possible ban risk:'
-        PublicBan     = 'They may get you kicked or banned.'
+        PublicBan     = 'WARNING: Untested - nobody can predict how the server will react. This may get you kicked or banned!'
         UntestedHead  = 'NOTE: These patches have not been tested in game - possibly buggy:'
+        UntestedWarn  = 'WARNING: Untested - nobody can predict how the game will react. Bugs or crashes are possible!'
         TagBan        = 'ban risk'
         TagPublic     = 'untested on public servers'
         TagGame       = 'untested in game'
@@ -5127,7 +5129,7 @@ if ($public.Count -gt 0) {
     Write-Host ''
     Say (T 'PublicHead') 'Yellow'
     foreach ($m in $public) { Say "  - $m" 'Yellow' }
-    Say (T 'PublicBan') 'Yellow'
+    Say (T 'PublicBan') 'Red'
 }
 $untested = @()
 foreach ($p in $chosen) { if ($p.GameUntested) { $untested += PatchRef $p } }
@@ -5135,6 +5137,7 @@ if ($untested.Count -gt 0) {
     Write-Host ''
     Say (T 'UntestedHead') 'Yellow'
     foreach ($m in $untested) { Say "  - $m" 'Yellow' }
+    Say (T 'UntestedWarn') 'Red'
 }
 Write-Host ''
 
