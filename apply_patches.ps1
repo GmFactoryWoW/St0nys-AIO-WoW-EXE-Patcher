@@ -17,14 +17,14 @@
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "reforged"
-#                             (Preset Project Reforged = Standard), "billy"
+#                             (Preset Reforged = Standard), "billy"
 #                             (Preset Billy's_Wow.exe), "stony" (Preset
 #                             St0nys_Wow.exe), "all", "none"
 #                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
-#                             gespeicherte Auswahl bzw. das Preset Project Reforged
+#                             gespeicherte Auswahl bzw. das Preset Reforged
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 #
 #  Fuer Entwickler:
@@ -99,12 +99,13 @@ $TEXT = @{
         Welcome3      = 'erweiterte Sichtweiten und verbesserte Sound-Einstellungen.'
         Welcome4      = 'Beim ersten Patchen wird das Original als Wow.exe.ORI gesichert, danach die vorherige Wow.exe als Wow.exe.BAK.'
         Welcome5      = 'Eingespielte Patches lassen sich spaeter wieder abwaehlen - bis zurueck zum Original.'
-        StartWarn1    = 'HINWEIS: Die meisten Patches sind im Spiel getestet. Solange keiner gewaehlt ist,'
-        StartWarn2    = 'der als Bann-Gefahr markiert ist oder die Wow.exe vergroessert, sollte auch auf'
-        StartWarn3    = 'oeffentlichen Servern nichts passieren - eine 100%-Garantie gibt es aber nicht.'
-        StartWarn4    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
-        StartWarn5    = 'Benutzung auf eigene Gefahr.'
-        Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
+        StartWarn1    = 'HINWEIS: Patches ohne Warnung in eckigen Klammern sind im Spiel getestet und sollten auch'
+        StartWarn2    = 'auf oeffentlichen Servern unbedenklich sein - eine 100%-Garantie gibt es aber nicht.'
+        StartWarn3    = 'Warnungen: [unsicher] (Bann-Gefahr), [online ungetestet] (Vorsicht, kann zu Kick/Bann fuehren),'
+        StartWarn4    = '[ingame ungetestet] (moeglicherweise verbuggt), [ungetestet], [Exe wird groesser] (Bann-Risiko).'
+        StartWarn5    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
+        StartWarn6    = 'Benutzung auf eigene Gefahr.'
+        Thanks        = 'Danke an Billy Hoyle, MacWarrior und Stormhand fuer ihre Hilfe und die vielen Tests im Spiel!'
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
         Checking      = 'Pruefe Wow.exe Integritaet...'
@@ -126,7 +127,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresetR   = 'R = Preset Project Reforged (Standard, sicher)'
+        MenuPresetR   = 'R = Preset Reforged (Standard, sicher)'
         MenuPresets   = 'B = Preset Billy''s_Wow.exe (erprobte Basis, sicher)    S = Preset St0nys_Wow.exe (unsicher)'
         StonyWarning  = 'Achtung: Das Preset St0nys_Wow.exe sollte unter keinen Umstaenden auf oeffentlichen Servern verwendet werden - das fuehrt wahrscheinlich zu einem Bann!'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
@@ -159,10 +160,18 @@ $TEXT = @{
         Hint          = 'wirkt nur vollstaendig zusammen mit:'
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
-        GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
-        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
-        DllHint       = 'HINWEIS: Der Patch selbst ist unkritisch. Erst die geladene DLL kann auf Servern mit Anti-Cheat auffallen - nur dort einsetzen, wo awesome_wotlk erlaubt ist.'
+        GrowBan       = 'Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche Server pruefen die Groesse der Wow.exe.'
+        CheatHead     = 'ACHTUNG - unsicher, Bann-Gefahr: Diese Patches koennen von Servern als Cheat oder Botting gewertet werden:'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
+        PublicHead    = 'VORSICHT: Diese Patches sind nicht auf oeffentlichen Servern getestet - moegliche Bann-Gefahr:'
+        PublicBan     = 'ACHTUNG: Ungetestet - niemand kann vorhersagen, wie der Server darauf reagiert. Das kann zu einem Kick oder Bann fuehren!'
+        UntestedHead  = 'HINWEIS: Die Funktion dieser Patches ist im Spiel ungetestet - moeglicherweise verbuggt:'
+        UntestedWarn  = 'ACHTUNG: Ungetestet - niemand kann vorhersagen, wie das Spiel darauf reagiert. Fehler oder Abstuerze sind moeglich!'
+        TagBan        = 'unsicher'
+        TagPublic     = 'online ungetestet'
+        TagGame       = 'ingame ungetestet'
+        TagBoth       = 'ungetestet'
+        TagGrow       = 'Exe wird groesser'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
@@ -191,12 +200,13 @@ $TEXT = @{
         Welcome3      = 'extended view distances and improved sound settings.'
         Welcome4      = 'The first patch run saves the original as Wow.exe.ORI, later runs save the previous Wow.exe as Wow.exe.BAK.'
         Welcome5      = 'Applied patches can be deselected later - all the way back to the original.'
-        StartWarn1    = 'NOTE: Most patches have been tested in game. As long as none is selected that'
-        StartWarn2    = 'is marked as a ban risk or makes Wow.exe larger, nothing should happen on'
-        StartWarn3    = 'public servers either - but there is no 100% guarantee.'
-        StartWarn4    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
-        StartWarn5    = 'Use at your own risk.'
-        Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
+        StartWarn1    = 'NOTE: Patches without a warning in square brackets have been tested in game and should be'
+        StartWarn2    = 'harmless on public servers as well - but there is no 100% guarantee.'
+        StartWarn3    = 'Warnings: [unsafe] (ban risk), [untested online] (careful, may get you kicked/banned),'
+        StartWarn4    = '[untested ingame] (possibly buggy), [untested], [exe grows] (possible ban risk).'
+        StartWarn5    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
+        StartWarn6    = 'Use at your own risk.'
+        Thanks        = 'Thanks to Billy Hoyle, MacWarrior and Stormhand for their help and all the testing in game!'
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
         Checking      = 'Checking Wow.exe integrity...'
@@ -218,7 +228,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresetR   = 'R = preset Project Reforged (default, safe)'
+        MenuPresetR   = 'R = preset Reforged (default, safe)'
         MenuPresets   = 'B = preset Billy''s_Wow.exe (proven base, safe)    S = preset St0nys_Wow.exe (unsafe)'
         StonyWarning  = 'Warning: the preset St0nys_Wow.exe should never be used on public servers under any circumstances - it will most likely get you banned!'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
@@ -251,10 +261,18 @@ $TEXT = @{
         Hint          = 'only takes full effect together with:'
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
-        GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
-        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
-        DllHint       = 'NOTE: The patch itself is harmless. Only the loaded DLL may be noticed by servers with anti-cheat - use it only where awesome_wotlk is allowed.'
+        GrowBan       = 'This does not mean a certain ban, but it is a risk: some servers check the size of Wow.exe.'
+        CheatHead     = 'WARNING - unsafe, ban risk: servers may treat these patches as cheating or botting:'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
+        PublicHead    = 'CAUTION: These patches have not been tested on public servers - possible ban risk:'
+        PublicBan     = 'WARNING: Untested - nobody can predict how the server will react. This may get you kicked or banned!'
+        UntestedHead  = 'NOTE: These patches have not been tested in game - possibly buggy:'
+        UntestedWarn  = 'WARNING: Untested - nobody can predict how the game will react. Bugs or crashes are possible!'
+        TagBan        = 'unsafe'
+        TagPublic     = 'untested online'
+        TagGame       = 'untested ingame'
+        TagBoth       = 'untested'
+        TagGrow       = 'exe grows'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
@@ -289,17 +307,34 @@ function Say([string]$text, [string]$color) {
     if ($color) { Write-Host "  $text" -ForegroundColor $color } else { Write-Host "  $text" }
 }
 
-function PatchName($p) {
+function PatchName($p, [switch]$NoTags) {
     if ($script:lang -eq 'en') { $n = $p.En; $note = $p.NoteEn } else { $n = $p.De; $note = $p.NoteDe }
     if ($note) { $n = "$n ($note)" }
+    if ($NoTags) { return $n }
+    $tags = @(PatchTags $p)
+    if ($tags.Count -gt 0) { $n = "$n [$($tags -join ', ')]" }
     return $n
 }
 
-# Name mit Patch-Nummer davor ("Nr. 64 ..."), fuer Hinweise auf andere Patches.
+# Einheitliche Warnungen (Warn-Codes): BanRisk = Bann-Gefahr (2),
+# PublicUntested = nicht auf oeffentlichen Servern getestet (3),
+# GameUntested = Funktion im Spiel ungetestet (4), dazu GrowsExe.
+function PatchTags($p) {
+    $tags = @()
+    if ($p.BanRisk) { $tags += T 'TagBan' }
+    if ($p.PublicUntested -and $p.GameUntested) { $tags += T 'TagBoth' }
+    elseif ($p.PublicUntested) { $tags += T 'TagPublic' }
+    elseif ($p.GameUntested) { $tags += T 'TagGame' }
+    if ($p.GrowsExe) { $tags += T 'TagGrow' }
+    return $tags
+}
+
+# Name mit Patch-Nummer davor ("Nr. 64 ..."), fuer Hinweise auf andere Patches
+# (ohne Warnungen - die Hinweisliste nennt sie schon).
 function PatchRef($p) {
     $nr = [array]::IndexOf($patches, $p) + 1
-    if ($script:lang -eq 'en') { return "No. $nr $(PatchName $p)" }
-    return "Nr. $nr $(PatchName $p)"
+    if ($script:lang -eq 'en') { return "No. $nr $(PatchName $p -NoTags)" }
+    return "Nr. $nr $(PatchName $p -NoTags)"
 }
 
 # Eingabe lesen. Read-Host liefert bei Strg+Z bzw. geschlossener Eingabe $null -
@@ -1528,6 +1563,638 @@ function Test-DoubleJump([string]$v) {
 }
 
 # ============================================================
+#  Schrift-Glyphen-Fix (tb, ported by St0ny)
+#  Blizzard-Fehler im Glyphen-Cache: Texte (vor allem Zahlen, Schaden,
+#  Chat) zeigen zeitweise falsche, abgeschnittene oder fremde Zeichen.
+#  Der Cache legt die gerenderten Zeichen auf 256 Pixel breiten Zeilen
+#  von Textur-Seiten ab und verdraengt alte, wenn er voll ist. Dabei
+#  passieren mehrere Fehler, die WotLK-Extensions (Fork von tb)
+#  per DLL behebt - hier dasselbe in einer eigenen Sektion (.glyph):
+#  - CreateNewDesc (VA 0x6C5120): Der Merker "breiteste freie Luecke"
+#    einer Zeile ([Zeile+0]) wird nie aktualisiert. Der Hook rechnet ihn
+#    vor jedem Einfuegen aus der Zeichenliste der Zeile neu aus
+#    (Knoten: Start +30h, Ende +34h, naechster [Knoten+Linkoffset+4]).
+#  - ClearInstanceData (VA 0x6C6B90): Die Merker "benutzte Seiten" (+60h)
+#    und "Seite verdraengt" (+64h) des Strings bleiben stehen - werden
+#    jetzt mit geloescht. Die Original-Funktion liest beide nicht.
+#  - CheckGeometry (VA 0x6C7480, an Ort und Stelle neu geschrieben): Ist
+#    eine Seite des Strings verdraengt worden, wird er immer komplett
+#    geloescht und neu aufgebaut (das Original loescht ihn nur, wenn
+#    eine weitere Pruefung bei VA 0x6C29A0 fehlschlaegt).
+#  - RenderBatch (VA 0x6C4AD0): Vor dem Zeichnen werden alle Strings des
+#    Batches neu aufgebaut; verdraengt das einen anderen String, folgen
+#    bis zu drei weitere Durchgaenge nur fuer die verdraengten.
+#  - TextureCallback (VA 0x6C9F50): Beim Hochladen einer Seite (Befehl 1)
+#    wird der Upload-Puffer (VA 0xC7D328, 128 KB) erst geleert, sonst
+#    landen Reste alter Zeichen auf der neuen Seite.
+#  Code-Sprungadressen werden beim Patchen aus der Lage der Sektion
+#  berechnet ($CAVE). Die Sektion ist nur ausfuehrbar, nicht beschreibbar.
+# ============================================================
+function Add-GlyphCacheFix {
+    $NEWDESC = 0x6C5120; $CLEAR = 0x6C6B90; $CHECK = 0x6C7480; $RENDER = 0x6C4AD0; $TEXCB = 0x6C9F50
+    Assert-Bytes ($NEWDESC - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x0C) 'Glyphen-Fix'
+    Assert-Bytes ($CLEAR - 0x400C00) @(0x56, 0x57, 0x8B, 0xF1, 0x6A, 0x00) 'Glyphen-Fix'
+    Assert-Bytes ($CHECK - 0x400C00) @(
+        0x56, 0x8B, 0xF1, 0x83, 0x7E, 0x64, 0x00, 0x74, 0x1E, 0x8B, 0x46, 0x48, 0x8B, 0x4E, 0x44, 0x50,
+        0xE8, 0x0B, 0xB5, 0xFF, 0xFF, 0x85, 0xC0, 0x75, 0x07, 0x8B, 0xCE, 0xE8, 0xF0, 0xF6, 0xFF, 0xFF,
+        0xC7, 0x46, 0x64, 0x00, 0x00, 0x00, 0x00, 0x8B, 0xCE, 0xE8, 0x62, 0x06, 0x00, 0x00, 0x33, 0xC0,
+        0x39, 0x86, 0xB0, 0x00, 0x00, 0x00, 0xC7, 0x86, 0xD4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x0F, 0x95, 0xC0, 0x5E, 0xC3
+    ) 'Glyphen-Fix'
+    Assert-Bytes ($RENDER - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x20) 'Glyphen-Fix'
+    Assert-Bytes ($TEXCB - 0x400C00) @(0x55, 0x8B, 0xEC, 0x51, 0x83, 0x7D, 0x08, 0x01) 'Glyphen-Fix'
+    $loc = Add-CodeSection '.glyph' 0xDF
+    $CAVE = $loc[0]
+    $c = New-Object System.Collections.Generic.List[byte]
+    # --- CreateNewDesc (VA 0x6C5120), ecx = Zeile: breiteste freie Luecke neu berechnen ---
+    # newdesc:
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x53)                                          # push ebx
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $c @(0x31, 0xD2)                                    # xor edx,edx
+    AddRaw $c @(0x8B, 0x71, 0x0C)                              # mov esi,[ecx+0xC]
+    AddRaw $c @(0x8B, 0x79, 0x04)                              # mov edi,[ecx+4]
+    # nd_loop:
+    AddRaw $c @(0x85, 0xF6)                                    # test esi,esi
+    AddRaw $c @(0x74, 0x21)                                    # jz nd_end
+    AddRaw $c @(0xF7, 0xC6, 0x01, 0x00, 0x00, 0x00)            # test esi,1
+    AddRaw $c @(0x75, 0x19)                                    # jnz nd_end
+    AddRaw $c @(0x8B, 0x5E, 0x30)                              # mov ebx,[esi+0x30]
+    AddRaw $c @(0x39, 0xD3)                                    # cmp ebx,edx
+    AddRaw $c @(0x76, 0x08)                                    # jbe nd_skip
+    AddRaw $c @(0x29, 0xD3)                                    # sub ebx,edx
+    AddRaw $c @(0x39, 0xC3)                                    # cmp ebx,eax
+    AddRaw $c @(0x76, 0x02)                                    # jbe nd_skip
+    AddRaw $c @(0x89, 0xD8)                                    # mov eax,ebx
+    # nd_skip:
+    AddRaw $c @(0x8B, 0x56, 0x34)                              # mov edx,[esi+0x34]
+    AddRaw $c @(0x42)                                          # inc edx
+    AddRaw $c @(0x8B, 0x74, 0x3E, 0x04)                        # mov esi,[esi+edi+4]
+    AddRaw $c @(0xEB, 0xDB)                                    # jmp nd_loop
+    # nd_end:
+    AddRaw $c @(0xBB, 0x00, 0x01, 0x00, 0x00)                  # mov ebx,0x100
+    AddRaw $c @(0x39, 0xD3)                                    # cmp ebx,edx
+    AddRaw $c @(0x76, 0x08)                                    # jbe nd_store
+    AddRaw $c @(0x29, 0xD3)                                    # sub ebx,edx
+    AddRaw $c @(0x39, 0xC3)                                    # cmp ebx,eax
+    AddRaw $c @(0x76, 0x02)                                    # jbe nd_store
+    AddRaw $c @(0x89, 0xD8)                                    # mov eax,ebx
+    # nd_store:
+    AddRaw $c @(0x89, 0x01)                                    # mov [ecx],eax
+    AddRaw $c @(0x5B)                                          # pop ebx
+    AddRaw $c @(0x5F)                                          # pop edi
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x83, 0xEC, 0x0C)                              # sub esp,0xC
+    AddRaw $c @(0xE9); AddLE32 $c (0x6C5126 - ($CAVE + 0x53))  # jmp 0x6C5126  (CreateNewDesc+6)
+    # --- ClearInstanceData (VA 0x6C6B90), ecx = String: Seiten-Merker loeschen ---
+    # clear:
+    AddRaw $c @(0x83, 0x61, 0x60, 0x00)                        # and dword ptr [ecx+0x60],0
+    AddRaw $c @(0x83, 0x61, 0x64, 0x00)                        # and dword ptr [ecx+0x64],0
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x89, 0xCE)                                    # mov esi,ecx
+    AddRaw $c @(0x6A, 0x00)                                    # push 0
+    AddRaw $c @(0xE9); AddLE32 $c (0x6C6B96 - ($CAVE + 0x66))  # jmp 0x6C6B96  (ClearInstanceData+6)
+    # --- RenderBatch (VA 0x6C4AD0), ecx = Batch: Geometrie vor dem Zeichnen neu aufbauen ---
+    # render:
+    AddRaw $c @(0x53)                                          # push ebx
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xCB)                                    # mov ebx,ecx
+    AddRaw $c @(0x31, 0xED)                                    # xor ebp,ebp
+    # rb_pass:
+    AddRaw $c @(0x31, 0xFF)                                    # xor edi,edi
+    AddRaw $c @(0x8B, 0x73, 0x24)                              # mov esi,[ebx+0x24]
+    # rb_str:
+    AddRaw $c @(0x85, 0xF6)                                    # test esi,esi
+    AddRaw $c @(0x74, 0x25)                                    # jz rb_end
+    AddRaw $c @(0xF7, 0xC6, 0x01, 0x00, 0x00, 0x00)            # test esi,1
+    AddRaw $c @(0x75, 0x1D)                                    # jnz rb_end
+    AddRaw $c @(0x8B, 0x46, 0x64)                              # mov eax,[esi+0x64]
+    AddRaw $c @(0x85, 0xED)                                    # test ebp,ebp
+    AddRaw $c @(0x74, 0x04)                                    # jz rb_do
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x74, 0x09)                                    # jz rb_next
+    # rb_do:
+    AddRaw $c @(0x09, 0xC7)                                    # or edi,eax
+    AddRaw $c @(0x89, 0xF1)                                    # mov ecx,esi
+    AddRaw $c @(0xE8); AddLE32 $c (0x6C7480 - ($CAVE + 0x93))  # call 0x6C7480  (CheckGeometry)
+    # rb_next:
+    AddRaw $c @(0x8B, 0x43, 0x1C)                              # mov eax,[ebx+0x1C]
+    AddRaw $c @(0x8B, 0x74, 0x06, 0x04)                        # mov esi,[esi+eax+4]
+    AddRaw $c @(0xEB, 0xD7)                                    # jmp rb_str
+    # rb_end:
+    AddRaw $c @(0x85, 0xFF)                                    # test edi,edi
+    AddRaw $c @(0x74, 0x06)                                    # jz rb_out
+    AddRaw $c @(0x45)                                          # inc ebp
+    AddRaw $c @(0x83, 0xFD, 0x04)                              # cmp ebp,4
+    AddRaw $c @(0x72, 0xC8)                                    # jb rb_pass
+    # rb_out:
+    AddRaw $c @(0x89, 0xD9)                                    # mov ecx,ebx
+    AddRaw $c @(0x5D)                                          # pop ebp
+    AddRaw $c @(0x5F)                                          # pop edi
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0x5B)                                          # pop ebx
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x83, 0xEC, 0x20)                              # sub esp,0x20
+    AddRaw $c @(0xE9); AddLE32 $c (0x6C4AD6 - ($CAVE + 0xB7))  # jmp 0x6C4AD6  (RenderBatch+6)
+    # --- TextureCallback (VA 0x6C9F50, cdecl): Upload-Puffer vor dem Fuellen leeren ---
+    # tex:
+    AddRaw $c @(0x83, 0x7C, 0x24, 0x04, 0x01)                  # cmp dword ptr [esp+4],1
+    AddRaw $c @(0x75, 0x14)                                    # jne tx_go
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x51)                                          # push ecx
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xBF, 0x28, 0xD3, 0xC7, 0x00)                  # mov edi,0xC7D328  (Glyphen-Upload-Puffer)
+    AddRaw $c @(0xB9, 0x00, 0x80, 0x00, 0x00)                  # mov ecx,0x8000
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $c @(0xF3, 0xAB)                                    # rep stosd
+    AddRaw $c @(0x58)                                          # pop eax
+    AddRaw $c @(0x59)                                          # pop ecx
+    AddRaw $c @(0x5F)                                          # pop edi
+    # tx_go:
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x51)                                          # push ecx
+    AddRaw $c @(0x83, 0x7D, 0x08, 0x01)                        # cmp dword ptr [ebp+8],1
+    AddRaw $c @(0xE9); AddLE32 $c (0x6C9F58 - ($CAVE + 0xDF))  # jmp 0x6C9F58  (TextureCallback+8)
+    if ($c.Count -ne 0xDF) { throw 'Glyphen-Fix: Sektion hat die falsche Groesse.' }
+    Patch $loc[1] $c.ToArray()
+    # Einspruenge: jmp in die Sektion, Rest der ueberschriebenen Befehle mit nop
+    Patch ($NEWDESC - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $NEWDESC ($CAVE + 0x0)) + [byte[]](0x90)))
+    Patch ($CLEAR - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $CLEAR ($CAVE + 0x53)) + [byte[]](0x90)))
+    Patch ($RENDER - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $RENDER ($CAVE + 0x66)) + [byte[]](0x90)))
+    Patch ($TEXCB - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $TEXCB ($CAVE + 0xB7)) + [byte[]](0x90, 0x90, 0x90)))
+    # CheckGeometry neu (45 statt 69 Byte, Rest int3). Der Aufruf von
+    # ClearInstanceData laeuft ueber den Hook oben und loescht +60h/+64h mit.
+    $k = New-Object System.Collections.Generic.List[byte]
+    AddRaw $k @(0x56)                                          # push esi
+    AddRaw $k @(0x89, 0xCE)                                    # mov esi,ecx
+    AddRaw $k @(0x83, 0x7E, 0x64, 0x00)                        # cmp dword ptr [esi+0x64],0
+    AddRaw $k @(0x74, 0x07)                                    # je L
+    AddRaw $k @(0x89, 0xF1)                                    # mov ecx,esi
+    AddRaw $k @(0xE8, 0x00, 0xF7, 0xFF, 0xFF)                  # call 0x6C6B90  (ClearInstanceData)
+    # L:
+    AddRaw $k @(0x89, 0xF1)                                    # mov ecx,esi
+    AddRaw $k @(0xE8, 0x79, 0x06, 0x00, 0x00)                  # call 0x6C7B10  (CreateGeometry)
+    AddRaw $k @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $k @(0x89, 0x46, 0x64)                              # mov [esi+0x64],eax
+    AddRaw $k @(0x89, 0x86, 0xD4, 0x00, 0x00, 0x00)            # mov [esi+0xD4],eax
+    AddRaw $k @(0x39, 0x86, 0xB0, 0x00, 0x00, 0x00)            # cmp [esi+0xB0],eax
+    AddRaw $k @(0x0F, 0x95, 0xC0)                              # setne al
+    AddRaw $k @(0x5E)                                          # pop esi
+    AddRaw $k @(0xC3)                                          # ret
+    while ($k.Count -lt 69) { $k.Add([byte]0xCC) }
+    Patch ($CHECK - 0x400C00) $k.ToArray()
+}
+
+# ============================================================
+#  Aktionstasten gedrueckt halten zum Wiederholen (tb, ported by St0ny)
+#  Haelt man die Taste einer Aktionsleisten-Belegung (ACTIONBUTTON1-12,
+#  die Hauptleiste mit Seiten- und Bonusleisten-Wechsel wie im Fork),
+#  loest der Client die Aktion wiederholt aus - wie in WotLK-Extensions
+#  (Fork von tb) mit actionButtonHoldRepeat = 2 (dauerhaft):
+#  - ExecKey (VA 0x563150): Beim Druecken merkt sich der Hook Taste,
+#    Aktions-Slot und Zeit (bis 8 Tasten gleichzeitig). Beim Loslassen
+#    wird der Eintrag geloescht; hat er schon wiederholt, unterdrueckt er
+#    das normale Ausloesen beim Loslassen (UseAction-Hook).
+#  - OnWorldRender (VA 0x4F8EA0): Nach jedem Bild prueft der Hook jede
+#    gehaltene Taste: fruehestens 500 ms nach dem Druecken, nicht waehrend
+#    der Spieler zaubert oder kanalisiert (Zauberleiste: laufender Zauber
+#    [Spieler+A6Ch] bis [Spieler+A7Ch], Kanalisierung [Spieler+A80h] bis
+#    [Spieler+A88h], wie UnitCastingInfo/UnitChannelInfo) oder ein Zauber
+#    auf sein Ziel wartet ([0xD3F4E4]), nicht waehrend der Abklingzeit
+#    (GetCooldown, auch globale), erst 100 ms nachdem die Aktion wieder
+#    bereit ist und hoechstens alle 100 ms ruft er UseAction auf.
+#  - Fokus-Ereignis (EventRegisterEx, Ereignis 2, beim ersten Druck
+#    angemeldet): Verliert das Fenster den Fokus, werden alle gehaltenen
+#    Tasten vergessen (sonst wiederholt es ohne Loslassen ewig).
+#  Die Zustaende stehen in derselben Sektion (.hrep), die darum
+#  beschreibbar sein muss: +0 acht Eintraege zu 32 Byte (Taste, Slot,
+#  Druckzeit, letzte Wiederholung, bereit seit, wiederholt, aktiv),
+#  +100h Unterdrueck-Merker, +104h Ereignis angemeldet, +108h GUID (0),
+#  +110h leerer Text, +114h "ACTIONBUTTON". Code ab +120h.
+# ============================================================
+function Add-HoldRepeat {
+    $EXEC = 0x563150; $USE = 0x5ABBC0; $RENDER = 0x4F8EA0
+    Assert-Bytes ($EXEC - 0x400C00) @(0x55, 0x8B, 0xEC, 0x81, 0xEC, 0xC4, 0x00, 0x00, 0x00) 'Gedrueckt halten'
+    Assert-Bytes ($USE - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x0C) 'Gedrueckt halten'
+    Assert-Bytes ($RENDER - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x34) 'Gedrueckt halten'
+    $loc = Add-CodeSection '.hrep' 0x473 -Writable
+    $CAVE = $loc[0]
+    $c = New-Object System.Collections.Generic.List[byte]
+    for ($i = 0; $i -lt 0x114; $i++) { $c.Add([byte]0) }                 # Zustaende, beginnen bei 0
+    AddRaw $c ([System.Text.Encoding]::ASCII.GetBytes('ACTIONBUTTON'))  # +114h, ohne Null
+    # --- ExecKey (VA 0x563150, thiscall: mods, slot, isDown, argC, keyMode) ---
+    # exec:
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x81, 0xEC, 0x04, 0x01, 0x00, 0x00)            # sub esp,0x104
+    AddRaw $c @(0x53)                                          # push ebx
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x89, 0x8D, 0xFC, 0xFE, 0xFF, 0xFF)            # mov [ebp-0x104],ecx
+    AddRaw $c @(0xC6, 0x85, 0x00, 0xFF, 0xFF, 0xFF, 0x00)      # mov byte ptr [ebp-0x100],0
+    AddRaw $c @(0x68, 0x80, 0x00, 0x00, 0x00)                  # push 0x80
+    AddRaw $c @(0x8D, 0x85, 0x00, 0xFF, 0xFF, 0xFF)            # lea eax,[ebp-0x100]
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xFF, 0x75, 0x0C)                              # push dword ptr [ebp+0xC]
+    AddRaw $c @(0xFF, 0x75, 0x18)                              # push dword ptr [ebp+0x18]
+    AddRaw $c @(0xE8); AddLE32 $c (0x5622E0 - ($CAVE + 0x150)) # call 0x5622E0  (GetReducedKeyBinding)
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x0F, 0x84, 0x47, 0x01, 0x00, 0x00)            # jz ex_orig
+    AddRaw $c @(0xFF, 0x75, 0x18)                              # push dword ptr [ebp+0x18]
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0x8B, 0x8D, 0xFC, 0xFE, 0xFF, 0xFF)            # mov ecx,[ebp-0x104]
+    AddRaw $c @(0xE8); AddLE32 $c (0x55E470 - ($CAVE + 0x167)) # call 0x55E470  (GetCommandForBinding)
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x0F, 0x84, 0x30, 0x01, 0x00, 0x00)            # jz ex_orig
+    AddRaw $c @(0x89, 0xC6)                                    # mov esi,eax
+    AddRaw $c @(0xBF); AddLE32 $c ($CAVE + 0x114)              # mov edi,strab
+    AddRaw $c @(0xB9, 0x0C, 0x00, 0x00, 0x00)                  # mov ecx,12
+    # ex_cmp:
+    AddRaw $c @(0x8A, 0x06)                                    # mov al,[esi]
+    AddRaw $c @(0x3C, 0x61)                                    # cmp al,0x61
+    AddRaw $c @(0x72, 0x06)                                    # jb ex_c1
+    AddRaw $c @(0x3C, 0x7A)                                    # cmp al,0x7A
+    AddRaw $c @(0x77, 0x02)                                    # ja ex_c1
+    AddRaw $c @(0x2C, 0x20)                                    # sub al,0x20
+    # ex_c1:
+    AddRaw $c @(0x3A, 0x07)                                    # cmp al,[edi]
+    AddRaw $c @(0x0F, 0x85, 0x10, 0x01, 0x00, 0x00)            # jne ex_orig
+    AddRaw $c @(0x46)                                          # inc esi
+    AddRaw $c @(0x47)                                          # inc edi
+    AddRaw $c @(0x49)                                          # dec ecx
+    AddRaw $c @(0x75, 0xE7)                                    # jnz ex_cmp
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    # ex_dig:
+    AddRaw $c @(0x0F, 0xB6, 0x16)                              # movzx edx,byte ptr [esi]
+    AddRaw $c @(0x83, 0xEA, 0x30)                              # sub edx,0x30
+    AddRaw $c @(0x83, 0xFA, 0x09)                              # cmp edx,9
+    AddRaw $c @(0x77, 0x11)                                    # ja ex_num
+    AddRaw $c @(0x6B, 0xC0, 0x0A)                              # imul eax,eax,10
+    AddRaw $c @(0x01, 0xD0)                                    # add eax,edx
+    AddRaw $c @(0x83, 0xF8, 0x0C)                              # cmp eax,12
+    AddRaw $c @(0x0F, 0x87, 0xF0, 0x00, 0x00, 0x00)            # ja ex_orig
+    AddRaw $c @(0x46)                                          # inc esi
+    AddRaw $c @(0xEB, 0xE4)                                    # jmp ex_dig
+    # ex_num:
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x0F, 0x84, 0xE5, 0x00, 0x00, 0x00)            # jz ex_orig
+    AddRaw $c @(0x8D, 0x58, 0xFF)                              # lea ebx,[eax-1]
+    AddRaw $c @(0x83, 0x3D, 0xA0, 0xE5, 0xC1, 0x00, 0x00)      # cmp dword ptr [0xC1E5A0],0  (Seitenwechsel aktiv)
+    AddRaw $c @(0x74, 0x07)                                    # je ex_p1
+    AddRaw $c @(0xBA, 0x01, 0x00, 0x00, 0x00)                  # mov edx,1
+    AddRaw $c @(0xEB, 0x07)                                    # jmp ex_p2
+    # ex_p1:
+    AddRaw $c @(0x8B, 0x15, 0x98, 0xE5, 0xC1, 0x00)            # mov edx,dword ptr [0xC1E598]  (aktuelle Seite)
+    AddRaw $c @(0x42)                                          # inc edx
+    # ex_p2:
+    AddRaw $c @(0x83, 0xFA, 0x01)                              # cmp edx,1
+    AddRaw $c @(0x75, 0x0D)                                    # jne ex_p3
+    AddRaw $c @(0x8B, 0x0D, 0x9C, 0xE5, 0xC1, 0x00)            # mov ecx,dword ptr [0xC1E59C]  (Bonusleiste)
+    AddRaw $c @(0x85, 0xC9)                                    # test ecx,ecx
+    AddRaw $c @(0x74, 0x03)                                    # jz ex_p3
+    AddRaw $c @(0x8D, 0x51, 0x06)                              # lea edx,[ecx+6]
+    # ex_p3:
+    AddRaw $c @(0x4A)                                          # dec edx
+    AddRaw $c @(0x6B, 0xD2, 0x0C)                              # imul edx,edx,12
+    AddRaw $c @(0x01, 0xD3)                                    # add ebx,edx
+    AddRaw $c @(0x8B, 0x55, 0x0C)                              # mov edx,[ebp+0xC]
+    AddRaw $c @(0xE8, 0xC5, 0x00, 0x00, 0x00)                  # call find
+    AddRaw $c @(0x83, 0x7D, 0x10, 0x00)                        # cmp dword ptr [ebp+0x10],0
+    AddRaw $c @(0x74, 0x5D)                                    # je ex_up
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x75, 0x0D)                                    # jnz ex_init
+    AddRaw $c @(0xE8, 0xD3, 0x00, 0x00, 0x00)                  # call findfree
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x0F, 0x84, 0x94, 0x00, 0x00, 0x00)            # jz ex_orig
+    # ex_init:
+    AddRaw $c @(0x89, 0xC6)                                    # mov esi,eax
+    AddRaw $c @(0x89, 0x5E, 0x04)                              # mov [esi+4],ebx
+    AddRaw $c @(0xE8); AddLE32 $c (0x86AE20 - ($CAVE + 0x215)) # call 0x86AE20  (OsGetAsyncTimeMs)
+    AddRaw $c @(0x89, 0x46, 0x08)                              # mov [esi+8],eax
+    AddRaw $c @(0x89, 0x46, 0x0C)                              # mov [esi+12],eax
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $c @(0x89, 0x46, 0x10)                              # mov [esi+16],eax
+    AddRaw $c @(0x89, 0x46, 0x14)                              # mov [esi+20],eax
+    AddRaw $c @(0x8B, 0x55, 0x0C)                              # mov edx,[ebp+0xC]
+    AddRaw $c @(0x89, 0x16)                                    # mov [esi],edx
+    AddRaw $c @(0xC7, 0x46, 0x18, 0x01, 0x00, 0x00, 0x00)      # mov dword ptr [esi+24],1
+    AddRaw $c @(0x83, 0x3D); AddLE32 $c ($CAVE + 0x104); AddRaw $c @(0x00) # cmp dword ptr [evreg],0
+    AddRaw $c @(0x75, 0x67)                                    # jne ex_orig
+    AddRaw $c @(0xC7, 0x05); AddLE32 $c ($CAVE + 0x104); AddRaw $c @(0x01, 0x00, 0x00, 0x00) # mov dword ptr [evreg],1
+    AddRaw $c @(0x6A, 0x00)                                    # push 0
+    AddRaw $c @(0x6A, 0x00)                                    # push 0
+    AddRaw $c @(0x68); AddLE32 $c ($CAVE + 0x2EF)              # push focus
+    AddRaw $c @(0x6A, 0x02)                                    # push 2
+    AddRaw $c @(0xE8); AddLE32 $c (0x47D3C0 - ($CAVE + 0x252)) # call 0x47D3C0  (EventRegisterEx)
+    AddRaw $c @(0x83, 0xC4, 0x10)                              # add esp,16
+    AddRaw $c @(0xEB, 0x48)                                    # jmp ex_orig
+    # ex_up:
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x74, 0x44)                                    # jz ex_orig
+    AddRaw $c @(0xC7, 0x40, 0x18, 0x00, 0x00, 0x00, 0x00)      # mov dword ptr [eax+24],0
+    AddRaw $c @(0x83, 0x78, 0x14, 0x00)                        # cmp dword ptr [eax+20],0
+    AddRaw $c @(0x74, 0x37)                                    # je ex_orig
+    AddRaw $c @(0xC7, 0x05); AddLE32 $c ($CAVE + 0x100); AddRaw $c @(0x01, 0x00, 0x00, 0x00) # mov dword ptr [suppress],1
+    AddRaw $c @(0xFF, 0x75, 0x18)                              # push dword ptr [ebp+0x18]
+    AddRaw $c @(0xFF, 0x75, 0x14)                              # push dword ptr [ebp+0x14]
+    AddRaw $c @(0xFF, 0x75, 0x10)                              # push dword ptr [ebp+0x10]
+    AddRaw $c @(0xFF, 0x75, 0x0C)                              # push dword ptr [ebp+0xC]
+    AddRaw $c @(0xFF, 0x75, 0x08)                              # push dword ptr [ebp+8]
+    AddRaw $c @(0x8B, 0x8D, 0xFC, 0xFE, 0xFF, 0xFF)            # mov ecx,[ebp-0x104]
+    AddRaw $c @(0xE8, 0x1F, 0x00, 0x00, 0x00)                  # call exec_tramp
+    AddRaw $c @(0xC7, 0x05); AddLE32 $c ($CAVE + 0x100); AddRaw $c @(0x00, 0x00, 0x00, 0x00) # mov dword ptr [suppress],0
+    AddRaw $c @(0x5F)                                          # pop edi
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0x5B)                                          # pop ebx
+    AddRaw $c @(0x89, 0xEC)                                    # mov esp,ebp
+    AddRaw $c @(0x5D)                                          # pop ebp
+    AddRaw $c @(0xC2, 0x14, 0x00)                              # ret 0x14
+    # ex_orig:
+    AddRaw $c @(0x8B, 0x8D, 0xFC, 0xFE, 0xFF, 0xFF)            # mov ecx,[ebp-0x104]
+    AddRaw $c @(0x5F)                                          # pop edi
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0x5B)                                          # pop ebx
+    AddRaw $c @(0x89, 0xEC)                                    # mov esp,ebp
+    AddRaw $c @(0x5D)                                          # pop ebp
+    # exec_tramp:  (ex_orig laeuft direkt hier hinein)
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x81, 0xEC, 0xC4, 0x00, 0x00, 0x00)            # sub esp,0xC4
+    AddRaw $c @(0xE9); AddLE32 $c (0x563159 - ($CAVE + 0x2B9)) # jmp 0x563159  (ExecKey+9)
+    # --- Hilfsfunktionen: Eintrag zu edx (Taste) / freien Eintrag suchen ---
+    # find:
+    AddRaw $c @(0xB8); AddLE32 $c ($CAVE + 0x0)                # mov eax,held
+    AddRaw $c @(0xB9, 0x08, 0x00, 0x00, 0x00)                  # mov ecx,8
+    # f_l:
+    AddRaw $c @(0x83, 0x78, 0x18, 0x00)                        # cmp dword ptr [eax+24],0
+    AddRaw $c @(0x74, 0x04)                                    # je f_n
+    AddRaw $c @(0x39, 0x10)                                    # cmp [eax],edx
+    AddRaw $c @(0x74, 0x08)                                    # je f_r
+    # f_n:
+    AddRaw $c @(0x83, 0xC0, 0x20)                              # add eax,32
+    AddRaw $c @(0x49)                                          # dec ecx
+    AddRaw $c @(0x75, 0xF0)                                    # jnz f_l
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    # f_r:
+    AddRaw $c @(0xC3)                                          # ret
+    # findfree:
+    AddRaw $c @(0xB8); AddLE32 $c ($CAVE + 0x0)                # mov eax,held
+    AddRaw $c @(0xB9, 0x08, 0x00, 0x00, 0x00)                  # mov ecx,8
+    # ff_l:
+    AddRaw $c @(0x83, 0x78, 0x18, 0x00)                        # cmp dword ptr [eax+24],0
+    AddRaw $c @(0x74, 0x08)                                    # je ff_r
+    AddRaw $c @(0x83, 0xC0, 0x20)                              # add eax,32
+    AddRaw $c @(0x49)                                          # dec ecx
+    AddRaw $c @(0x75, 0xF4)                                    # jnz ff_l
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    # ff_r:
+    AddRaw $c @(0xC3)                                          # ret
+    # --- Fokus-Ereignis (cdecl): alle gehaltenen Tasten vergessen ---
+    # focus:
+    AddRaw $c @(0xB8); AddLE32 $c ($CAVE + 0x0)                # mov eax,held
+    AddRaw $c @(0xB9, 0x08, 0x00, 0x00, 0x00)                  # mov ecx,8
+    # fo_l:
+    AddRaw $c @(0xC7, 0x40, 0x18, 0x00, 0x00, 0x00, 0x00)      # mov dword ptr [eax+24],0
+    AddRaw $c @(0x83, 0xC0, 0x20)                              # add eax,32
+    AddRaw $c @(0x49)                                          # dec ecx
+    AddRaw $c @(0x75, 0xF3)                                    # jnz fo_l
+    AddRaw $c @(0xB8, 0x01, 0x00, 0x00, 0x00)                  # mov eax,1
+    AddRaw $c @(0xC3)                                          # ret
+    # --- UseAction (VA 0x5ABBC0, cdecl: slot, guid*, button) ---
+    # use:
+    AddRaw $c @(0x83, 0x3D); AddLE32 $c ($CAVE + 0x100); AddRaw $c @(0x00) # cmp dword ptr [suppress],0
+    AddRaw $c @(0x74, 0x0B)                                    # je use_tramp
+    AddRaw $c @(0xC7, 0x05); AddLE32 $c ($CAVE + 0x100); AddRaw $c @(0x00, 0x00, 0x00, 0x00) # mov dword ptr [suppress],0
+    AddRaw $c @(0xC3)                                          # ret
+    # use_tramp:
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x83, 0xEC, 0x0C)                              # sub esp,0xC
+    AddRaw $c @(0xE9); AddLE32 $c (0x5ABBC6 - ($CAVE + 0x32B)) # jmp 0x5ABBC6  (UseAction+6)
+    # --- OnWorldRender (VA 0x4F8EA0, thiscall): Original, danach Wiederholung pruefen ---
+    # render:
+    AddRaw $c @(0xE8, 0x08, 0x00, 0x00, 0x00)                  # call render_tramp
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xE8, 0x0D, 0x00, 0x00, 0x00)                  # call update
+    AddRaw $c @(0x58)                                          # pop eax
+    AddRaw $c @(0xC3)                                          # ret
+    # render_tramp:
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x83, 0xEC, 0x34)                              # sub esp,0x34
+    AddRaw $c @(0xE9); AddLE32 $c (0x4F8EA6 - ($CAVE + 0x343)) # jmp 0x4F8EA6  (OnWorldRender+6)
+    # --- Wiederholung: Zauberleiste/Kanalisierung des Spielers, dann jede gehaltene Taste pruefen ---
+    # update:
+    AddRaw $c @(0x53)                                          # push ebx
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0x57)                                          # push edi
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x83, 0xEC, 0x10)                              # sub esp,16
+    AddRaw $c @(0x89, 0xE3)                                    # mov ebx,esp
+    AddRaw $c @(0xE8); AddLE32 $c (0x86AE20 - ($CAVE + 0x351)) # call 0x86AE20  (OsGetAsyncTimeMs)
+    AddRaw $c @(0x89, 0xC5)                                    # mov ebp,eax
+    AddRaw $c @(0xE8); AddLE32 $c (0x4D3790 - ($CAVE + 0x358)) # call 0x4D3790  (Spieler-GUID)
+    AddRaw $c @(0x6A, 0x00)                                    # push 0
+    AddRaw $c @(0x68, 0xD4, 0x2C, 0xA2, 0x00)                  # push 0xA22CD4
+    AddRaw $c @(0x6A, 0x10)                                    # push 0x10
+    AddRaw $c @(0x52)                                          # push edx
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xE8); AddLE32 $c (0x4D4DB0 - ($CAVE + 0x368)) # call 0x4D4DB0  (Objekt zur GUID)
+    AddRaw $c @(0x83, 0xC4, 0x14)                              # add esp,0x14
+    AddRaw $c @(0xB9, 0x01, 0x00, 0x00, 0x00)                  # mov ecx,1
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x74, 0x28)                                    # jz cast_done
+    AddRaw $c @(0x83, 0xB8, 0x6C, 0x0A, 0x00, 0x00, 0x00)      # cmp dword ptr [eax+0xA6C],0
+    AddRaw $c @(0x74, 0x0A)                                    # je cast_chan
+    AddRaw $c @(0x89, 0xEA)                                    # mov edx,ebp
+    AddRaw $c @(0x2B, 0x90, 0x7C, 0x0A, 0x00, 0x00)            # sub edx,[eax+0xA7C]
+    AddRaw $c @(0x78, 0x15)                                    # js cast_done
+    # cast_chan:
+    AddRaw $c @(0x83, 0xB8, 0x80, 0x0A, 0x00, 0x00, 0x00)      # cmp dword ptr [eax+0xA80],0
+    AddRaw $c @(0x74, 0x0A)                                    # je cast_no
+    AddRaw $c @(0x89, 0xEA)                                    # mov edx,ebp
+    AddRaw $c @(0x2B, 0x90, 0x88, 0x0A, 0x00, 0x00)            # sub edx,[eax+0xA88]
+    AddRaw $c @(0x78, 0x02)                                    # js cast_done
+    # cast_no:
+    AddRaw $c @(0x31, 0xC9)                                    # xor ecx,ecx
+    # cast_done:
+    AddRaw $c @(0x89, 0x4B, 0x0C)                              # mov [ebx+12],ecx
+    AddRaw $c @(0xBE); AddLE32 $c ($CAVE + 0x0)                # mov esi,held
+    AddRaw $c @(0xBF, 0x08, 0x00, 0x00, 0x00)                  # mov edi,8
+    # up_l:
+    AddRaw $c @(0x83, 0x7E, 0x18, 0x00)                        # cmp dword ptr [esi+24],0
+    AddRaw $c @(0x0F, 0x84, 0xAE, 0x00, 0x00, 0x00)            # je up_n
+    AddRaw $c @(0x89, 0xE8)                                    # mov eax,ebp
+    AddRaw $c @(0x2B, 0x46, 0x08)                              # sub eax,[esi+8]
+    AddRaw $c @(0x3D, 0xF4, 0x01, 0x00, 0x00)                  # cmp eax,500
+    AddRaw $c @(0x0F, 0x82, 0x9E, 0x00, 0x00, 0x00)            # jb up_n
+    AddRaw $c @(0x83, 0x3D, 0xE4, 0xF4, 0xD3, 0x00, 0x00)      # cmp dword ptr [0xD3F4E4],0  (laufender Zauber)
+    AddRaw $c @(0x75, 0x06)                                    # jne up_busy
+    AddRaw $c @(0x83, 0x7B, 0x0C, 0x00)                        # cmp dword ptr [ebx+12],0
+    AddRaw $c @(0x74, 0x0C)                                    # je up_nc
+    # up_busy:
+    AddRaw $c @(0xC7, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00)      # mov dword ptr [esi+16],0
+    AddRaw $c @(0xE9, 0x83, 0x00, 0x00, 0x00)                  # jmp up_n
+    # up_nc:
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $c @(0x89, 0x03)                                    # mov [ebx],eax
+    AddRaw $c @(0x89, 0x43, 0x04)                              # mov [ebx+4],eax
+    AddRaw $c @(0x89, 0x43, 0x08)                              # mov [ebx+8],eax
+    AddRaw $c @(0x8D, 0x43, 0x08)                              # lea eax,[ebx+8]
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0x8D, 0x43, 0x04)                              # lea eax,[ebx+4]
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0x53)                                          # push ebx
+    AddRaw $c @(0xFF, 0x76, 0x04)                              # push dword ptr [esi+4]
+    AddRaw $c @(0xE8); AddLE32 $c (0x5A8E40 - ($CAVE + 0x3F9)) # call 0x5A8E40  (GetCooldown)
+    AddRaw $c @(0x83, 0xC4, 0x10)                              # add esp,16
+    AddRaw $c @(0x8B, 0x43, 0x04)                              # mov eax,[ebx+4]
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x7E, 0x11)                                    # jle up_ready
+    AddRaw $c @(0x89, 0xE9)                                    # mov ecx,ebp
+    AddRaw $c @(0x2B, 0x0B)                                    # sub ecx,[ebx]
+    AddRaw $c @(0x39, 0xC1)                                    # cmp ecx,eax
+    AddRaw $c @(0x73, 0x09)                                    # jae up_ready
+    AddRaw $c @(0xC7, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00)      # mov dword ptr [esi+16],0
+    AddRaw $c @(0xEB, 0x4D)                                    # jmp up_n
+    # up_ready:
+    AddRaw $c @(0x83, 0x7E, 0x10, 0x00)                        # cmp dword ptr [esi+16],0
+    AddRaw $c @(0x75, 0x03)                                    # jne up_r2
+    AddRaw $c @(0x89, 0x6E, 0x10)                              # mov [esi+16],ebp
+    # up_r2:
+    AddRaw $c @(0x89, 0xE8)                                    # mov eax,ebp
+    AddRaw $c @(0x2B, 0x46, 0x10)                              # sub eax,[esi+16]
+    AddRaw $c @(0x83, 0xF8, 0x64)                              # cmp eax,100
+    AddRaw $c @(0x72, 0x3A)                                    # jb up_n
+    AddRaw $c @(0x89, 0xE8)                                    # mov eax,ebp
+    AddRaw $c @(0x2B, 0x46, 0x0C)                              # sub eax,[esi+12]
+    AddRaw $c @(0x83, 0xF8, 0x64)                              # cmp eax,100
+    AddRaw $c @(0x72, 0x30)                                    # jb up_n
+    AddRaw $c @(0x31, 0xC0)                                    # xor eax,eax
+    AddRaw $c @(0xA3); AddLE32 $c ($CAVE + 0x108)              # mov dword ptr [guid],eax
+    AddRaw $c @(0xA3); AddLE32 $c ($CAVE + 0x10C)              # mov dword ptr [guid+4],eax
+    AddRaw $c @(0xA3); AddLE32 $c ($CAVE + 0x110)              # mov dword ptr [btn],eax
+    AddRaw $c @(0x68); AddLE32 $c ($CAVE + 0x110)              # push btn
+    AddRaw $c @(0x68); AddLE32 $c ($CAVE + 0x108)              # push guid
+    AddRaw $c @(0xFF, 0x76, 0x04)                              # push dword ptr [esi+4]
+    AddRaw $c @(0xE8, 0xCC, 0xFE, 0xFF, 0xFF)                  # call use_tramp
+    AddRaw $c @(0x83, 0xC4, 0x0C)                              # add esp,12
+    AddRaw $c @(0x89, 0x6E, 0x0C)                              # mov [esi+12],ebp
+    AddRaw $c @(0xC7, 0x46, 0x14, 0x01, 0x00, 0x00, 0x00)      # mov dword ptr [esi+20],1
+    # up_n:
+    AddRaw $c @(0x83, 0xC6, 0x20)                              # add esi,32
+    AddRaw $c @(0x4F)                                          # dec edi
+    AddRaw $c @(0x0F, 0x85, 0x3E, 0xFF, 0xFF, 0xFF)            # jnz up_l
+    AddRaw $c @(0x83, 0xC4, 0x10)                              # add esp,16
+    AddRaw $c @(0x5D)                                          # pop ebp
+    AddRaw $c @(0x5F)                                          # pop edi
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0x5B)                                          # pop ebx
+    AddRaw $c @(0xC3)                                          # ret
+    if ($c.Count -ne 0x473) { throw 'Gedrueckt halten: Sektion hat die falsche Groesse.' }
+    Patch $loc[1] $c.ToArray()
+    Patch ($EXEC - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $EXEC ($CAVE + 0x120)) + [byte[]](0x90, 0x90, 0x90, 0x90)))
+    Patch ($USE - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $USE ($CAVE + 0x30C)) + [byte[]](0x90)))
+    Patch ($RENDER - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $RENDER ($CAVE + 0x32B)) + [byte[]](0x90)))
+}
+
+# ============================================================
+#  Icons im Text pixelgenau (tb, ported by St0ny)
+#  Texte koennen Icons enthalten (|T...|t, z.B. Raidmarker, Waehrungen,
+#  Questsymbole). Ihre Groesse und Lage rechnet der Client in Pixeln mit
+#  Nachkommastellen aus - bei skalierten Schriften landen die Icons dann
+#  zwischen zwei Pixeln und werden unscharf oder um einen Pixel verzerrt.
+#  Der Hook hinter ParseEmbeddedTexture (VA 0x6C0E80, cdecl: Text, Info,
+#  Hoehe, Skalierung, Schrifthoehe) rundet - wenn das Parsen geklappt hat
+#  und die Hoehe von der Schrifthoehe abweicht - Hoehe [Info+18h] und
+#  Breite [Info+1Ch] auf ganze Pixel (mindestens 1) und den Versatz
+#  [Info+20h] / [Info+24h] auf ganze Pixel. Gerundet wird wie im Fork mit
+#  floor(x + 0,5): Rundungsmodus der FPU kurz auf "abrunden", danach wieder
+#  zurueck. Eigene Sektion (.isnap), nur ausfuehrbar.
+# ============================================================
+function Add-IconPixelSnap {
+    $PARSE = 0x6C0E80
+    Assert-Bytes ($PARSE - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x44) 'Icons pixelgenau'
+    $loc = Add-CodeSection '.isnap' 0xB3
+    $CAVE = $loc[0]
+    $c = New-Object System.Collections.Generic.List[byte]
+    # snap:  Original aufrufen (Argumente neu ablegen), danach runden
+    AddRaw $c @(0x56)                                          # push esi
+    AddRaw $c @(0xFF, 0x74, 0x24, 0x18)                        # push dword ptr [esp+0x18]
+    AddRaw $c @(0xFF, 0x74, 0x24, 0x18)                        # push dword ptr [esp+0x18]
+    AddRaw $c @(0xFF, 0x74, 0x24, 0x18)                        # push dword ptr [esp+0x18]
+    AddRaw $c @(0xFF, 0x74, 0x24, 0x18)                        # push dword ptr [esp+0x18]
+    AddRaw $c @(0xFF, 0x74, 0x24, 0x18)                        # push dword ptr [esp+0x18]
+    AddRaw $c @(0xE8, 0x8E, 0x00, 0x00, 0x00)                  # call tramp
+    AddRaw $c @(0x83, 0xC4, 0x14)                              # add esp,0x14
+    AddRaw $c @(0x84, 0xC0)                                    # test al,al
+    AddRaw $c @(0x0F, 0x84, 0x81, 0x00, 0x00, 0x00)            # jz out
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xD9, 0x44, 0x24, 0x14)                        # fld dword ptr [esp+0x14]
+    AddRaw $c @(0xD8, 0x5C, 0x24, 0x1C)                        # fcomp dword ptr [esp+0x1C]
+    AddRaw $c @(0xDF, 0xE0)                                    # fnstsw ax
+    AddRaw $c @(0x80, 0xE4, 0x45)                              # and ah,0x45
+    AddRaw $c @(0x80, 0xFC, 0x40)                              # cmp ah,0x40
+    AddRaw $c @(0x74, 0x6D)                                    # je out_pop
+    AddRaw $c @(0x8B, 0x74, 0x24, 0x10)                        # mov esi,[esp+0x10]
+    AddRaw $c @(0x83, 0xEC, 0x08)                              # sub esp,8
+    AddRaw $c @(0xD9, 0x3C, 0x24)                              # fnstcw word ptr [esp]
+    AddRaw $c @(0x66, 0x8B, 0x04, 0x24)                        # mov ax,word ptr [esp]
+    AddRaw $c @(0x66, 0x25, 0xFF, 0xF3)                        # and ax,0xF3FF
+    AddRaw $c @(0x66, 0x0D, 0x00, 0x04)                        # or ax,0x400
+    AddRaw $c @(0x66, 0x89, 0x44, 0x24, 0x02)                  # mov word ptr [esp+2],ax
+    AddRaw $c @(0xC7, 0x44, 0x24, 0x04, 0x00, 0x00, 0x00, 0x3F) # mov dword ptr [esp+4],0x3F000000
+    AddRaw $c @(0xD9, 0x6C, 0x24, 0x02)                        # fldcw word ptr [esp+2]
+    AddRaw $c @(0xD9, 0x46, 0x18)                              # fld dword ptr [esi+0x18]
+    AddRaw $c @(0xD8, 0x44, 0x24, 0x04)                        # fadd dword ptr [esp+4]
+    AddRaw $c @(0xD9, 0xFC)                                    # frndint
+    AddRaw $c @(0xD9, 0xE8)                                    # fld1
+    AddRaw $c @(0xDB, 0xF1)                                    # fcomi st(0),st(1)
+    AddRaw $c @(0xDA, 0xD1)                                    # fcmovbe st(0),st(1)
+    AddRaw $c @(0xD9, 0x5E, 0x18)                              # fstp dword ptr [esi+0x18]
+    AddRaw $c @(0xDD, 0xD8)                                    # fstp st(0)
+    AddRaw $c @(0xD9, 0x46, 0x1C)                              # fld dword ptr [esi+0x1C]
+    AddRaw $c @(0xD8, 0x44, 0x24, 0x04)                        # fadd dword ptr [esp+4]
+    AddRaw $c @(0xD9, 0xFC)                                    # frndint
+    AddRaw $c @(0xD9, 0xE8)                                    # fld1
+    AddRaw $c @(0xDB, 0xF1)                                    # fcomi st(0),st(1)
+    AddRaw $c @(0xDA, 0xD1)                                    # fcmovbe st(0),st(1)
+    AddRaw $c @(0xD9, 0x5E, 0x1C)                              # fstp dword ptr [esi+0x1C]
+    AddRaw $c @(0xDD, 0xD8)                                    # fstp st(0)
+    AddRaw $c @(0xD9, 0x46, 0x20)                              # fld dword ptr [esi+0x20]
+    AddRaw $c @(0xD8, 0x44, 0x24, 0x04)                        # fadd dword ptr [esp+4]
+    AddRaw $c @(0xD9, 0xFC)                                    # frndint
+    AddRaw $c @(0xD9, 0x5E, 0x20)                              # fstp dword ptr [esi+0x20]
+    AddRaw $c @(0xD9, 0x46, 0x24)                              # fld dword ptr [esi+0x24]
+    AddRaw $c @(0xD8, 0x44, 0x24, 0x04)                        # fadd dword ptr [esp+4]
+    AddRaw $c @(0xD9, 0xFC)                                    # frndint
+    AddRaw $c @(0xD9, 0x5E, 0x24)                              # fstp dword ptr [esi+0x24]
+    AddRaw $c @(0xD9, 0x2C, 0x24)                              # fldcw word ptr [esp]
+    AddRaw $c @(0x83, 0xC4, 0x08)                              # add esp,8
+    # out_pop:
+    AddRaw $c @(0x58)                                          # pop eax
+    # out:
+    AddRaw $c @(0x5E)                                          # pop esi
+    AddRaw $c @(0xC3)                                          # ret
+    # tramp: ueberschriebene Befehle, weiter im Original
+    AddRaw $c @(0x55)                                          # push ebp
+    AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
+    AddRaw $c @(0x83, 0xEC, 0x44)                              # sub esp,0x44
+    AddRaw $c @(0xE9); AddLE32 $c (0x6C0E86 - ($CAVE + 0xB3))  # jmp 0x6C0E86  (ParseEmbeddedTexture+6)
+    if ($c.Count -ne 0xB3) { throw 'Icons pixelgenau: Sektion hat die falsche Groesse.' }
+    Patch $loc[1] $c.ToArray()
+    Patch ($PARSE - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $PARSE ($CAVE + 0x0)) + [byte[]](0x90)))
+}
+
+# ============================================================
 #  Wasserzeichen
 #  Jede gepatchte Wow.exe bekommt einen Text, an dem der Patcher sie eindeutig
 #  als seine eigene erkennt: So vermischt er nie Patches mit denen anderer
@@ -1781,13 +2448,41 @@ function Test-JumpValue([string]$v) {
 }
 
 # ============================================================
+#  Helfer fuer die Sprechblasen-Reichweite
+#  Der Client zeigt Sprechblasen nur bis 25 Meter: Er vergleicht das Quadrat
+#  des Abstands mit der float-Konstante 625.0 (VA 0xA104B0), die auch die
+#  Fussspuren nutzen. Der Patch laesst die beiden Sprechblasen-Stellen auf
+#  eine andere, schon vorhandene Konstante in .rdata zeigen - erlaubt sind
+#  daher nur die Reichweiten, deren Quadrat es dort gibt (0 = unbegrenzt,
+#  FLT_MAX). Schluessel = Meter, Wert = VA der Konstante.
+# ============================================================
+$BUBBLE_RANGES = [ordered]@{
+    '50'  = 0xA12094    # 2500.0
+    '100' = 0x9EA4C8    # 10000.0
+    '150' = 0xA32904    # 22500.0
+    '200' = 0xA4062C    # 40000.0
+    '0'   = 0x9EA8FC    # FLT_MAX
+}
+
+function Test-BubbleRange([string]$v) {
+    if ($BUBBLE_RANGES.Contains($v.Trim())) { return $null }
+    return (L 'Erlaubt sind 50, 100, 150, 200 oder 0 (unbegrenzt).' 'Allowed are 50, 100, 150, 200 or 0 (unlimited).')
+}
+
+function Get-BubbleRangeFromExe {
+    $va = [BitConverter]::ToUInt32($script:f, 0x31F4D0)
+    foreach ($k in $BUBBLE_RANGES.Keys) { if ($BUBBLE_RANGES[$k] -eq $va) { return $k } }
+    return $null
+}
+
+# ============================================================
 #  PATCH-DEFINITIONEN
 #  Jeder Patch ist eine Hashtable:
 #    Id    - interner Kurzname (fuer Abhaengigkeiten und patcher_selection.ini)
 #    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
 #    On    - Teil des Presets "Billy's_Wow.exe" ($true) oder nicht ($false).
-#            Die Standard-Auswahl ist das Preset "Project Reforged"
+#            Die Standard-Auswahl ist das Preset "Reforged"
 #            ($PRESET_REFORGED), das Preset "St0nys_Wow.exe" steht in
 #            $PRESET_STONY - beide als Id-Listen hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
@@ -1798,10 +2493,15 @@ function Test-JumpValue([string]$v) {
 #            (erzeugt nur einen Hinweis, wenn beide ausgewaehlt sind)
 #    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
-#    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
-#            oder Botting werten koennen (erzeugt einen roten Bann-Hinweis)
-#    DllHint - optional: $true fuer den DLL-Loader - dezenter gelber Hinweis,
-#            dass erst die geladene DLL auffallen kann
+#    Warn-Codes - Patches ohne die drei folgenden Flags sind sicher (Code 1,
+#            keine Warnung). Jedes Flag erzeugt eine Warnung in eckigen
+#            Klammern hinter dem Namen und einen Hinweis vor dem Patchen:
+#    BanRisk - optional: $true bei Bann-Gefahr (Code 2, roter Hinweis)
+#    PublicUntested - optional: $true, wenn der Patch nicht auf oeffentlichen
+#            Servern getestet ist - Vorsicht, kann zu Kick/Bann fuehren
+#            (Code 3, gelber Hinweis)
+#    GameUntested - optional: $true, wenn die Funktion im Spiel ungetestet
+#            ist - moeglicherweise verbuggt (Code 4, gelber Hinweis)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -1861,7 +2561,7 @@ $patches = @(
         Patch 0x2689FD @(0x00, 0x00)
     }}
 
-    @{ Id = 'worldcrash'; Cat = 'system'; On = $false
+    @{ Id = 'worldcrash'; Cat = 'system'; On = $false; PublicUntested = $true
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
        En = 'WorldFrame crash fix (invalid triangle indices)'
@@ -1887,25 +2587,89 @@ $patches = @(
         Patch 0x46A08E @(0xE9, 0x83, 0x00, 0x00, 0x00, 0x90)
     }}
 
+    @{ Id = 'nothrottle'; Cat = 'system'; On = $false
+       Author = 'tb (ported by St0ny)'
+       De = 'Gegenstands- und Namensabfragen nicht drosseln'
+       En = 'Do not throttle item and player name queries'
+       Code = {
+        # Die Datenbank-Caches des Clients (Items, Kreaturen, Quests, Namen ...)
+        # koennen ihre Anfragen an den Server pro 30-Sekunden-Fenster begrenzen
+        # ([Cache+48h] = "Anfragen pro Minute" aus dem Konstruktor / 2). Ist die
+        # Grenze erreicht, kommt die Anfrage in eine Warteschlange (Pruefung bei
+        # VA 0x67B711), 0 heisst unbegrenzt. Von den 15 Caches ist das nur bei
+        # zweien gesetzt: itemcache (Gegenstands-Infos, 512 pro Minute) und
+        # namecache (Spielernamen, 256 pro Minute) - alle anderen bekommen schon
+        # im Original 0. In den beiden Konstruktoren wird statt des berechneten
+        # Werts (edx) ecx gespeichert, das dort 0 ist:
+        # mov [esi+48h],edx -> mov [esi+48h],ecx.
+        Patch 0x27547E @(0x4E)   # VA 0x67607E, itemcache.wdb
+        Patch 0x2756DE @(0x4E)   # VA 0x6762DE, namecache.wdb
+    }}
+
+    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false
+       Author = 'tb (ported by St0ny)'
+       De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)'
+       En = 'Mirror Image crash fix (memory leak with mirror images)'
+       Code = {
+        # Blizzard-Fehler: Der Handler fuer SMSG_MIRRORIMAGE_DATA (VA 0x730290)
+        # legt fuer das Aussehen einer Spiegelbild-Einheit eine neue
+        # Charakter-Komponente an ([Einheit+B4Ch]), ohne eine noch vorhandene
+        # alte freizugeben. Die alte bleibt mit ihrer Textur am Grafikgeraet
+        # haengen; beim Beenden greift der Client dann auf schon freigegebenen
+        # Speicher zu (Absturz). Haeufig bei Server-Kopien von Spielern (Eluna
+        # "Mirror Image"-Kreaturen), die ihr Modell oft neu laden.
+        # Beide Aufrufe des Allokators (VA 0x4F0980) im Handler gehen jetzt an
+        # einen Stub, der eine alte Komponente erst mit der Original-Freigabe
+        # (VA 0x4F16C0) loest und dann zum Allokator springt. Der Stub (29 Byte)
+        # liegt in einer toten Funktion bei VA 0x86BF10 (nirgends aufgerufen
+        # oder referenziert). Die Dateigroesse aendert sich nicht.
+        Patch 0x46B310 @(
+            0x8B, 0x86, 0x4C, 0x0B, 0x00, 0x00, 0x85, 0xC0, 0x74, 0x0E, 0x50, 0xE8, 0xA0, 0x57, 0xC8, 0xFF,
+            0x59, 0x83, 0xA6, 0x4C, 0x0B, 0x00, 0x00, 0x00, 0xE9, 0x53, 0x4A, 0xC8, 0xFF, 0xCC, 0xCC, 0xCC
+        )
+        Patch 0x32F729 @(0xE8, 0xE2, 0xBB, 0x13, 0x00)
+        Patch 0x32F8CA @(0xE8, 0x41, 0xBA, 0x13, 0x00)
+    }}
+
+    @{ Id = 'wmocube'; Cat = 'system'; On = $false
+       Author = 'Alyst3r (ported by St0ny)'
+       De = 'Fehlende WMO-Datei: Fehlerwuerfel statt ERROR #134'
+       En = 'Missing WMO file: error cube instead of ERROR #134'
+       Code = {
+        # CMap::SafeOpen (VA 0x7BD480) oeffnet WMO-Dateien (Gebaeude, Dungeons).
+        # Klappt das zehnmal nicht, bricht der Client mit "ERROR #134 Fatal
+        # Condition: CMap::SafeOpen() failed" ab. Statt der Fehlermeldung oeffnet
+        # der Fehlerausgang jetzt "Spells\ErrorCube.mdx" (der Text steht schon in
+        # der Exe) und gibt dessen Ergebnis zurueck - wie in WotLK-Extensions:
+        # push ebx / push "Spells\ErrorCube.mdx" / call SFile::Open / Epilog.
+        Patch 0x3BC8AF @(0x53, 0x68, 0x60, 0x4B, 0xA3, 0x00, 0xE8, 0xC6, 0x7A, 0xC6, 0xFF, 0x5F, 0x5E, 0x5B, 0x5D, 0xC3)
+    }}
+
+    @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true
+       Author = 'tb (ported by St0ny)'
+       De = 'Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)'
+       En = 'Font glyph fix (wrong or garbled characters in text)'
+       Code = {
+        # Eigene Sektion (.glyph) mit vier Hooks im Glyphen-Cache plus
+        # CheckGeometry an Ort und Stelle neu, siehe Add-GlyphCacheFix.
+        Add-GlyphCacheFix
+    }}
+
     # --- Sicherheit & Datenschutz ---
 
     @{ Id = 'rce'; Cat = 'security'; On = $false; BanRisk = $true
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
-       NoteDe = 'auf oeffentlichen Servern ueber Warden erkennbar - Bann-Gefahr'
-       NoteEn = 'detectable through Warden on public servers - ban risk'
        Code = {
         Patch 0x2A7 @(0xC0)
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; BanRisk = $true; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; Obsoletes = @('rce'); BanRisk = $true
        Author = 'Robinsch'
        De = 'Warden komplett abschalten, RCE-Fix'
        En = 'Disable Warden completely, RCE fix'
-       NoteDe = 'Kick-Gefahr bei aktivem Warden, auf oeffentlichen Servern Bann-Gefahr'
-       NoteEn = 'may get you kicked if Warden is active, ban risk on public servers'
        Code = {
         # Verwirft SMSG_WARDEN_DATA (Opcode 0x2E6) direkt am Eingang des
         # Paket-Handlers (VA 0x7DA850): je -> nop, der Handler kehrt sofort mit 0
@@ -2049,8 +2813,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'LUA Unlock (Zauber, Bewegung, Makros)'
        En = 'LUA unlock (spells, movement, macros)'
-       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
-       NoteEn = 'may be treated as botting - ban risk'
        Code = {
         # Die zentrale Schutzpruefung (VA 0x5191C0) meldet fuer die Schutzarten
         # 0-5, 16 und 17 immer "erlaubt": Bewegungsfunktionen (MoveForwardStart,
@@ -2061,12 +2823,10 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'luaunlockfull'; Cat = 'modding'; On = $false; BanRisk = $true; Obsoletes = @('luaunlock')
+    @{ Id = 'luaunlockfull'; Cat = 'modding'; On = $false; Obsoletes = @('luaunlock'); BanRisk = $true
        Author = 'St0ny'
        De = 'LUA Unlock (vollstaendig): alle geschuetzten Funktionen freigeben'
        En = 'LUA unlock (complete): allow all protected functions'
-       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
-       NoteEn = 'may be treated as botting - ban risk'
        Code = {
         # Umfasst die Wirkung von "LUA Unlock (Zauber, Bewegung, Makros)" und
         # gibt zusaetzlich alle Funktionen frei, die eine eigene Pruefung haben.
@@ -2096,7 +2856,7 @@ $patches = @(
         # keine Spielaktionen.
     }}
 
-    @{ Id = 'keyprop'; Cat = 'modding'; On = $false
+    @{ Id = 'keyprop'; Cat = 'modding'; On = $false; BanRisk = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)'
        En = 'Pass all keyboard events on to addons (OnKeyDown)'
@@ -2107,7 +2867,7 @@ $patches = @(
         Patch 0x8EFD9 @(0x00)
     }}
 
-    @{ Id = 'globalsv'; Cat = 'modding'; On = $false
+    @{ Id = 'globalsv'; Cat = 'modding'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'St0ny (original by boredatom)'
        De = 'Addon-Daten aller Accounts zusammenlegen (SavedVariables)'
        En = 'Merge addon data of all accounts (SavedVariables)'
@@ -2130,7 +2890,7 @@ $patches = @(
 
     # --- DLL-Loader ---
 
-    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa'); DllHint = $true
+    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa')
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
@@ -2151,7 +2911,36 @@ $patches = @(
         Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
     }}
 
-    @{ Id = 'voicedll'; Cat = 'dll'; On = $false
+    @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa')
+       Author = 'St0ny (original by Alyst3r)'
+       De = 'WotLKExtensions.dll Unterstuetzung aktivieren'
+       En = 'Enable WotLKExtensions.dll support'
+       NoteDe = 'benoetigt WotLK-Extensions'
+       NoteEn = 'requires WotLK-Extensions'
+       Url = 'https://github.com/Alyst3r/WotLK-Extensions'
+       Code = {
+        # Laedt beim Start die WotLKExtensions.dll aus dem WoW-Ordner. Der
+        # Original-Patcher von WotLK-Extensions haengt seinen Lader wie der
+        # awesome-Lader an den Start der Haupt-Fiber (VA 0x40B7D0) - beide
+        # zusammen gingen nicht. Dieser Lader sitzt stattdessen am Anfang der
+        # Funktion, die die Haupt-Fiber dort aufruft (VA 0x406D70, einziger
+        # Aufrufer): jmp -> Lader bei VA 0x4E5D00 im toten Teil der
+        # Scan.dll-Startfunktion (hinter dem awesome-Lader) -> Scan.dll-Flag
+        # "Pruefung bestanden" setzen (sonst blockiert DefaultServerLogin),
+        # LoadLibraryA("WotLKExtensions.dll"), ersten Befehl (push 5EEB70h)
+        # nachholen, zurueck. Lua ScanDLLStart (VA 0x4DCCF0) wird wie beim
+        # awesome-Lader zu "return 0" (gleiche Bytes). Mit dem awesome-Lader
+        # zusammen werden beide DLLs geladen. Fehlt die DLL, startet WoW normal.
+        Patch 0x6170 @(0xE9, 0x8B, 0xEF, 0x0D, 0x00)
+        Patch 0xDC0F0 @(0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3)
+        Patch 0xE5100 @(
+            0xC6, 0x05, 0x74, 0xB4, 0xB6, 0x00, 0x01, 0x68, 0x1C, 0x5D, 0x4E, 0x00, 0xFF, 0x15, 0x48, 0xF2,
+            0x9D, 0x00, 0x68, 0x70, 0xEB, 0x5E, 0x00, 0xE9, 0x59, 0x10, 0xF2, 0xFF, 0x57, 0x6F, 0x74, 0x4C,
+            0x4B, 0x45, 0x78, 0x74, 0x65, 0x6E, 0x73, 0x69, 0x6F, 0x6E, 0x73, 0x2E, 0x64, 0x6C, 0x6C, 0x00
+        )
+    }}
+
+    @{ Id = 'voicedll'; Cat = 'dll'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'St0ny'
        De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
        En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
@@ -2269,7 +3058,7 @@ $patches = @(
         Patch 0x10CA41 @(0xEB)
     }}
 
-    @{ Id = 'follow'; Cat = 'gameplay'; On = $false
+    @{ Id = 'follow'; Cat = 'gameplay'; On = $false; PublicUntested = $true
        Author = 'St0ny (original by Alastor StrixEfuartus)'
        De = '/follow auch bei NPCs erlauben'
        En = 'Allow /follow on NPCs'
@@ -2313,7 +3102,7 @@ $patches = @(
         Patch 0x3F5DE0 @(0x55, 0x8B, 0xEC, 0xFF, 0x75, 0x0C, 0xFF, 0x75, 0x08, 0xE8, 0xC2, 0xFF, 0xFF, 0xFF, 0xDD, 0xD8, 0xD9, 0x40, 0x04, 0x5D, 0xC2, 0x08, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC)
     }}
 
-    @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false
+    @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus / Robinsch'
        De = 'Charaktererstellung: mehr als 10 Klassen (Zufallsklasse)'
        En = 'Character creation: more than 10 classes (random class)'
@@ -2332,7 +3121,7 @@ $patches = @(
         Patch 0xE03C3 @(0x88)
     }}
 
-    @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false
+    @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'Namenspruefung bei der Charaktererstellung abschalten (z.B. Zahlen im Namen)'
        En = 'Disable the name check in character creation (e.g. digits in names)'
@@ -2353,7 +3142,7 @@ $patches = @(
         Patch 0x6404F @(0xFF)
     }}
 
-    @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache')
+    @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache'); PublicUntested = $true; GameUntested = $true
        Author = 'Kebabstorm (fixed by St0ny)'
        De = 'Custom Item Fix (BETA) v2'
        En = 'Custom Item Fix (BETA) v2'
@@ -2451,8 +3240,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)'
        En = 'Remove the climb angle limit (walk up any slope)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Aus der 12th Generation EXE (Alastor StrixEfuartus). VA 0xA37F0C ist
         # der Kosinus des steilsten begehbaren Hangs, im Original 0.6427876 =
@@ -2465,8 +3252,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'Sprunghoehe aendern (Original -7.9555473)'
        En = 'Change jump height (original -7.9555473)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        PromptDe = 'Neuer Wert, negativ - je kleiner, desto hoeher (z.B. -11.25 = doppelte Hoehe)'
        PromptEn = 'New value, negative - the lower, the higher (e.g. -11.25 = double height)'
        Default = '-7.9555473'
@@ -2483,8 +3268,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung vorwaerts/rueckwaerts steuern'
        En = 'Steer forward/backward while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Dort ersetzt die DLL die Vorwaerts-Eingabe
         # (VA 0x988A20) durch eine eigene Funktion; die unterscheidet sich vom
@@ -2503,8 +3286,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung seitwaerts steuern'
        En = 'Steer sideways while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod, wie oben fuer die Seitwaerts-Eingabe
         # (VA 0x988B00):
@@ -2521,8 +3302,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung drehen aendert die Flugrichtung'
        En = 'Turning while jumping changes the flight direction'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Beim Drehen (VA 0x989B70) setzt der Client
         # die Bewegungsrichtung nur am Boden neu; in der Luft springt er bei
@@ -2534,8 +3313,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Doppelsprung (weitere Spruenge in der Luft)'
        En = 'Double jump (more jumps in the air)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden, Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server, exe grows - ban risk'
        PromptDe = 'Anzahl zusaetzlicher Spruenge in der Luft, 1 bis 9 (1 = Doppelsprung)'
        PromptEn = 'Number of extra jumps in the air, 1 to 9 (1 = double jump)'
        Default = '1'
@@ -2544,6 +3321,21 @@ $patches = @(
        Code = {
         # Eigene beschreibbare Sektion (.djump), siehe Add-DoubleJump.
         Add-DoubleJump ([int]$script:VALUES['doublejump'])
+    }}
+
+    @{ Id = 'noammo'; Cat = 'gameplay'; On = $false; PublicUntested = $true; GameUntested = $true
+       Author = 'Alyst3r (ported by St0ny)'
+       De = 'Fernkampf ohne Munition'
+       En = 'Ranged attacks without ammo'
+       NoteDe = 'Server muss mitspielen, sonst meldet er weiter "Keine Munition"'
+       NoteEn = 'the server has to support it, otherwise it still reports "no ammo"'
+       Code = {
+        # Spell_C_HaveEquippedSpellItems (VA 0x8093D0): Bei Zaubern, die
+        # Munition verlangen (Schiessen, Automatischer Schuss ...), prueft der
+        # Client ab VA 0x809540 die Munition. Ein Sprung zum Erfolgsausgang
+        # (VA 0x8095FF) laesst diese Pruefung weg. Der Server prueft selbst -
+        # ohne Anpassung am Server bleibt es bei seiner Fehlermeldung.
+        Patch 0x408940 @(0xE9, 0xBA, 0x00, 0x00, 0x00)
     }}
 
     # --- Grafik & Sichtweite ---
@@ -2811,7 +3603,7 @@ $patches = @(
         Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'nofade'; Cat = 'graphics'; On = $false
+    @{ Id = 'nofade'; Cat = 'graphics'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Kein Ausblenden fuer NPCs mit Flag DO_NOT_FADE_IN'
        En = 'No fade-out for NPCs with flag DO_NOT_FADE_IN'
@@ -2826,14 +3618,21 @@ $patches = @(
        Author = 'St0ny (original by Badgermilk0)'
        De = 'HD Unit-Frame Portraits: Renderaufloesung 256 statt 64 Pixel'
        En = 'HD unit frame portraits: render resolution 256 instead of 64 pixels'
-       NoteDe = 'Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'exe grows - ban risk'
        Code = {
         # Haengt die .hdp-Sektion an und biegt den Model-Render-Pfad auf 256px um.
         # Erzeugt keine neuen Portraits: Die Unit-Frames zeigen schon im Original
         # das 3D-Modell, nur die Textur, in die es gerendert wird, waechst von
         # 64x64 auf 256x256 Pixel. Die Groesse ist der einzige Parameter.
         Add-HdPortraits 256
+    }}
+
+    @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true
+       Author = 'tb (ported by St0ny)'
+       De = 'Icons im Text pixelgenau (scharf statt verschwommen)'
+       En = 'Pixel-exact icons in text (sharp instead of blurry)'
+       Code = {
+        # Eigene Sektion (.isnap) hinter ParseEmbeddedTexture, siehe Add-IconPixelSnap.
+        Add-IconPixelSnap
     }}
 
     # --- Interface & Komfort ---
@@ -2860,7 +3659,7 @@ $patches = @(
         Patch 0x123676 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames')
+    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames'); PublicUntested = $true
        Author = 'MacWarrior'
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'
@@ -2945,14 +3744,99 @@ $patches = @(
         Patch 0xE087B @(0xEB)
     }}
 
+    @{ Id = 'lootopen'; Cat = 'ui'; On = $false; PublicUntested = $true
+       Author = 'tb (ported by St0ny)'
+       De = 'Lootfenster bleibt beim Laufen offen'
+       En = 'Loot window stays open while moving'
+       Code = {
+        # Zehn Bewegungs-Handler (Laufen, Seitwaerts, Drehen, Neigen ...) der
+        # eigenen Figur schliessen das Lootfenster (Aufruf VA 0x523640). Das
+        # "je" vor dem Aufruf wird zu "jmp", der Aufruf entfaellt.
+        Patch 0x32A347 @(0xEB)   # VA 0x72AF47
+        Patch 0x32C62E @(0xEB)   # VA 0x72D22E
+        Patch 0x32DA4B @(0xEB)   # VA 0x72E64B
+        Patch 0x32DAFB @(0xEB)   # VA 0x72E6FB
+        Patch 0x32DBAB @(0xEB)   # VA 0x72E7AB
+        Patch 0x32DCBD @(0xEB)   # VA 0x72E8BD
+        Patch 0x32DD7B @(0xEB)   # VA 0x72E97B
+        Patch 0x32DE2B @(0xEB)   # VA 0x72EA2B
+        Patch 0x32DF4B @(0xEB)   # VA 0x72EB4B
+        Patch 0x32DFCA @(0xEB)   # VA 0x72EBCA
+    }}
+
+    @{ Id = 'showlevel'; Cat = 'ui'; On = $false; PublicUntested = $true
+       Author = 'tb (ported by St0ny)'
+       De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir'
+       En = 'Real level instead of "??" for enemies 10+ levels above you'
+       NoteDe = 'Bosse zeigen weiter "??" - dafuer Nr. 73'
+       NoteEn = 'bosses still show "??" - see No. 73'
+       Code = {
+        # Lua UnitLevel (VA 0x60F9E0), Tooltip (VA 0x620EE0) und Namensplakette
+        # (VA 0x98EF10) zeigen "??" (bzw. -1 / Totenkopf), wenn ein feindliches
+        # Ziel 10 oder mehr Level ueber dir ist. Diese Pruefung ("jle") faellt
+        # weg; die Boss-Pruefung direkt dahinter bleibt (die nimmt Nr. 73 raus).
+        Patch 0x20EEB2 @(0x90, 0x90)
+        Patch 0x220B66 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+        Patch 0x58E3B9 @(0x90, 0x90)
+    }}
+
+    @{ Id = 'showlevelboss'; Cat = 'ui'; On = $false; Needs = @('showlevel'); PublicUntested = $true
+       Author = 'St0ny'
+       De = 'Echtes Level auch bei Bossen statt "??" (Erweiterung zu Nr. 72)'
+       En = 'Real level for bosses too instead of "??" (extension to No. 72)'
+       Code = {
+        # Ist eine Kreatur als Boss markiert (Flag 0x4 in den Kreatur-Typflags,
+        # Pruefung CGUnit_C::IsBossMob bei VA 0x715D70), zeigen UnitLevel,
+        # Tooltip und Namensplakette immer "??" bzw. -1 / Totenkopf. Diese drei
+        # Boss-Pruefungen fallen weg; die Beschriftung "Boss" im Tooltip und das
+        # Elite-Symbol der Namensplakette bleiben. Gegner 10+ Level ueber dir
+        # zeigen ihr Level erst zusammen mit Nr. 72.
+        Patch 0x20EEBD @(0xEB)                                 # VA 0x60FABD UnitLevel: je -> jmp (kein -1)
+        Patch 0x220B78 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)   # VA 0x621778 Tooltip: jne "??" -> nop
+        Patch 0x58E358 @(0xEB)                                 # VA 0x98EF58 Namensplakette: je -> jmp (Level statt Totenkopf)
+    }}
+
+    @{ Id = 'holdrepeat'; Cat = 'ui'; On = $false; GrowsExe = $true; BanRisk = $true
+       Author = 'tb (ported by St0ny)'
+       De = 'Aktionstasten gedrueckt halten zum Wiederholen'
+       En = 'Hold action buttons to repeat'
+       Code = {
+        # Eigene beschreibbare Sektion (.hrep) mit Hooks in ExecKey, UseAction
+        # und OnWorldRender, siehe Add-HoldRepeat. Fest: 500 ms bis zur ersten
+        # Wiederholung, danach hoechstens alle 100 ms, nur wenn die Aktion
+        # bereit ist (keine Abklingzeit, kein laufender Zauber).
+        Add-HoldRepeat
+    }}
+
+
     # --- Fenster, Maus & Kamera ---
+
+    @{ Id = 'bubblerange'; Cat = 'ui'; On = $false
+       Author = 'St0ny'
+       De = 'Sprechblasen-Reichweite erhoehen (Original 25 Meter)'
+       En = 'Increase the chat bubble range (original 25 yards)'
+       PromptDe = 'Reichweite in Metern: 50, 100, 150, 200 oder 0 = unbegrenzt'
+       PromptEn = 'Range in yards: 50, 100, 150, 200 or 0 = unlimited'
+       Default = '50'
+       Check = { param($v) Test-BubbleRange $v }
+       Decode = { Get-BubbleRangeFromExe }
+       Code = {
+        # Zwei Abstandspruefungen gegen 625.0 = 25 Meter im Quadrat:
+        # fcomp [0xA104B0] bei VA 0x7200CE (neue Blase nur in Reichweite, gilt
+        # fuer Sagen, Gruppe, Schreien und NPC-Sagen/-Schreien) und bei VA
+        # 0x56C5E9 (vorhandene Blase ausblenden, wenn der Sprecher zu weit weg
+        # ist). Beide lesen danach die gewaehlte Konstante, siehe $BUBBLE_RANGES.
+        $va = [BitConverter]::GetBytes([uint32]$BUBBLE_RANGES[$script:VALUES['bubblerange'].Trim()])
+        Patch 0x31F4D0 $va
+        Patch 0x16B9EB $va
+    }}
 
     @{ Id = 'window'; Cat = 'window'; On = $false
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 65'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 65'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 77'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 77'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -2961,8 +3845,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 64'
-       NoteEn = 'only works together with No. 64'
+       NoteDe = 'wirkt nur zusammen mit Nr. 76'
+       NoteEn = 'only works together with No. 76'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -2986,12 +3870,12 @@ $patches = @(
         Patch 0x469183 @(0x83, 0xF8, 0x32, 0x7D, 0x03, 0x83, 0xC0, 0x01, 0x83, 0xF9, 0x32, 0xEB, 0x31)
     }}
 
-    @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
+    @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true; PublicUntested = $true
        Author = 'Stormhand (fixed by St0ny)'
        De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen'
        En = 'CameraReforged [BETA]: camera height and zoom limits'
-       NoteDe = 'Schulterversatz noch ohne Wirkung; Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'shoulder offset has no effect yet; exe grows - ban risk'
+       NoteDe = 'Schulterversatz noch ohne Wirkung'
+       NoteEn = 'shoulder offset has no effect yet'
        Code = {
         # BETA - funktioniert noch nicht zu 100 Prozent, hier fliesst noch Arbeit rein.
         #
@@ -3065,7 +3949,7 @@ $patches = @(
 
     # --- Client-Infos ---
 
-    @{ Id = 'clientversion'; Cat = 'client'; On = $false
+    @{ Id = 'clientversion'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior'
        De = 'Client-Version aendern (Original 3.3.5)'
        En = 'Change client version (original 3.3.5)'
@@ -3081,7 +3965,7 @@ $patches = @(
         Set-ClientVersion $script:VALUES['clientversion']
     }}
 
-    @{ Id = 'clientbuild'; Cat = 'client'; On = $false
+    @{ Id = 'clientbuild'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior'
        De = 'Build-Nummer aendern (Original 12340)'
        En = 'Change build number (original 12340)'
@@ -3096,7 +3980,7 @@ $patches = @(
         Set-ClientBuild $script:VALUES['clientbuild']
     }}
 
-    @{ Id = 'clienttitle'; Cat = 'client'; On = $false
+    @{ Id = 'clienttitle'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior (fixed by St0ny)'
        De = 'Programmtitel aendern (Dateieigenschaften und Fenstertitel)'
        En = 'Change program title (file properties and window title)'
@@ -3112,7 +3996,7 @@ $patches = @(
         Set-ClientTitle $script:VALUES['clienttitle']
     }}
 
-    @{ Id = 'clientdate'; Cat = 'client'; On = $false
+    @{ Id = 'clientdate'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'St0ny (original by MacWarrior)'
        De = 'Build-Datum aendern (Original Jun 24 2010)'
        En = 'Change build date (original Jun 24 2010)'
@@ -3130,7 +4014,7 @@ $patches = @(
         Set-ClientDate $script:VALUES['clientdate']
     }}
 
-    @{ Id = 'clienticon'; Cat = 'client'; On = $false
+    @{ Id = 'clienticon'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'St0ny (original by MacWarrior)'
        De = 'Programm-Icon aendern (Symbol der Wow.exe)'
        En = 'Change program icon (icon of Wow.exe)'
@@ -3147,29 +4031,36 @@ $patches = @(
     }}
 )
 
-# Standard-Preset "Project Reforged" - das offizielle Preset des Projekts
+# Standard-Preset "Reforged" - das offizielle Preset des Projekts
 # Project Reforged (https://projectreforged.github.io/wotlk/), zusammengestellt
-# von Stormhand. Nur sichere Patches ohne Bann-Gefahr. Im Menue mit R, ueber
+# von Stormhand. Nur sichere Patches, alle von Stormhand mehrere Stunden auf
+# Warmane getestet (Nr. 9, 63 und 64 vergroessern die Wow.exe). Im Menue mit R, ueber
 # -Select reforged; gilt beim ersten Start und fuer neue Patches.
 $PRESET_REFORGED = @(
-    'laa', 'itemcache', 'windowfix', 'mouse'
-)
-
-# Preset "St0nys_Wow.exe" - Billys Patch-Set plus
-# Sicherheits- und Login-Patches, MPQ-Signatur, /follow, Level 101,
-# Slider-Maxima, Objektgroesse, Tracker, Weltkarte und Fenstermodus. Im Menue
-# mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
-$PRESET_STONY = @(
-    'laa', 'itemcache', 'worldcrash', 'timer', 'rce',
-    'scandll', 'noserverpatch', 'nosurvey',
-    'skipbnet', 'skiprdp', 'nohttp', 'afk',
+    'laa', 'itemcache', 'timer', 'mirrorfix', 'wmocube', 'glyphfix',
+    'scandll', 'noserverpatch', 'nosurvey', 'skipbnet', 'skiprdp', 'nohttp',
     'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
     'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
-    'forcereaction', 'mail', 'deadchat', 'follow', 'level101', 'maxchars', 'customitem',
-    'airforward', 'airlateral', 'airturn', 'doublejump',
-    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale', 'cat0', 'occluder',
-    'bluemoon', 'notransparency', 'hdportraits',
-    'tracker', 'worldmap', 'castbars', 'emblems', 'flash',
+    'forcereaction', 'mail', 'deadchat', 'level101',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
+    'occluder', 'bluemoon', 'notransparency', 'hdportraits', 'iconsnap',
+    'tracker', 'worldmap', 'castbars', 'charrandom', 'bubblerange',
+    'window', 'maximize', 'windowfix', 'mouse', 'sound'
+)
+
+# Preset "St0nys_Wow.exe" - St0nys eigene Auswahl fuer eigene Server (enthaelt
+# auch unsichere Patches wie Warden aus und die Sprungsteuerung). Im Menue
+# mit S, ueber -Select stony. Ids, die hier fehlen oder unbekannt sind, bleiben aus.
+$PRESET_STONY = @(
+    'laa', 'itemcache', 'worldcrash', 'timer', 'nothrottle', 'mirrorfix',
+    'wmocube', 'glyphfix', 'wardenoff', 'scandll', 'noserverpatch', 'nosurvey',
+    'skipbnet', 'skiprdp', 'nohttp', 'afk', 'glue', 'mpqsig',
+    'mpqnames', 'localdata', 'awesome', 'areatrigger', 'swing', 'npcanim',
+    'spellanim', 'ghostattack', 'naked', 'forcereaction', 'mail', 'deadchat',
+    'follow', 'level101', 'airforward', 'airlateral', 'airturn', 'doublejump',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
+    'cat0', 'occluder', 'bluemoon', 'notransparency', 'iconsnap', 'tracker',
+    'worldmap', 'castbars', 'emblems', 'flash', 'holdrepeat', 'bubblerange',
     'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
 
@@ -3186,6 +4077,21 @@ worldcrash;210;B3D35D00;0
 worldcrash;41C91B;0F834D010000;1
 worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
 timer;46A08E;0F8582000000;1
+nothrottle;27547E;56;1
+nothrottle;2756DE;56;1
+mirrorfix;32F729;E85206DCFF;1
+mirrorfix;32F8CA;E8B104DCFF;1
+mirrorfix;46B310;558BEC8B4508687026870050E89FFFFFFF83C4085DC3CCCCCCCCCCCCCCCCCCCC;1
+wmocube;3BC8AF;56681802A400E8E655FBFF83C4085F5E;1
+glyphfix;116;0600;0
+glyphfix;160;00D09F00;0
+glyphfix;1A8;007C750098120000;0
+glyphfix;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+glyphfix;2C3ED0;558BEC83EC20;1
+glyphfix;2C4520;558BEC83EC0C;1
+glyphfix;2C5F90;56578BF16A00;1
+glyphfix;2C6880;568BF1837E6400741E8B46488B4E4450E80BB5FFFF85C075078BCEE8F0F6FFFFC74664000000008BCEE86206000033C03986B0000000C786D4000000000000000F95C05EC3;1
+glyphfix;2C9350;558BEC51837D0801;1
 rce;2A7;E0;1
 rce;3D9D7C;750A;1
 wardenoff;3D9C5B;7406;1
@@ -3225,8 +4131,11 @@ luaunlockfull;40259C;74;1
 keyprop;8EFD9;01;1
 globalsv;1F8488;8B4508680005000050;1
 awesome;ABD0;558BECE898B5FFFF;1
-awesome;DC0F0;558BEC568B75;1
+awesome;DC0F0;558BEC568B75;0
 awesome;E50B0;558BEC5633F639356CB4B6000F85DB010000393568B4B6000F85CF01000033C0B968B4B6008701566A5468F8659F006A18E85A8828006860659F00A380B4B600E81BBEF7;1
+wotlkext;6170;6870EB5E00;1
+wotlkext;DC0F0;558BEC568B75;0
+wotlkext;E5100;B6006A18526860659F00E881561D0083C40C84C074206854659F00E8C0BFF7FF6854659F006860659F00E841BFF7FF83;1
 voicedll;406;91AA0000;1
 voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 areatrigger;2DB241;64;1
@@ -3313,8 +4222,9 @@ airturn;588F97;7512;1
 doublejump;116;0600;0
 doublejump;160;00D09F00;0
 doublejump;1A8;007C750098120000;0
-doublejump;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+doublejump;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 doublejump;58782A;8B7E44F7C7001800027544;1
+noammo;408940;F64710100F;1
 farclip;63CF0C;ABEA4544ABEAC544;1
 horizon;38CBDF;F88C9E00;1
 envdetail;38D08E;D9;1
@@ -3339,12 +4249,19 @@ nofade;5DD7D9;000000000000000000000000000000000000000000000000000000000000000000
 hdportraits;116;0600;0
 hdportraits;160;00D09F00;0
 hdportraits;1A8;007C750098120000;0
-hdportraits;2F8;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+hdportraits;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+hdportraits;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 hdportraits;21620A;40000000;1
 hdportraits;216AA0;558BEC81EC04050000;1
 hdportraits;2174E9;930BEAFF;1
 hdportraits;218F73;89F6E9FF;1
 hdportraits;2193AF;40000000;1
+iconsnap;116;0600;0
+iconsnap;160;00D09F00;0
+iconsnap;1A8;007C750098120000;0
+iconsnap;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+iconsnap;370;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+iconsnap;2C0280;558BEC83EC44;1
 tracker;11D4C5;A0149E00;1
 worldmap;11D462;A0149E00;1
 castbars;123676;8BCEE8A3181F00;1
@@ -3352,6 +4269,32 @@ emblems;613108;AA;1
 flash;1342D5;0C56E8B4BA17008BF085F60F84860000008B068B90C80000008BCEFFD283F80175758B068B90AC000000;1
 flash;606EE4;424E52656D6F7665467269656E64;1
 charrandom;E087B;74;1
+lootopen;32A347;74;1
+lootopen;32C62E;74;1
+lootopen;32DA4B;74;1
+lootopen;32DAFB;74;1
+lootopen;32DBAB;74;1
+lootopen;32DCBD;74;1
+lootopen;32DD7B;74;1
+lootopen;32DE2B;74;1
+lootopen;32DF4B;74;1
+lootopen;32DFCA;74;1
+showlevel;20EEB2;7E0B;1
+showlevel;220B66;0F8EDD000000;1
+showlevel;58E3B9;7E9F;1
+showlevelboss;20EEBD;74;1
+showlevelboss;220B78;0F85CB000000;1
+showlevelboss;58E358;74;1
+holdrepeat;116;0600;0
+holdrepeat;160;00D09F00;0
+holdrepeat;1A8;007C750098120000;0
+holdrepeat;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+holdrepeat;398;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+holdrepeat;F82A0;558BEC83EC34;1
+holdrepeat;162550;558BEC81ECC4000000;1
+holdrepeat;1AAFC0;558BEC83EC0C;1
+bubblerange;16B9EB;B004A100;1
+bubblerange;31F4D0;B004A100;1
 window;369A7D;A0149E;1
 maximize;369AB2;A0149E;1
 windowfix;E94;74;1
@@ -3363,7 +4306,7 @@ camera;116;0600;0
 camera;160;00D09F00;0
 camera;1A8;007C750098120000;0
 camera;2F8;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
-camera;348;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
+camera;3C0;00000000000000000000000000000000000000000000000000000000000000000000000000000000;0
 camera;11CDB0;558BEC81EC80000000;1
 camera;1FCE36;68E0E7A100;1
 camera;1FD5B2;6840139E00;1
@@ -3433,7 +4376,7 @@ function ConvertTo-Indices([string]$text, [int]$max) {
     return , $result.ToArray()
 }
 
-# Standard-Auswahl = Preset "Project Reforged"
+# Standard-Auswahl = Preset "Reforged"
 function Get-DefaultSelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_REFORGED -contains $patches[$i].Id }
@@ -3457,7 +4400,7 @@ function Get-StonySelection {
 # Gespeicherte Auswahl aus patcher_selection.ini lesen. Liefert $null, wenn es
 # keine gibt. Gespeichert wird pro Patch-Id, nicht pro Nummer: Patches, die in
 # der Datei fehlen (z.B. in einer neueren Version hinzugekommen), bekommen
-# ihren Standardwert (Preset Project Reforged), unbekannte Eintraege werden ignoriert.
+# ihren Standardwert (Preset Reforged), unbekannte Eintraege werden ignoriert.
 function Get-SavedSelection {
     if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $null }
     try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $null }
@@ -3662,7 +4605,7 @@ function Get-PatchById([string]$id) {
 # Anzeigename auch fuer Ids, die es in dieser Version nicht mehr gibt.
 function Get-NameById([string]$id) {
     $q = Get-PatchById $id
-    if ($q) { return PatchName $q }
+    if ($q) { return PatchName $q -NoTags }
     return $id
 }
 
@@ -3910,6 +4853,7 @@ Say (T 'StartWarn2') 'Yellow'
 Say (T 'StartWarn3') 'Yellow'
 Say (T 'StartWarn4') 'Yellow'
 Say (T 'StartWarn5') 'Yellow'
+Say (T 'StartWarn6') 'Yellow'
 Write-Host ''
 Say (T 'Thanks') 'Magenta'
 Write-Host ''
@@ -4170,19 +5114,12 @@ foreach ($p in $chosen) {
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
     }
 }
-foreach ($p in $chosen) {
-    if ($p.DllHint) {
-        Write-Host ''
-        Say (T 'HintHead' (PatchRef $p)) 'Yellow'
-        Say (T 'DllHint') 'Yellow'
-    }
-}
 $cheat = @()
 foreach ($p in $chosen) { if ($p.BanRisk) { $cheat += PatchRef $p } }
 if ($cheat.Count -gt 0) {
     Write-Host ''
-    Say (T 'CheatHead') 'Yellow'
-    foreach ($m in $cheat) { Say "  - $m" 'Yellow' }
+    Say (T 'CheatHead') 'Red'
+    foreach ($m in $cheat) { Say "  - $m" 'Red' }
     Say (T 'CheatBan') 'Red'
 }
 $grow = @()
@@ -4191,7 +5128,23 @@ if ($grow.Count -gt 0) {
     Write-Host ''
     Say (T 'GrowHead') 'Yellow'
     foreach ($m in $grow) { Say "  - $m" 'Yellow' }
-    Say (T 'GrowBan') 'Red'
+    Say (T 'GrowBan') 'Yellow'
+}
+$public = @()
+foreach ($p in $chosen) { if ($p.PublicUntested) { $public += PatchRef $p } }
+if ($public.Count -gt 0) {
+    Write-Host ''
+    Say (T 'PublicHead') 'Yellow'
+    foreach ($m in $public) { Say "  - $m" 'Yellow' }
+    Say (T 'PublicBan') 'Red'
+}
+$untested = @()
+foreach ($p in $chosen) { if ($p.GameUntested) { $untested += PatchRef $p } }
+if ($untested.Count -gt 0) {
+    Write-Host ''
+    Say (T 'UntestedHead') 'Yellow'
+    foreach ($m in $untested) { Say "  - $m" 'Yellow' }
+    Say (T 'UntestedWarn') 'Red'
 }
 Write-Host ''
 
@@ -4261,7 +5214,7 @@ $cur = 0
 try {
     foreach ($p in $chosen) {
         $cur++
-        Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p)"
+        Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p -NoTags)"
         & $p.Code
     }
     if ($total -gt 0) { Add-Watermark }
