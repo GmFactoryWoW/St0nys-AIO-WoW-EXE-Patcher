@@ -1730,9 +1730,12 @@ function Add-GlyphCacheFix {
 #    das normale Ausloesen beim Loslassen (UseAction-Hook).
 #  - OnWorldRender (VA 0x4F8EA0): Nach jedem Bild prueft der Hook jede
 #    gehaltene Taste: fruehestens 500 ms nach dem Druecken, nicht waehrend
-#    eines Zaubers, nicht waehrend der Abklingzeit (GetCooldown, auch
-#    globale), erst 100 ms nachdem die Aktion wieder bereit ist und
-#    hoechstens alle 100 ms ruft er UseAction auf.
+#    der Spieler zaubert oder kanalisiert (Zauberleiste: laufender Zauber
+#    [Spieler+A6Ch] bis [Spieler+A7Ch], Kanalisierung [Spieler+A80h] bis
+#    [Spieler+A88h], wie UnitCastingInfo/UnitChannelInfo) oder ein Zauber
+#    auf sein Ziel wartet ([0xD3F4E4]), nicht waehrend der Abklingzeit
+#    (GetCooldown, auch globale), erst 100 ms nachdem die Aktion wieder
+#    bereit ist und hoechstens alle 100 ms ruft er UseAction auf.
 #  - Fokus-Ereignis (EventRegisterEx, Ereignis 2, beim ersten Druck
 #    angemeldet): Verliert das Fenster den Fokus, werden alle gehaltenen
 #    Tasten vergessen (sonst wiederholt es ohne Loslassen ewig).
@@ -1747,7 +1750,7 @@ function Add-HoldRepeat {
     Assert-Bytes ($EXEC - 0x400C00) @(0x55, 0x8B, 0xEC, 0x81, 0xEC, 0xC4, 0x00, 0x00, 0x00) 'Gedrueckt halten'
     Assert-Bytes ($USE - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x0C) 'Gedrueckt halten'
     Assert-Bytes ($RENDER - 0x400C00) @(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x34) 'Gedrueckt halten'
-    $loc = Add-CodeSection '.hrep' 0x421 -Writable
+    $loc = Add-CodeSection '.hrep' 0x473 -Writable
     $CAVE = $loc[0]
     $c = New-Object System.Collections.Generic.List[byte]
     for ($i = 0; $i -lt 0x114; $i++) { $c.Add([byte]0) }                 # Zustaende, beginnen bei 0
@@ -1953,27 +1956,56 @@ function Add-HoldRepeat {
     AddRaw $c @(0x89, 0xE5)                                    # mov ebp,esp
     AddRaw $c @(0x83, 0xEC, 0x34)                              # sub esp,0x34
     AddRaw $c @(0xE9); AddLE32 $c (0x4F8EA6 - ($CAVE + 0x343)) # jmp 0x4F8EA6  (OnWorldRender+6)
-    # --- Wiederholung: jede gehaltene Taste pruefen ---
+    # --- Wiederholung: Zauberleiste/Kanalisierung des Spielers, dann jede gehaltene Taste pruefen ---
     # update:
     AddRaw $c @(0x53)                                          # push ebx
     AddRaw $c @(0x56)                                          # push esi
     AddRaw $c @(0x57)                                          # push edi
     AddRaw $c @(0x55)                                          # push ebp
-    AddRaw $c @(0x83, 0xEC, 0x0C)                              # sub esp,12
+    AddRaw $c @(0x83, 0xEC, 0x10)                              # sub esp,16
     AddRaw $c @(0x89, 0xE3)                                    # mov ebx,esp
     AddRaw $c @(0xE8); AddLE32 $c (0x86AE20 - ($CAVE + 0x351)) # call 0x86AE20  (OsGetAsyncTimeMs)
     AddRaw $c @(0x89, 0xC5)                                    # mov ebp,eax
+    AddRaw $c @(0xE8); AddLE32 $c (0x4D3790 - ($CAVE + 0x358)) # call 0x4D3790  (Spieler-GUID)
+    AddRaw $c @(0x6A, 0x00)                                    # push 0
+    AddRaw $c @(0x68, 0xD4, 0x2C, 0xA2, 0x00)                  # push 0xA22CD4
+    AddRaw $c @(0x6A, 0x10)                                    # push 0x10
+    AddRaw $c @(0x52)                                          # push edx
+    AddRaw $c @(0x50)                                          # push eax
+    AddRaw $c @(0xE8); AddLE32 $c (0x4D4DB0 - ($CAVE + 0x368)) # call 0x4D4DB0  (Objekt zur GUID)
+    AddRaw $c @(0x83, 0xC4, 0x14)                              # add esp,0x14
+    AddRaw $c @(0xB9, 0x01, 0x00, 0x00, 0x00)                  # mov ecx,1
+    AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
+    AddRaw $c @(0x74, 0x28)                                    # jz cast_done
+    AddRaw $c @(0x83, 0xB8, 0x6C, 0x0A, 0x00, 0x00, 0x00)      # cmp dword ptr [eax+0xA6C],0
+    AddRaw $c @(0x74, 0x0A)                                    # je cast_chan
+    AddRaw $c @(0x89, 0xEA)                                    # mov edx,ebp
+    AddRaw $c @(0x2B, 0x90, 0x7C, 0x0A, 0x00, 0x00)            # sub edx,[eax+0xA7C]
+    AddRaw $c @(0x78, 0x15)                                    # js cast_done
+    # cast_chan:
+    AddRaw $c @(0x83, 0xB8, 0x80, 0x0A, 0x00, 0x00, 0x00)      # cmp dword ptr [eax+0xA80],0
+    AddRaw $c @(0x74, 0x0A)                                    # je cast_no
+    AddRaw $c @(0x89, 0xEA)                                    # mov edx,ebp
+    AddRaw $c @(0x2B, 0x90, 0x88, 0x0A, 0x00, 0x00)            # sub edx,[eax+0xA88]
+    AddRaw $c @(0x78, 0x02)                                    # js cast_done
+    # cast_no:
+    AddRaw $c @(0x31, 0xC9)                                    # xor ecx,ecx
+    # cast_done:
+    AddRaw $c @(0x89, 0x4B, 0x0C)                              # mov [ebx+12],ecx
     AddRaw $c @(0xBE); AddLE32 $c ($CAVE + 0x0)                # mov esi,held
     AddRaw $c @(0xBF, 0x08, 0x00, 0x00, 0x00)                  # mov edi,8
     # up_l:
     AddRaw $c @(0x83, 0x7E, 0x18, 0x00)                        # cmp dword ptr [esi+24],0
-    AddRaw $c @(0x0F, 0x84, 0xA8, 0x00, 0x00, 0x00)            # je up_n
+    AddRaw $c @(0x0F, 0x84, 0xAE, 0x00, 0x00, 0x00)            # je up_n
     AddRaw $c @(0x89, 0xE8)                                    # mov eax,ebp
     AddRaw $c @(0x2B, 0x46, 0x08)                              # sub eax,[esi+8]
     AddRaw $c @(0x3D, 0xF4, 0x01, 0x00, 0x00)                  # cmp eax,500
-    AddRaw $c @(0x0F, 0x82, 0x98, 0x00, 0x00, 0x00)            # jb up_n
+    AddRaw $c @(0x0F, 0x82, 0x9E, 0x00, 0x00, 0x00)            # jb up_n
     AddRaw $c @(0x83, 0x3D, 0xE4, 0xF4, 0xD3, 0x00, 0x00)      # cmp dword ptr [0xD3F4E4],0  (laufender Zauber)
+    AddRaw $c @(0x75, 0x06)                                    # jne up_busy
+    AddRaw $c @(0x83, 0x7B, 0x0C, 0x00)                        # cmp dword ptr [ebx+12],0
     AddRaw $c @(0x74, 0x0C)                                    # je up_nc
+    # up_busy:
     AddRaw $c @(0xC7, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00)      # mov dword ptr [esi+16],0
     AddRaw $c @(0xE9, 0x83, 0x00, 0x00, 0x00)                  # jmp up_n
     # up_nc:
@@ -1987,7 +2019,7 @@ function Add-HoldRepeat {
     AddRaw $c @(0x50)                                          # push eax
     AddRaw $c @(0x53)                                          # push ebx
     AddRaw $c @(0xFF, 0x76, 0x04)                              # push dword ptr [esi+4]
-    AddRaw $c @(0xE8); AddLE32 $c (0x5A8E40 - ($CAVE + 0x3A7)) # call 0x5A8E40  (GetCooldown)
+    AddRaw $c @(0xE8); AddLE32 $c (0x5A8E40 - ($CAVE + 0x3F9)) # call 0x5A8E40  (GetCooldown)
     AddRaw $c @(0x83, 0xC4, 0x10)                              # add esp,16
     AddRaw $c @(0x8B, 0x43, 0x04)                              # mov eax,[ebx+4]
     AddRaw $c @(0x85, 0xC0)                                    # test eax,eax
@@ -2018,21 +2050,21 @@ function Add-HoldRepeat {
     AddRaw $c @(0x68); AddLE32 $c ($CAVE + 0x110)              # push btn
     AddRaw $c @(0x68); AddLE32 $c ($CAVE + 0x108)              # push guid
     AddRaw $c @(0xFF, 0x76, 0x04)                              # push dword ptr [esi+4]
-    AddRaw $c @(0xE8, 0x1E, 0xFF, 0xFF, 0xFF)                  # call use_tramp
+    AddRaw $c @(0xE8, 0xCC, 0xFE, 0xFF, 0xFF)                  # call use_tramp
     AddRaw $c @(0x83, 0xC4, 0x0C)                              # add esp,12
     AddRaw $c @(0x89, 0x6E, 0x0C)                              # mov [esi+12],ebp
     AddRaw $c @(0xC7, 0x46, 0x14, 0x01, 0x00, 0x00, 0x00)      # mov dword ptr [esi+20],1
     # up_n:
     AddRaw $c @(0x83, 0xC6, 0x20)                              # add esi,32
     AddRaw $c @(0x4F)                                          # dec edi
-    AddRaw $c @(0x0F, 0x85, 0x44, 0xFF, 0xFF, 0xFF)            # jnz up_l
-    AddRaw $c @(0x83, 0xC4, 0x0C)                              # add esp,12
+    AddRaw $c @(0x0F, 0x85, 0x3E, 0xFF, 0xFF, 0xFF)            # jnz up_l
+    AddRaw $c @(0x83, 0xC4, 0x10)                              # add esp,16
     AddRaw $c @(0x5D)                                          # pop ebp
     AddRaw $c @(0x5F)                                          # pop edi
     AddRaw $c @(0x5E)                                          # pop esi
     AddRaw $c @(0x5B)                                          # pop ebx
     AddRaw $c @(0xC3)                                          # ret
-    if ($c.Count -ne 0x421) { throw 'Gedrueckt halten: Sektion hat die falsche Groesse.' }
+    if ($c.Count -ne 0x473) { throw 'Gedrueckt halten: Sektion hat die falsche Groesse.' }
     Patch $loc[1] $c.ToArray()
     Patch ($EXEC - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $EXEC ($CAVE + 0x120)) + [byte[]](0x90, 0x90, 0x90, 0x90)))
     Patch ($USE - 0x400C00) ([byte[]]((Get-Rel32 @(0xE9) $USE ($CAVE + 0x30C)) + [byte[]](0x90)))
@@ -3247,8 +3279,8 @@ $patches = @(
 
     @{ Id = 'noammo'; Cat = 'gameplay'; On = $false
        Author = 'Alyst3r (ported by St0ny)'
-       De = 'Fernkampf ohne Munition - ungetestet'
-       En = 'Ranged attacks without ammo - untested'
+       De = 'Fernkampf ohne Munition'
+       En = 'Ranged attacks without ammo'
        NoteDe = 'Server muss mitspielen, sonst meldet er weiter "Keine Munition"'
        NoteEn = 'the server has to support it, otherwise it still reports "no ammo"'
        Code = {
@@ -3672,8 +3704,8 @@ $patches = @(
 
     @{ Id = 'lootopen'; Cat = 'ui'; On = $false
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Lootfenster bleibt beim Laufen offen - ungetestet'
-       En = 'Loot window stays open while moving - untested'
+       De = 'Lootfenster bleibt beim Laufen offen'
+       En = 'Loot window stays open while moving'
        Code = {
         # Zehn Bewegungs-Handler (Laufen, Seitwaerts, Drehen, Neigen ...) der
         # eigenen Figur schliessen das Lootfenster (Aufruf VA 0x523640). Das
@@ -3692,8 +3724,8 @@ $patches = @(
 
     @{ Id = 'showlevel'; Cat = 'ui'; On = $false
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir - ungetestet'
-       En = 'Real level instead of "??" for enemies 10+ levels above you - untested'
+       De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir'
+       En = 'Real level instead of "??" for enemies 10+ levels above you'
        NoteDe = 'Bosse zeigen weiter "??" - dafuer Nr. 73'
        NoteEn = 'bosses still show "??" - see No. 73'
        Code = {
@@ -3708,8 +3740,8 @@ $patches = @(
 
     @{ Id = 'showlevelboss'; Cat = 'ui'; On = $false; Needs = @('showlevel')
        Author = 'St0ny'
-       De = 'Echtes Level auch bei Bossen statt "??" (Erweiterung zu Nr. 72) - ungetestet'
-       En = 'Real level for bosses too instead of "??" (extension to No. 72) - untested'
+       De = 'Echtes Level auch bei Bossen statt "??" (Erweiterung zu Nr. 72)'
+       En = 'Real level for bosses too instead of "??" (extension to No. 72)'
        Code = {
         # Ist eine Kreatur als Boss markiert (Flag 0x4 in den Kreatur-Typflags,
         # Pruefung CGUnit_C::IsBossMob bei VA 0x715D70), zeigen UnitLevel,

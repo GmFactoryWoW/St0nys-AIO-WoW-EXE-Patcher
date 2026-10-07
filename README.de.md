@@ -352,7 +352,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [48](PATCHES.md#patch-airlateral) | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [49](PATCHES.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [50](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [51](PATCHES.md#patch-noammo) | Fernkampf ohne Munition – ungetestet *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* | Alyst3r (ported by St0ny) | – | – | – |
+| [51](PATCHES.md#patch-noammo) | Fernkampf ohne Munition *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* | Alyst3r (ported by St0ny) | – | – | – |
 
 #### Grafik & Sichtweite
 
@@ -382,9 +382,9 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [68](PATCHES.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
 | [69](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – | – |
-| [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir – ungetestet *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
-| [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) – ungetestet | St0ny | – | – | – |
+| [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen | Hour of Twilight (ported by St0ny) | – | – | – |
+| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) | St0ny | – | – | – |
 | [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen – ungetestet *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
 
 #### Fenster, Maus & Kamera

@@ -724,7 +724,7 @@ writable); this makes `Wow.exe` slightly larger.
 > to a ban.**
 
 <a id="patch-noammo"></a>
-**Ranged attacks without ammo – untested** *(No. 51, Author: Alyst3r (ported by St0ny))*
+**Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))*
 
 For Shoot, Auto Shot and other abilities that need ammo, the client checks
 whether arrows or bullets are present. The patch skips this check in the
@@ -1166,14 +1166,14 @@ etc. automatically; you start with the default appearance. The randomize button
 keeps working – it uses a separate path in the client.
 
 <a id="patch-lootopen"></a>
-**Loot window stays open while moving – untested** *(No. 71, Author: Hour of Twilight (ported by St0ny))*
+**Loot window stays open while moving** *(No. 71, Author: Hour of Twilight (ported by St0ny))*
 
 In the original the loot window closes as soon as you walk, strafe or turn.
 With the patch it stays open. The ten places in the movement handlers that
 close the window are skipped (one byte each).
 
 <a id="patch-showlevel"></a>
-**Real level instead of "??" for enemies 10+ levels above you – untested** *(No. 72, Author: Hour of Twilight (ported by St0ny))*
+**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: Hour of Twilight (ported by St0ny))*
 
 If a hostile target is 10 or more levels above you, the client shows "??"
 instead of the level (or a skull on the nameplate, `UnitLevel` returns -1).
@@ -1181,7 +1181,7 @@ With the patch, tooltip, nameplate and `UnitLevel` show the real level. Bosses
 still show "??" – that check is kept; No. 73 removes it.
 
 <a id="patch-showlevelboss"></a>
-**Real level for bosses too instead of "??" (extension to No. 72) – untested** *(No. 73, Author: St0ny)*
+**Real level for bosses too instead of "??" (extension to No. 72)** *(No. 73, Author: St0ny)*
 
 Creatures marked as boss (a flag in the creature data, e.g. raid and dungeon
 bosses) always show "??" in the original – in the tooltip, on the nameplate
@@ -1205,8 +1205,8 @@ has had since Dragonflight.
 
 - The first repeat comes 500 ms after pressing at the earliest.
 - It only repeats when the action is ready: no cooldown (including the global
-  cooldown), no spell being cast, and only 100 ms after it became ready again.
-  After that at most every 100 ms.
+  cooldown), no cast bar or channel running, no spell waiting for its target,
+  and only 100 ms after it became ready again. After that at most every 100 ms.
 - If the key has already repeated, releasing it does not trigger the action
   once more. A short press behaves like the original.
 - If the WoW window loses focus (e.g. Alt+Tab), all held keys are forgotten.

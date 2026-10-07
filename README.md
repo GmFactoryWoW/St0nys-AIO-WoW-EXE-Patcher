@@ -344,7 +344,7 @@ Click the number of a patch to jump to its description.
 | [48](PATCHES.en.md#patch-airlateral) | Steer sideways while jumping *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [49](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [50](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [51](PATCHES.en.md#patch-noammo) | Ranged attacks without ammo – untested *(the server has to support it, otherwise it still reports "no ammo")* | Alyst3r (ported by St0ny) | – | – | – |
+| [51](PATCHES.en.md#patch-noammo) | Ranged attacks without ammo *(the server has to support it, otherwise it still reports "no ammo")* | Alyst3r (ported by St0ny) | – | – | – |
 
 #### Graphics & view distance
 
@@ -374,9 +374,9 @@ Click the number of a patch to jump to its description.
 | [68](PATCHES.en.md#patch-emblems) | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
 | [69](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – | – |
-| [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving – untested | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you – untested *(bosses still show "??" – see No. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
-| [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) – untested | St0ny | – | – | – |
+| [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving | Hour of Twilight (ported by St0ny) | – | – | – |
+| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) | St0ny | – | – | – |
 | [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat – untested *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
 
 #### Window, mouse & camera

@@ -744,7 +744,7 @@ beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 > kann zu einem Bann führen.**
 
 <a id="patch-noammo"></a>
-**Fernkampf ohne Munition – ungetestet** *(Nr. 51, Autor: Alyst3r (ported by St0ny))*
+**Fernkampf ohne Munition** *(Nr. 51, Autor: Alyst3r (ported by St0ny))*
 
 Der Client prüft bei Schießen, Automatischem Schuss und anderen Fähigkeiten,
 die Munition brauchen, ob Pfeile oder Kugeln vorhanden sind. Der Patch lässt
@@ -1200,7 +1200,7 @@ nicht mehr automatisch aus, man startet mit dem Standard-Aussehen. Der
 Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 
 <a id="patch-lootopen"></a>
-**Lootfenster bleibt beim Laufen offen – ungetestet** *(Nr. 71, Autor: Hour of Twilight (ported by St0ny))*
+**Lootfenster bleibt beim Laufen offen** *(Nr. 71, Autor: Hour of Twilight (ported by St0ny))*
 
 Im Original schließt sich das Lootfenster, sobald du läufst, seitwärts gehst
 oder dich drehst. Mit dem Patch bleibt es offen. Die zehn Stellen in den
@@ -1208,7 +1208,7 @@ Bewegungs-Handlern, die das Fenster schließen, werden übersprungen (je ein
 Byte).
 
 <a id="patch-showlevel"></a>
-**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir – ungetestet** *(Nr. 72, Autor: Hour of Twilight (ported by St0ny))*
+**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir** *(Nr. 72, Autor: Hour of Twilight (ported by St0ny))*
 
 Ist ein feindliches Ziel 10 oder mehr Level über dir, zeigt der Client statt
 des Levels „??“ (bzw. einen Totenkopf auf der Namensplakette, `UnitLevel`
@@ -1217,7 +1217,7 @@ echte Level. Bosse zeigen weiterhin „??“ – diese Prüfung bleibt erhalten,
 nimmt Nr. 73 heraus.
 
 <a id="patch-showlevelboss"></a>
-**Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) – ungetestet** *(Nr. 73, Autor: St0ny)*
+**Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72)** *(Nr. 73, Autor: St0ny)*
 
 Kreaturen, die als Boss markiert sind (Flag in den Kreaturdaten, z. B.
 Schlachtzug- und Dungeonbosse), zeigen im Original immer „??“ – im Tooltip,
@@ -1241,8 +1241,9 @@ Zaubern“, die Retail-WoW seit Dragonflight hat.
 
 - Die erste Wiederholung kommt frühestens 500 ms nach dem Drücken.
 - Wiederholt wird nur, wenn die Aktion bereit ist: keine Abklingzeit (auch
-  keine globale), kein laufender Zauber, und erst 100 ms nachdem sie wieder
-  bereit ist. Danach höchstens alle 100 ms.
+  keine globale), keine laufende Zauberleiste oder Kanalisierung, kein Zauber,
+  der auf sein Ziel wartet, und erst 100 ms nachdem sie wieder bereit ist.
+  Danach höchstens alle 100 ms.
 - Hat die Taste schon wiederholt, löst das Loslassen die Aktion nicht noch
   einmal aus. Ein kurzer Druck verhält sich wie im Original.
 - Verliert das WoW-Fenster den Fokus (z. B. Alt+Tab), werden alle gehaltenen
