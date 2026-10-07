@@ -17,14 +17,14 @@
 #    -Language de|en          Sprachabfrage ueberspringen
 #    -Select   <Auswahl>      Auswahlmenue ueberspringen. Erlaubt sind
 #                             "saved" (gespeicherte Auswahl), "reforged"
-#                             (Preset Project Reforged = Standard), "billy"
+#                             (Preset Reforged = Standard), "billy"
 #                             (Preset Billy's_Wow.exe), "stony" (Preset
 #                             St0nys_Wow.exe), "all", "none"
 #                             (alle Patches zuruecknehmen) oder Nummern/Bereiche
 #                             wie "1,3,5-8"
 #    -Unattended              Keine Rueckfragen und keine Pausen. Ohne
 #                             -Language die gemerkte Sprache bzw. Deutsch, ohne -Select die
-#                             gespeicherte Auswahl bzw. das Preset Project Reforged
+#                             gespeicherte Auswahl bzw. das Preset Reforged
 #    -Path     <Datei>        Andere Wow.exe als die im Skriptordner
 #
 #  Fuer Entwickler:
@@ -127,7 +127,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH-AUSWAHL  ({0} von {1} ausgewaehlt)'
         MenuHelp1     = 'Nummer(n) eingeben um Patches an-/abzuwaehlen, z.B.:  5   oder  3 7 12   oder  10-15'
         MenuHelp2     = 'A = alle an    N = alle aus    L = English    Q = abbrechen'
-        MenuPresetR   = 'R = Preset Project Reforged (Standard, sicher)'
+        MenuPresetR   = 'R = Preset Reforged (Standard, sicher)'
         MenuPresets   = 'B = Preset Billy''s_Wow.exe (erprobte Basis, sicher)    S = Preset St0nys_Wow.exe (unsicher)'
         StonyWarning  = 'Achtung: Das Preset St0nys_Wow.exe sollte unter keinen Umstaenden auf oeffentlichen Servern verwendet werden - das fuehrt wahrscheinlich zu einem Bann!'
         LangInfo      = 'Sprache: Deutsch (gemerkt, im Menue mit L umschaltbar)'
@@ -228,7 +228,7 @@ $TEXT = @{
         MenuTitle     = 'PATCH SELECTION  ({0} of {1} selected)'
         MenuHelp1     = 'Enter number(s) to toggle patches, e.g.:  5   or  3 7 12   or  10-15'
         MenuHelp2     = 'A = all on    N = all off    L = Deutsch    Q = quit'
-        MenuPresetR   = 'R = preset Project Reforged (default, safe)'
+        MenuPresetR   = 'R = preset Reforged (default, safe)'
         MenuPresets   = 'B = preset Billy''s_Wow.exe (proven base, safe)    S = preset St0nys_Wow.exe (unsafe)'
         StonyWarning  = 'Warning: the preset St0nys_Wow.exe should never be used on public servers under any circumstances - it will most likely get you banned!'
         LangInfo      = 'Language: English (remembered, switch with L in the menu)'
@@ -2482,7 +2482,7 @@ function Get-BubbleRangeFromExe {
 #    Cat   - Kategorie (siehe $CATEGORIES), Ueberschrift im Menue
 #    De/En - Anzeigename je Sprache
 #    On    - Teil des Presets "Billy's_Wow.exe" ($true) oder nicht ($false).
-#            Die Standard-Auswahl ist das Preset "Project Reforged"
+#            Die Standard-Auswahl ist das Preset "Reforged"
 #            ($PRESET_REFORGED), das Preset "St0nys_Wow.exe" steht in
 #            $PRESET_STONY - beide als Id-Listen hinter den Patches
 #    NoteDe/NoteEn - optional: Hinweis in Klammern hinter dem Namen, z.B. was
@@ -4031,7 +4031,7 @@ $patches = @(
     }}
 )
 
-# Standard-Preset "Project Reforged" - das offizielle Preset des Projekts
+# Standard-Preset "Reforged" - das offizielle Preset des Projekts
 # Project Reforged (https://projectreforged.github.io/wotlk/), zusammengestellt
 # von Stormhand. Nur sichere Patches, alle von Stormhand mehrere Stunden auf
 # Warmane getestet (Nr. 9, 63 und 64 vergroessern die Wow.exe). Im Menue mit R, ueber
@@ -4378,7 +4378,7 @@ function ConvertTo-Indices([string]$text, [int]$max) {
     return , $result.ToArray()
 }
 
-# Standard-Auswahl = Preset "Project Reforged"
+# Standard-Auswahl = Preset "Reforged"
 function Get-DefaultSelection {
     $sel = New-Object bool[] $patches.Count
     for ($i = 0; $i -lt $patches.Count; $i++) { $sel[$i] = $PRESET_REFORGED -contains $patches[$i].Id }
@@ -4402,7 +4402,7 @@ function Get-StonySelection {
 # Gespeicherte Auswahl aus patcher_selection.ini lesen. Liefert $null, wenn es
 # keine gibt. Gespeichert wird pro Patch-Id, nicht pro Nummer: Patches, die in
 # der Datei fehlen (z.B. in einer neueren Version hinzugekommen), bekommen
-# ihren Standardwert (Preset Project Reforged), unbekannte Eintraege werden ignoriert.
+# ihren Standardwert (Preset Reforged), unbekannte Eintraege werden ignoriert.
 function Get-SavedSelection {
     if (-not (Test-Path -LiteralPath $settingsFile -PathType Leaf)) { return $null }
     try { $lines = [System.IO.File]::ReadAllLines($settingsFile) } catch { return $null }

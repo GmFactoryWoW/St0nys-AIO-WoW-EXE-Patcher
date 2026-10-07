@@ -107,7 +107,7 @@ siehe [Patches ändern oder zurücknehmen](#patches-ändern-oder-zurücknehmen).
 Das Menü listet alle Patches mit Nummer auf. `[X]` = wird eingespielt,
 `[ ]` = wird übersprungen. Das Menü ist in dieselben Kategorien gegliedert wie
 die [Patch-Übersicht](#patch-übersicht). Beim ersten Start ist das
-**Preset „Project Reforged“** vorausgewählt (Spalte „Reforged“ in der
+**Preset „Reforged“** vorausgewählt (Spalte „Reforged“ in der
 Übersicht), danach die gespeicherte Auswahl bzw. die Patches, die gerade in der
 `Wow.exe` stecken. Mit `B` lädst du das Preset **„Billy's_Wow.exe“** (Spalte
 „Billy“), mit `S` das Preset **„St0nys_Wow.exe“** (Spalte „St0ny“). Patches,
@@ -122,7 +122,7 @@ Link dazu steht direkt darunter.
 | `A`                | alle Patches an                             |
 | `N`                | alle Patches aus (bei gepatchter `Wow.exe` + ENTER: Original wiederherstellen) |
 | `L`                | Sprache umschalten (Deutsch ↔ English)      |
-| `R`                | Preset „Project Reforged“ laden (= Standard) (**Sicher** – offizielles Preset von [Project Reforged](https://projectreforged.github.io/wotlk/)) |
+| `R`                | Preset „Reforged“ laden (= Standard) (**Sicher** – offizielles Preset von [Project Reforged](https://projectreforged.github.io/wotlk/)) |
 | `B`                | Preset „Billy's_Wow.exe“ laden (**Sicher** – basiert auf Billys erprobter Exe) |
 | `S`                | Preset „St0nys_Wow.exe“ laden (**Nicht sicher**, nur auf eigenen Servern verwenden) |
 | `Q`                | abbrechen, die `Wow.exe` bleibt unverändert |
@@ -152,10 +152,10 @@ Sicherheitsabfrage abgebrochen hast.
   (`value.clientversion=3.3.6` usw.).
 - Auch die Sprache wird dort gemerkt (`language=de` bzw. `en`).
 - **Zurücksetzen:** im Menü `R` drücken oder `patcher_selection.ini` löschen –
-  dann gilt wieder das Preset „Project Reforged“ (beim Löschen der Datei werden
+  dann gilt wieder das Preset „Reforged“ (beim Löschen der Datei werden
   auch Sprache und gemerkte Werte wieder abgefragt).
 
-Das Preset „Project Reforged“ (Taste `R`) ist das offizielle Preset des
+Das Preset „Reforged“ (Taste `R`) ist das offizielle Preset des
 Projekts [Project Reforged](https://projectreforged.github.io/wotlk/),
 zusammengestellt von Stormhand, und die Standard-Auswahl. Es enthält nur
 sichere Patches (🟢), die Stormhand alle mehrere Stunden auf Warmane getestet
@@ -239,8 +239,8 @@ Alle Parameter sind optional und werden von `patcher.bat` an
 | Parameter              | Bedeutung                                                                   |
 |------------------------|-----------------------------------------------------------------------------|
 | `-Language de\|en`     | Sprache für diesen Lauf festlegen. Zusammen mit `-Select` bleibt die gemerkte Sprache unverändert; wird die Auswahl im Menü mit ENTER übernommen, wird sie mitgespeichert. |
-| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `reforged` (Preset „Project Reforged“, auch `default`), `billy` (Preset „Billy's_Wow.exe“), `stony` (Preset „St0nys_Wow.exe“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
-| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Project Reforged“. |
+| `-Select <Auswahl>`    | Auswahlmenü überspringen: `saved` (gespeicherte Auswahl), `reforged` (Preset „Reforged“, auch `default`), `billy` (Preset „Billy's_Wow.exe“), `stony` (Preset „St0nys_Wow.exe“), `all`, `none` (alle Patches zurücknehmen, Original wiederherstellen) oder Nummern/Bereiche wie `"1,3,5-8"`. Die Auswahl ersetzt die Patches in der `Wow.exe` komplett. Mit `-Select` wird die gespeicherte Auswahl nicht verändert. |
+| `-Unattended`          | keine Rückfragen und keine Pausen. Ohne `-Language` gilt die gemerkte Sprache bzw. Deutsch, ohne `-Select` die gespeicherte Auswahl bzw. das Preset „Reforged“. |
 | `-Path <Datei>`        | eine andere `Wow.exe` als die im Skriptordner patchen                        |
 
 Beispiel:
@@ -518,19 +518,20 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
 
 ## Danksagung
 
-- Ein ganz besonderer Dank geht an **Billy Hoyle** – für all seine Hilfe und
-  seine Tipps in den letzten Monaten und für die Unterstützung beim
+- Ein ganz besonderer Dank geht an **Billy Hoyle** – für all seine Hilfe, Tipps,
+  Expertise und Tests in den letzten Monaten und für die Unterstützung beim
   Zusammentragen der Patches. Sein Patch-Set steckt als Preset
   „Billy's_Wow.exe“ in diesem Patcher.
-- Beim Zusammentragen der Patches hat auch **MacWarrior** geholfen und dazu
-  einige eigene Patches beigesteuert – vielen Dank auch dafür!
+- Danke auch an **MacWarrior**, der ebenfalls beim Zusammentragen der Patches
+  geholfen und einige eigene Patches beigesteuert hat.
 - Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
-  einzubauen, und für das Preset „Project Reforged“, das offizielle Preset
-  seines Projekts [Project Reforged](https://projectreforged.github.io/wotlk/).
-- Ein großes Dankeschön an **Stormhand** und **MacWarrior** für die vielen
-  Tests im Spiel – und an Stormhand ganz besonders dafür, den eigenen
-  Warmane-Account riskiert zu haben, um herauszufinden, welche Patches sicher
-  sind. 😄
+  einzubauen. Das offizielle Preset seines Projekts
+  [Project Reforged](https://projectreforged.github.io/wotlk/) steckt als Preset
+  „Reforged“ in diesem Patcher und ist die Standard-Auswahl.
+- Ein großes Dankeschön an **Stormhand**, **MacWarrior** und **Billy Hoyle** für
+  die vielen Tests im Spiel – und an Stormhand ganz besonders dafür, den eigenen
+  Warmane-Account riskiert zu haben, um herauszufinden, welche Patches „sicher“
+  nutzbar sind. 😄
 - Danke an **Moroes**, der den Patch [#26](PATCHES.de.md#patch-globalsv)
   aufgespürt und mir zugespielt hat.
 - Und natürlich danke an alle Autoren der Patches, die in der

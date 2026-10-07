@@ -102,7 +102,7 @@ To **change or remove** patches just run `patcher.bat` again, see
 The menu lists every patch with a number. `[X]` = will be applied,
 `[ ]` = will be skipped. The menu is grouped into the same categories as the
 [patch overview](#patch-overview). On the first start the
-**preset "Project Reforged"** is preselected (see the "Reforged" column in the
+**preset "Reforged"** is preselected (see the "Reforged" column in the
 overview), after that the saved selection or the patches currently in
 `Wow.exe`. `B` loads the preset **"Billy's_Wow.exe"** (column "Billy"), `S` the
 preset **"St0nys_Wow.exe"** (column "St0ny").
@@ -117,7 +117,7 @@ after their name, with the link right below.
 | `A`                | all patches on                             |
 | `N`                | all patches off (patched `Wow.exe` + ENTER: restore the original) |
 | `L`                | switch language (Deutsch ↔ English)        |
-| `R`                | load preset "Project Reforged" (= default) (**Safe** – official preset of [Project Reforged](https://projectreforged.github.io/wotlk/)) |
+| `R`                | load preset "Reforged" (= default) (**Safe** – official preset of [Project Reforged](https://projectreforged.github.io/wotlk/)) |
 | `B`                | load preset "Billy's_Wow.exe" (**Safe** – based on Billy's proven exe) |
 | `S`                | load preset "St0nys_Wow.exe" (**Not safe**, use only on your own servers) |
 | `Q`                | quit, `Wow.exe` stays unmodified           |
@@ -145,10 +145,10 @@ prompt.
   jump height, double jump (`value.clientversion=3.3.6` etc.).
 - The language is remembered there as well (`language=de` or `en`).
 - **Reset:** press `R` in the menu or delete `patcher_selection.ini` – then
-  the preset "Project Reforged" applies again (deleting the file also forgets the
+  the preset "Reforged" applies again (deleting the file also forgets the
   language and the remembered values, they are asked for again).
 
-The preset "Project Reforged" (key `R`) is the official preset of the
+The preset "Reforged" (key `R`) is the official preset of the
 [Project Reforged](https://projectreforged.github.io/wotlk/) project, put
 together by Stormhand, and the default selection. It contains only patches
 rated safe (🟢), all tested by Stormhand for several hours on Warmane – **the
@@ -229,8 +229,8 @@ All parameters are optional and are passed through from `patcher.bat` to
 | Parameter              | Meaning                                                                    |
 |------------------------|----------------------------------------------------------------------------|
 | `-Language de\|en`     | set the language for this run. Together with `-Select` the remembered language stays unchanged; if you accept a selection in the menu with ENTER, it is saved along with it. |
-| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `reforged` (preset "Project Reforged", also `default`), `billy` (preset "Billy's_Wow.exe"), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
-| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Project Reforged". |
+| `-Select <selection>`  | skip the selection menu: `saved` (saved selection), `reforged` (preset "Reforged", also `default`), `billy` (preset "Billy's_Wow.exe"), `stony` (preset "St0nys_Wow.exe"), `all`, `none` (remove all patches, restore the original) or numbers/ranges like `"1,3,5-8"`. The selection completely replaces the patches in `Wow.exe`. Using `-Select` does not change the saved selection. |
+| `-Unattended`          | no prompts and no pauses. Without `-Language` the remembered language or German is used, without `-Select` the saved selection or the preset "Reforged". |
 | `-Path <file>`         | patch a `Wow.exe` other than the one next to the script                    |
 
 Example:
@@ -503,18 +503,18 @@ clicking the number of a patch takes you straight to its description.
 
 ## Acknowledgements
 
-- A very special thank you goes to **Billy Hoyle** – for all his help and tips
-  over the past months and for helping to collect the patches. His patch set is
-  included as the preset "Billy's_Wow.exe".
-- **MacWarrior** also helped collect the patches and contributed some of his
-  own – thank you as well!
+- A very special thank you goes to **Billy Hoyle** – for all his help, tips,
+  expertise and testing over the past months and for helping to collect the
+  patches. His patch set is included as the preset "Billy's_Wow.exe".
+- Thanks also to **MacWarrior**, who also helped collect the patches and
+  contributed some of his own.
 - Thanks also to **Stormhand** for the permission to include his
-  CameraReforged patch, and for the preset "Project Reforged", the official
-  preset of his [Project Reforged](https://projectreforged.github.io/wotlk/)
-  project.
-- A big thank you to **Stormhand** and **MacWarrior** for all the testing in
-  game – and to Stormhand in particular for risking their own Warmane account
-  to find out which patches are safe. 😄
+  CameraReforged patch. The official preset of his project
+  [Project Reforged](https://projectreforged.github.io/wotlk/) is included as
+  the preset "Reforged" and is the default selection.
+- A big thank you to **Stormhand**, **MacWarrior** and **Billy Hoyle** for all
+  the testing in game – and to Stormhand in particular for risking their own
+  Warmane account to find out which patches are "safe" to use. 😄
 - Thanks to **Moroes**, who tracked down patch
   [#26](PATCHES.en.md#patch-globalsv) and passed it on to me.
 - And of course thanks to all patch authors named in the
