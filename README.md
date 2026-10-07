@@ -18,8 +18,8 @@ extended** at any time later – all the way back to the original `Wow.exe`.
 > [!WARNING]
 > **Use at your own risk.** Patches rated safe (🟢) have been tested in game and
 > should be harmless on public servers as well – but there is no 100 %
-> guarantee: what a server detects and tolerates is up to the server and
-> changes from time to time. All other patches carry a uniform warning in the
+> guarantee: what is detected and tolerated on a server is up to its operator
+> and may change from time to time. All other patches carry a uniform warning in the
 > overview and in the patcher (see [Notes](#notes)). If in doubt, check the
 > rules of your server before using a patched `Wow.exe` there. The patcher
 > also shows this note on every start.

@@ -20,10 +20,10 @@ originalen `Wow.exe`.
 > [!WARNING]
 > **Benutzung auf eigene Gefahr.** Als sicher (🟢) eingestufte Patches sind im
 > Spiel getestet und sollten auch auf öffentlichen Servern unbedenklich sein –
-> eine 100-%-Garantie gibt es aber nicht: Was ein Server erkennt und duldet,
-> entscheidet er selbst und ändert es auch mal. Alle anderen Patches tragen in
-> der Übersicht und im Patcher eine einheitliche Warnung (siehe
-> [Hinweise](#hinweise)). Im Zweifel prüfe die Richtlinien deines Servers,
+> eine 100-%-Garantie gibt es aber nicht: Was auf einem Server erkannt und
+> geduldet wird, entscheidet der jeweilige Serverbetreiber, und das kann sich
+> auch ändern. Alle anderen Patches tragen in der Übersicht und im Patcher eine
+> einheitliche Warnung (siehe [Hinweise](#hinweise)). Im Zweifel prüfe die Richtlinien deines Servers,
 > bevor du eine gepatchte `Wow.exe` dort benutzt. Der Patcher zeigt diesen
 > Hinweis auch bei jedem Start an.
 
