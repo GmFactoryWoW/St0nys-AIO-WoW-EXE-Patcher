@@ -291,12 +291,12 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 > - 🟡 **[im Spiel ungetestet]** – **Funktion im Spiel ungetestet**: Der Patch
 >   ist im Spiel noch nicht geprüft und möglicherweise verbuggt. Der Patcher
 >   zeigt vor dem Patchen einen gelben Hinweis.
-> - **[Exe wird größer]** – der Patch hängt eine Sektion an die `Wow.exe` an.
+> - 🟠 **[Exe wird größer]** – der Patch hängt eine Sektion an die `Wow.exe` an.
 >   Viele Server tolerieren eine veränderte Dateigröße nicht – das kann zu
 >   einem Bann führen. Der Patcher zeigt vor dem Patchen eine rote Warnung.
 >
 > Ein Patch kann mehrere Warnungen tragen, z. B. 🟡 **[auf öffentlichen Servern
-> und im Spiel ungetestet]**.
+> und im Spiel ungetestet]** 🟠 **[Exe wird größer]**.
 
 #### System & Leistung
 
@@ -310,7 +310,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [6](PATCHES.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln 🟢 **[sicher]** | tb (ported by St0ny) | – | – | – |
 | [7](PATCHES.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [8](PATCHES.md#patch-wmocube) | Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (ported by St0ny) | – | – | – |
-| [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
+| [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 
 #### Sicherheit & Datenschutz
 
@@ -341,7 +341,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [22](PATCHES.md#patch-localdata) | Daten direkt aus dem Data-Ordner laden (ohne MPQ) 🟢 **[sicher]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [23](PATCHES.md#patch-luaunlock) | LUA Unlock (Zauber, Bewegung, Makros) 🔴 **[Bann-Gefahr]** | Alastor StrixEfuartus | – | – | – |
 | [24](PATCHES.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben 🔴 **[Bann-Gefahr]** | St0ny | – | – | – |
-| [25](PATCHES.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) 🔴 **[Bann-Gefahr, im Spiel ungetestet]** | Alyst3r (0x539wowmod) | – | – | – |
+| [25](PATCHES.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) 🔴 **[Bann-Gefahr]** 🟡 **[im Spiel ungetestet]** | Alyst3r (0x539wowmod) | – | – | – |
 | [26](PATCHES.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | St0ny (original by boredatom) | – | – | – |
 
 #### DLL-Loader
@@ -376,7 +376,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [47](PATCHES.md#patch-airforward) | Im Sprung vorwärts/rückwärts steuern 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [48](PATCHES.md#patch-airlateral) | Im Sprung seitwärts steuern 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [49](PATCHES.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [50](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr, Exe wird größer]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [50](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab)* 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [51](PATCHES.md#patch-noammo) | Fernkampf ohne Munition *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (ported by St0ny) | – | – | – |
 
 #### Grafik & Sichtweite
@@ -394,8 +394,8 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [60](PATCHES.md#patch-bluemoon) | Blauer Mond am Nachthimmel reaktiviert 🟢 **[sicher]** | Robinsch | – | ✅ | ✅ |
 | [61](PATCHES.md#patch-notransparency) | Keine Transparenz beim Heranzoomen 🟢 **[sicher]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [62](PATCHES.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
-| [63](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | St0ny (original by Badgermilk0) | – | – | ✅ |
-| [64](PATCHES.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
+| [63](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]** | St0ny (original by Badgermilk0) | – | – | ✅ |
+| [64](PATCHES.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 
 #### Interface & Komfort
 
@@ -410,7 +410,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen 🟡 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* 🟡 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) 🟡 **[auf öffentlichen Servern ungetestet]** | St0ny | – | – | – |
-| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen 🔴 **[Bann-Gefahr, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
+| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 | [75](PATCHES.md#patch-bubblerange) | Sprechblasen-Reichweite erhöhen (Original 25 Meter) *(fragt den Wert ab)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | St0ny | – | – | – |
 
 #### Fenster, Maus & Kamera
@@ -421,7 +421,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [77](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 76)* 🟢 **[sicher]** | St0ny | – | – | ✅ |
 | [78](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [79](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [80](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
+| [80](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* 🟡 **[auf öffentlichen Servern ungetestet]** 🟠 **[Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
 
 #### Sound
 
@@ -471,7 +471,7 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   - 🟡 **im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
     möglicherweise verbuggt: Nr. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 und 75
     (gelber Hinweis).
-  - **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
+  - 🟠 **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
     Nr. 9, 50, 63, 64, 74 und 80. Viele Server tolerieren eine veränderte
     Dateigröße nicht – das kann zu einem Bann führen (rote Warnung). Alle
     anderen Patches ändern die Dateigröße nicht.

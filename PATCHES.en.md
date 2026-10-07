@@ -150,7 +150,7 @@ not change.
 > not been tested yet.
 
 <a id="patch-glyphfix"></a>
-**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -358,7 +358,7 @@ out.
 > it as botting – this can lead to a ban.
 
 <a id="patch-keyprop"></a>
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk, untested in game]**
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk]** 🟡 **[untested in game]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -761,7 +761,7 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk, exe grows]**
+**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]** 🟠 **[exe grows]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1126,7 +1126,7 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟡 **[untested on public servers and in game, exe grows]**
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1160,7 +1160,7 @@ otherwise read past the source.
 > exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 <a id="patch-iconsnap"></a>
-**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1304,7 +1304,7 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk, exe grows]**
+**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk]** 🟠 **[exe grows]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1406,7 +1406,7 @@ A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 80, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers, exe grows]**
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 80, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers]** 🟠 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.

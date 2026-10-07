@@ -152,7 +152,7 @@ der DLL steckt. Die Änderung passt in die Original-Funktion, die Dateigröße
 > fehlt, ist noch nicht getestet.
 
 <a id="patch-glyphfix"></a>
-**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
+**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -365,7 +365,7 @@ Patcher weist dann nur darauf hin.
 > das als Botting werten – das kann zu einem Bann führen.
 
 <a id="patch-keyprop"></a>
-**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 25, Autor: Alyst3r (0x539wowmod))* 🔴 **[Bann-Gefahr, im Spiel ungetestet]**
+**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 25, Autor: Alyst3r (0x539wowmod))* 🔴 **[Bann-Gefahr]** 🟡 **[im Spiel ungetestet]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -779,7 +779,7 @@ den beiden vorigen Patches.
 > kann zu einem Bann führen.
 
 <a id="patch-doublejump"></a>
-**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 50, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[Bann-Gefahr, Exe wird größer]**
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 50, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1158,7 +1158,7 @@ wie bisher.
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 <a id="patch-hdportraits"></a>
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1193,7 +1193,7 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > egal was in `portraitResolution` steht.
 
 <a id="patch-iconsnap"></a>
-**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
+**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1340,7 +1340,7 @@ steht dort das Level, das der Server für den Boss schickt. Die Beschriftung
 > Nr. 72 einspielen; der Patcher weist darauf hin, wenn Nr. 72 fehlt.
 
 <a id="patch-holdrepeat"></a>
-**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: tb (ported by St0ny))* 🔴 **[Bann-Gefahr, Exe wird größer]**
+**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: tb (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1449,7 +1449,7 @@ hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 80, Autor: Stormhand (fixed by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet, Exe wird größer]**
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 80, Autor: Stormhand (fixed by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]** 🟠 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.

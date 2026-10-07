@@ -280,12 +280,12 @@ Click the number of a patch to jump to its description.
 > - 🟡 **[untested in game]** – **function untested in game**: the patch has
 >   not been checked in game yet and may be buggy. The patcher shows a yellow
 >   note before patching.
-> - **[exe grows]** – the patch appends a section to `Wow.exe`. Many servers do
+> - 🟠 **[exe grows]** – the patch appends a section to `Wow.exe`. Many servers do
 >   not tolerate a changed file size – this can lead to a ban. The patcher
 >   shows a red warning before patching.
 >
 > A patch can carry several warnings, e.g. 🟡 **[untested on public servers
-> and in game]**.
+> and in game]** 🟠 **[exe grows]**.
 
 #### System & performance
 
@@ -299,7 +299,7 @@ Click the number of a patch to jump to its description.
 | [6](PATCHES.en.md#patch-nothrottle) | Do not throttle item and player name queries 🟢 **[safe]** | tb (ported by St0ny) | – | – | – |
 | [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) 🟡 **[untested on public servers and in game]** | tb (ported by St0ny) | – | – | – |
 | [8](PATCHES.en.md#patch-wmocube) | Missing WMO file: error cube instead of ERROR #134 🟡 **[untested on public servers and in game]** | Alyst3r (ported by St0ny) | – | – | – |
-| [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) 🟡 **[untested on public servers and in game, exe grows]** | tb (ported by St0ny) | – | – | – |
+| [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]** | tb (ported by St0ny) | – | – | – |
 
 #### Security & privacy
 
@@ -330,7 +330,7 @@ Click the number of a patch to jump to its description.
 | [22](PATCHES.en.md#patch-localdata) | Load data directly from the Data folder (no MPQ) 🟢 **[safe]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [23](PATCHES.en.md#patch-luaunlock) | LUA unlock (spells, movement, macros) 🔴 **[ban risk]** | Alastor StrixEfuartus | – | – | – |
 | [24](PATCHES.en.md#patch-luaunlockfull) | LUA unlock (complete): allow all protected functions 🔴 **[ban risk]** | St0ny | – | – | – |
-| [25](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) 🔴 **[ban risk, untested in game]** | Alyst3r (0x539wowmod) | – | – | – |
+| [25](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) 🔴 **[ban risk]** 🟡 **[untested in game]** | Alyst3r (0x539wowmod) | – | – | – |
 | [26](PATCHES.en.md#patch-globalsv) | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* 🟡 **[untested on public servers and in game]** | St0ny (original by boredatom) | – | – | – |
 
 #### DLL loaders
@@ -365,7 +365,7 @@ Click the number of a patch to jump to its description.
 | [47](PATCHES.en.md#patch-airforward) | Steer forward/backward while jumping 🔴 **[ban risk]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [48](PATCHES.en.md#patch-airlateral) | Steer sideways while jumping 🔴 **[ban risk]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [49](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction 🔴 **[ban risk]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [50](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value)* 🔴 **[ban risk, exe grows]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [50](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value)* 🔴 **[ban risk]** 🟠 **[exe grows]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [51](PATCHES.en.md#patch-noammo) | Ranged attacks without ammo *(the server has to support it, otherwise it still reports "no ammo")* 🟡 **[untested on public servers and in game]** | Alyst3r (ported by St0ny) | – | – | – |
 
 #### Graphics & view distance
@@ -383,8 +383,8 @@ Click the number of a patch to jump to its description.
 | [60](PATCHES.en.md#patch-bluemoon) | Re-enable the blue moon in the night sky 🟢 **[safe]** | Robinsch | – | ✅ | ✅ |
 | [61](PATCHES.en.md#patch-notransparency) | No character transparency when zooming in 🟢 **[safe]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [62](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* 🟡 **[untested on public servers and in game]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
-| [63](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels 🟡 **[untested on public servers and in game, exe grows]** | St0ny (original by Badgermilk0) | – | – | ✅ |
-| [64](PATCHES.en.md#patch-iconsnap) | Pixel-exact icons in text (sharp instead of blurry) 🟡 **[untested on public servers and in game, exe grows]** | tb (ported by St0ny) | – | – | – |
+| [63](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]** | St0ny (original by Badgermilk0) | – | – | ✅ |
+| [64](PATCHES.en.md#patch-iconsnap) | Pixel-exact icons in text (sharp instead of blurry) 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]** | tb (ported by St0ny) | – | – | – |
 
 #### Interface & comfort
 
@@ -399,7 +399,7 @@ Click the number of a patch to jump to its description.
 | [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving 🟡 **[untested on public servers]** | tb (ported by St0ny) | – | – | – |
 | [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* 🟡 **[untested on public servers]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) 🟡 **[untested on public servers]** | St0ny | – | – | – |
-| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat 🔴 **[ban risk, exe grows]** | tb (ported by St0ny) | – | – | – |
+| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat 🔴 **[ban risk]** 🟠 **[exe grows]** | tb (ported by St0ny) | – | – | – |
 | [75](PATCHES.en.md#patch-bubblerange) | Increase the chat bubble range (original 25 yards) *(asks for the value)* 🟡 **[untested on public servers and in game]** | St0ny | – | – | – |
 
 #### Window, mouse & camera
@@ -410,7 +410,7 @@ Click the number of a patch to jump to its description.
 | [77](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 76)* 🟢 **[safe]** | St0ny | – | – | ✅ |
 | [78](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
 | [79](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
-| [80](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet)* 🟡 **[untested on public servers, exe grows]** | Stormhand (fixed by St0ny) | – | – | – |
+| [80](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet)* 🟡 **[untested on public servers]** 🟠 **[exe grows]** | Stormhand (fixed by St0ny) | – | – | – |
 
 #### Sound
 
@@ -460,7 +460,7 @@ clicking the number of a patch takes you straight to its description.
   - 🟡 **untested in game** – the function has not been checked in game yet,
     possibly buggy: No. 4, 7–9, 25, 26, 29, 44, 51, 62–64, 68, 70 and 75
     (yellow note).
-  - **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
+  - 🟠 **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
     63, 64, 74 and 80. Many servers do not tolerate a changed file size – this
     can lead to a ban (red warning). All other patches do not change the file
     size.
