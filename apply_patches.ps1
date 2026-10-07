@@ -2821,20 +2821,6 @@ $patches = @(
         Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
     }}
 
-    @{ Id = 'voicedll'; Cat = 'dll'; On = $false
-       Author = 'St0ny'
-       De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
-       En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
-       NoteDe = 'Modul noch unfertig'
-       NoteEn = 'module not finished yet'
-       Url = 'https://github.com/Raz0r1337/mod-voicechat'
-       Code = {
-        # ALPHA - das Modul mod-voicechat ist noch nicht fertig. Laedt
-        # beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
-        # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
-        Add-VoiceLoader 'voice.dll'
-    }}
-
     @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa'); DllHint = 'WotLK-Extensions'
        Author = 'St0ny (original by Alyst3r)'
        De = 'WotLKExtensions.dll Unterstuetzung aktivieren - ungetestet'
@@ -2862,6 +2848,20 @@ $patches = @(
             0x9D, 0x00, 0x68, 0x70, 0xEB, 0x5E, 0x00, 0xE9, 0x59, 0x10, 0xF2, 0xFF, 0x57, 0x6F, 0x74, 0x4C,
             0x4B, 0x45, 0x78, 0x74, 0x65, 0x6E, 0x73, 0x69, 0x6F, 0x6E, 0x73, 0x2E, 0x64, 0x6C, 0x6C, 0x00
         )
+    }}
+
+    @{ Id = 'voicedll'; Cat = 'dll'; On = $false
+       Author = 'St0ny'
+       De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
+       En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
+       NoteDe = 'Modul noch unfertig'
+       NoteEn = 'module not finished yet'
+       Url = 'https://github.com/Raz0r1337/mod-voicechat'
+       Code = {
+        # ALPHA - das Modul mod-voicechat ist noch nicht fertig. Laedt
+        # beim Start die voice.dll aus dem WoW-Ordner; fehlt sie,
+        # startet WoW ganz normal. Dateigroesse und PE-Header bleiben gleich.
+        Add-VoiceLoader 'voice.dll'
     }}
 
     # --- Gameplay-Fixes ---
@@ -4034,11 +4034,11 @@ globalsv;1F8488;8B4508680005000050;1
 awesome;ABD0;558BECE898B5FFFF;1
 awesome;DC0F0;558BEC568B75;0
 awesome;E50B0;558BEC5633F639356CB4B6000F85DB010000393568B4B6000F85CF01000033C0B968B4B6008701566A5468F8659F006A18E85A8828006860659F00A380B4B600E81BBEF7;1
-voicedll;406;91AA0000;1
-voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 wotlkext;6170;6870EB5E00;1
 wotlkext;DC0F0;558BEC568B75;0
 wotlkext;E5100;B6006A18526860659F00E881561D0083C40C84C074206854659F00E8C0BFF7FF6854659F006860659F00E841BFF7FF83;1
+voicedll;406;91AA0000;1
+voicedll;543F45;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC;1
 areatrigger;2DB241;64;1
 swing;2E1C67;6AFF6A408BCEE8BE830500;1
 npcanim;33D785;75308B96380A0000F7C2000800007522F6C1207516F7C200100000750E83F80B740583F80C752A33C9EB0CB90C000000EB05B90B0000003BC174168BCEE8C9FAFDFF85C0740B6AFF6A008BCEE85AC8FFFF;1

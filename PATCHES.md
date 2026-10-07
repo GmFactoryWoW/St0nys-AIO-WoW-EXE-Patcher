@@ -402,25 +402,8 @@ Fehlt die DLL, startet WoW normal weiter.
 > `portraitResolution` von awesome_wotlk keine Wirkung – es gilt immer die
 > Auflösung des Exe-Patches.
 
-<a id="patch-voicedll"></a>
-**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 28, Autor: St0ny)*
-
-Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
-[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem
-Voice-Chat-Modul für AzerothCore. Fehlt die DLL, startet WoW ganz normal.
-
-> [!CAUTION]
-> **ALPHA** – das Modul mod-voicechat ist noch nicht fertig. Deshalb ist dieser
-> Patch standardmäßig abgewählt. Der Patch selbst ist im Spiel getestet.
-
-Dateigröße und PE-Header bleiben unverändert: Der Sprung am Einstiegspunkt
-(VA `0x401005`) wird in eine freie 27-Byte-Lücke zwischen zwei Funktionen
-(VA `0x944B45`) umgebogen. Dort stehen `push "voice.dll"` → `call [LoadLibraryA]`
-→ Sprung zum ursprünglichen Ziel. Vor dem Schreiben prüft der Patcher
-Einstiegspunkt, Lücke und den `LoadLibraryA`-Import.
-
 <a id="patch-wotlkext"></a>
-**WotLKExtensions.dll Unterstützung aktivieren – ungetestet** *(Nr. 29, Autor: St0ny (original by Alyst3r))*
+**WotLKExtensions.dll Unterstützung aktivieren – ungetestet** *(Nr. 28, Autor: St0ny (original by Alyst3r))*
 
 Lädt beim Client-Start die `WotLKExtensions.dll` aus dem WoW-Ordner. Die DLL aus
 [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions) von Alyst3r
@@ -434,7 +417,7 @@ Der Original-Patcher von WotLK-Extensions setzt seinen Lader an dieselbe Stelle
 wie Nr. 27 – beide zusammen gingen nicht. Dieser Lader hängt sich stattdessen
 an die erste Funktion, die der Client von dort aus aufruft, und liegt im
 ungenutzten Teil der Scan.dll-Startfunktion hinter dem Lader von Nr. 27. So
-lassen sich Nr. 27 und Nr. 29 einzeln oder zusammen einspielen; zusammen lädt
+lassen sich Nr. 27 und Nr. 28 einzeln oder zusammen einspielen; zusammen lädt
 der Client beide DLLs. Wie bei Nr. 27 wird die Lua-Funktion `ScanDLLStart` zum
 Leerlauf und das Scan.dll-Flag auf „bestanden“ gesetzt – der Scan.dll-Mechanismus
 ist damit abgeschaltet (wie Nr. 12). Fehlt die DLL, startet WoW normal weiter.
@@ -459,6 +442,23 @@ Die Dateigröße ändert sich nicht.
 > Der Patch lädt auch die `WotLKExtensions.dll` aus dem Fork von
 > [Hour of Twilight](https://github.com/Hour-of-Twilight/WotLK-Extensions)
 > (gleicher Name, gleicher Lader). Dort ist der Zeit-Fix der DLL abgeschaltet.
+
+<a id="patch-voicedll"></a>
+**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 29, Autor: St0ny)*
+
+Lädt beim Start die `voice.dll` aus dem WoW-Ordner – den Client-Teil von
+[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), einem
+Voice-Chat-Modul für AzerothCore. Fehlt die DLL, startet WoW ganz normal.
+
+> [!CAUTION]
+> **ALPHA** – das Modul mod-voicechat ist noch nicht fertig. Deshalb ist dieser
+> Patch standardmäßig abgewählt. Der Patch selbst ist im Spiel getestet.
+
+Dateigröße und PE-Header bleiben unverändert: Der Sprung am Einstiegspunkt
+(VA `0x401005`) wird in eine freie 27-Byte-Lücke zwischen zwei Funktionen
+(VA `0x944B45`) umgebogen. Dort stehen `push "voice.dll"` → `call [LoadLibraryA]`
+→ Sprung zum ursprünglichen Ziel. Vor dem Schreiben prüft der Patcher
+Einstiegspunkt, Lücke und den `LoadLibraryA`-Import.
 
 ## Gameplay-Fixes
 

@@ -273,9 +273,10 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 <details>
 <summary><b>Übersicht aller Patches mit Autor und Preset-Zuordnung anzeigen</b></summary>
 
+#### System & Leistung
+
 | Nr. | Patch | Autor | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-|    | **System & Leistung** |  |  |  |  |
 | [1](PATCHES.md#patch-laa) | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.md#patch-cache) | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.md#patch-itemcache) | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ | ✅ |
@@ -285,18 +286,30 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [7](PATCHES.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
 | [8](PATCHES.md#patch-wmocube) | Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134 – ungetestet | Alyst3r (ported by St0ny) | – | – | – |
 | [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) – ungetestet *(Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Sicherheit & Datenschutz** |  |  |  |  |
+
+#### Sicherheit & Datenschutz
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [10](PATCHES.md#patch-rce) | Remote Code Execution Exploit Fix *(auf öffentlichen Servern über Warden erkennbar – Bann-Gefahr)* | Robinsch | – | – | ✅ |
 | [11](PATCHES.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden, auf öffentlichen Servern Bann-Gefahr)* | Robinsch | – | – | – |
 | [12](PATCHES.md#patch-scandll) | Scan.dll deaktivieren | Alastor StrixEfuartus | – | – | ✅ |
 | [13](PATCHES.md#patch-noserverpatch) | Client-Patches vom Server verbieten | Kebabstorm | – | – | ✅ |
 | [14](PATCHES.md#patch-nosurvey) | Hardware-Umfragen vom Server verbieten | Kebabstorm | – | – | ✅ |
-|    | **Login & Verbindung** |  |  |  |  |
+
+#### Login & Verbindung
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [15](PATCHES.md#patch-skipbnet) | Battle.net-Login überspringen | Kebabstorm | – | – | ✅ |
 | [16](PATCHES.md#patch-skiprdp) | Remote-Desktop-Prüfung überspringen | Kebabstorm | – | – | ✅ |
 | [17](PATCHES.md#patch-nohttp) | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – | – | ✅ |
 | [18](PATCHES.md#patch-afk) | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
-|    | **Modding: Interface, MPQs & Addons** |  |  |  |  |
+
+#### Modding: Interface, MPQs & Addons
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [19](PATCHES.md#patch-glue) | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
 | [20](PATCHES.md#patch-mpqsig) | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | – | ✅ |
 | [21](PATCHES.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben |  | – | ✅ | ✅ |
@@ -305,11 +318,19 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [24](PATCHES.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben *(kann als Botting gewertet werden – Bann-Gefahr)* | St0ny | – | – | – |
 | [25](PATCHES.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
 | [26](PATCHES.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
-|    | **DLL-Loader** |  |  |  |  |
+
+#### DLL-Loader
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [27](PATCHES.md#patch-awesome) | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
-| [28](PATCHES.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
-| [29](PATCHES.md#patch-wotlkext) | WotLKExtensions.dll Unterstützung aktivieren – ungetestet *(benötigt [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions))* | St0ny (original by Alyst3r) | – | – | – |
-|    | **Gameplay-Fixes** |  |  |  |  |
+| [28](PATCHES.md#patch-wotlkext) | WotLKExtensions.dll Unterstützung aktivieren – ungetestet *(benötigt [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions))* | St0ny (original by Alyst3r) | – | – | – |
+| [29](PATCHES.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
+
+#### Gameplay-Fixes
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [30](PATCHES.md#patch-areatrigger) | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | – | ✅ | ✅ |
 | [31](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | – | ✅ | ✅ |
 | [32](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
@@ -332,7 +353,11 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [49](PATCHES.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [50](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [51](PATCHES.md#patch-noammo) | Fernkampf ohne Munition – ungetestet *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* | Alyst3r (ported by St0ny) | – | – | – |
-|    | **Grafik & Sichtweite** |  |  |  |  |
+
+#### Grafik & Sichtweite
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [52](PATCHES.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [53](PATCHES.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
 | [54](PATCHES.md#patch-envdetail) | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | – | ✅ | ✅ |
@@ -346,7 +371,11 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [62](PATCHES.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [63](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | St0ny (original by Badgermilk0) | – | – | ✅ |
 | [64](PATCHES.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) – ungetestet *(Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Interface & Komfort** |  |  |  |  |
+
+#### Interface & Komfort
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [65](PATCHES.md#patch-tracker) | Quest-Tracker automatisch sortieren |  | – | – | ✅ |
 | [66](PATCHES.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv |  | – | – | ✅ |
 | [67](PATCHES.md#patch-castbars) | Cast Bars auf allen Frames | Kebabstorm | – | ✅ | ✅ |
@@ -357,15 +386,27 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir – ungetestet *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) – ungetestet | St0ny | – | – | – |
 | [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen – ungetestet *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Fenster, Maus & Kamera** |  |  |  |  |
+
+#### Fenster, Maus & Kamera
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [75](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 76)* | St0ny | – | – | ✅ |
 | [76](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 75)* | St0ny | – | – | ✅ |
 | [77](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
 | [78](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
 | [79](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |
-|    | **Sound** |  |  |  |  |
+
+#### Sound
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [80](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – | ✅ |
-|    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |  |
+
+#### Client-Infos: Version, Build, Titel, Datum, Icon
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [81](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
 | [82](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
 | [83](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |

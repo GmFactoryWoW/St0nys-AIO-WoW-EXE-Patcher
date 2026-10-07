@@ -394,25 +394,8 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > `portraitResolution` has no effect – the resolution of the exe patch always
 > wins.
 
-<a id="patch-voicedll"></a>
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 28, Author: St0ny)*
-
-Loads `voice.dll` from the WoW folder at startup – the client part of
-[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
-module for AzerothCore. If the DLL is missing, WoW starts normally.
-
-> [!CAUTION]
-> **ALPHA** – the mod-voicechat module is not finished yet. That is why this
-> patch is deselected by default. The patch itself has been tested in game.
-
-File size and PE header stay unchanged: the jump at the entry point (VA
-`0x401005`) is redirected into a free 27-byte gap between two functions (VA
-`0x944B45`), which holds `push "voice.dll"` → `call [LoadLibraryA]` → jump to the
-original target. Before writing, the patcher checks the entry point, the gap and
-the `LoadLibraryA` import.
-
 <a id="patch-wotlkext"></a>
-**Enable WotLKExtensions.dll support – untested** *(No. 29, Author: St0ny (original by Alyst3r))*
+**Enable WotLKExtensions.dll support – untested** *(No. 28, Author: St0ny (original by Alyst3r))*
 
 Loads `WotLKExtensions.dll` from the WoW folder when the client starts. The DLL
 from [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions) by Alyst3r
@@ -424,7 +407,7 @@ the 4GB patch (No. 1): if that one is not selected, the patcher points it out.
 The original patcher of WotLK-Extensions puts its loader at the same place as
 No. 27 – the two could not be combined. Instead, this loader hooks the first
 function the client calls from there, and it sits in the unused part of the
-Scan.dll start function behind the loader of No. 27. This way No. 27 and No. 29
+Scan.dll start function behind the loader of No. 27. This way No. 27 and No. 28
 can be applied alone or together; together, the client loads both DLLs. As with
 No. 27, the Lua function `ScanDLLStart` becomes a no-op and the Scan.dll flag is
 set to "passed" – which also disables the Scan.dll mechanism (like No. 12). If
@@ -448,6 +431,23 @@ the DLL is missing, WoW simply starts as usual. The file size does not change.
 > The patch also loads `WotLKExtensions.dll` from the fork by
 > [Hour of Twilight](https://github.com/Hour-of-Twilight/WotLK-Extensions)
 > (same name, same loader). Its time fix is disabled there.
+
+<a id="patch-voicedll"></a>
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)*
+
+Loads `voice.dll` from the WoW folder at startup – the client part of
+[mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
+module for AzerothCore. If the DLL is missing, WoW starts normally.
+
+> [!CAUTION]
+> **ALPHA** – the mod-voicechat module is not finished yet. That is why this
+> patch is deselected by default. The patch itself has been tested in game.
+
+File size and PE header stay unchanged: the jump at the entry point (VA
+`0x401005`) is redirected into a free 27-byte gap between two functions (VA
+`0x944B45`), which holds `push "voice.dll"` → `call [LoadLibraryA]` → jump to the
+original target. Before writing, the patcher checks the entry point, the gap and
+the `LoadLibraryA` import.
 
 ## Gameplay fixes
 

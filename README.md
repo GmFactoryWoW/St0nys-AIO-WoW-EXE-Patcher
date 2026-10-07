@@ -265,9 +265,10 @@ Click the number of a patch to jump to its description.
 <details>
 <summary><b>Show all patches with author and preset assignment</b></summary>
 
+#### System & performance
+
 | No. | Patch | Author | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-|    | **System & performance** |  |  |  |  |
 | [1](PATCHES.en.md#patch-laa) | 4GB patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.en.md#patch-cache) | Disable CACHE folder creation | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately | Robinsch | ✅ | ✅ | ✅ |
@@ -277,18 +278,30 @@ Click the number of a patch to jump to its description.
 | [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) – untested | Hour of Twilight (ported by St0ny) | – | – | – |
 | [8](PATCHES.en.md#patch-wmocube) | Missing WMO file: error cube instead of ERROR #134 – untested | Alyst3r (ported by St0ny) | – | – | – |
 | [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) – untested *(exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Security & privacy** |  |  |  |  |
+
+#### Security & privacy
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [10](PATCHES.en.md#patch-rce) | Remote code execution exploit fix *(detectable through Warden on public servers – ban risk)* | Robinsch | – | – | ✅ |
 | [11](PATCHES.en.md#patch-wardenoff) | Disable Warden completely, RCE fix *(may get you kicked if Warden is active, ban risk on public servers)* | Robinsch | – | – | – |
 | [12](PATCHES.en.md#patch-scandll) | Disable Scan.dll | Alastor StrixEfuartus | – | – | ✅ |
 | [13](PATCHES.en.md#patch-noserverpatch) | Disallow client patches from the server | Kebabstorm | – | – | ✅ |
 | [14](PATCHES.en.md#patch-nosurvey) | Disallow hardware surveys from the server | Kebabstorm | – | – | ✅ |
-|    | **Login & connection** |  |  |  |  |
+
+#### Login & connection
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [15](PATCHES.en.md#patch-skipbnet) | Skip Battle.net login | Kebabstorm | – | – | ✅ |
 | [16](PATCHES.en.md#patch-skiprdp) | Skip Remote Desktop check | Kebabstorm | – | – | ✅ |
 | [17](PATCHES.en.md#patch-nohttp) | Disable HTTP requests to Battle.net | Kebabstorm | – | – | ✅ |
 | [18](PATCHES.en.md#patch-afk) | Prevent the idle kick after character auto-login *(required for character auto-login; AFK and idle timers stay active, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
-|    | **Modding: interface, MPQs & addons** |  |  |  |  |
+
+#### Modding: interface, MPQs & addons
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [19](PATCHES.en.md#patch-glue) | Allow custom GlueXML | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
 | [20](PATCHES.en.md#patch-mpqsig) | Allow unsigned / incorrectly signed MPQs | Alastor StrixEfuartus | – | – | ✅ |
 | [21](PATCHES.en.md#patch-mpqnames) | Allow extended MPQ names |  | – | ✅ | ✅ |
@@ -297,11 +310,19 @@ Click the number of a patch to jump to its description.
 | [24](PATCHES.en.md#patch-luaunlockfull) | LUA unlock (complete): allow all protected functions *(may be treated as botting – ban risk)* | St0ny | – | – | – |
 | [25](PATCHES.en.md#patch-keyprop) | Pass all keyboard events on to addons (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
 | [26](PATCHES.en.md#patch-globalsv) | Merge addon data of all accounts (SavedVariables) *(shared folder `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
-|    | **DLL loaders** |  |  |  |  |
+
+#### DLL loaders
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [27](PATCHES.en.md#patch-awesome) | Enable AwesomeWotlkLib.dll support *(requires [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
-| [28](PATCHES.en.md#patch-voicedll) | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
-| [29](PATCHES.en.md#patch-wotlkext) | Enable WotLKExtensions.dll support – untested *(requires [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions))* | St0ny (original by Alyst3r) | – | – | – |
-|    | **Gameplay fixes** |  |  |  |  |
+| [28](PATCHES.en.md#patch-wotlkext) | Enable WotLKExtensions.dll support – untested *(requires [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions))* | St0ny (original by Alyst3r) | – | – | – |
+| [29](PATCHES.en.md#patch-voicedll) | Load voice.dll at startup (mod-voicechat) [ALPHA] *(module not finished yet, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
+
+#### Gameplay fixes
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [30](PATCHES.en.md#patch-areatrigger) | More precise area trigger timer (50 ms instead of 100 ms) | Robinsch | – | ✅ | ✅ |
 | [31](PATCHES.en.md#patch-swing) | Remove melee swing on right-click | Robinsch | – | ✅ | ✅ |
 | [32](PATCHES.en.md#patch-npcanim) | Suppress NPC attack animation when turning | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
@@ -324,7 +345,11 @@ Click the number of a patch to jump to its description.
 | [49](PATCHES.en.md#patch-airturn) | Turning while jumping changes the flight direction *(may be detected as cheating by the server – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [50](PATCHES.en.md#patch-doublejump) | Double jump (more jumps in the air) *(asks for the value, may be detected as cheating by the server, exe grows – ban risk)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [51](PATCHES.en.md#patch-noammo) | Ranged attacks without ammo – untested *(the server has to support it, otherwise it still reports "no ammo")* | Alyst3r (ported by St0ny) | – | – | – |
-|    | **Graphics & view distance** |  |  |  |  |
+
+#### Graphics & view distance
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [52](PATCHES.en.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [53](PATCHES.en.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
 | [54](PATCHES.en.md#patch-envdetail) | CVar environmentDetail unlock (no limit instead of 1.5) | St0ny | – | ✅ | ✅ |
@@ -338,7 +363,11 @@ Click the number of a patch to jump to its description.
 | [62](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [63](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels *(exe grows – ban risk)* | St0ny (original by Badgermilk0) | – | – | ✅ |
 | [64](PATCHES.en.md#patch-iconsnap) | Pixel-exact icons in text (sharp instead of blurry) – untested *(exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Interface & comfort** |  |  |  |  |
+
+#### Interface & comfort
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [65](PATCHES.en.md#patch-tracker) | Auto-sort quest tracker |  | – | – | ✅ |
 | [66](PATCHES.en.md#patch-worldmap) | Advanced world map enabled by default |  | – | – | ✅ |
 | [67](PATCHES.en.md#patch-castbars) | Cast bars on all frames | Kebabstorm | – | ✅ | ✅ |
@@ -349,15 +378,27 @@ Click the number of a patch to jump to its description.
 | [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you – untested *(bosses still show "??" – see No. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) – untested | St0ny | – | – | – |
 | [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat – untested *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
-|    | **Window, mouse & camera** |  |  |  |  |
+
+#### Window, mouse & camera
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [75](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 76)* | St0ny | – | – | ✅ |
 | [76](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 75)* | St0ny | – | – | ✅ |
 | [77](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
 | [78](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
 | [79](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |
-|    | **Sound** |  |  |  |  |
+
+#### Sound
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [80](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – | ✅ |
-|    | **Client info: version, build, title, date, icon** |  |  |  |  |
+
+#### Client info: version, build, title, date, icon
+
+| No. | Patch | Author | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [81](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
 | [82](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
 | [83](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
