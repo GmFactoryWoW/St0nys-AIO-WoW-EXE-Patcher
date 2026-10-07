@@ -1196,7 +1196,7 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat – untested** *(No. 74, Author: Hour of Twilight (ported by St0ny))*
+**Hold action buttons to repeat** *(No. 74, Author: Hour of Twilight (ported by St0ny))*
 
 When you hold the key of an action bar binding (the main bar,
 `ACTIONBUTTON1`–`12`, with page, stance and form bars), the client triggers the

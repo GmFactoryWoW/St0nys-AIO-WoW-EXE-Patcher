@@ -3756,8 +3756,8 @@ $patches = @(
 
     @{ Id = 'holdrepeat'; Cat = 'ui'; On = $false; GrowsExe = $true; BanRisk = $true
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Aktionstasten gedrueckt halten zum Wiederholen - ungetestet'
-       En = 'Hold action buttons to repeat - untested'
+       De = 'Aktionstasten gedrueckt halten zum Wiederholen'
+       En = 'Hold action buttons to repeat'
        NoteDe = 'kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird groesser - Bann-Gefahr'
        NoteEn = 'may be treated as automation (botting) by the server, exe grows - ban risk'
        Code = {

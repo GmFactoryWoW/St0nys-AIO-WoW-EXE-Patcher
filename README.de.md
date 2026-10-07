@@ -385,7 +385,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen | Hour of Twilight (ported by St0ny) | – | – | – |
 | [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) | St0ny | – | – | – |
-| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen – ungetestet *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
 
 #### Fenster, Maus & Kamera
 

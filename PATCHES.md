@@ -1232,7 +1232,7 @@ steht dort das Level, das der Server für den Boss schickt. Die Beschriftung
 > Nr. 72 einspielen; der Patcher weist darauf hin, wenn Nr. 72 fehlt.
 
 <a id="patch-holdrepeat"></a>
-**Aktionstasten gedrückt halten zum Wiederholen – ungetestet** *(Nr. 74, Autor: Hour of Twilight (ported by St0ny))*
+**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: Hour of Twilight (ported by St0ny))*
 
 Hältst du die Taste einer Aktionsleisten-Belegung gedrückt (die Hauptleiste,
 `ACTIONBUTTON1`–`12`, mit Seiten-, Haltungs- und Gestaltleisten), löst der

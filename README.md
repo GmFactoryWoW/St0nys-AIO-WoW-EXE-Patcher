@@ -377,7 +377,7 @@ Click the number of a patch to jump to its description.
 | [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving | Hour of Twilight (ported by St0ny) | – | – | – |
 | [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) | St0ny | – | – | – |
-| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat – untested *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
 
 #### Window, mouse & camera
 
