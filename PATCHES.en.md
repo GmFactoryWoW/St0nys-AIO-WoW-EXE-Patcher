@@ -164,10 +164,10 @@ it in its DLL. Here the four hooks live in a section of their own (`.glyph`,
 ## Security & privacy
 
 <a id="patch-rce"></a>
-**Remote code execution exploit fix** *(No. 10, Author: Robinsch)* 🔴 **[ban risk]**
+**Remote code execution exploit fix** *(No. 10, Author: Robinsch)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
@@ -183,10 +183,10 @@ are no longer loaded from the local cache. Warden itself keeps working.
 > they do no harm.
 
 <a id="patch-wardenoff"></a>
-**Disable Warden completely, RCE fix** *(No. 11, Author: Robinsch)* 🔴 **[ban risk]**
+**Disable Warden completely, RCE fix** *(No. 11, Author: Robinsch)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
@@ -293,10 +293,10 @@ The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
 
 <a id="patch-luaunlock"></a>
-**LUA unlock (spells, movement, macros)** *(No. 23, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+**LUA unlock (spells, movement, macros)** *(No. 23, Author: Alastor StrixEfuartus)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Addons and macros may call protected functions: movement functions
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,
@@ -310,10 +310,10 @@ prints an error. No. 24 unlocks these and all others.
 > this can lead to a ban.
 
 <a id="patch-luaunlockfull"></a>
-**LUA unlock (complete): allow all protected functions** *(No. 24, Author: St0ny)* 🔴 **[ban risk]**
+**LUA unlock (complete): allow all protected functions** *(No. 24, Author: St0ny)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Extends No. 23 to all protected functions. The client's central protection
 check knows 24 protection types in three classes (always forbidden, allowed only
@@ -337,10 +337,10 @@ out.
 > it as botting – this can lead to a ban.
 
 <a id="patch-keyprop"></a>
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk]** 🟠 **[untested in game]**
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[unsafe - ban risk]** 🟠 **[untested in game]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 >
 > **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
@@ -582,10 +582,10 @@ unchanged.
 source. There it is called "Disable XML SIG MD5", hence the note "Use XML MD5".
 
 <a id="patch-raceclass"></a>
-**Character creation: more than 10 classes (random class)** *(No. 41, Author: Alastor StrixEfuartus / Robinsch)* 🔴 **[ban risk]**
+**Character creation: more than 10 classes (random class)** *(No. 41, Author: Alastor StrixEfuartus / Robinsch)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The random class selection in character creation collects the allowed classes
 in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
@@ -593,10 +593,10 @@ in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 pick which class is still checked by the server – this patch does nothing more.
 
 <a id="patch-namecheck"></a>
-**Disable the name check in character creation (e.g. digits in names)** *(No. 42, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🔴 **[ban risk]**
+**Disable the name check in character creation (e.g. digits in names)** *(No. 42, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -662,10 +662,10 @@ Not taken over from v1: the PE checksum (Windows does not check it for
 programs) and the change `Cache` → `||che` – that is exactly patch No. 2.
 
 <a id="patch-climb"></a>
-**Remove the climb angle limit (walk up any slope)** *(No. 45, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+**Remove the climb angle limit (walk up any slope)** *(No. 45, Author: Alastor StrixEfuartus)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
@@ -676,10 +676,10 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > ban.
 
 <a id="patch-jump"></a>
-**Change jump height (original -7.9555473)** *(No. 46, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+**Change jump height (original -7.9555473)** *(No. 46, Author: Alastor StrixEfuartus)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
@@ -693,10 +693,10 @@ remembered like those of the client info patches.
 > ban.
 
 <a id="patch-airforward"></a>
-**Steer forward/backward while jumping** *(No. 47, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+**Steer forward/backward while jumping** *(No. 47, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
@@ -711,10 +711,10 @@ byte patch from 0x539wowmod that updates the movement in the air.
 > lead to a ban.
 
 <a id="patch-airlateral"></a>
-**Steer sideways while jumping** *(No. 48, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+**Steer sideways while jumping** *(No. 48, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
@@ -725,10 +725,10 @@ the movement early while the falling flag is set.
 > lead to a ban.
 
 <a id="patch-airturn"></a>
-**Turning while jumping changes the flight direction** *(No. 49, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+**Turning while jumping changes the flight direction** *(No. 49, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
@@ -740,10 +740,10 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]** 🟡 **[exe grows]**
+**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[unsafe - ban risk]** 🟡 **[exe grows]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
@@ -1269,10 +1269,10 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk]** 🟡 **[exe grows]**
+**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[unsafe - ban risk]** 🟡 **[exe grows]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 When you hold the key of an action bar binding (the main bar,
 `ACTIONBUTTON1`–`12`, with page, stance and form bars), the client triggers the
@@ -1479,10 +1479,10 @@ name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 > to match the server.
 
 <a id="patch-clientversion"></a>
-**Change client version (original 3.3.5)** *(No. 82, Author: MacWarrior)* 🔴 **[ban risk]**
+**Change client version (original 3.3.5)** *(No. 82, Author: MacWarrior)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
@@ -1492,10 +1492,10 @@ The build number in `VS_FIXEDFILEINFO` is kept; the FileVersion text
 together must fit into the ProductVersion field (e.g. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Change build number (original 12340)** *(No. 83, Author: MacWarrior)* 🔴 **[ban risk]**
+**Change build number (original 12340)** *(No. 83, Author: MacWarrior)* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion in
@@ -1523,10 +1523,10 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title (file properties and window title)** *(No. 84, Author: MacWarrior (fixed by St0ny))* 🔴 **[ban risk]**
+**Change program title (file properties and window title)** *(No. 84, Author: MacWarrior (fixed by St0ny))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
@@ -1542,10 +1542,10 @@ custom title to the first place and disables the two calls so that it stays.
 > as the title of error messages – the custom title appears there as well.
 
 <a id="patch-clientdate"></a>
-**Change build date (original Jun 24 2010)** *(No. 85, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+**Change build date (original Jun 24 2010)** *(No. 85, Author: St0ny (original by MacWarrior))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice, plus the time. The time is stored in two
@@ -1564,10 +1564,10 @@ the time of patching if nothing is remembered. If the patch is already applied,
 the current date and time of `Wow.exe` are suggested.
 
 <a id="patch-clienticon"></a>
-**Change program icon (icon of Wow.exe)** *(No. 86, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+**Change program icon (icon of Wow.exe)** *(No. 86, Author: St0ny (original by MacWarrior))* 🔴 **[unsafe - ban risk]**
 
 > [!CAUTION]
-> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+> **Unsafe - ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or
