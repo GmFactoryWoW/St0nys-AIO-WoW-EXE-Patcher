@@ -105,7 +105,7 @@ $TEXT = @{
         StartWarn4    = 'fuehren), [im Spiel ungetestet] (moeglicherweise verbuggt), [Exe wird groesser] (Bann-Gefahr).'
         StartWarn5    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
         StartWarn6    = 'Benutzung auf eigene Gefahr.'
-        Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
+        Thanks        = 'Danke an Billy Hoyle, MacWarrior und Stormhand fuer ihre Hilfe und die vielen Tests im Spiel!'
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
         Checking      = 'Pruefe Wow.exe Integritaet...'
@@ -205,7 +205,7 @@ $TEXT = @{
         StartWarn4    = '[untested in game] (possibly buggy), [exe grows] (ban risk).'
         StartWarn5    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
         StartWarn6    = 'Use at your own risk.'
-        Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
+        Thanks        = 'Thanks to Billy Hoyle, MacWarrior and Stormhand for their help and all the testing in game!'
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
         Checking      = 'Checking Wow.exe integrity...'
@@ -1561,12 +1561,12 @@ function Test-DoubleJump([string]$v) {
 }
 
 # ============================================================
-#  Schrift-Glyphen-Fix (Hour of Twilight, ported by St0ny)
+#  Schrift-Glyphen-Fix (tb, ported by St0ny)
 #  Blizzard-Fehler im Glyphen-Cache: Texte (vor allem Zahlen, Schaden,
 #  Chat) zeigen zeitweise falsche, abgeschnittene oder fremde Zeichen.
 #  Der Cache legt die gerenderten Zeichen auf 256 Pixel breiten Zeilen
 #  von Textur-Seiten ab und verdraengt alte, wenn er voll ist. Dabei
-#  passieren mehrere Fehler, die WotLK-Extensions (Hour of Twilight)
+#  passieren mehrere Fehler, die WotLK-Extensions (Fork von tb)
 #  per DLL behebt - hier dasselbe in einer eigenen Sektion (.glyph):
 #  - CreateNewDesc (VA 0x6C5120): Der Merker "breiteste freie Luecke"
 #    einer Zeile ([Zeile+0]) wird nie aktualisiert. Der Hook rechnet ihn
@@ -1752,11 +1752,11 @@ function Add-GlyphCacheFix {
 }
 
 # ============================================================
-#  Aktionstasten gedrueckt halten zum Wiederholen (Hour of Twilight, ported by St0ny)
+#  Aktionstasten gedrueckt halten zum Wiederholen (tb, ported by St0ny)
 #  Haelt man die Taste einer Aktionsleisten-Belegung (ACTIONBUTTON1-12,
 #  die Hauptleiste mit Seiten- und Bonusleisten-Wechsel wie im Fork),
 #  loest der Client die Aktion wiederholt aus - wie in WotLK-Extensions
-#  (Hour of Twilight) mit actionButtonHoldRepeat = 2 (dauerhaft):
+#  (Fork von tb) mit actionButtonHoldRepeat = 2 (dauerhaft):
 #  - ExecKey (VA 0x563150): Beim Druecken merkt sich der Hook Taste,
 #    Aktions-Slot und Zeit (bis 8 Tasten gleichzeitig). Beim Loslassen
 #    wird der Eintrag geloescht; hat er schon wiederholt, unterdrueckt er
@@ -2105,7 +2105,7 @@ function Add-HoldRepeat {
 }
 
 # ============================================================
-#  Icons im Text pixelgenau (Hour of Twilight, ported by St0ny)
+#  Icons im Text pixelgenau (tb, ported by St0ny)
 #  Texte koennen Icons enthalten (|T...|t, z.B. Raidmarker, Waehrungen,
 #  Questsymbole). Ihre Groesse und Lage rechnet der Client in Pixeln mit
 #  Nachkommastellen aus - bei skalierten Schriften landen die Icons dann
@@ -2558,7 +2558,7 @@ $patches = @(
     }}
 
     @{ Id = 'nothrottle'; Cat = 'system'; On = $false
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Gegenstands- und Namensabfragen nicht drosseln'
        En = 'Do not throttle item and player name queries'
        Code = {
@@ -2577,7 +2577,7 @@ $patches = @(
     }}
 
     @{ Id = 'mirrorfix'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)'
        En = 'Mirror Image crash fix (memory leak with mirror images)'
        Code = {
@@ -2616,7 +2616,7 @@ $patches = @(
     }}
 
     @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)'
        En = 'Font glyph fix (wrong or garbled characters in text)'
        Code = {
@@ -3597,7 +3597,7 @@ $patches = @(
     }}
 
     @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Icons im Text pixelgenau (scharf statt verschwommen)'
        En = 'Pixel-exact icons in text (sharp instead of blurry)'
        Code = {
@@ -3715,7 +3715,7 @@ $patches = @(
     }}
 
     @{ Id = 'lootopen'; Cat = 'ui'; On = $false; PublicUntested = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Lootfenster bleibt beim Laufen offen'
        En = 'Loot window stays open while moving'
        Code = {
@@ -3735,7 +3735,7 @@ $patches = @(
     }}
 
     @{ Id = 'showlevel'; Cat = 'ui'; On = $false; PublicUntested = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir'
        En = 'Real level instead of "??" for enemies 10+ levels above you'
        NoteDe = 'Bosse zeigen weiter "??" - dafuer Nr. 73'
@@ -3767,7 +3767,7 @@ $patches = @(
     }}
 
     @{ Id = 'holdrepeat'; Cat = 'ui'; On = $false; GrowsExe = $true; BanRisk = $true
-       Author = 'Hour of Twilight (ported by St0ny)'
+       Author = 'tb (ported by St0ny)'
        De = 'Aktionstasten gedrueckt halten zum Wiederholen'
        En = 'Hold action buttons to repeat'
        Code = {

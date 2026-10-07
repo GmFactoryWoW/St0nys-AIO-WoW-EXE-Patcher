@@ -307,10 +307,10 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [3](PATCHES.md#patch-itemcache) | Item-Cache sofort aktualisieren 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [4](PATCHES.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) 🟢 **[sicher]** | St0ny | – | – | ✅ |
-| [6](PATCHES.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln 🟢 **[sicher]** | Hour of Twilight (ported by St0ny) | – | – | – |
-| [7](PATCHES.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [6](PATCHES.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln 🟢 **[sicher]** | tb (ported by St0ny) | – | – | – |
+| [7](PATCHES.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [8](PATCHES.md#patch-wmocube) | Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (ported by St0ny) | – | – | – |
-| [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 
 #### Sicherheit & Datenschutz
 
@@ -395,7 +395,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [61](PATCHES.md#patch-notransparency) | Keine Transparenz beim Heranzoomen 🟢 **[sicher]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [62](PATCHES.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [63](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | St0ny (original by Badgermilk0) | – | – | ✅ |
-| [64](PATCHES.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [64](PATCHES.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 
 #### Interface & Komfort
 
@@ -407,10 +407,10 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [68](PATCHES.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | MacWarrior | – | – | ✅ |
 | [69](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* 🟢 **[sicher]** | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) | – | – | – |
-| [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen 🟡 **[auf öffentlichen Servern ungetestet]** | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* 🟡 **[auf öffentlichen Servern ungetestet]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen 🟡 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
+| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* 🟡 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) 🟡 **[auf öffentlichen Servern ungetestet]** | St0ny | – | – | – |
-| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen 🔴 **[Bann-Gefahr, Exe wird größer]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen 🔴 **[Bann-Gefahr, Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 
 #### Fenster, Maus & Kamera
 
@@ -522,6 +522,10 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
 - Danke auch an **Stormhand** für die Erlaubnis, seinen CameraReforged-Patch
   einzubauen, und für das Preset „Project Reforged“, das offizielle Preset
   seines Projekts [Project Reforged](https://projectreforged.github.io/wotlk/).
+- Ein großes Dankeschön an **Stormhand** und **MacWarrior** für die vielen
+  Tests im Spiel – und an Stormhand ganz besonders dafür, den eigenen
+  Warmane-Account riskiert zu haben, um herauszufinden, welche Patches sicher
+  sind. 😄
 - Danke an **Moroes**, der den Patch [#26](PATCHES.md#patch-globalsv)
   aufgespürt und mir zugespielt hat.
 - Und natürlich danke an alle Autoren der Patches, die in der

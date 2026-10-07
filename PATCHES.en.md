@@ -93,7 +93,7 @@ faster.
 > `SET timingMethod "2"` in `Config.wtf` helps as well.
 
 <a id="patch-nothrottle"></a>
-**Do not throttle item and player name queries** *(No. 6, Author: Hour of Twilight (ported by St0ny))* 🟢 **[safe]**
+**Do not throttle item and player name queries** *(No. 6, Author: tb (ported by St0ny))* 🟢 **[safe]**
 
 When the client does not know an item, creature, quest or name yet, it asks the
 server. The client itself limits two of these queries: item info to 512 and
@@ -112,7 +112,7 @@ unthrottled.
 > protection could object – test it first on public servers.
 
 <a id="patch-mirrorfix"></a>
-**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -150,7 +150,7 @@ not change.
 > not been tested yet.
 
 <a id="patch-glyphfix"></a>
-**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -170,7 +170,7 @@ many different characters and font sizes are on screen at the same time.
 - Before a new page is uploaded, the upload buffer is cleared so that no
   leftovers of old characters come along.
 
-This matches the glyph fix from WotLK-Extensions (Hour of Twilight), which does
+This matches the glyph fix from WotLK-Extensions (fork by tb), which does
 it in its DLL. Here the four hooks live in a section of their own (`.glyph`,
 223 bytes), and one function is rewritten in place.
 
@@ -467,11 +467,6 @@ the DLL is missing, WoW simply starts as usual. The file size does not change.
 > its GlueXML unlock like No. 19), no broken code results, and with the DLL its
 > version applies. Its time fix, however, makes yearly holidays with a fixed
 > date and weekly holidays disappear from the calendar.
-
-> [!NOTE]
-> The patch also loads `WotLKExtensions.dll` from the fork by
-> [Hour of Twilight](https://github.com/Hour-of-Twilight/WotLK-Extensions)
-> (same name, same loader). Its time fix is disabled there.
 
 <a id="patch-voicedll"></a>
 **Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)* 🟡 **[untested on public servers and in game]**
@@ -1165,7 +1160,7 @@ otherwise read past the source.
 > exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 <a id="patch-iconsnap"></a>
-**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1177,7 +1172,7 @@ symbols in chat, tooltips and addons). The client computes their size and
 position in pixels with decimals – with scaled fonts the icons then end up
 between two pixels and become blurry or distorted by one pixel. The patch
 rounds the height and width (at least 1 pixel) and the offset of the icons to
-whole pixels, like the pixel snap from WotLK-Extensions (Hour of Twilight),
+whole pixels, like the pixel snap from WotLK-Extensions (fork by tb),
 which does it in its DLL. Icons at the font's original size stay unchanged.
 
 > [!WARNING]
@@ -1270,7 +1265,7 @@ etc. automatically; you start with the default appearance. The randomize button
 keeps working – it uses a separate path in the client.
 
 <a id="patch-lootopen"></a>
-**Loot window stays open while moving** *(No. 71, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers]**
+**Loot window stays open while moving** *(No. 71, Author: tb (ported by St0ny))* 🟡 **[untested on public servers]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1280,7 +1275,7 @@ With the patch it stays open. The ten places in the movement handlers that
 close the window are skipped (one byte each).
 
 <a id="patch-showlevel"></a>
-**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers]**
+**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: tb (ported by St0ny))* 🟡 **[untested on public servers]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1309,7 +1304,7 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat** *(No. 74, Author: Hour of Twilight (ported by St0ny))* 🔴 **[ban risk, exe grows]**
+**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk, exe grows]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1328,7 +1323,7 @@ has had since Dragonflight.
 - If the WoW window loses focus (e.g. Alt+Tab), all held keys are forgotten.
 
 This matches `actionButtonHoldRepeat = 2` (continuous) from WotLK-Extensions
-(Hour of Twilight), which does it in its DLL with adjustable timings. Here the
+(fork by tb), which does it in its DLL with adjustable timings. Here the
 timings are fixed, and the code and its state live in a writable section of
 their own (`.hrep`). Up to 8 keys can be held at the same time.
 

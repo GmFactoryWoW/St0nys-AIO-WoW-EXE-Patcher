@@ -94,7 +94,7 @@ Client etwa eine Viertelsekunde schneller.
 > gescheitert. Ohne Patch hilft auch `SET timingMethod "2"` in der `Config.wtf`.
 
 <a id="patch-nothrottle"></a>
-**Gegenstands- und Namensabfragen nicht drosseln** *(Nr. 6, Autor: Hour of Twilight (ported by St0ny))* 🟢 **[sicher]**
+**Gegenstands- und Namensabfragen nicht drosseln** *(Nr. 6, Autor: tb (ported by St0ny))* 🟢 **[sicher]**
 
 Kennt der Client einen Gegenstand, eine Kreatur, eine Quest oder einen Namen
 noch nicht, fragt er beim Server nach. Zwei dieser Abfragen begrenzt der
@@ -114,7 +114,7 @@ sind damit alle 15 Datenbank-Abfragen des Clients ungedrosselt.
 > testen.
 
 <a id="patch-mirrorfix"></a>
-**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: Hour of Twilight (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -152,7 +152,7 @@ der DLL steckt. Die Änderung passt in die Original-Funktion, die Dateigröße
 > fehlt, ist noch nicht getestet.
 
 <a id="patch-glyphfix"></a>
-**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: Hour of Twilight (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
+**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -173,7 +173,7 @@ viele verschiedene Zeichen und Schriftgrößen gleichzeitig zu sehen sind.
 - Vor dem Hochladen einer neuen Seite wird der Upload-Puffer geleert, damit
   keine Reste alter Zeichen mitkommen.
 
-Das entspricht dem Glyphen-Fix aus WotLK-Extensions (Hour of Twilight), dort
+Das entspricht dem Glyphen-Fix aus WotLK-Extensions (Fork von tb), dort
 per DLL. Hier stecken die vier Hooks in einer eigenen Sektion (`.glyph`,
 223 Byte), eine Funktion wird an Ort und Stelle neu geschrieben.
 
@@ -477,11 +477,6 @@ Die Dateigröße ändert sich nicht.
 > Nr. 24, ihr GlueXML-Unlock wie Nr. 19), entsteht kein kaputter Code, und mit
 > DLL gilt deren Fassung. Ihr Zeit-Fix lässt allerdings jährliche Feiertage mit
 > festem Datum und wöchentliche Feiertage aus dem Kalender verschwinden.
-
-> [!NOTE]
-> Der Patch lädt auch die `WotLKExtensions.dll` aus dem Fork von
-> [Hour of Twilight](https://github.com/Hour-of-Twilight/WotLK-Extensions)
-> (gleicher Name, gleicher Lader). Dort ist der Zeit-Fix der DLL abgeschaltet.
 
 <a id="patch-voicedll"></a>
 **voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 29, Autor: St0ny)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
@@ -1198,7 +1193,7 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > egal was in `portraitResolution` steht.
 
 <a id="patch-iconsnap"></a>
-**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: Hour of Twilight (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
+**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet, Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1211,7 +1206,7 @@ Client in Pixeln mit Nachkommastellen aus – bei skalierten Schriften landen di
 Icons dann zwischen zwei Pixeln und werden unscharf oder um einen Pixel
 verzerrt. Der Patch rundet Höhe und Breite (mindestens 1 Pixel) und den
 Versatz der Icons auf ganze Pixel, wie der Pixel-Snap aus WotLK-Extensions
-(Hour of Twilight), dort per DLL. Icons in Originalgröße der Schrift bleiben
+(Fork von tb), dort per DLL. Icons in Originalgröße der Schrift bleiben
 unverändert.
 
 > [!WARNING]
@@ -1304,7 +1299,7 @@ nicht mehr automatisch aus, man startet mit dem Standard-Aussehen. Der
 Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 
 <a id="patch-lootopen"></a>
-**Lootfenster bleibt beim Laufen offen** *(Nr. 71, Autor: Hour of Twilight (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
+**Lootfenster bleibt beim Laufen offen** *(Nr. 71, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1315,7 +1310,7 @@ Bewegungs-Handlern, die das Fenster schließen, werden übersprungen (je ein
 Byte).
 
 <a id="patch-showlevel"></a>
-**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir** *(Nr. 72, Autor: Hour of Twilight (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
+**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir** *(Nr. 72, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1345,7 +1340,7 @@ steht dort das Level, das der Server für den Boss schickt. Die Beschriftung
 > Nr. 72 einspielen; der Patcher weist darauf hin, wenn Nr. 72 fehlt.
 
 <a id="patch-holdrepeat"></a>
-**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: Hour of Twilight (ported by St0ny))* 🔴 **[Bann-Gefahr, Exe wird größer]**
+**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: tb (ported by St0ny))* 🔴 **[Bann-Gefahr, Exe wird größer]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1366,7 +1361,7 @@ Zaubern“, die Retail-WoW seit Dragonflight hat.
   Tasten vergessen.
 
 Das entspricht `actionButtonHoldRepeat = 2` (dauerhaft) aus WotLK-Extensions
-(Hour of Twilight), dort per DLL und mit einstellbaren Zeiten. Hier sind die
+(Fork von tb), dort per DLL und mit einstellbaren Zeiten. Hier sind die
 Zeiten fest, der Code und die Zustände stecken in einer eigenen,
 beschreibbaren Sektion (`.hrep`). Bis zu 8 Tasten können gleichzeitig gehalten
 werden.

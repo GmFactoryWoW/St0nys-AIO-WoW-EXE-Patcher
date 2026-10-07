@@ -296,10 +296,10 @@ Click the number of a patch to jump to its description.
 | [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
 | [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) 🟡 **[untested on public servers and in game]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) 🟢 **[safe]** | St0ny | – | – | ✅ |
-| [6](PATCHES.en.md#patch-nothrottle) | Do not throttle item and player name queries 🟢 **[safe]** | Hour of Twilight (ported by St0ny) | – | – | – |
-| [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) 🟡 **[untested on public servers and in game]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [6](PATCHES.en.md#patch-nothrottle) | Do not throttle item and player name queries 🟢 **[safe]** | tb (ported by St0ny) | – | – | – |
+| [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) 🟡 **[untested on public servers and in game]** | tb (ported by St0ny) | – | – | – |
 | [8](PATCHES.en.md#patch-wmocube) | Missing WMO file: error cube instead of ERROR #134 🟡 **[untested on public servers and in game]** | Alyst3r (ported by St0ny) | – | – | – |
-| [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) 🟡 **[untested on public servers and in game, exe grows]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) 🟡 **[untested on public servers and in game, exe grows]** | tb (ported by St0ny) | – | – | – |
 
 #### Security & privacy
 
@@ -384,7 +384,7 @@ Click the number of a patch to jump to its description.
 | [61](PATCHES.en.md#patch-notransparency) | No character transparency when zooming in 🟢 **[safe]** | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [62](PATCHES.en.md#patch-nofade) | No fade-out for NPCs with flag DO_NOT_FADE_IN *(server must set the flag)* 🟡 **[untested on public servers and in game]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [63](PATCHES.en.md#patch-hdportraits) | HD unit frame portraits: render resolution 256 instead of 64 pixels 🟡 **[untested on public servers and in game, exe grows]** | St0ny (original by Badgermilk0) | – | – | ✅ |
-| [64](PATCHES.en.md#patch-iconsnap) | Pixel-exact icons in text (sharp instead of blurry) 🟡 **[untested on public servers and in game, exe grows]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [64](PATCHES.en.md#patch-iconsnap) | Pixel-exact icons in text (sharp instead of blurry) 🟡 **[untested on public servers and in game, exe grows]** | tb (ported by St0ny) | – | – | – |
 
 #### Interface & comfort
 
@@ -396,10 +396,10 @@ Click the number of a patch to jump to its description.
 | [68](PATCHES.en.md#patch-emblems) | Retail guild emblems: selection extended from 170 to 196 *(requires [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* 🟡 **[untested on public servers and in game]** | MacWarrior | – | – | ✅ |
 | [69](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* 🟢 **[safe]** | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically 🟡 **[untested on public servers and in game]** | Alyst3r (0x539wowmod) | – | – | – |
-| [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving 🟡 **[untested on public servers]** | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* 🟡 **[untested on public servers]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving 🟡 **[untested on public servers]** | tb (ported by St0ny) | – | – | – |
+| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you *(bosses still show "??" – see No. 73)* 🟡 **[untested on public servers]** | tb (ported by St0ny) | – | – | – |
 | [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) 🟡 **[untested on public servers]** | St0ny | – | – | – |
-| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat 🔴 **[ban risk, exe grows]** | Hour of Twilight (ported by St0ny) | – | – | – |
+| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat 🔴 **[ban risk, exe grows]** | tb (ported by St0ny) | – | – | – |
 
 #### Window, mouse & camera
 
@@ -509,6 +509,9 @@ clicking the number of a patch takes you straight to its description.
   CameraReforged patch, and for the preset "Project Reforged", the official
   preset of his [Project Reforged](https://projectreforged.github.io/wotlk/)
   project.
+- A big thank you to **Stormhand** and **MacWarrior** for all the testing in
+  game – and to Stormhand in particular for risking their own Warmane account
+  to find out which patches are safe. 😄
 - Thanks to **Moroes**, who tracked down patch
   [#26](PATCHES.en.md#patch-globalsv) and passed it on to me.
 - And of course thanks to all patch authors named in the
