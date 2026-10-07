@@ -282,13 +282,14 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | Kennzeichnung | Bedeutung | Im Patcher |
 |---------------|-----------|------------|
 | 🟢 **[sicher]** | Im Spiel getestet und sicher nutzbar. | keine Warnung |
-| 🔴 **[Bann-Gefahr]** | Bestätigte Bann-Gefahr: kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben. | rote Warnung |
-| 🟠 **[auf öffentlichen Servern ungetestet]** | Mögliche Bann-Gefahr: Niemand kann vorhersagen, wie der Server reagiert. Vorsicht, kann zu Kick/Bann führen. | rote Warnung |
-| 🟠 **[im Spiel ungetestet]** | Die Funktion ist im Spiel noch nicht geprüft: Niemand kann vorhersagen, wie das Spiel reagiert, möglicherweise verbuggt. | rote Warnung |
+| 🔴 **[unsicher]** | Bestätigte Bann-Gefahr: kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben. | rote Warnung |
+| 🟠 **[online ungetestet]** | Nicht auf öffentlichen Servern getestet, mögliche Bann-Gefahr: Niemand kann vorhersagen, wie der Server reagiert. Vorsicht, kann zu Kick/Bann führen. | rote Warnung |
+| 🟠 **[ingame ungetestet]** | Die Funktion ist im Spiel noch nicht geprüft: Niemand kann vorhersagen, wie das Spiel reagiert, möglicherweise verbuggt. | rote Warnung |
+| 🟠 **[ungetestet]** | Weder online noch ingame getestet – beides zusammen. | rote Warnung |
 | 🟡 **[Exe wird größer]** | Der Patch hängt eine Sektion an die `Wow.exe` an. Keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen die Dateigröße. | gelber Hinweis |
 
-Ein Patch kann mehrere Kennzeichnungen tragen, z. B. 🟠 **[auf öffentlichen
-Servern und im Spiel ungetestet]**. Im Patcher stehen die Warnungen in eckigen
+Ein Patch kann mehrere Kennzeichnungen tragen, z. B. 🟢 **[sicher]** und
+🟡 **[Exe wird größer]**. Im Patcher stehen die Warnungen in eckigen
 Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 
 #### System & Leistung
@@ -298,7 +299,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [1](PATCHES.de.md#patch-laa) | 4GB-Patch (Large Address Aware) | 🟢 **[sicher]** | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.de.md#patch-cache) | CACHE-Ordner-Erstellung deaktivieren | 🟢 **[sicher]** | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.de.md#patch-itemcache) | Item-Cache sofort aktualisieren | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [4](PATCHES.de.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | 🟠 **[auf öffentlichen Servern ungetestet]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
+| [4](PATCHES.de.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | 🟠 **[online ungetestet]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.de.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) | 🟢 **[sicher]** | St0ny | ✅ | – | ✅ |
 | [6](PATCHES.de.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln | 🟢 **[sicher]** | tb (ported by St0ny) | – | – | – |
 | [7](PATCHES.de.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) | 🟢 **[sicher]** | tb (ported by St0ny) | ✅ | – | – |
@@ -309,8 +310,8 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 
 | Nr. | Patch | Status | Autor | Reforged | Billy | St0ny |
 |----:|-------|--------|-------|:--------:|:-----:|:-----:|
-| [10](PATCHES.de.md#patch-rce) | Remote Code Execution Exploit Fix | 🔴 **[Bann-Gefahr]** | Robinsch | – | – | ✅ |
-| [11](PATCHES.de.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix | 🔴 **[Bann-Gefahr]** | Robinsch | – | – | – |
+| [10](PATCHES.de.md#patch-rce) | Remote Code Execution Exploit Fix | 🔴 **[unsicher]** | Robinsch | – | – | ✅ |
+| [11](PATCHES.de.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix | 🔴 **[unsicher]** | Robinsch | – | – | – |
 | [12](PATCHES.de.md#patch-scandll) | Scan.dll deaktivieren | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | – | ✅ |
 | [13](PATCHES.de.md#patch-noserverpatch) | Client-Patches vom Server verbieten | 🟢 **[sicher]** | Kebabstorm | ✅ | – | ✅ |
 | [14](PATCHES.de.md#patch-nosurvey) | Hardware-Umfragen vom Server verbieten | 🟢 **[sicher]** | Kebabstorm | ✅ | – | ✅ |
@@ -332,10 +333,10 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [20](PATCHES.de.md#patch-mpqsig) | Falsch/Nicht signierte MPQs zulassen | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | – | ✅ |
 | [21](PATCHES.de.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben | 🟢 **[sicher]** |  | ✅ | ✅ | ✅ |
 | [22](PATCHES.de.md#patch-localdata) | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | ✅ | ✅ |
-| [23](PATCHES.de.md#patch-luaunlock) | LUA Unlock (Zauber, Bewegung, Makros) | 🔴 **[Bann-Gefahr]** | Alastor StrixEfuartus | – | – | – |
-| [24](PATCHES.de.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben | 🔴 **[Bann-Gefahr]** | St0ny | – | – | – |
-| [25](PATCHES.de.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | 🔴 **[Bann-Gefahr]**<br>🟠 **[im Spiel ungetestet]** | Alyst3r (0x539wowmod) | – | – | – |
-| [26](PATCHES.de.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | St0ny (original by boredatom) | – | – | – |
+| [23](PATCHES.de.md#patch-luaunlock) | LUA Unlock (Zauber, Bewegung, Makros) | 🔴 **[unsicher]** | Alastor StrixEfuartus | – | – | – |
+| [24](PATCHES.de.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben | 🔴 **[unsicher]** | St0ny | – | – | – |
+| [25](PATCHES.de.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | 🔴 **[unsicher]**<br>🟠 **[ingame ungetestet]** | Alyst3r (0x539wowmod) | – | – | – |
+| [26](PATCHES.de.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | 🟠 **[ungetestet]** | St0ny (original by boredatom) | – | – | – |
 
 #### DLL-Loader
 
@@ -343,7 +344,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 |----:|-------|--------|-------|:--------:|:-----:|:-----:|
 | [27](PATCHES.de.md#patch-awesome) | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | 🟢 **[sicher]** | FrostAtom | ✅ | ✅ | ✅ |
 | [28](PATCHES.de.md#patch-wotlkext) | WotLKExtensions.dll Unterstützung aktivieren *(benötigt [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions))* | 🟢 **[sicher]** | St0ny (original by Alyst3r) | – | – | – |
-| [29](PATCHES.de.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | St0ny | – | – | – |
+| [29](PATCHES.de.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | 🟠 **[ungetestet]** | St0ny | – | – | – |
 
 #### Gameplay-Fixes
 
@@ -360,17 +361,17 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [38](PATCHES.de.md#patch-deadchat) | Chat-Befehle auch im Tod erlauben | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [39](PATCHES.de.md#patch-follow) | /follow auch bei NPCs erlauben | 🟢 **[sicher]** | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
 | [40](PATCHES.de.md#patch-level101) | Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) | 🟢 **[sicher]** | Alastor StrixEfuartus (fixed by St0ny) | ✅ | – | ✅ |
-| [41](PATCHES.de.md#patch-raceclass) | Charaktererstellung: mehr als 10 Klassen (Zufallsklasse) *(für eigene Klassen; Server muss es unterstützen)* | 🔴 **[Bann-Gefahr]** | Alastor StrixEfuartus / Robinsch | – | – | – |
-| [42](PATCHES.de.md#patch-namecheck) | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
+| [41](PATCHES.de.md#patch-raceclass) | Charaktererstellung: mehr als 10 Klassen (Zufallsklasse) *(für eigene Klassen; Server muss es unterstützen)* | 🔴 **[unsicher]** | Alastor StrixEfuartus / Robinsch | – | – | – |
+| [42](PATCHES.de.md#patch-namecheck) | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | 🔴 **[unsicher]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
 | [43](PATCHES.de.md#patch-maxchars) | Max. Charaktere pro Server auf 255 erhöht | 🟢 **[sicher]** | St0ny | – | ✅ | ✅ |
-| [44](PATCHES.de.md#patch-customitem) | Custom Item Fix (BETA) v2 *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | Kebabstorm (fixed by St0ny) | – | – | ✅ |
-| [45](PATCHES.de.md#patch-climb) | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) | 🔴 **[Bann-Gefahr]** | Alastor StrixEfuartus | – | – | – |
-| [46](PATCHES.de.md#patch-jump) | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | Alastor StrixEfuartus | – | – | – |
-| [47](PATCHES.de.md#patch-airforward) | Im Sprung vorwärts/rückwärts steuern | 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [48](PATCHES.de.md#patch-airlateral) | Im Sprung seitwärts steuern | 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [49](PATCHES.de.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung | 🔴 **[Bann-Gefahr]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [50](PATCHES.de.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]**<br>🟡 **[Exe wird größer]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-| [51](PATCHES.de.md#patch-noammo) | Fernkampf ohne Munition *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (ported by St0ny) | – | – | – |
+| [44](PATCHES.de.md#patch-customitem) | Custom Item Fix (BETA) v2 *(Custom-Items ohne DBC-Anpassung: Modell, Icon und Item-Typ aus den Serverdaten)* | 🟠 **[ungetestet]** | Kebabstorm (fixed by St0ny) | – | – | ✅ |
+| [45](PATCHES.de.md#patch-climb) | Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen) | 🔴 **[unsicher]** | Alastor StrixEfuartus | – | – | – |
+| [46](PATCHES.de.md#patch-jump) | Sprunghöhe ändern (Original -7.9555473) *(fragt den Wert ab)* | 🔴 **[unsicher]** | Alastor StrixEfuartus | – | – | – |
+| [47](PATCHES.de.md#patch-airforward) | Im Sprung vorwärts/rückwärts steuern | 🔴 **[unsicher]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [48](PATCHES.de.md#patch-airlateral) | Im Sprung seitwärts steuern | 🔴 **[unsicher]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [49](PATCHES.de.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung | 🔴 **[unsicher]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [50](PATCHES.de.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab)* | 🔴 **[unsicher]**<br>🟡 **[Exe wird größer]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
+| [51](PATCHES.de.md#patch-noammo) | Fernkampf ohne Munition *(Server muss mitspielen, sonst meldet er weiter „Keine Munition“)* | 🟠 **[ungetestet]** | Alyst3r (ported by St0ny) | – | – | – |
 
 #### Grafik & Sichtweite
 
@@ -386,7 +387,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [59](PATCHES.de.md#patch-occluder) | Occluder Fix für Stormwind (Open Azeroth) | 🟢 **[sicher]** | Robinsch | ✅ | – | ✅ |
 | [60](PATCHES.de.md#patch-bluemoon) | Blauer Mond am Nachthimmel reaktiviert | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [61](PATCHES.de.md#patch-notransparency) | Keine Transparenz beim Heranzoomen | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | ✅ | ✅ |
-| [62](PATCHES.de.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
+| [62](PATCHES.de.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | 🟠 **[ungetestet]** | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [63](PATCHES.de.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel | 🟢 **[sicher]**<br>🟡 **[Exe wird größer]** | St0ny (original by Badgermilk0) | ✅ | – | ✅ |
 | [64](PATCHES.de.md#patch-iconsnap) | Icons im Text pixelgenau (scharf statt verschwommen) | 🟢 **[sicher]**<br>🟡 **[Exe wird größer]** | tb (ported by St0ny) | ✅ | – | – |
 
@@ -397,13 +398,13 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [65](PATCHES.de.md#patch-tracker) | Quest-Tracker automatisch sortieren | 🟢 **[sicher]** |  | ✅ | – | ✅ |
 | [66](PATCHES.de.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv | 🟢 **[sicher]** |  | ✅ | – | ✅ |
 | [67](PATCHES.de.md#patch-castbars) | Cast Bars auf allen Frames | 🟢 **[sicher]** | Kebabstorm | ✅ | ✅ | ✅ |
-| [68](PATCHES.de.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | MacWarrior | – | – | ✅ |
+| [68](PATCHES.de.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | 🟠 **[ungetestet]** | MacWarrior | – | – | ✅ |
 | [69](PATCHES.de.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | 🟢 **[sicher]** | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.de.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | 🟢 **[sicher]** | Alyst3r (0x539wowmod) | ✅ | – | – |
-| [71](PATCHES.de.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen | 🟠 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
-| [72](PATCHES.de.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | 🟠 **[auf öffentlichen Servern ungetestet]** | tb (ported by St0ny) | – | – | – |
-| [73](PATCHES.de.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) | 🟠 **[auf öffentlichen Servern ungetestet]** | St0ny | – | – | – |
-| [74](PATCHES.de.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen | 🔴 **[Bann-Gefahr]**<br>🟡 **[Exe wird größer]** | tb (ported by St0ny) | – | – | – |
+| [71](PATCHES.de.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen | 🟠 **[online ungetestet]** | tb (ported by St0ny) | – | – | – |
+| [72](PATCHES.de.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | 🟠 **[online ungetestet]** | tb (ported by St0ny) | – | – | – |
+| [73](PATCHES.de.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) | 🟠 **[online ungetestet]** | St0ny | – | – | – |
+| [74](PATCHES.de.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen | 🔴 **[unsicher]**<br>🟡 **[Exe wird größer]** | tb (ported by St0ny) | – | – | – |
 | [75](PATCHES.de.md#patch-bubblerange) | Sprechblasen-Reichweite erhöhen (Original 25 Meter) *(fragt den Wert ab)* | 🟢 **[sicher]** | St0ny | ✅ | – | – |
 
 #### Fenster, Maus & Kamera
@@ -414,7 +415,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [77](PATCHES.de.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 76)* | 🟢 **[sicher]** | St0ny | ✅ | – | ✅ |
 | [78](PATCHES.de.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [79](PATCHES.de.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [80](PATCHES.de.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* | 🟠 **[auf öffentlichen Servern ungetestet]**<br>🟡 **[Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
+| [80](PATCHES.de.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung)* | 🟠 **[online ungetestet]**<br>🟡 **[Exe wird größer]** | Stormhand (fixed by St0ny) | – | – | – |
 
 #### Sound
 
@@ -426,11 +427,11 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 
 | Nr. | Patch | Status | Autor | Reforged | Billy | St0ny |
 |----:|-------|--------|-------|:--------:|:-----:|:-----:|
-| [82](PATCHES.de.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
-| [83](PATCHES.de.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | MacWarrior | – | – | – |
-| [84](PATCHES.de.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | MacWarrior (fixed by St0ny) | – | – | – |
-| [85](PATCHES.de.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
-| [86](PATCHES.de.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | 🔴 **[Bann-Gefahr]** | St0ny (original by MacWarrior) | – | – | – |
+| [82](PATCHES.de.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | 🔴 **[unsicher]** | MacWarrior | – | – | – |
+| [83](PATCHES.de.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | 🔴 **[unsicher]** | MacWarrior | – | – | – |
+| [84](PATCHES.de.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | 🔴 **[unsicher]** | MacWarrior (fixed by St0ny) | – | – | – |
+| [85](PATCHES.de.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | 🔴 **[unsicher]** | St0ny (original by MacWarrior) | – | – | – |
+| [86](PATCHES.de.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | 🔴 **[unsicher]** | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -456,12 +457,12 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   eckigen Klammern, und vor der Sicherheitsabfrage listet der Patcher die
   gewählten Patches mit Warnung noch einmal auf:
   - 🟢 **sicher** – im Spiel getestet, im Patcher ohne Warnung.
-  - 🔴 **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen: Nr. 10,
+  - 🔴 **unsicher** – Bann-Gefahr, kann auf vielen Servern zu einem Bann führen: Nr. 10,
     11, 23–25, 41, 42, 45–50, 74 und 82–86 (rote Warnung).
-  - 🟠 **auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr, Vorsicht,
+  - 🟠 **online ungetestet** – nicht auf öffentlichen Servern getestet, mögliche Bann-Gefahr, Vorsicht,
     kann zu Kick/Bann führen: Nr. 4, 26, 29, 44, 51, 62, 68, 71–73 und 80 (rote
     Warnung).
-  - 🟠 **im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
+  - 🟠 **ingame ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
     möglicherweise verbuggt: Nr. 25, 26, 29, 44, 51, 62 und 68 (rote Warnung).
   - 🟡 **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
     Nr. 9, 50, 63, 64, 74 und 80. Das ist keine sichere Bann-Gefahr,
