@@ -21,18 +21,18 @@ Preset-Zuordnung steht in der [README](README.de.md#patch-übersicht).
 ## System & Leistung
 
 <a id="patch-laa"></a>
-**4GB-Patch (Large Address Aware)** *(Nr. 1, Autor: Alastor StrixEfuartus / Kebabstorm / Robinsch)*
+**4GB-Patch (Large Address Aware)** *(Nr. 1, Autor: Alastor StrixEfuartus / Kebabstorm / Robinsch)* 🟢 **[sicher]**
 
 Ermöglicht der `Wow.exe`, bis zu 4 GB RAM zu nutzen statt der
 standardmäßigen 2-GB-Grenze für 32-Bit-Anwendungen.
 
 <a id="patch-cache"></a>
-**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, Autor: Alastor StrixEfuartus / Kebabstorm)*
+**CACHE-Ordner-Erstellung deaktivieren** *(Nr. 2, Autor: Alastor StrixEfuartus / Kebabstorm)* 🟢 **[sicher]**
 
 Verhindert, dass der Client automatisch einen `CACHE`-Ordner anlegt.
 
 <a id="patch-itemcache"></a>
-**Item-Cache sofort aktualisieren** *(Nr. 3, Autor: Robinsch)*
+**Item-Cache sofort aktualisieren** *(Nr. 3, Autor: Robinsch)* 🟢 **[sicher]**
 
 Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
@@ -63,7 +63,7 @@ kürzer.
 > denkbaren Fall ab.
 
 <a id="patch-timer"></a>
-**Genauen Timer immer nutzen (Ruckeln beim Drehen behoben)** *(Nr. 5, Autor: St0ny)*
+**Genauen Timer immer nutzen (Ruckeln beim Drehen behoben)** *(Nr. 5, Autor: St0ny)* 🟢 **[sicher]**
 
 Behebt einen alten Blizzard-Fehler: Dreht man den Charakter, ruckelt sich der
 Unterkörper in die neue Richtung, statt flüssig nachzudrehen – mal direkt nach
@@ -94,7 +94,7 @@ Client etwa eine Viertelsekunde schneller.
 > gescheitert. Ohne Patch hilft auch `SET timingMethod "2"` in der `Config.wtf`.
 
 <a id="patch-nothrottle"></a>
-**Gegenstands- und Namensabfragen nicht drosseln** *(Nr. 6, Autor: Hour of Twilight (ported by St0ny))*
+**Gegenstands- und Namensabfragen nicht drosseln** *(Nr. 6, Autor: Hour of Twilight (ported by St0ny))* 🟢 **[sicher]**
 
 Kennt der Client einen Gegenstand, eine Kreatur, eine Quest oder einen Namen
 noch nicht, fragt er beim Server nach. Zwei dieser Abfragen begrenzt der
@@ -226,7 +226,7 @@ Patcher weist dann nur darauf hin.
 > deshalb kicken. Auf öffentlichen Servern besteht außerdem Bann-Gefahr.
 
 <a id="patch-scandll"></a>
-**Scan.dll deaktivieren** *(Nr. 12, Autor: Alastor StrixEfuartus)*
+**Scan.dll deaktivieren** *(Nr. 12, Autor: Alastor StrixEfuartus)* 🟢 **[sicher]**
 
 Verhindert das Laden der `Scan.dll`, die der Login-Server per „Scan“-Befehl
 nachladen kann (ein Prüfmodul des Login-Servers, unabhängig von Warden): Aus
@@ -234,13 +234,13 @@ nachladen kann (ein Prüfmodul des Login-Servers, unabhängig von Warden): Aus
 verboten, das Laden schlägt damit garantiert fehl.
 
 <a id="patch-noserverpatch"></a>
-**Client-Patches vom Server verbieten** *(Nr. 13, Autor: Kebabstorm)*
+**Client-Patches vom Server verbieten** *(Nr. 13, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Der Server kann dem Client keine Patch-Dateien mehr schicken und installieren
 lassen.
 
 <a id="patch-nosurvey"></a>
-**Hardware-Umfragen vom Server verbieten** *(Nr. 14, Autor: Kebabstorm)*
+**Hardware-Umfragen vom Server verbieten** *(Nr. 14, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Der Server kann keine Hardware-Umfrage (Informationen über deinen PC) mehr beim
 Client anfordern.
@@ -248,25 +248,25 @@ Client anfordern.
 ## Login & Verbindung
 
 <a id="patch-skipbnet"></a>
-**Battle.net-Login überspringen** *(Nr. 15, Autor: Kebabstorm)*
+**Battle.net-Login überspringen** *(Nr. 15, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Der Client überspringt den Battle.net-Login-Schritt und nutzt direkt den
 klassischen Login.
 
 <a id="patch-skiprdp"></a>
-**Remote-Desktop-Prüfung überspringen** *(Nr. 16, Autor: Kebabstorm)*
+**Remote-Desktop-Prüfung überspringen** *(Nr. 16, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Der Client prüft nicht mehr, ob er über eine Remote-Desktop-Verbindung läuft –
 WoW lässt sich damit z. B. per RDP spielen.
 
 <a id="patch-nohttp"></a>
-**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 17, Autor: Kebabstorm)*
+**HTTP-Anfragen an Battle.net deaktivieren** *(Nr. 17, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Der Client ruft keine News, Hilfe-Artikel und Nutzungsbedingungen mehr von
 Blizzards Servern ab – die gibt es für 3.3.5 ohnehin nicht mehr.
 
 <a id="patch-afk"></a>
-**Idle-Kick nach Character-Autologin verhindern** *(Nr. 18, Autor: St0ny)*
+**Idle-Kick nach Character-Autologin verhindern** *(Nr. 18, Autor: St0ny)* 🟢 **[sicher]**
 
 Nach einem Autologin ohne jede Tastatur- oder Mauseingabe steht der
 Zeitstempel der letzten Eingabe noch auf 0 – der Client hält den Spieler sofort
@@ -279,7 +279,7 @@ unverändert: AFK-Status nach 5 Minuten, Logout nach 30 Minuten ohne Eingabe.
 ## Modding: Interface, MPQs & Addons
 
 <a id="patch-glue"></a>
-**Custom Glue-XML erlauben** *(Nr. 19, Autor: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
+**Custom Glue-XML erlauben** *(Nr. 19, Autor: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))* 🟢 **[sicher]**
 
 Ermöglicht Änderungen am Login- und Charakterauswahl-Bildschirm durch eigene
 XML/Lua-Dateien (Glue-Screen-Modding): Die Signaturprüfung der Interface-Dateien
@@ -298,7 +298,7 @@ frei (undefiniertes Verhalten). Hier gibt der Fehlerausgang stattdessen direkt
 „gültig“ zurück – gleiche Wirkung, ohne wilden Speicherzugriff.
 
 <a id="patch-mpqsig"></a>
-**Falsch/Nicht signierte MPQs zulassen** *(Nr. 20, Autor: Alastor StrixEfuartus)*
+**Falsch/Nicht signierte MPQs zulassen** *(Nr. 20, Autor: Alastor StrixEfuartus)* 🟢 **[sicher]**
 
 Die Signaturprüfung für MPQ-Archive meldet immer „gültig“. Der Client prüft
 damit nur Archive, die der Server schickt: `wow-patch.mpq` (Client-Patch vom
@@ -308,13 +308,13 @@ Patch also nicht nötig. Zusammen mit Nr. 13 und Nr. 14 hat er keine Wirkung meh
 weil beide Wege dann gar nicht erst laufen.
 
 <a id="patch-mpqnames"></a>
-**Erweiterte MPQ-Namen erlauben** *(Nr. 21)*
+**Erweiterte MPQ-Namen erlauben** *(Nr. 21)* 🟢 **[sicher]**
 
 Ermöglicht die Nutzung von Wildcard-Namen für MPQ-Archive
 (`patch-*.MPQ` und `patch-locale-*.MPQ`).
 
 <a id="patch-localdata"></a>
-**Daten direkt aus dem Data-Ordner laden (ohne MPQ)** *(Nr. 22, Autor: Alastor StrixEfuartus)*
+**Daten direkt aus dem Data-Ordner laden (ohne MPQ)** *(Nr. 22, Autor: Alastor StrixEfuartus)* 🟢 **[sicher]**
 
 Der Client liest Dateien direkt aus dem Data-Ordner, ohne dass sie in ein MPQ
 gepackt werden müssen – z. B. `Data\DBFilesClient\ItemDisplayInfo.dbc`.
@@ -418,7 +418,7 @@ Login-Bildschirm), ist nicht enthalten.
 ## DLL-Loader
 
 <a id="patch-awesome"></a>
-**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 27, Autor: FrostAtom)*
+**AwesomeWotlkLib.dll Unterstützung aktivieren** *(Nr. 27, Autor: FrostAtom)* 🟢 **[sicher]**
 
 Ermöglicht das Laden der `AwesomeWotlkLib.dll` beim Client-Start. Diese DLL
 erweitert den Client um zusätzliche Funktionen und Verbesserungen für private
@@ -444,7 +444,7 @@ Fehlt die DLL, startet WoW normal weiter.
 > Auflösung des Exe-Patches.
 
 <a id="patch-wotlkext"></a>
-**WotLKExtensions.dll Unterstützung aktivieren** *(Nr. 28, Autor: St0ny (original by Alyst3r))*
+**WotLKExtensions.dll Unterstützung aktivieren** *(Nr. 28, Autor: St0ny (original by Alyst3r))* 🟢 **[sicher]**
 
 Lädt beim Client-Start die `WotLKExtensions.dll` aus dem WoW-Ordner. Die DLL aus
 [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions) von Alyst3r
@@ -508,19 +508,19 @@ Einstiegspunkt, Lücke und den `LoadLibraryA`-Import.
 ## Gameplay-Fixes
 
 <a id="patch-areatrigger"></a>
-**Area-Trigger-Timer genauer (50 ms statt 100 ms)** *(Nr. 30, Autor: Robinsch)*
+**Area-Trigger-Timer genauer (50 ms statt 100 ms)** *(Nr. 30, Autor: Robinsch)* 🟢 **[sicher]**
 
 Erhöht die Prüffrequenz für Area-Trigger von 100 ms auf 50 ms. Dadurch werden
 Zonen-Übergänge und Trigger präziser erkannt.
 
 <a id="patch-swing"></a>
-**Nahkampf-Schwung bei Rechtsklick entfernt** *(Nr. 31, Autor: Robinsch)*
+**Nahkampf-Schwung bei Rechtsklick entfernt** *(Nr. 31, Autor: Robinsch)* 🟢 **[sicher]**
 
 Verhindert den fehlerhaften Auto-Attack-Swing, der beim Rechtsklick auf ein
 Ziel ausgelöst wurde.
 
 <a id="patch-npcanim"></a>
-**NPC-Angriffsanimation beim Drehen unterdrückt** *(Nr. 32, Autor: Robinsch (fixed by St0ny))*
+**NPC-Angriffsanimation beim Drehen unterdrückt** *(Nr. 32, Autor: Robinsch (fixed by St0ny))* 🟢 **[sicher]**
 
 Unterdrückt die Angriffsanimation von NPCs beim Drehen, wenn kein echter
 Angriff stattfindet.
@@ -538,13 +538,13 @@ Hier ist der Block bei VA `0x73E385`–`0x73E3D5` kompakter neu geschrieben
 drehen sich wie im Original, NPCs verhalten sich wie mit Robinschs Patch.
 
 <a id="patch-spellanim"></a>
-**Zauber-Animation nach Abbruch repariert** *(Nr. 33, Autor: Robinsch)*
+**Zauber-Animation nach Abbruch repariert** *(Nr. 33, Autor: Robinsch)* 🟢 **[sicher]**
 
 Behebt einen Bug, bei dem nach dem Abbrechen eines kanalisierten Zaubers die
 Vorbereitungsanimation hängen blieb.
 
 <a id="patch-ghostattack"></a>
-**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 34, Autor: Robinsch (fixed by St0ny))*
+**„Geister“-Angriff von NPCs beim Evade behoben** *(Nr. 34, Autor: Robinsch (fixed by St0ny))* 🟢 **[sicher]**
 
 Bevor der Client ein neues Nahkampf-Ergebnis anzeigt, spielt er den zuletzt
 gespeicherten Schlag noch einmal auf dem Ziel ab. Hat ein NPC inzwischen den
@@ -558,7 +558,7 @@ In Robinschs Liste steht der Offset `0x355BF` – dort fehlt eine 5. Er traf ein
 gemacht. Hier ist er auf `0x3555BF` korrigiert.
 
 <a id="patch-naked"></a>
-**Nackter-Charakter-Bug behoben** *(Nr. 35, Autor: Robinsch (fixed by St0ny))*
+**Nackter-Charakter-Bug behoben** *(Nr. 35, Autor: Robinsch (fixed by St0ny))* 🟢 **[sicher]**
 
 Behebt nackt dargestellte Charaktere, wie sie auf privaten Servern vorkommen,
 wenn neue Items nur über `ItemDisplayInfo` verteilt werden. Der Patch schaltet
@@ -572,24 +572,24 @@ ein `push 0` in der Lua-Funktion `GetTradeSkillTools`. Hier ist er auf
 `0x2DDC5D` korrigiert.
 
 <a id="patch-forcereaction"></a>
-**Force-Reaction bei /reload erhalten** *(Nr. 36, Autor: Robinsch)*
+**Force-Reaction bei /reload erhalten** *(Nr. 36, Autor: Robinsch)* 🟢 **[sicher]**
 
 Verhindert, dass Force-Reaction-Werte (z. B. Fraktionsstatus) beim Neuladen
 der UI zurückgesetzt werden. Wichtig für Custom-Server.
 
 <a id="patch-mail"></a>
-**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 37, Autor: Robinsch)*
+**Neue Post ohne 60 Sekunden Wartezeit** *(Nr. 37, Autor: Robinsch)* 🟢 **[sicher]**
 
 Der Client fragt neue Post sofort ab – kein Warten mehr von 60 Sekunden und kein
 Relog, um neue Post zu bekommen.
 
 <a id="patch-deadchat"></a>
-**Chat-Befehle auch im Tod erlauben** *(Nr. 38, Autor: Robinsch)*
+**Chat-Befehle auch im Tod erlauben** *(Nr. 38, Autor: Robinsch)* 🟢 **[sicher]**
 
 Slash-Befehle funktionieren auch, während der Charakter tot ist.
 
 <a id="patch-follow"></a>
-**/follow auch bei NPCs erlauben** *(Nr. 39, Autor: St0ny (original by Alastor StrixEfuartus))*
+**/follow auch bei NPCs erlauben** *(Nr. 39, Autor: St0ny (original by Alastor StrixEfuartus))* 🟢 **[sicher]**
 
 Mit `/follow` lässt sich auch NPCs folgen, nicht nur Spielern. Basiert auf
 dem `/follow`-Patch aus der 12th Generation EXE von Alastor StrixEfuartus,
@@ -600,7 +600,7 @@ stattdessen der bedingte Sprung hinter der Prüfung unbedingt gemacht – ein
 einziges Byte, gleiche Wirkung, und die Patches vertragen sich.
 
 <a id="patch-level101"></a>
-**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)** *(Nr. 40, Autor: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte)** *(Nr. 40, Autor: Alastor StrixEfuartus (fixed by St0ny))* 🟢 **[sicher]**
 
 Die Spielwert-Tabellen des Clients (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – elf Tabellen) haben je Spalte
@@ -657,7 +657,7 @@ erlauben“ (Nr. 19).
 > lehnt er den Charakter ab.
 
 <a id="patch-maxchars"></a>
-**Max. Charaktere pro Server auf 255 erhöht** *(Nr. 43, Autor: St0ny)*
+**Max. Charaktere pro Server auf 255 erhöht** *(Nr. 43, Autor: St0ny)* 🟢 **[sicher]**
 
 Hebt die clientseitige Begrenzung von 10 auf 255 Charaktere pro Server an.
 Der Server muss dies ebenfalls unterstützen. Zusätzliche
@@ -838,7 +838,7 @@ diese Prüfung im Client weg (Sprung zum Erfolgsausgang bei VA `0x809540`).
 ## Grafik & Sichtweite
 
 <a id="patch-farclip"></a>
-**CVar farclip unlock (max 10000)** *(Nr. 52, Autor: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(Nr. 52, Autor: Alastor StrixEfuartus)* 🟢 **[sicher]**
 
 Entsperrt die maximale Sichtweite (Farclip) auf 10000 Yards. Der Client klemmt
 den Wert beim Setzen in einer einzigen Funktion (VA `0x780770`) nach oben ab
@@ -854,13 +854,13 @@ des Sichtweite-Reglers und eine völlig andere Stelle in der EXE (siehe
 Patch Nr. 56 „Grafikoptionen: Slider-Maxima erweitern“).
 
 <a id="patch-horizon"></a>
-**CVar horizonFarclipScale unlock (max 12)** *(Nr. 53, Autor: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(Nr. 53, Autor: St0ny)* 🟢 **[sicher]**
 
 Entsperrt das CVar `horizonFarclipScale` und setzt den maximalen Wert auf 12.
 Erhöht die Sichtweite des Horizonts deutlich.
 
 <a id="patch-envdetail"></a>
-**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 54, Autor: St0ny)*
+**CVar environmentDetail unlock (kein Limit statt 1.5)** *(Nr. 54, Autor: St0ny)* 🟢 **[sicher]**
 
 Entfernt die Obergrenze des CVars `environmentDetail` komplett. Original wird
 der Wert auf den Bereich 0.5 bis 1.5 begrenzt; der Patch ersetzt am gemeinsamen
@@ -873,13 +873,13 @@ multiplizieren (siehe Patch Nr. 57) – im Original nur die der Kategorien 1 bis
 Objekt-Rendering, weil er ohne Neupatchen im Spiel wirkt.
 
 <a id="patch-grounddist"></a>
-**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 55)*
+**CVar groundEffectDist unlock (max 3166 statt 140)** *(Nr. 55)* 🟢 **[sicher]**
 
 Erhöht die maximale Sichtweite für Bodeneffekte (Gras, Blumen, Bodendeko) von
 140 auf 3166 Yards.
 
 <a id="patch-sliders"></a>
-**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 56, Autor: St0ny)*
+**Grafikoptionen: Slider-Maxima erweitern** *(Nr. 56, Autor: St0ny)* 🟢 **[sicher]**
 
 Hebt die Obergrenzen von vier Reglern im Video-Menü an, Reiter „Effekte“. Die
 CVars selbst sind durch die Unlock-Patches längst entsperrt – die Regler
@@ -984,7 +984,7 @@ nichts anzuheben gibt. Der Wert lässt sich weiterhin nur über die
 > ungenutzten Rest von `.rdata`. Mit Nr. 4 und Nr. 62 gibt es keine Überschneidung.
 
 <a id="patch-goscale"></a>
-**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 57, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen** *(Nr. 57, Autor: St0ny)* 🟢 **[sicher]**
 
 Behebt eine Auslassung im Client: Die Funktion, die aus den Basiswerten die
 Laufzeit-Sichtweiten rechnet, multipliziert nur Cat 1 bis 3 mit dem CVar
@@ -1008,7 +1008,7 @@ Mit Patch Nr. 58 liegt Cat 0 bei 50 statt 30 Yards (in der Tabelle oben also
 unlock“ (Nr. 54) voraus.
 
 <a id="patch-cat0"></a>
-**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 58, Autor: St0ny)*
+**GameObject Sichtweite: Cat 0 von 30 auf 50 Yards** *(Nr. 58, Autor: St0ny)* 🟢 **[sicher]**
 
 Der Patch kostet Leistung: Es ist deutlich mehr Kleinkram gleichzeitig
 sichtbar, und die Anzahl der gezeichneten Objekte ist der Performance-Hebel.
@@ -1118,7 +1118,7 @@ sie unabhängig von den Distanzen verbreitern.
 </details>
 
 <a id="patch-occluder"></a>
-**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 59, Autor: Robinsch)*
+**Occluder Fix für Stormwind (Open Azeroth)** *(Nr. 59, Autor: Robinsch)* 🟢 **[sicher]**
 
 Schaltet die fest in den Client eingebauten Occluder (Sichtblocker) für
 Stormwind ab: Der Karten-Schlüssel des Tabelleneintrags für die Östlichen
@@ -1127,13 +1127,13 @@ werden auf Custom-Servern mit umgebautem Stormwind keine Gebäude und Objekte
 mehr fälschlich ausgeblendet.
 
 <a id="patch-bluemoon"></a>
-**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 60, Autor: Robinsch)*
+**Blauer Mond am Nachthimmel reaktiviert** *(Nr. 60, Autor: Robinsch)* 🟢 **[sicher]**
 
 Stellt ein entferntes Legacy-Feature wieder her: den blauen Mond, der früher
 am Nachthimmel sichtbar war.
 
 <a id="patch-notransparency"></a>
-**Keine Transparenz beim Heranzoomen** *(Nr. 61, Autor: Alastor StrixEfuartus)*
+**Keine Transparenz beim Heranzoomen** *(Nr. 61, Autor: Alastor StrixEfuartus)* 🟢 **[sicher]**
 
 Der eigene Charakter wird nicht mehr durchsichtig, wenn die Kamera nah
 herangezoomt wird. Der Patch entfernt die Transparenz-Zuweisung für den
@@ -1221,19 +1221,19 @@ unverändert.
 ## Interface & Komfort
 
 <a id="patch-tracker"></a>
-**Quest-Tracker automatisch sortieren** *(Nr. 65)*
+**Quest-Tracker automatisch sortieren** *(Nr. 65)* 🟢 **[sicher]**
 
 Setzt das CVar `trackerSorting` standardmäßig auf 1. Quests im Tracker werden
 automatisch sortiert.
 
 <a id="patch-worldmap"></a>
-**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 66)*
+**Erweiterte Weltkarte standardmäßig aktiv** *(Nr. 66)* 🟢 **[sicher]**
 
 Setzt das CVar `advancedWorldMap` standardmäßig auf 1. Die erweiterte
 Kartenansicht ist von Anfang an aktiviert.
 
 <a id="patch-castbars"></a>
-**Cast Bars auf allen Frames** *(Nr. 67, Autor: Kebabstorm)*
+**Cast Bars auf allen Frames** *(Nr. 67, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Ermöglicht die Anzeige von Zauberbalken auf allen Unit-Frames (Party, Arena,
 Boss etc.), nicht nur auf Target und Focus, sowie auf allen
@@ -1278,7 +1278,7 @@ ist frei wählbar (`patch-*.MPQ`), dafür sorgt der Patch
 „Erweiterte MPQ-Namen erlauben“ (Nr. 21).
 
 <a id="patch-flash"></a>
-**FlashWindow Patch** *(Nr. 69, Autor: Kebabstorm)*
+**FlashWindow Patch** *(Nr. 69, Autor: Kebabstorm)* 🟢 **[sicher]**
 
 Lässt das WoW-Fenster in der Taskleiste blinken, wenn ein relevantes Ereignis
 eintritt und das Spiel im Hintergrund läuft. Dafür wird die in 3.3.5a
@@ -1379,7 +1379,7 @@ werden.
 ## Fenster, Maus & Kamera
 
 <a id="patch-window"></a>
-**Fenstermodus als Standard setzen** *(Nr. 75, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 75, Autor: St0ny)* 🟢 **[sicher]**
 
 Setzt das CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
@@ -1394,7 +1394,7 @@ Fenstermodus statt im Vollbild.
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-maximize"></a>
-**Fenstermodus maximiert als Standard setzen** *(Nr. 76, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 76, Autor: St0ny)* 🟢 **[sicher]**
 
 Setzt das CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
@@ -1409,7 +1409,7 @@ automatisch maximiert.
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-windowfix"></a>
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 77, Autor: Robinsch)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 77, Autor: Robinsch)* 🟢 **[sicher]**
 
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
@@ -1417,7 +1417,7 @@ schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
 damit das CVar `DesktopGamma` sind ohne Wirkung.
 
 <a id="patch-mouse"></a>
-**Mausflackern / Kamerasprünge Fix** *(Nr. 78, Autor: Robinsch)*
+**Mausflackern / Kamerasprünge Fix** *(Nr. 78, Autor: Robinsch)* 🟢 **[sicher]**
 
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
@@ -1498,7 +1498,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 ## Sound
 
 <a id="patch-sound"></a>
-**Sound-Einstellungen optimieren** *(Nr. 80, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 80, Autor: St0ny)* 🟢 **[sicher]**
 
 Umfasst folgende Änderungen:
 

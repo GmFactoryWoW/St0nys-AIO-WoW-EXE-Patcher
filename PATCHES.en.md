@@ -21,18 +21,18 @@ preset assignment is in the [README](README.md#patch-overview).
 ## System & performance
 
 <a id="patch-laa"></a>
-**4GB patch (Large Address Aware)** *(No. 1, Author: Alastor StrixEfuartus / Kebabstorm / Robinsch)*
+**4GB patch (Large Address Aware)** *(No. 1, Author: Alastor StrixEfuartus / Kebabstorm / Robinsch)* 🟢 **[safe]**
 
 Lets `Wow.exe` use up to 4 GB of RAM instead of the default 2 GB limit for
 32-bit applications.
 
 <a id="patch-cache"></a>
-**Disable CACHE folder creation** *(No. 2, Author: Alastor StrixEfuartus / Kebabstorm)*
+**Disable CACHE folder creation** *(No. 2, Author: Alastor StrixEfuartus / Kebabstorm)* 🟢 **[safe]**
 
 Prevents the client from creating a `CACHE` folder automatically.
 
 <a id="patch-itemcache"></a>
-**Refresh item cache immediately** *(No. 3, Author: Robinsch)*
+**Refresh item cache immediately** *(No. 3, Author: Robinsch)* 🟢 **[safe]**
 
 Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
@@ -62,7 +62,7 @@ original, the three jump distances have been corrected and the code is shorter.
 > catch every conceivable case.
 
 <a id="patch-timer"></a>
-**Always use the precise timer (fixes turning stutter)** *(No. 5, Author: St0ny)*
+**Always use the precise timer (fixes turning stutter)** *(No. 5, Author: St0ny)* 🟢 **[safe]**
 
 Fixes an old Blizzard bug: when you turn your character, the lower body jerks
 into the new direction instead of following smoothly – sometimes right after
@@ -93,7 +93,7 @@ faster.
 > `SET timingMethod "2"` in `Config.wtf` helps as well.
 
 <a id="patch-nothrottle"></a>
-**Do not throttle item and player name queries** *(No. 6, Author: Hour of Twilight (ported by St0ny))*
+**Do not throttle item and player name queries** *(No. 6, Author: Hour of Twilight (ported by St0ny))* 🟢 **[safe]**
 
 When the client does not know an item, creature, quest or name yet, it asks the
 server. The client itself limits two of these queries: item info to 512 and
@@ -220,7 +220,7 @@ that is no longer possible at all, including future tricks. Makes the RCE fix
 > public servers there is also a risk of a ban.
 
 <a id="patch-scandll"></a>
-**Disable Scan.dll** *(No. 12, Author: Alastor StrixEfuartus)*
+**Disable Scan.dll** *(No. 12, Author: Alastor StrixEfuartus)* 🟢 **[safe]**
 
 Prevents loading of `Scan.dll`, which the login server can push with its
 "Scan" command (a check module of the login server, independent of Warden):
@@ -228,13 +228,13 @@ Prevents loading of `Scan.dll`, which the login server can push with its
 file names, so loading is guaranteed to fail.
 
 <a id="patch-noserverpatch"></a>
-**Disallow client patches from the server** *(No. 13, Author: Kebabstorm)*
+**Disallow client patches from the server** *(No. 13, Author: Kebabstorm)* 🟢 **[safe]**
 
 The server can no longer send patch files to the client and have them
 installed.
 
 <a id="patch-nosurvey"></a>
-**Disallow hardware surveys from the server** *(No. 14, Author: Kebabstorm)*
+**Disallow hardware surveys from the server** *(No. 14, Author: Kebabstorm)* 🟢 **[safe]**
 
 The server can no longer request a hardware survey (information about your PC)
 from the client.
@@ -242,25 +242,25 @@ from the client.
 ## Login & connection
 
 <a id="patch-skipbnet"></a>
-**Skip Battle.net login** *(No. 15, Author: Kebabstorm)*
+**Skip Battle.net login** *(No. 15, Author: Kebabstorm)* 🟢 **[safe]**
 
 The client skips the Battle.net login step and goes straight to the classic
 login.
 
 <a id="patch-skiprdp"></a>
-**Skip Remote Desktop check** *(No. 16, Author: Kebabstorm)*
+**Skip Remote Desktop check** *(No. 16, Author: Kebabstorm)* 🟢 **[safe]**
 
 The client no longer checks whether it runs over a Remote Desktop connection –
 so WoW can be played via RDP, for example.
 
 <a id="patch-nohttp"></a>
-**Disable HTTP requests to Battle.net** *(No. 17, Author: Kebabstorm)*
+**Disable HTTP requests to Battle.net** *(No. 17, Author: Kebabstorm)* 🟢 **[safe]**
 
 The client no longer fetches news, help articles and terms of use from
 Blizzard's servers – they no longer exist for 3.3.5 anyway.
 
 <a id="patch-afk"></a>
-**Prevent the idle kick after character auto-login** *(No. 18, Author: St0ny)*
+**Prevent the idle kick after character auto-login** *(No. 18, Author: St0ny)* 🟢 **[safe]**
 
 After an auto-login without any keyboard or mouse input the timestamp of the
 last input is still 0 – the client immediately considers the player idle and
@@ -273,7 +273,7 @@ logout after 30 minutes without input.
 ## Modding: interface, MPQs & addons
 
 <a id="patch-glue"></a>
-**Allow custom GlueXML** *(No. 19, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))*
+**Allow custom GlueXML** *(No. 19, Author: Alastor StrixEfuartus / Kebabstorm (fixed by St0ny))* 🟢 **[safe]**
 
 Allows modifying the login and character selection screens with your own
 XML/Lua files (glue screen modding): the signature check of the interface files
@@ -292,7 +292,7 @@ the way (undefined behaviour). Here the error exit returns "valid" directly
 instead – same effect, without the wild memory access.
 
 <a id="patch-mpqsig"></a>
-**Allow unsigned / incorrectly signed MPQs** *(No. 20, Author: Alastor StrixEfuartus)*
+**Allow unsigned / incorrectly signed MPQs** *(No. 20, Author: Alastor StrixEfuartus)* 🟢 **[safe]**
 
 The signature check for MPQ archives always reports "valid". The client only
 checks archives sent by the server with it: `wow-patch.mpq` (client patch from
@@ -302,13 +302,13 @@ your own patch MPQs. Together with No. 13 and No. 14 it has no effect any more,
 because neither path runs then.
 
 <a id="patch-mpqnames"></a>
-**Allow extended MPQ names** *(No. 21)*
+**Allow extended MPQ names** *(No. 21)* 🟢 **[safe]**
 
 Allows wildcard names for MPQ archives (`patch-*.MPQ` and
 `patch-locale-*.MPQ`).
 
 <a id="patch-localdata"></a>
-**Load data directly from the Data folder (no MPQ)** *(No. 22, Author: Alastor StrixEfuartus)*
+**Load data directly from the Data folder (no MPQ)** *(No. 22, Author: Alastor StrixEfuartus)* 🟢 **[safe]**
 
 The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
@@ -411,7 +411,7 @@ not included.
 ## DLL loaders
 
 <a id="patch-awesome"></a>
-**Enable AwesomeWotlkLib.dll support** *(No. 27, Author: FrostAtom)*
+**Enable AwesomeWotlkLib.dll support** *(No. 27, Author: FrostAtom)* 🟢 **[safe]**
 
 Allows `AwesomeWotlkLib.dll` to be loaded on client start. This DLL extends
 the client with additional features and improvements for private servers.
@@ -436,7 +436,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > wins.
 
 <a id="patch-wotlkext"></a>
-**Enable WotLKExtensions.dll support** *(No. 28, Author: St0ny (original by Alyst3r))*
+**Enable WotLKExtensions.dll support** *(No. 28, Author: St0ny (original by Alyst3r))* 🟢 **[safe]**
 
 Loads `WotLKExtensions.dll` from the WoW folder when the client starts. The DLL
 from [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions) by Alyst3r
@@ -498,19 +498,19 @@ the `LoadLibraryA` import.
 ## Gameplay fixes
 
 <a id="patch-areatrigger"></a>
-**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 30, Author: Robinsch)*
+**More precise area trigger timer (50 ms instead of 100 ms)** *(No. 30, Author: Robinsch)* 🟢 **[safe]**
 
 Increases the area trigger check frequency from 100 ms to 50 ms, so zone
 transitions and triggers are detected more precisely.
 
 <a id="patch-swing"></a>
-**Remove melee swing on right-click** *(No. 31, Author: Robinsch)*
+**Remove melee swing on right-click** *(No. 31, Author: Robinsch)* 🟢 **[safe]**
 
 Prevents the faulty auto-attack swing that was triggered when right-clicking
 a target.
 
 <a id="patch-npcanim"></a>
-**Suppress NPC attack animation when turning** *(No. 32, Author: Robinsch (fixed by St0ny))*
+**Suppress NPC attack animation when turning** *(No. 32, Author: Robinsch (fixed by St0ny))* 🟢 **[safe]**
 
 Suppresses the NPC attack animation when turning if no actual attack takes
 place.
@@ -528,13 +528,13 @@ logic) and additionally checks whether the unit is a player: players turn as in
 the original, NPCs behave as with Robinsch's patch.
 
 <a id="patch-spellanim"></a>
-**Fix spell animation after cancelled channel** *(No. 33, Author: Robinsch)*
+**Fix spell animation after cancelled channel** *(No. 33, Author: Robinsch)* 🟢 **[safe]**
 
 Fixes a bug where the preparation animation got stuck after cancelling a
 channelled spell.
 
 <a id="patch-ghostattack"></a>
-**Fix "ghost" attack when NPCs evade from combat** *(No. 34, Author: Robinsch (fixed by St0ny))*
+**Fix "ghost" attack when NPCs evade from combat** *(No. 34, Author: Robinsch (fixed by St0ny))* 🟢 **[safe]**
 
 Before the client shows a new melee result, it plays the last stored swing on
 the target once more. If an NPC has evaded from combat in the meantime, that is
@@ -547,7 +547,7 @@ string helper function and would have turned it into an endless loop. Here it
 is corrected to `0x3555BF`.
 
 <a id="patch-naked"></a>
-**Fix naked character bug** *(No. 35, Author: Robinsch (fixed by St0ny))*
+**Fix naked character bug** *(No. 35, Author: Robinsch (fixed by St0ny))* 🟢 **[safe]**
 
 Fixes characters shown naked, as happens on private servers when new items are
 only distributed via `ItemDisplayInfo`. The patch disables `SPELL_AURA_X_RAY`:
@@ -560,24 +560,24 @@ For this patch Robinsch calculated with the base address `0x500C00` instead of
 `0x2DDC5D`.
 
 <a id="patch-forcereaction"></a>
-**Keep force reaction on /reload** *(No. 36, Author: Robinsch)*
+**Keep force reaction on /reload** *(No. 36, Author: Robinsch)* 🟢 **[safe]**
 
 Prevents force reaction values (e.g. faction standing) from being reset when
 reloading the UI. Important for custom servers.
 
 <a id="patch-mail"></a>
-**New mail without the 60-second wait** *(No. 37, Author: Robinsch)*
+**New mail without the 60-second wait** *(No. 37, Author: Robinsch)* 🟢 **[safe]**
 
 The client checks for new mail immediately – no more 60-second wait and no
 relog needed to receive new mail.
 
 <a id="patch-deadchat"></a>
-**Allow chat commands while dead** *(No. 38, Author: Robinsch)*
+**Allow chat commands while dead** *(No. 38, Author: Robinsch)* 🟢 **[safe]**
 
 Slash commands also work while the character is dead.
 
 <a id="patch-follow"></a>
-**Allow /follow on NPCs** *(No. 39, Author: St0ny (original by Alastor StrixEfuartus))*
+**Allow /follow on NPCs** *(No. 39, Author: St0ny (original by Alastor StrixEfuartus))* 🟢 **[safe]**
 
 `/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
@@ -588,7 +588,7 @@ unconditional instead – a single byte, same effect, and the patches work
 together.
 
 <a id="patch-level101"></a>
-**Level 101+ fix (game tables, barber chair, base stats)** *(No. 40, Author: Alastor StrixEfuartus (fixed by St0ny))*
+**Level 101+ fix (game tables, barber chair, base stats)** *(No. 40, Author: Alastor StrixEfuartus (fixed by St0ny))* 🟢 **[safe]**
 
 The client's game tables (`gtCombatRatings`, `gtBarberShopCostBase`,
 `gtOCTRegenHP`/`MP`, `gtChanceToMeleeCrit` … – eleven tables) have 100 rows per
@@ -642,7 +642,7 @@ patch MPQ, and for the changed interface files "Allow custom GlueXML" (No. 19).
 > it rejects the character.
 
 <a id="patch-maxchars"></a>
-**Max characters per realm raised to 255** *(No. 43, Author: St0ny)*
+**Max characters per realm raised to 255** *(No. 43, Author: St0ny)* 🟢 **[safe]**
 
 Raises the client-side limit from 10 to 255 characters per realm. The server
 has to support this as well. Additional interface changes (GlueXML) are
@@ -817,7 +817,7 @@ client (jump to the success exit at VA `0x809540`).
 ## Graphics & view distance
 
 <a id="patch-farclip"></a>
-**CVar farclip unlock (max 10000)** *(No. 52, Author: Alastor StrixEfuartus)*
+**CVar farclip unlock (max 10000)** *(No. 52, Author: Alastor StrixEfuartus)* 🟢 **[safe]**
 
 Unlocks the maximum view distance (farclip) to 10000 yards. The client clamps
 the value when it is set, in a single function (VA `0x780770`), and has two
@@ -832,13 +832,13 @@ the view distance slider and a completely different location in the EXE (see
 patch No. 56 "Graphics options: extend slider maximums").
 
 <a id="patch-horizon"></a>
-**CVar horizonFarclipScale unlock (max 12)** *(No. 53, Author: St0ny)*
+**CVar horizonFarclipScale unlock (max 12)** *(No. 53, Author: St0ny)* 🟢 **[safe]**
 
 Unlocks the CVar `horizonFarclipScale` and sets its maximum to 12. Noticeably
 increases the horizon view distance.
 
 <a id="patch-envdetail"></a>
-**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 54, Author: St0ny)*
+**CVar environmentDetail unlock (no limit instead of 1.5)** *(No. 54, Author: St0ny)* 🟢 **[safe]**
 
 Removes the upper limit of the CVar `environmentDetail` entirely. Originally
 the value is clamped to the range 0.5 to 1.5; the patch replaces the clamped
@@ -851,13 +851,13 @@ No. 57 for all five. That makes it the most convenient FPS lever for object
 rendering, since it works in-game without re-patching.
 
 <a id="patch-grounddist"></a>
-**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 55)*
+**CVar groundEffectDist unlock (max 3166 instead of 140)** *(No. 55)* 🟢 **[safe]**
 
 Raises the maximum view distance for ground effects (grass, flowers, ground
 clutter) from 140 to 3166 yards.
 
 <a id="patch-sliders"></a>
-**Graphics options: extend slider maximums** *(No. 56, Author: St0ny)*
+**Graphics options: extend slider maximums** *(No. 56, Author: St0ny)* 🟢 **[safe]**
 
 Raises the maximums of four sliders in the video menu, "Effects" tab. The
 CVars themselves have long been unlocked by the unlock patches – but the
@@ -958,7 +958,7 @@ see above).
 > `.rdata`. There is no overlap with No. 4 and No. 62.
 
 <a id="patch-goscale"></a>
-**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 57, Author: St0ny)*
+**GameObject view distance: Cat 0 and Cat 4 scale with environmentDetail** *(No. 57, Author: St0ny)* 🟢 **[safe]**
 
 Fixes an omission in the client: the function that calculates the runtime view
 distances from the base values only multiplies Cat 1 to 3 by the CVar
@@ -981,7 +981,7 @@ the table above). Values above 1.5 require the patch "CVar environmentDetail
 unlock" (No. 54).
 
 <a id="patch-cat0"></a>
-**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 58, Author: St0ny)*
+**GameObject view distance: Cat 0 from 30 to 50 yards** *(No. 58, Author: St0ny)* 🟢 **[safe]**
 
 The patch costs performance: noticeably more small clutter is visible at the
 same time, and the number of drawn objects is the performance lever. If you
@@ -1088,7 +1088,7 @@ you can widen them independently of the distances.
 </details>
 
 <a id="patch-occluder"></a>
-**Occluder fix for Stormwind (Open Azeroth)** *(No. 59, Author: Robinsch)*
+**Occluder fix for Stormwind (Open Azeroth)** *(No. 59, Author: Robinsch)* 🟢 **[safe]**
 
 Disables the occluders (view blockers) for Stormwind that are hard-coded in the
 client: the map key of the table entry for the Eastern Kingdoms is set to
@@ -1096,13 +1096,13 @@ client: the map key of the table entry for the Eastern Kingdoms is set to
 hidden incorrectly on custom servers with a rebuilt Stormwind.
 
 <a id="patch-bluemoon"></a>
-**Re-enable the blue moon in the night sky** *(No. 60, Author: Robinsch)*
+**Re-enable the blue moon in the night sky** *(No. 60, Author: Robinsch)* 🟢 **[safe]**
 
 Restores a removed legacy feature: the blue moon that used to be visible in
 the night sky.
 
 <a id="patch-notransparency"></a>
-**No character transparency when zooming in** *(No. 61, Author: Alastor StrixEfuartus)*
+**No character transparency when zooming in** *(No. 61, Author: Alastor StrixEfuartus)* 🟢 **[safe]**
 
 Your own character no longer becomes transparent when the camera is zoomed in
 close. The patch removes the transparency assignment for the normal case; if
@@ -1187,19 +1187,19 @@ which does it in its DLL. Icons at the font's original size stay unchanged.
 ## Interface & comfort
 
 <a id="patch-tracker"></a>
-**Auto-sort quest tracker** *(No. 65)*
+**Auto-sort quest tracker** *(No. 65)* 🟢 **[safe]**
 
 Sets the CVar `trackerSorting` to 1 by default. Quests in the tracker are
 sorted automatically.
 
 <a id="patch-worldmap"></a>
-**Advanced world map enabled by default** *(No. 66)*
+**Advanced world map enabled by default** *(No. 66)* 🟢 **[safe]**
 
 Sets the CVar `advancedWorldMap` to 1 by default. The advanced map view is
 enabled from the start.
 
 <a id="patch-castbars"></a>
-**Cast bars on all frames** *(No. 67, Author: Kebabstorm)*
+**Cast bars on all frames** *(No. 67, Author: Kebabstorm)* 🟢 **[safe]**
 
 Shows cast bars on all unit frames (party, arena, boss etc.), not just target
 and focus, as well as on all default nameplates. Matches the behavior from
@@ -1244,7 +1244,7 @@ up to you (`patch-*.MPQ`), thanks to the patch "Allow extended MPQ names"
 (No. 21).
 
 <a id="patch-flash"></a>
-**FlashWindow patch** *(No. 69, Author: Kebabstorm)*
+**FlashWindow patch** *(No. 69, Author: Kebabstorm)* 🟢 **[safe]**
 
 Makes the WoW window flash in the taskbar when a relevant event occurs while
 the game is in the background. For this the Lua function `BNRemoveFriend`,
@@ -1340,7 +1340,7 @@ their own (`.hrep`). Up to 8 keys can be held at the same time.
 ## Window, mouse & camera
 
 <a id="patch-window"></a>
-**Windowed mode by default** *(No. 75, Author: St0ny)*
+**Windowed mode by default** *(No. 75, Author: St0ny)* 🟢 **[safe]**
 
 Sets the CVar `gxWindow` to 1 by default. The game starts in windowed mode
 instead of fullscreen.
@@ -1355,7 +1355,7 @@ instead of fullscreen.
 >   window" is active, but greyed out.
 
 <a id="patch-maximize"></a>
-**Maximized window by default** *(No. 76, Author: St0ny)*
+**Maximized window by default** *(No. 76, Author: St0ny)* 🟢 **[safe]**
 
 Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 
@@ -1369,7 +1369,7 @@ Sets the CVar `gxMaximize` to 1 by default. The window is maximized on start.
 >   window" is active, but greyed out.
 
 <a id="patch-windowfix"></a>
-**No black screen when switching to windowed mode** *(No. 77, Author: Robinsch)*
+**No black screen when switching to windowed mode** *(No. 77, Author: Robinsch)* 🟢 **[safe]**
 
 Switching to windowed mode while in-game no longer results in a black
 screen. Technically the callback of the CVar `DesktopGamma` always takes the
@@ -1377,7 +1377,7 @@ game-gamma path; the desktop-gamma path and with it the CVar `DesktopGamma`
 have no effect.
 
 <a id="patch-mouse"></a>
-**Mouse flicker / camera jump fix** *(No. 78, Author: Robinsch)*
+**Mouse flicker / camera jump fix** *(No. 78, Author: Robinsch)* 🟢 **[safe]**
 
 A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
@@ -1458,7 +1458,7 @@ overwrites the table of the slider patch.
 ## Sound
 
 <a id="patch-sound"></a>
-**Optimize sound settings** *(No. 80, Author: St0ny)*
+**Optimize sound settings** *(No. 80, Author: St0ny)* 🟢 **[safe]**
 
 Includes the following changes:
 
