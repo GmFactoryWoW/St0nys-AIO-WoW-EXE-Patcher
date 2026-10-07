@@ -38,7 +38,12 @@ Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame crash fix (invalid triangle indices)** *(No. 4, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**WorldFrame crash fix (invalid triangle indices)** *(No. 4, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Prevents a crash in a world rendering function (VA `0x81D510`). It walks over
 triangles made of three vertex indices each and turns "index minus base" into a
@@ -88,7 +93,7 @@ faster.
 > `SET timingMethod "2"` in `Config.wtf` helps as well.
 
 <a id="patch-nothrottle"></a>
-**Do not throttle item and player name queries – untested** *(No. 6, Author: Hour of Twilight (ported by St0ny))*
+**Do not throttle item and player name queries** *(No. 6, Author: Hour of Twilight (ported by St0ny))*
 
 When the client does not know an item, creature, quest or name yet, it asks the
 server. The client itself limits two of these queries: item info to 512 and
@@ -107,7 +112,12 @@ unthrottled.
 > protection could object – test it first on public servers.
 
 <a id="patch-mirrorfix"></a>
-**Mirror Image crash fix (memory leak with mirror images) – untested** *(No. 7, Author: Hour of Twilight (ported by St0ny))*
+**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Fixes a Blizzard bug: when a unit that copies a player's appearance (mirror
 images, on some servers also player copies as creatures) receives new
@@ -121,7 +131,12 @@ The small extra code (29 bytes) sits in an unused function of the exe – the
 file size does not change.
 
 <a id="patch-wmocube"></a>
-**Missing WMO file: error cube instead of ERROR #134 – untested** *(No. 8, Author: Alyst3r (ported by St0ny))*
+**Missing WMO file: error cube instead of ERROR #134** *(No. 8, Author: Alyst3r (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 If a WMO file is missing (large world objects such as buildings or dungeons,
 e.g. in custom MPQs), the client aborts with "ERROR #134 Fatal Condition:
@@ -135,7 +150,12 @@ not change.
 > not been tested yet.
 
 <a id="patch-glyphfix"></a>
-**Font glyph fix (wrong or garbled characters in text) – untested** *(No. 9, Author: Hour of Twilight (ported by St0ny))*
+**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Fixes Blizzard bugs in the glyph cache, which stores the rendered font
 characters on texture pages: otherwise texts (especially numbers, damage and
@@ -165,7 +185,10 @@ it in its DLL. Here the four hooks live in a section of their own (`.glyph`,
 ## Security & privacy
 
 <a id="patch-rce"></a>
-**Remote code execution exploit fix** *(No. 10, Author: Robinsch)*
+**Remote code execution exploit fix** *(No. 10, Author: Robinsch)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Closes a vulnerability that could allow remote code execution through crafted
 packets: the `.zdata` section loses its execute permission and Warden modules
@@ -181,7 +204,10 @@ are no longer loaded from the local cache. Warden itself keeps working.
 > they do no harm.
 
 <a id="patch-wardenoff"></a>
-**Disable Warden completely, RCE fix** *(No. 11, Author: Robinsch)*
+**Disable Warden completely, RCE fix** *(No. 11, Author: Robinsch)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The client drops all Warden packets from the server (`SMSG_WARDEN_DATA`).
 Warden modules are code the server has the client execute – with this patch
@@ -288,7 +314,10 @@ The client reads files directly from the Data folder without packing them into
 an MPQ – e.g. `Data\DBFilesClient\ItemDisplayInfo.dbc`. Handy for modders.
 
 <a id="patch-luaunlock"></a>
-**LUA unlock (spells, movement, macros)** *(No. 23, Author: Alastor StrixEfuartus)*
+**LUA unlock (spells, movement, macros)** *(No. 23, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Addons and macros may call protected functions: movement functions
 (`MoveForwardStart`, `TurnLeftStart`, …), `CastSpellByName`, `CastSpell`,
@@ -302,7 +331,10 @@ prints an error. No. 24 unlocks these and all others.
 > this can lead to a ban.
 
 <a id="patch-luaunlockfull"></a>
-**LUA unlock (complete): allow all protected functions** *(No. 24, Author: St0ny)*
+**LUA unlock (complete): allow all protected functions** *(No. 24, Author: St0ny)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Extends No. 23 to all protected functions. The client's central protection
 check knows 24 protection types in three classes (always forbidden, allowed only
@@ -326,7 +358,12 @@ out.
 > it as botting – this can lead to a ban.
 
 <a id="patch-keyprop"></a>
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))*
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk, untested in game]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 If a frame has an OnKeyDown script, the client reports the key as handled
 afterwards – it no longer reaches the key bindings. With the patch every key
@@ -338,7 +375,12 @@ all key presses without blocking the normal controls.
 > bound action.
 
 <a id="patch-globalsv"></a>
-**Merge addon data of all accounts (SavedVariables)** *(No. 26, Author: St0ny (original by boredatom))*
+**Merge addon data of all accounts (SavedVariables)** *(No. 26, Author: St0ny (original by boredatom))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 WoW normally stores addon data per account under `WTF\Account\<ACCOUNT>\`. With
 this patch all accounts use the shared folder `WTF\Account\global\` instead – if
@@ -386,8 +428,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > [!NOTE]
 > The patch itself is harmless, it only loads a DLL that is not included here.
 > Only the loaded `AwesomeWotlkLib.dll` may be noticed by servers with
-> anti-cheat – so use it only where awesome_wotlk is allowed. The patcher shows
-> a yellow note for this.
+> anti-cheat – so use it only where awesome_wotlk is allowed.
 
 > [!NOTE]
 > If No. 63 (HD portraits) is applied as well, awesome_wotlk's CVar
@@ -395,7 +436,7 @@ set to "passed". As a side effect the patch disables the Scan.dll mechanism
 > wins.
 
 <a id="patch-wotlkext"></a>
-**Enable WotLKExtensions.dll support – untested** *(No. 28, Author: St0ny (original by Alyst3r))*
+**Enable WotLKExtensions.dll support** *(No. 28, Author: St0ny (original by Alyst3r))*
 
 Loads `WotLKExtensions.dll` from the WoW folder when the client starts. The DLL
 from [WotLK-Extensions](https://github.com/Alyst3r/WotLK-Extensions) by Alyst3r
@@ -417,7 +458,7 @@ the DLL is missing, WoW simply starts as usual. The file size does not change.
 > The patch itself is harmless, it only loads a DLL that is not included here.
 > WotLK-Extensions is meant for your own server projects; according to the
 > project, some servers can detect calls to its Lua functions. Only use it
-> where WotLK-Extensions is allowed – the patcher shows a yellow note about it.
+> where WotLK-Extensions is allowed.
 
 > [!NOTE]
 > At startup the DLL applies some patches in memory itself, always including
@@ -433,7 +474,12 @@ the DLL is missing, WoW simply starts as usual. The file size does not change.
 > (same name, same loader). Its time fix is disabled there.
 
 <a id="patch-voicedll"></a>
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)*
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Loads `voice.dll` from the WoW folder at startup – the client part of
 [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat), a voice chat
@@ -441,7 +487,7 @@ module for AzerothCore. If the DLL is missing, WoW starts normally.
 
 > [!CAUTION]
 > **ALPHA** – the mod-voicechat module is not finished yet. That is why this
-> patch is deselected by default. The patch itself has been tested in game.
+> patch is deselected by default.
 
 File size and PE header stay unchanged: the jump at the entry point (VA
 `0x401005`) is redirected into a free 27-byte gap between two functions (VA
@@ -562,7 +608,10 @@ unchanged.
 source. There it is called "Disable XML SIG MD5", hence the note "Use XML MD5".
 
 <a id="patch-raceclass"></a>
-**Character creation: more than 10 classes (random class)** *(No. 41, Author: Alastor StrixEfuartus / Robinsch)*
+**Character creation: more than 10 classes (random class)** *(No. 41, Author: Alastor StrixEfuartus / Robinsch)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The random class selection in character creation collects the allowed classes
 in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
@@ -570,7 +619,10 @@ in an array with 10 slots. With custom classes (`ChrClasses.dbc` with more than
 pick which class is still checked by the server – this patch does nothing more.
 
 <a id="patch-namecheck"></a>
-**Disable the name check in character creation (e.g. digits in names)** *(No. 42, Author: Alyst3r (0x539wowmod) (fixed by St0ny))*
+**Disable the name check in character creation (e.g. digits in names)** *(No. 42, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Disables the complete client-side name check in character creation: the check
 function (VA `0x6B0F90`) always reports "name valid". This allows e.g. digits in
@@ -597,7 +649,12 @@ has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(No. 44, Author: Kebabstorm (fixed by St0ny))*
+**Custom Item Fix (BETA) v2** *(No. 44, Author: Kebabstorm (fixed by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Makes custom items possible without changing the client's `Item.dbc`. Many
 places in the client read the display ID, inventory type, class, subclass and
@@ -621,18 +678,20 @@ from the server at every start. If No. 2 is not selected, the patcher points
 this out.
 
 > [!NOTE]
-> v2 has been tested in game. The v1 patch list this patch was taken from
-> contained two errors that would have crashed the client: one line was missing
-> a byte (turning the function for the item class into garbage), another was a
-> copy of the line before it (a call landed in the middle of an unrelated
-> function). v2 fixes both. All rebuilt places were checked by emulation with
+> The v1 patch list this patch was taken from contained two errors that would
+> have crashed the client: one line was missing a byte (turning the function
+> for the item class into garbage), another was a copy of the line before it
+> (a call landed in the middle of an unrelated function). v2 fixes both. All rebuilt places were checked by emulation with
 > test items: only in the cache, only in `Item.dbc`, in both and in neither.
 
 Not taken over from v1: the PE checksum (Windows does not check it for
 programs) and the change `Cache` → `||che` – that is exactly patch No. 2.
 
 <a id="patch-climb"></a>
-**Remove the climb angle limit (walk up any slope)** *(No. 45, Author: Alastor StrixEfuartus)*
+**Remove the climb angle limit (walk up any slope)** *(No. 45, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 The character can walk up any slope, no matter how steep. The original stops at
 50°: the client compares the slope with the cosine of that angle (`0.6427876`
@@ -643,7 +702,10 @@ at VA `0xA37F0C`). The patch sets it to `0.0` = cos 90°.
 > ban.
 
 <a id="patch-jump"></a>
-**Change jump height (original -7.9555473)** *(No. 46, Author: Alastor StrixEfuartus)*
+**Change jump height (original -7.9555473)** *(No. 46, Author: Alastor StrixEfuartus)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Changes the initial velocity of a jump (VA `0xAA33DC`, original `-7.9555473`).
 The patcher asks for the value after the selection: a negative number from
@@ -657,7 +719,10 @@ remembered like those of the client info patches.
 > ban.
 
 <a id="patch-airforward"></a>
-**Steer forward/backward while jumping** *(No. 47, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Steer forward/backward while jumping** *(No. 47, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Normally the client ignores forward and backward input while the character is
 jumping or falling. With the patch the direction can be changed in the air as
@@ -672,7 +737,10 @@ byte patch from 0x539wowmod that updates the movement in the air.
 > lead to a ban.
 
 <a id="patch-airlateral"></a>
-**Steer sideways while jumping** *(No. 48, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Steer sideways while jumping** *(No. 48, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Like the previous patch, but for sideways movement (strafing): two jumps in the
 client's sideways input plus the byte patch from 0x539wowmod that no longer stops
@@ -683,7 +751,10 @@ the movement early while the falling flag is set.
 > lead to a ban.
 
 <a id="patch-airturn"></a>
-**Turning while jumping changes the flight direction** *(No. 49, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Turning while jumping changes the flight direction** *(No. 49, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 If you turn while jumping (mouse or keys), the character keeps its flight
 direction in the original. With the patch the client sets the movement direction
@@ -695,7 +766,10 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk, exe grows]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Allows more jumps while the character is in the air. After the selection the
 patcher asks how many extra jumps there should be (1 to 9, `1` = double jump);
@@ -724,7 +798,12 @@ writable); this makes `Wow.exe` slightly larger.
 > to a ban.**
 
 <a id="patch-noammo"></a>
-**Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))*
+**Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 For Shoot, Auto Shot and other abilities that need ammo, the client checks
 whether arrows or bullets are present. The patch skips this check in the
@@ -1031,7 +1110,12 @@ the character sits in a vehicle or is attached to another object, it can still
 become transparent when zooming in (same as in the original patch).
 
 <a id="patch-nofade"></a>
-**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 62, Author: Alyst3r (0x539wowmod) (ported by St0ny))*
+**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 62, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 When an NPC is removed (e.g. despawn), the client normally fades the model out
 slowly. With the patch, NPCs for which the server sets the flag
@@ -1047,7 +1131,12 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))*
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟡 **[untested on public servers and in game, exe grows]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -1076,7 +1165,12 @@ otherwise read past the source.
 > exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 <a id="patch-iconsnap"></a>
-**Pixel-exact icons in text (sharp instead of blurry) – untested** *(No. 64, Author: Hour of Twilight (ported by St0ny))*
+**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers and in game, exe grows]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 Texts can contain icons (`|T…|t`, e.g. raid target markers, currencies or quest
 symbols in chat, tooltips and addons). The client computes their size and
@@ -1112,7 +1206,12 @@ and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
 <a id="patch-emblems"></a>
-**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)*
+**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,
@@ -1158,7 +1257,12 @@ which additionally needs `IsWindowFocused()` from `AwesomeWotlkLib.dll`
 (No. 27).
 
 <a id="patch-charrandom"></a>
-**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))*
+**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))* 🟡 **[untested on public servers and in game]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
+>
+> **Untested in game** – the function has not been checked in game yet, possibly buggy.
 
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
@@ -1166,14 +1270,20 @@ etc. automatically; you start with the default appearance. The randomize button
 keeps working – it uses a separate path in the client.
 
 <a id="patch-lootopen"></a>
-**Loot window stays open while moving** *(No. 71, Author: Hour of Twilight (ported by St0ny))*
+**Loot window stays open while moving** *(No. 71, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
 
 In the original the loot window closes as soon as you walk, strafe or turn.
 With the patch it stays open. The ten places in the movement handlers that
 close the window are skipped (one byte each).
 
 <a id="patch-showlevel"></a>
-**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: Hour of Twilight (ported by St0ny))*
+**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: Hour of Twilight (ported by St0ny))* 🟡 **[untested on public servers]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
 
 If a hostile target is 10 or more levels above you, the client shows "??"
 instead of the level (or a skull on the nameplate, `UnitLevel` returns -1).
@@ -1181,7 +1291,10 @@ With the patch, tooltip, nameplate and `UnitLevel` show the real level. Bosses
 still show "??" – that check is kept; No. 73 removes it.
 
 <a id="patch-showlevelboss"></a>
-**Real level for bosses too instead of "??" (extension to No. 72)** *(No. 73, Author: St0ny)*
+**Real level for bosses too instead of "??" (extension to No. 72)** *(No. 73, Author: St0ny)* 🟡 **[untested on public servers]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
 
 Creatures marked as boss (a flag in the creature data, e.g. raid and dungeon
 bosses) always show "??" in the original – in the tooltip, on the nameplate
@@ -1196,7 +1309,10 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat** *(No. 74, Author: Hour of Twilight (ported by St0ny))*
+**Hold action buttons to repeat** *(No. 74, Author: Hour of Twilight (ported by St0ny))* 🔴 **[ban risk, exe grows]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 When you hold the key of an action bar binding (the main bar,
 `ACTIONBUTTON1`–`12`, with page, stance and form bars), the client triggers the
@@ -1267,7 +1383,10 @@ A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 79, Author: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 79, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers, exe grows]**
+
+> [!WARNING]
+> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
 
 Port of [CameraReforged](https://github.com/Zendevve/CameraReforged) by
 **Stormhand** into this patcher, so everything
@@ -1377,7 +1496,10 @@ name (`-> suggestion: …`, or `-> current: …` for an already applied patch).
 > to match the server.
 
 <a id="patch-clientversion"></a>
-**Change client version (original 3.3.5)** *(No. 81, Author: MacWarrior)*
+**Change client version (original 3.3.5)** *(No. 81, Author: MacWarrior)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets a new version in the format `x.y.z` (e.g. `3.3.6` or `3.3.123`, at most 7
 characters). Changes the version the client shows in-game, the FileVersion and
@@ -1387,7 +1509,10 @@ The build number in `VS_FIXEDFILEINFO` is kept; the FileVersion text
 together must fit into the ProductVersion field (e.g. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Change build number (original 12340)** *(No. 82, Author: MacWarrior)*
+**Change build number (original 12340)** *(No. 82, Author: MacWarrior)* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets a new build number (6142 to 65535, original `12340`): the internal build
 number, the visible build number and the fourth part of the FileVersion in
@@ -1415,7 +1540,10 @@ different login protocol – a 3.3.5 client can no longer get onto the server.
 > it as offline.
 
 <a id="patch-clienttitle"></a>
-**Change program title (file properties and window title)** *(No. 83, Author: MacWarrior (fixed by St0ny))*
+**Change program title (file properties and window title)** *(No. 83, Author: MacWarrior (fixed by St0ny))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets FileDescription, InternalName and ProductName of the version resource,
 i.e. what Windows shows in the file properties and the Task Manager. At most 17
@@ -1431,7 +1559,10 @@ custom title to the first place and disables the two calls so that it stays.
 > as the title of error messages – the custom title appears there as well.
 
 <a id="patch-clientdate"></a>
-**Change build date (original Jun 24 2010)** *(No. 84, Author: St0ny (original by MacWarrior))*
+**Change build date (original Jun 24 2010)** *(No. 84, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Sets the build date (original `Jun 24 2010`) at all three places in the EXE and
 the year in the copyright notice, plus the time. The time is stored in two
@@ -1450,7 +1581,10 @@ the time of patching if nothing is remembered. If the patch is already applied,
 the current date and time of `Wow.exe` are suggested.
 
 <a id="patch-clienticon"></a>
-**Change program icon (icon of Wow.exe)** *(No. 85, Author: St0ny (original by MacWarrior))*
+**Change program icon (icon of Wow.exe)** *(No. 85, Author: St0ny (original by MacWarrior))* 🔴 **[ban risk]**
+
+> [!CAUTION]
+> **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
 
 Replaces the icon Windows shows for `Wow.exe` (Explorer, taskbar, shortcuts).
 The patcher asks for the path of an `.ico` or `.png` file, absolute or

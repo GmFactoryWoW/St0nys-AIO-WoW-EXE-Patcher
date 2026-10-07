@@ -99,11 +99,12 @@ $TEXT = @{
         Welcome3      = 'erweiterte Sichtweiten und verbesserte Sound-Einstellungen.'
         Welcome4      = 'Beim ersten Patchen wird das Original als Wow.exe.ORI gesichert, danach die vorherige Wow.exe als Wow.exe.BAK.'
         Welcome5      = 'Eingespielte Patches lassen sich spaeter wieder abwaehlen - bis zurueck zum Original.'
-        StartWarn1    = 'HINWEIS: Die meisten Patches sind im Spiel getestet. Solange keiner gewaehlt ist,'
-        StartWarn2    = 'der als Bann-Gefahr markiert ist oder die Wow.exe vergroessert, sollte auch auf'
-        StartWarn3    = 'oeffentlichen Servern nichts passieren - eine 100%-Garantie gibt es aber nicht.'
-        StartWarn4    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
-        StartWarn5    = 'Benutzung auf eigene Gefahr.'
+        StartWarn1    = 'HINWEIS: Patches ohne Warnung in eckigen Klammern sind im Spiel getestet und sollten auch'
+        StartWarn2    = 'auf oeffentlichen Servern unbedenklich sein - eine 100%-Garantie gibt es aber nicht.'
+        StartWarn3    = 'Warnungen: [Bann-Gefahr], [auf oeffentlichen Servern ungetestet] (Vorsicht, kann zu Kick/Bann'
+        StartWarn4    = 'fuehren), [im Spiel ungetestet] (moeglicherweise verbuggt), [Exe wird groesser] (Bann-Gefahr).'
+        StartWarn5    = 'Im Zweifel pruefe die Richtlinien deines Servers, bevor du eine gepatchte Wow.exe dort benutzt.'
+        StartWarn6    = 'Benutzung auf eigene Gefahr.'
         Thanks        = 'Danke an Billy Hoyle und MacWarrior fuer ihre Hilfe!'
         PressStart    = 'ENTER druecken um zu starten'
         NotFound      = '[FEHLER] Keine Wow.exe gefunden: {0}'
@@ -160,9 +161,16 @@ $TEXT = @{
         Obsolete      = 'macht diese Patches ueberfluessig (beide zusammen schaden nicht):'
         GrowHead      = 'HINWEIS: Diese Patches haengen eine Sektion an und machen die Wow.exe groesser:'
         GrowBan       = 'Viele Server tolerieren eine veraenderte Groesse der Wow.exe nicht - das kann zu einem Bann fuehren!'
-        CheatHead     = 'HINWEIS: Diese Patches koennen von Servern mit Anti-Cheat als Cheat oder Botting gewertet werden:'
-        DllHint       = 'HINWEIS: Der Patch selbst ist unkritisch. Erst die geladene DLL kann auf Servern mit Anti-Cheat auffallen - nur dort einsetzen, wo {0} erlaubt ist.'
+        CheatHead     = 'ACHTUNG - Bann-Gefahr: Diese Patches koennen von Servern als Cheat oder Botting gewertet werden:'
         CheatBan      = 'Das kann zu einem Bann fuehren - nur auf Servern nutzen, die das erlauben!'
+        PublicHead    = 'VORSICHT: Diese Patches sind nicht auf oeffentlichen Servern getestet - moegliche Bann-Gefahr:'
+        PublicBan     = 'Sie koennen zu einem Kick oder Bann fuehren.'
+        UntestedHead  = 'HINWEIS: Die Funktion dieser Patches ist im Spiel ungetestet - moeglicherweise verbuggt:'
+        TagBan        = 'Bann-Gefahr'
+        TagPublic     = 'auf oeffentlichen Servern ungetestet'
+        TagGame       = 'im Spiel ungetestet'
+        TagBoth       = 'auf oeffentlichen Servern und im Spiel ungetestet'
+        TagGrow       = 'Exe wird groesser'
         Confirm       = 'Patchen jetzt starten? (J/N)'
         Yes           = 'J'
         Aborted       = 'Abgebrochen. Die Wow.exe wurde nicht veraendert.'
@@ -191,11 +199,12 @@ $TEXT = @{
         Welcome3      = 'extended view distances and improved sound settings.'
         Welcome4      = 'The first patch run saves the original as Wow.exe.ORI, later runs save the previous Wow.exe as Wow.exe.BAK.'
         Welcome5      = 'Applied patches can be deselected later - all the way back to the original.'
-        StartWarn1    = 'NOTE: Most patches have been tested in game. As long as none is selected that'
-        StartWarn2    = 'is marked as a ban risk or makes Wow.exe larger, nothing should happen on'
-        StartWarn3    = 'public servers either - but there is no 100% guarantee.'
-        StartWarn4    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
-        StartWarn5    = 'Use at your own risk.'
+        StartWarn1    = 'NOTE: Patches without a warning in square brackets have been tested in game and should be'
+        StartWarn2    = 'harmless on public servers as well - but there is no 100% guarantee.'
+        StartWarn3    = 'Warnings: [ban risk], [untested on public servers] (careful, may get you kicked/banned),'
+        StartWarn4    = '[untested in game] (possibly buggy), [exe grows] (ban risk).'
+        StartWarn5    = 'If in doubt, check the rules of your server before using a patched Wow.exe there.'
+        StartWarn6    = 'Use at your own risk.'
         Thanks        = 'Thanks to Billy Hoyle and MacWarrior for their help!'
         PressStart    = 'Press ENTER to start'
         NotFound      = '[ERROR] No Wow.exe found: {0}'
@@ -252,9 +261,16 @@ $TEXT = @{
         Obsolete      = 'makes these patches unnecessary (both together do no harm):'
         GrowHead      = 'NOTE: These patches append a section and make Wow.exe larger:'
         GrowBan       = 'Many servers do not tolerate a changed size of Wow.exe - this can lead to a ban!'
-        CheatHead     = 'NOTE: Servers with anti-cheat may treat these patches as cheating or botting:'
-        DllHint       = 'NOTE: The patch itself is harmless. Only the loaded DLL may be noticed by servers with anti-cheat - use it only where {0} is allowed.'
+        CheatHead     = 'WARNING - ban risk: servers may treat these patches as cheating or botting:'
         CheatBan      = 'This can lead to a ban - only use them on servers that allow it!'
+        PublicHead    = 'CAUTION: These patches have not been tested on public servers - possible ban risk:'
+        PublicBan     = 'They may get you kicked or banned.'
+        UntestedHead  = 'NOTE: These patches have not been tested in game - possibly buggy:'
+        TagBan        = 'ban risk'
+        TagPublic     = 'untested on public servers'
+        TagGame       = 'untested in game'
+        TagBoth       = 'untested on public servers and in game'
+        TagGrow       = 'exe grows'
         Confirm       = 'Start patching now? (Y/N)'
         Yes           = 'Y'
         Aborted       = 'Aborted. Wow.exe has not been modified.'
@@ -289,17 +305,34 @@ function Say([string]$text, [string]$color) {
     if ($color) { Write-Host "  $text" -ForegroundColor $color } else { Write-Host "  $text" }
 }
 
-function PatchName($p) {
+function PatchName($p, [switch]$NoTags) {
     if ($script:lang -eq 'en') { $n = $p.En; $note = $p.NoteEn } else { $n = $p.De; $note = $p.NoteDe }
     if ($note) { $n = "$n ($note)" }
+    if ($NoTags) { return $n }
+    $tags = @(PatchTags $p)
+    if ($tags.Count -gt 0) { $n = "$n [$($tags -join ', ')]" }
     return $n
 }
 
-# Name mit Patch-Nummer davor ("Nr. 64 ..."), fuer Hinweise auf andere Patches.
+# Einheitliche Warnungen (Warn-Codes): BanRisk = Bann-Gefahr (2),
+# PublicUntested = nicht auf oeffentlichen Servern getestet (3),
+# GameUntested = Funktion im Spiel ungetestet (4), dazu GrowsExe.
+function PatchTags($p) {
+    $tags = @()
+    if ($p.BanRisk) { $tags += T 'TagBan' }
+    if ($p.PublicUntested -and $p.GameUntested) { $tags += T 'TagBoth' }
+    elseif ($p.PublicUntested) { $tags += T 'TagPublic' }
+    elseif ($p.GameUntested) { $tags += T 'TagGame' }
+    if ($p.GrowsExe) { $tags += T 'TagGrow' }
+    return $tags
+}
+
+# Name mit Patch-Nummer davor ("Nr. 64 ..."), fuer Hinweise auf andere Patches
+# (ohne Warnungen - die Hinweisliste nennt sie schon).
 function PatchRef($p) {
     $nr = [array]::IndexOf($patches, $p) + 1
-    if ($script:lang -eq 'en') { return "No. $nr $(PatchName $p)" }
-    return "Nr. $nr $(PatchName $p)"
+    if ($script:lang -eq 'en') { return "No. $nr $(PatchName $p -NoTags)" }
+    return "Nr. $nr $(PatchName $p -NoTags)"
 }
 
 # Eingabe lesen. Read-Host liefert bei Strg+Z bzw. geschlossener Eingabe $null -
@@ -2430,10 +2463,15 @@ function Test-JumpValue([string]$v) {
 #            (erzeugt nur einen Hinweis, wenn beide ausgewaehlt sind)
 #    GrowsExe - optional: $true, wenn der Patch immer eine Sektion anhaengt und
 #            die Wow.exe damit groesser macht (erzeugt einen Bann-Hinweis)
-#    BanRisk - optional: $true, wenn Server mit Anti-Cheat den Patch als Cheat
-#            oder Botting werten koennen (erzeugt einen roten Bann-Hinweis)
-#    DllHint - optional: Name des DLL-Projekts fuer den DLL-Loader - dezenter
-#            gelber Hinweis, dass erst die geladene DLL auffallen kann
+#    Warn-Codes - Patches ohne die drei folgenden Flags sind sicher (Code 1,
+#            keine Warnung). Jedes Flag erzeugt eine Warnung in eckigen
+#            Klammern hinter dem Namen und einen Hinweis vor dem Patchen:
+#    BanRisk - optional: $true bei Bann-Gefahr (Code 2, roter Hinweis)
+#    PublicUntested - optional: $true, wenn der Patch nicht auf oeffentlichen
+#            Servern getestet ist - Vorsicht, kann zu Kick/Bann fuehren
+#            (Code 3, gelber Hinweis)
+#    GameUntested - optional: $true, wenn die Funktion im Spiel ungetestet
+#            ist - moeglicherweise verbuggt (Code 4, gelber Hinweis)
 #    Needs - optional: Ids von Patches, ohne die dieser nicht voll wirkt
 #            (erzeugt nur einen Hinweis, keine Sperre)
 #    PromptDe/PromptEn, Default, Check - optional, fuer Patches mit eigenem
@@ -2493,7 +2531,7 @@ $patches = @(
         Patch 0x2689FD @(0x00, 0x00)
     }}
 
-    @{ Id = 'worldcrash'; Cat = 'system'; On = $false
+    @{ Id = 'worldcrash'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'WorldFrame-Absturzfix (ungueltige Dreiecks-Indizes)'
        En = 'WorldFrame crash fix (invalid triangle indices)'
@@ -2521,8 +2559,8 @@ $patches = @(
 
     @{ Id = 'nothrottle'; Cat = 'system'; On = $false
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Gegenstands- und Namensabfragen nicht drosseln - ungetestet'
-       En = 'Do not throttle item and player name queries - untested'
+       De = 'Gegenstands- und Namensabfragen nicht drosseln'
+       En = 'Do not throttle item and player name queries'
        Code = {
         # Die Datenbank-Caches des Clients (Items, Kreaturen, Quests, Namen ...)
         # koennen ihre Anfragen an den Server pro 30-Sekunden-Fenster begrenzen
@@ -2538,10 +2576,10 @@ $patches = @(
         Patch 0x2756DE @(0x4E)   # VA 0x6762DE, namecache.wdb
     }}
 
-    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false
+    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) - ungetestet'
-       En = 'Mirror Image crash fix (memory leak with mirror images) - untested'
+       De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)'
+       En = 'Mirror Image crash fix (memory leak with mirror images)'
        Code = {
         # Blizzard-Fehler: Der Handler fuer SMSG_MIRRORIMAGE_DATA (VA 0x730290)
         # legt fuer das Aussehen einer Spiegelbild-Einheit eine neue
@@ -2563,10 +2601,10 @@ $patches = @(
         Patch 0x32F8CA @(0xE8, 0x41, 0xBA, 0x13, 0x00)
     }}
 
-    @{ Id = 'wmocube'; Cat = 'system'; On = $false
+    @{ Id = 'wmocube'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (ported by St0ny)'
-       De = 'Fehlende WMO-Datei: Fehlerwuerfel statt ERROR #134 - ungetestet'
-       En = 'Missing WMO file: error cube instead of ERROR #134 - untested'
+       De = 'Fehlende WMO-Datei: Fehlerwuerfel statt ERROR #134'
+       En = 'Missing WMO file: error cube instead of ERROR #134'
        Code = {
         # CMap::SafeOpen (VA 0x7BD480) oeffnet WMO-Dateien (Gebaeude, Dungeons).
         # Klappt das zehnmal nicht, bricht der Client mit "ERROR #134 Fatal
@@ -2577,12 +2615,10 @@ $patches = @(
         Patch 0x3BC8AF @(0x53, 0x68, 0x60, 0x4B, 0xA3, 0x00, 0xE8, 0xC6, 0x7A, 0xC6, 0xFF, 0x5F, 0x5E, 0x5B, 0x5D, 0xC3)
     }}
 
-    @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true
+    @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) - ungetestet'
-       En = 'Font glyph fix (wrong or garbled characters in text) - untested'
-       NoteDe = 'Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'exe grows - ban risk'
+       De = 'Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)'
+       En = 'Font glyph fix (wrong or garbled characters in text)'
        Code = {
         # Eigene Sektion (.glyph) mit vier Hooks im Glyphen-Cache plus
         # CheckGeometry an Ort und Stelle neu, siehe Add-GlyphCacheFix.
@@ -2595,19 +2631,15 @@ $patches = @(
        Author = 'Robinsch'
        De = 'Remote Code Execution Exploit Fix'
        En = 'Remote code execution exploit fix'
-       NoteDe = 'auf oeffentlichen Servern ueber Warden erkennbar - Bann-Gefahr'
-       NoteEn = 'detectable through Warden on public servers - ban risk'
        Code = {
         Patch 0x2A7 @(0xC0)
         Patch 0x3D9D7C @(0x90, 0x90)
     }}
 
-    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; BanRisk = $true; Obsoletes = @('rce')
+    @{ Id = 'wardenoff'; Cat = 'security'; On = $false; Obsoletes = @('rce'); BanRisk = $true
        Author = 'Robinsch'
        De = 'Warden komplett abschalten, RCE-Fix'
        En = 'Disable Warden completely, RCE fix'
-       NoteDe = 'Kick-Gefahr bei aktivem Warden, auf oeffentlichen Servern Bann-Gefahr'
-       NoteEn = 'may get you kicked if Warden is active, ban risk on public servers'
        Code = {
         # Verwirft SMSG_WARDEN_DATA (Opcode 0x2E6) direkt am Eingang des
         # Paket-Handlers (VA 0x7DA850): je -> nop, der Handler kehrt sofort mit 0
@@ -2751,8 +2783,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'LUA Unlock (Zauber, Bewegung, Makros)'
        En = 'LUA unlock (spells, movement, macros)'
-       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
-       NoteEn = 'may be treated as botting - ban risk'
        Code = {
         # Die zentrale Schutzpruefung (VA 0x5191C0) meldet fuer die Schutzarten
         # 0-5, 16 und 17 immer "erlaubt": Bewegungsfunktionen (MoveForwardStart,
@@ -2763,12 +2793,10 @@ $patches = @(
         Patch 0x1185E7 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'luaunlockfull'; Cat = 'modding'; On = $false; BanRisk = $true; Obsoletes = @('luaunlock')
+    @{ Id = 'luaunlockfull'; Cat = 'modding'; On = $false; Obsoletes = @('luaunlock'); BanRisk = $true
        Author = 'St0ny'
        De = 'LUA Unlock (vollstaendig): alle geschuetzten Funktionen freigeben'
        En = 'LUA unlock (complete): allow all protected functions'
-       NoteDe = 'kann als Botting gewertet werden - Bann-Gefahr'
-       NoteEn = 'may be treated as botting - ban risk'
        Code = {
         # Umfasst die Wirkung von "LUA Unlock (Zauber, Bewegung, Makros)" und
         # gibt zusaetzlich alle Funktionen frei, die eine eigene Pruefung haben.
@@ -2798,7 +2826,7 @@ $patches = @(
         # keine Spielaktionen.
     }}
 
-    @{ Id = 'keyprop'; Cat = 'modding'; On = $false
+    @{ Id = 'keyprop'; Cat = 'modding'; On = $false; BanRisk = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)'
        En = 'Pass all keyboard events on to addons (OnKeyDown)'
@@ -2809,7 +2837,7 @@ $patches = @(
         Patch 0x8EFD9 @(0x00)
     }}
 
-    @{ Id = 'globalsv'; Cat = 'modding'; On = $false
+    @{ Id = 'globalsv'; Cat = 'modding'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'St0ny (original by boredatom)'
        De = 'Addon-Daten aller Accounts zusammenlegen (SavedVariables)'
        En = 'Merge addon data of all accounts (SavedVariables)'
@@ -2832,7 +2860,7 @@ $patches = @(
 
     # --- DLL-Loader ---
 
-    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa'); DllHint = 'awesome_wotlk'
+    @{ Id = 'awesome'; Cat = 'dll'; On = $true; Needs = @('laa')
        Author = 'FrostAtom'
        De = 'AwesomeWotlkLib.dll Unterstuetzung aktivieren'
        En = 'Enable AwesomeWotlkLib.dll support'
@@ -2853,10 +2881,10 @@ $patches = @(
         Patch 0xE50B0 @(0xB8, 0x01, 0x00, 0x00, 0x00, 0xA3, 0x74, 0xB4, 0xB6, 0x00, 0x68, 0xE0, 0x5C, 0x4E, 0x00, 0xE8, 0x1C, 0x68, 0x38, 0x00, 0x83, 0xC4, 0x04, 0x55, 0x8B, 0xEC, 0xE8, 0xA1, 0x10, 0xF2, 0xFF, 0xE9, 0x04, 0x5B, 0xF2, 0xFF, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x41, 0x77, 0x65, 0x73, 0x6F, 0x6D, 0x65, 0x57, 0x6F, 0x74, 0x6C, 0x6B, 0x4C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00)
     }}
 
-    @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa'); DllHint = 'WotLK-Extensions'
+    @{ Id = 'wotlkext'; Cat = 'dll'; On = $false; Needs = @('laa')
        Author = 'St0ny (original by Alyst3r)'
-       De = 'WotLKExtensions.dll Unterstuetzung aktivieren - ungetestet'
-       En = 'Enable WotLKExtensions.dll support - untested'
+       De = 'WotLKExtensions.dll Unterstuetzung aktivieren'
+       En = 'Enable WotLKExtensions.dll support'
        NoteDe = 'benoetigt WotLK-Extensions'
        NoteEn = 'requires WotLK-Extensions'
        Url = 'https://github.com/Alyst3r/WotLK-Extensions'
@@ -2882,7 +2910,7 @@ $patches = @(
         )
     }}
 
-    @{ Id = 'voicedll'; Cat = 'dll'; On = $false
+    @{ Id = 'voicedll'; Cat = 'dll'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'St0ny'
        De = 'voice.dll beim Start laden (mod-voicechat) [ALPHA]'
        En = 'Load voice.dll at startup (mod-voicechat) [ALPHA]'
@@ -3044,7 +3072,7 @@ $patches = @(
         Patch 0x3F5DE0 @(0x55, 0x8B, 0xEC, 0xFF, 0x75, 0x0C, 0xFF, 0x75, 0x08, 0xE8, 0xC2, 0xFF, 0xFF, 0xFF, 0xDD, 0xD8, 0xD9, 0x40, 0x04, 0x5D, 0xC2, 0x08, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC)
     }}
 
-    @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false
+    @{ Id = 'raceclass'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alastor StrixEfuartus / Robinsch'
        De = 'Charaktererstellung: mehr als 10 Klassen (Zufallsklasse)'
        En = 'Character creation: more than 10 classes (random class)'
@@ -3063,7 +3091,7 @@ $patches = @(
         Patch 0xE03C3 @(0x88)
     }}
 
-    @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false
+    @{ Id = 'namecheck'; Cat = 'gameplay'; On = $false; BanRisk = $true
        Author = 'Alyst3r (0x539wowmod) (fixed by St0ny)'
        De = 'Namenspruefung bei der Charaktererstellung abschalten (z.B. Zahlen im Namen)'
        En = 'Disable the name check in character creation (e.g. digits in names)'
@@ -3084,7 +3112,7 @@ $patches = @(
         Patch 0x6404F @(0xFF)
     }}
 
-    @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache')
+    @{ Id = 'customitem'; Cat = 'gameplay'; On = $false; Needs = @('cache'); PublicUntested = $true; GameUntested = $true
        Author = 'Kebabstorm (fixed by St0ny)'
        De = 'Custom Item Fix (BETA) v2'
        En = 'Custom Item Fix (BETA) v2'
@@ -3182,8 +3210,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'Steigwinkel-Begrenzung aufheben (jeden Hang hochlaufen)'
        En = 'Remove the climb angle limit (walk up any slope)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Aus der 12th Generation EXE (Alastor StrixEfuartus). VA 0xA37F0C ist
         # der Kosinus des steilsten begehbaren Hangs, im Original 0.6427876 =
@@ -3196,8 +3222,6 @@ $patches = @(
        Author = 'Alastor StrixEfuartus'
        De = 'Sprunghoehe aendern (Original -7.9555473)'
        En = 'Change jump height (original -7.9555473)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        PromptDe = 'Neuer Wert, negativ - je kleiner, desto hoeher (z.B. -11.25 = doppelte Hoehe)'
        PromptEn = 'New value, negative - the lower, the higher (e.g. -11.25 = double height)'
        Default = '-7.9555473'
@@ -3214,8 +3238,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung vorwaerts/rueckwaerts steuern'
        En = 'Steer forward/backward while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Dort ersetzt die DLL die Vorwaerts-Eingabe
         # (VA 0x988A20) durch eine eigene Funktion; die unterscheidet sich vom
@@ -3234,8 +3256,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung seitwaerts steuern'
        En = 'Steer sideways while jumping'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod, wie oben fuer die Seitwaerts-Eingabe
         # (VA 0x988B00):
@@ -3252,8 +3272,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Im Sprung drehen aendert die Flugrichtung'
        En = 'Turning while jumping changes the flight direction'
-       NoteDe = 'kann vom Server als Cheat erkannt werden - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server - ban risk'
        Code = {
         # Nach 0x539wowmod. Beim Drehen (VA 0x989B70) setzt der Client
         # die Bewegungsrichtung nur am Boden neu; in der Luft springt er bei
@@ -3265,8 +3283,6 @@ $patches = @(
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Doppelsprung (weitere Spruenge in der Luft)'
        En = 'Double jump (more jumps in the air)'
-       NoteDe = 'kann vom Server als Cheat erkannt werden, Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'may be detected as cheating by the server, exe grows - ban risk'
        PromptDe = 'Anzahl zusaetzlicher Spruenge in der Luft, 1 bis 9 (1 = Doppelsprung)'
        PromptEn = 'Number of extra jumps in the air, 1 to 9 (1 = double jump)'
        Default = '1'
@@ -3277,7 +3293,7 @@ $patches = @(
         Add-DoubleJump ([int]$script:VALUES['doublejump'])
     }}
 
-    @{ Id = 'noammo'; Cat = 'gameplay'; On = $false
+    @{ Id = 'noammo'; Cat = 'gameplay'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (ported by St0ny)'
        De = 'Fernkampf ohne Munition'
        En = 'Ranged attacks without ammo'
@@ -3557,7 +3573,7 @@ $patches = @(
         Patch 0x336841 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'nofade'; Cat = 'graphics'; On = $false
+    @{ Id = 'nofade'; Cat = 'graphics'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod) (ported by St0ny)'
        De = 'Kein Ausblenden fuer NPCs mit Flag DO_NOT_FADE_IN'
        En = 'No fade-out for NPCs with flag DO_NOT_FADE_IN'
@@ -3568,12 +3584,10 @@ $patches = @(
         Add-NoFadeOutFlag
     }}
 
-    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true
+    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
        Author = 'St0ny (original by Badgermilk0)'
        De = 'HD Unit-Frame Portraits: Renderaufloesung 256 statt 64 Pixel'
        En = 'HD unit frame portraits: render resolution 256 instead of 64 pixels'
-       NoteDe = 'Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'exe grows - ban risk'
        Code = {
         # Haengt die .hdp-Sektion an und biegt den Model-Render-Pfad auf 256px um.
         # Erzeugt keine neuen Portraits: Die Unit-Frames zeigen schon im Original
@@ -3582,12 +3596,10 @@ $patches = @(
         Add-HdPortraits 256
     }}
 
-    @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true
+    @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Icons im Text pixelgenau (scharf statt verschwommen) - ungetestet'
-       En = 'Pixel-exact icons in text (sharp instead of blurry) - untested'
-       NoteDe = 'Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'exe grows - ban risk'
+       De = 'Icons im Text pixelgenau (scharf statt verschwommen)'
+       En = 'Pixel-exact icons in text (sharp instead of blurry)'
        Code = {
         # Eigene Sektion (.isnap) hinter ParseEmbeddedTexture, siehe Add-IconPixelSnap.
         Add-IconPixelSnap
@@ -3617,7 +3629,7 @@ $patches = @(
         Patch 0x123676 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames')
+    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames'); PublicUntested = $true; GameUntested = $true
        Author = 'MacWarrior'
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'
@@ -3690,7 +3702,7 @@ $patches = @(
         Patch 0x606EE4 @(0x46, 0x6C, 0x61, 0x73, 0x68, 0x57, 0x69, 0x6E, 0x64, 0x6F, 0x77, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'charrandom'; Cat = 'ui'; On = $false
+    @{ Id = 'charrandom'; Cat = 'ui'; On = $false; PublicUntested = $true; GameUntested = $true
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Charaktererstellung: Aussehen nicht automatisch auswuerfeln'
        En = 'Character creation: do not randomize the appearance automatically'
@@ -3702,7 +3714,7 @@ $patches = @(
         Patch 0xE087B @(0xEB)
     }}
 
-    @{ Id = 'lootopen'; Cat = 'ui'; On = $false
+    @{ Id = 'lootopen'; Cat = 'ui'; On = $false; PublicUntested = $true
        Author = 'Hour of Twilight (ported by St0ny)'
        De = 'Lootfenster bleibt beim Laufen offen'
        En = 'Loot window stays open while moving'
@@ -3722,7 +3734,7 @@ $patches = @(
         Patch 0x32DFCA @(0xEB)   # VA 0x72EBCA
     }}
 
-    @{ Id = 'showlevel'; Cat = 'ui'; On = $false
+    @{ Id = 'showlevel'; Cat = 'ui'; On = $false; PublicUntested = $true
        Author = 'Hour of Twilight (ported by St0ny)'
        De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir'
        En = 'Real level instead of "??" for enemies 10+ levels above you'
@@ -3738,7 +3750,7 @@ $patches = @(
         Patch 0x58E3B9 @(0x90, 0x90)
     }}
 
-    @{ Id = 'showlevelboss'; Cat = 'ui'; On = $false; Needs = @('showlevel')
+    @{ Id = 'showlevelboss'; Cat = 'ui'; On = $false; Needs = @('showlevel'); PublicUntested = $true
        Author = 'St0ny'
        De = 'Echtes Level auch bei Bossen statt "??" (Erweiterung zu Nr. 72)'
        En = 'Real level for bosses too instead of "??" (extension to No. 72)'
@@ -3758,8 +3770,6 @@ $patches = @(
        Author = 'Hour of Twilight (ported by St0ny)'
        De = 'Aktionstasten gedrueckt halten zum Wiederholen'
        En = 'Hold action buttons to repeat'
-       NoteDe = 'kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'may be treated as automation (botting) by the server, exe grows - ban risk'
        Code = {
         # Eigene beschreibbare Sektion (.hrep) mit Hooks in ExecKey, UseAction
         # und OnWorldRender, siehe Add-HoldRepeat. Fest: 500 ms bis zur ersten
@@ -3810,12 +3820,12 @@ $patches = @(
         Patch 0x469183 @(0x83, 0xF8, 0x32, 0x7D, 0x03, 0x83, 0xC0, 0x01, 0x83, 0xF9, 0x32, 0xEB, 0x31)
     }}
 
-    @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true
+    @{ Id = 'camera'; Cat = 'window'; On = $false; GrowsExe = $true; PublicUntested = $true
        Author = 'Stormhand (fixed by St0ny)'
        De = 'CameraReforged [BETA]: Kamerahoehe und Zoom-Grenzen'
        En = 'CameraReforged [BETA]: camera height and zoom limits'
-       NoteDe = 'Schulterversatz noch ohne Wirkung; Exe wird groesser - Bann-Gefahr'
-       NoteEn = 'shoulder offset has no effect yet; exe grows - ban risk'
+       NoteDe = 'Schulterversatz noch ohne Wirkung'
+       NoteEn = 'shoulder offset has no effect yet'
        Code = {
         # BETA - funktioniert noch nicht zu 100 Prozent, hier fliesst noch Arbeit rein.
         #
@@ -3889,7 +3899,7 @@ $patches = @(
 
     # --- Client-Infos ---
 
-    @{ Id = 'clientversion'; Cat = 'client'; On = $false
+    @{ Id = 'clientversion'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior'
        De = 'Client-Version aendern (Original 3.3.5)'
        En = 'Change client version (original 3.3.5)'
@@ -3905,7 +3915,7 @@ $patches = @(
         Set-ClientVersion $script:VALUES['clientversion']
     }}
 
-    @{ Id = 'clientbuild'; Cat = 'client'; On = $false
+    @{ Id = 'clientbuild'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior'
        De = 'Build-Nummer aendern (Original 12340)'
        En = 'Change build number (original 12340)'
@@ -3920,7 +3930,7 @@ $patches = @(
         Set-ClientBuild $script:VALUES['clientbuild']
     }}
 
-    @{ Id = 'clienttitle'; Cat = 'client'; On = $false
+    @{ Id = 'clienttitle'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'MacWarrior (fixed by St0ny)'
        De = 'Programmtitel aendern (Dateieigenschaften und Fenstertitel)'
        En = 'Change program title (file properties and window title)'
@@ -3936,7 +3946,7 @@ $patches = @(
         Set-ClientTitle $script:VALUES['clienttitle']
     }}
 
-    @{ Id = 'clientdate'; Cat = 'client'; On = $false
+    @{ Id = 'clientdate'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'St0ny (original by MacWarrior)'
        De = 'Build-Datum aendern (Original Jun 24 2010)'
        En = 'Change build date (original Jun 24 2010)'
@@ -3954,7 +3964,7 @@ $patches = @(
         Set-ClientDate $script:VALUES['clientdate']
     }}
 
-    @{ Id = 'clienticon'; Cat = 'client'; On = $false
+    @{ Id = 'clienticon'; Cat = 'client'; On = $false; BanRisk = $true
        Author = 'St0ny (original by MacWarrior)'
        De = 'Programm-Icon aendern (Symbol der Wow.exe)'
        En = 'Change program icon (icon of Wow.exe)'
@@ -4536,7 +4546,7 @@ function Get-PatchById([string]$id) {
 # Anzeigename auch fuer Ids, die es in dieser Version nicht mehr gibt.
 function Get-NameById([string]$id) {
     $q = Get-PatchById $id
-    if ($q) { return PatchName $q }
+    if ($q) { return PatchName $q -NoTags }
     return $id
 }
 
@@ -4784,6 +4794,7 @@ Say (T 'StartWarn2') 'Yellow'
 Say (T 'StartWarn3') 'Yellow'
 Say (T 'StartWarn4') 'Yellow'
 Say (T 'StartWarn5') 'Yellow'
+Say (T 'StartWarn6') 'Yellow'
 Write-Host ''
 Say (T 'Thanks') 'Magenta'
 Write-Host ''
@@ -5044,19 +5055,12 @@ foreach ($p in $chosen) {
         foreach ($m in $both) { Say "  - $m" 'Yellow' }
     }
 }
-foreach ($p in $chosen) {
-    if ($p.DllHint) {
-        Write-Host ''
-        Say (T 'HintHead' (PatchRef $p)) 'Yellow'
-        Say (T 'DllHint' $p.DllHint) 'Yellow'
-    }
-}
 $cheat = @()
 foreach ($p in $chosen) { if ($p.BanRisk) { $cheat += PatchRef $p } }
 if ($cheat.Count -gt 0) {
     Write-Host ''
-    Say (T 'CheatHead') 'Yellow'
-    foreach ($m in $cheat) { Say "  - $m" 'Yellow' }
+    Say (T 'CheatHead') 'Red'
+    foreach ($m in $cheat) { Say "  - $m" 'Red' }
     Say (T 'CheatBan') 'Red'
 }
 $grow = @()
@@ -5066,6 +5070,21 @@ if ($grow.Count -gt 0) {
     Say (T 'GrowHead') 'Yellow'
     foreach ($m in $grow) { Say "  - $m" 'Yellow' }
     Say (T 'GrowBan') 'Red'
+}
+$public = @()
+foreach ($p in $chosen) { if ($p.PublicUntested) { $public += PatchRef $p } }
+if ($public.Count -gt 0) {
+    Write-Host ''
+    Say (T 'PublicHead') 'Yellow'
+    foreach ($m in $public) { Say "  - $m" 'Yellow' }
+    Say (T 'PublicBan') 'Yellow'
+}
+$untested = @()
+foreach ($p in $chosen) { if ($p.GameUntested) { $untested += PatchRef $p } }
+if ($untested.Count -gt 0) {
+    Write-Host ''
+    Say (T 'UntestedHead') 'Yellow'
+    foreach ($m in $untested) { Say "  - $m" 'Yellow' }
 }
 Write-Host ''
 
@@ -5135,7 +5154,7 @@ $cur = 0
 try {
     foreach ($p in $chosen) {
         $cur++
-        Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p)"
+        Say "[+] $(([string]$cur).PadLeft($width))/$total - $(PatchName $p -NoTags)"
         & $p.Code
     }
     if ($total -gt 0) { Add-Watermark }
