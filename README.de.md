@@ -273,26 +273,39 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 <details>
 <summary><b>Übersicht aller Patches mit Autor und Preset-Zuordnung anzeigen</b></summary>
 
+#### System & Leistung
+
 | Nr. | Patch | Autor | Reforged | Billy | St0ny |
 |----:|-------|-------|:--------:|:-----:|:-----:|
-|    | **System & Leistung** |  |  |  |  |
 | [1](PATCHES.md#patch-laa) | 4GB-Patch (Large Address Aware) | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.md#patch-cache) | CACHE-Ordner-Erstellung deaktivieren | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.md#patch-itemcache) | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ | ✅ |
 | [4](PATCHES.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) | St0ny | – | – | ✅ |
-|    | **Sicherheit & Datenschutz** |  |  |  |  |
+
+#### Sicherheit & Datenschutz
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [6](PATCHES.md#patch-rce) | Remote Code Execution Exploit Fix *(auf öffentlichen Servern über Warden erkennbar – Bann-Gefahr)* | Robinsch | – | – | ✅ |
 | [7](PATCHES.md#patch-wardenoff) | Warden komplett abschalten, RCE-Fix *(Kick-Gefahr bei aktivem Warden, auf öffentlichen Servern Bann-Gefahr)* | Robinsch | – | – | – |
 | [8](PATCHES.md#patch-scandll) | Scan.dll deaktivieren | Alastor StrixEfuartus | – | – | ✅ |
 | [9](PATCHES.md#patch-noserverpatch) | Client-Patches vom Server verbieten | Kebabstorm | – | – | ✅ |
 | [10](PATCHES.md#patch-nosurvey) | Hardware-Umfragen vom Server verbieten | Kebabstorm | – | – | ✅ |
-|    | **Login & Verbindung** |  |  |  |  |
+
+#### Login & Verbindung
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [11](PATCHES.md#patch-skipbnet) | Battle.net-Login überspringen | Kebabstorm | – | – | ✅ |
 | [12](PATCHES.md#patch-skiprdp) | Remote-Desktop-Prüfung überspringen | Kebabstorm | – | – | ✅ |
 | [13](PATCHES.md#patch-nohttp) | HTTP-Anfragen an Battle.net deaktivieren | Kebabstorm | – | – | ✅ |
 | [14](PATCHES.md#patch-afk) | Idle-Kick nach Character-Autologin verhindern *(wird für Character-Autologin benötigt; AFK- und Idle-Timer bleiben aktiv, [Discord](https://discord.com/channels/858041817043042364/1515439916878663701))* | St0ny | – | – | ✅ |
-|    | **Modding: Interface, MPQs & Addons** |  |  |  |  |
+
+#### Modding: Interface, MPQs & Addons
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [15](PATCHES.md#patch-glue) | Custom Glue-XML erlauben | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | – | ✅ | ✅ |
 | [16](PATCHES.md#patch-mpqsig) | Falsch/Nicht signierte MPQs zulassen | Alastor StrixEfuartus | – | – | ✅ |
 | [17](PATCHES.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben |  | – | ✅ | ✅ |
@@ -301,10 +314,18 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [20](PATCHES.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben *(kann als Botting gewertet werden – Bann-Gefahr)* | St0ny | – | – | – |
 | [21](PATCHES.md#patch-keyprop) | Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown) | Alyst3r (0x539wowmod) | – | – | – |
 | [22](PATCHES.md#patch-globalsv) | Addon-Daten aller Accounts zusammenlegen (SavedVariables) *(gemeinsamer Ordner `WTF\Account\global`)* | St0ny (original by boredatom) | – | – | – |
-|    | **DLL-Loader** |  |  |  |  |
+
+#### DLL-Loader
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [23](PATCHES.md#patch-awesome) | AwesomeWotlkLib.dll Unterstützung aktivieren *(benötigt [awesome_wotlk](https://github.com/noname08662/awesome_wotlk))* | FrostAtom | – | ✅ | ✅ |
 | [24](PATCHES.md#patch-voicedll) | voice.dll beim Start laden (mod-voicechat) [ALPHA] *(Modul noch unfertig, [mod-voicechat](https://github.com/Raz0r1337/mod-voicechat))* | St0ny | – | – | – |
-|    | **Gameplay-Fixes** |  |  |  |  |
+
+#### Gameplay-Fixes
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [25](PATCHES.md#patch-areatrigger) | Area-Trigger-Timer genauer (50 ms statt 100 ms) | Robinsch | – | ✅ | ✅ |
 | [26](PATCHES.md#patch-swing) | Nahkampf-Schwung bei Rechtsklick entfernt | Robinsch | – | ✅ | ✅ |
 | [27](PATCHES.md#patch-npcanim) | NPC-Angriffsanimation beim Drehen unterdrückt | Robinsch (fixed by St0ny) | – | ✅ | ✅ |
@@ -326,7 +347,11 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [43](PATCHES.md#patch-airlateral) | Im Sprung seitwärts steuern *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [44](PATCHES.md#patch-airturn) | Im Sprung drehen ändert die Flugrichtung *(kann vom Server als Cheat erkannt werden – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
 | [45](PATCHES.md#patch-doublejump) | Doppelsprung (weitere Sprünge in der Luft) *(fragt den Wert ab, kann vom Server als Cheat erkannt werden, Exe wird größer – Bann-Gefahr)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | ✅ |
-|    | **Grafik & Sichtweite** |  |  |  |  |
+
+#### Grafik & Sichtweite
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [46](PATCHES.md#patch-farclip) | CVar farclip unlock (max 10000) | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [47](PATCHES.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | St0ny | – | ✅ | ✅ |
 | [48](PATCHES.md#patch-envdetail) | CVar environmentDetail unlock (kein Limit statt 1.5) | St0ny | – | ✅ | ✅ |
@@ -339,22 +364,38 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [55](PATCHES.md#patch-notransparency) | Keine Transparenz beim Heranzoomen | Alastor StrixEfuartus | – | ✅ | ✅ |
 | [56](PATCHES.md#patch-nofade) | Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN *(Server muss das Flag setzen)* | Alyst3r (0x539wowmod) (ported by St0ny) | – | – | – |
 | [57](PATCHES.md#patch-hdportraits) | HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel *(Exe wird größer – Bann-Gefahr)* | St0ny (original by Badgermilk0) | – | – | ✅ |
-|    | **Interface & Komfort** |  |  |  |  |
+
+#### Interface & Komfort
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [58](PATCHES.md#patch-tracker) | Quest-Tracker automatisch sortieren |  | – | – | ✅ |
 | [59](PATCHES.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv |  | – | – | ✅ |
 | [60](PATCHES.md#patch-castbars) | Cast Bars auf allen Frames | Kebabstorm | – | ✅ | ✅ |
 | [61](PATCHES.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | MacWarrior | – | – | ✅ |
 | [62](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [63](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – | – |
-|    | **Fenster, Maus & Kamera** |  |  |  |  |
+
+#### Fenster, Maus & Kamera
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [64](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 65)* | St0ny | – | – | ✅ |
 | [65](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 64)* | St0ny | – | – | ✅ |
 | [66](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
 | [67](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
 | [68](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |
-|    | **Sound** |  |  |  |  |
+
+#### Sound
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [69](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – | ✅ |
-|    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |  |
+
+#### Client-Infos: Version, Build, Titel, Datum, Icon
+
+| Nr. | Patch | Autor | Reforged | Billy | St0ny |
+|----:|-------|-------|:--------:|:-----:|:-----:|
 | [70](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
 | [71](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
 | [72](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
