@@ -38,7 +38,7 @@ Entfernt die 30-Sekunden-Verzögerung beim Aktualisieren des Item-Caches.
 Änderungen an Items werden sofort sichtbar.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes)** *(Nr. 4, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**WorldFrame-Absturzfix (ungültige Dreiecks-Indizes)** *(Nr. 4, Autor: Alyst3r (0x539wowmod) (fixed by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -114,7 +114,7 @@ sind damit alle 15 Datenbank-Abfragen des Clients ungedrosselt.
 > testen.
 
 <a id="patch-mirrorfix"></a>
-**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -133,7 +133,7 @@ Original-Funktion frei. Der kleine Zusatzcode (29 Byte) liegt in einer
 ungenutzten Funktion der Exe – die Dateigröße ändert sich nicht.
 
 <a id="patch-wmocube"></a>
-**Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134** *(Nr. 8, Autor: Alyst3r (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134** *(Nr. 8, Autor: Alyst3r (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -152,7 +152,7 @@ der DLL steckt. Die Änderung passt in die Original-Funktion, die Dateigröße
 > fehlt, ist noch nicht getestet.
 
 <a id="patch-glyphfix"></a>
-**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
+**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -365,7 +365,7 @@ Patcher weist dann nur darauf hin.
 > das als Botting werten – das kann zu einem Bann führen.
 
 <a id="patch-keyprop"></a>
-**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 25, Autor: Alyst3r (0x539wowmod))* 🔴 **[Bann-Gefahr]** 🟡 **[im Spiel ungetestet]**
+**Alle Tastatur-Ereignisse an Addons weiterreichen (OnKeyDown)** *(Nr. 25, Autor: Alyst3r (0x539wowmod))* 🔴 **[Bann-Gefahr]** 🟠 **[im Spiel ungetestet]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -382,7 +382,7 @@ Addons alle Tastendrücke mitlesen, ohne die normale Steuerung zu blockieren.
 > damit zusätzlich die belegte Aktion aus.
 
 <a id="patch-globalsv"></a>
-**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 26, Autor: St0ny (original by boredatom))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Addon-Daten aller Accounts zusammenlegen (SavedVariables)** *(Nr. 26, Autor: St0ny (original by boredatom))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -479,7 +479,7 @@ Die Dateigröße ändert sich nicht.
 > festem Datum und wöchentliche Feiertage aus dem Kalender verschwinden.
 
 <a id="patch-voicedll"></a>
-**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 29, Autor: St0ny)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**voice.dll beim Start laden (mod-voicechat) [ALPHA]** *(Nr. 29, Autor: St0ny)* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -660,7 +660,7 @@ Interface-Anpassungen (Glue-XML) sind nötig, damit der
 Charakterauswahl-Bildschirm mehr als 10 Slots anzeigt.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(Nr. 44, Autor: Kebabstorm (fixed by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Custom Item Fix (BETA) v2** *(Nr. 44, Autor: Kebabstorm (fixed by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -779,7 +779,7 @@ den beiden vorigen Patches.
 > kann zu einem Bann führen.
 
 <a id="patch-doublejump"></a>
-**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 50, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]**
+**Doppelsprung (weitere Sprünge in der Luft)** *(Nr. 50, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟡 **[Exe wird größer]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -813,7 +813,7 @@ beschreibbar); die `Wow.exe` wird dadurch etwas größer.
 > kann zu einem Bann führen.**
 
 <a id="patch-noammo"></a>
-**Fernkampf ohne Munition** *(Nr. 51, Autor: Alyst3r (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Fernkampf ohne Munition** *(Nr. 51, Autor: Alyst3r (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1137,7 +1137,7 @@ Objekt, kann er beim Heranzoomen weiterhin durchsichtig werden (so auch im
 Original-Patch).
 
 <a id="patch-nofade"></a>
-**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 62, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Kein Ausblenden für NPCs mit Flag DO_NOT_FADE_IN** *(Nr. 62, Autor: Alyst3r (0x539wowmod) (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1158,7 +1158,7 @@ wie bisher.
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 <a id="patch-hdportraits"></a>
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1193,7 +1193,7 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > egal was in `portraitResolution` steht.
 
 <a id="patch-iconsnap"></a>
-**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟠 **[Exe wird größer]**
+**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1235,7 +1235,7 @@ Boss etc.), nicht nur auf Target und Focus, sowie auf allen
 Standard-Nameplates. Entspricht dem Verhalten ab Cataclysm.
 
 <a id="patch-emblems"></a>
-**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 68, Autor: MacWarrior)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert** *(Nr. 68, Autor: MacWarrior)* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1286,7 +1286,7 @@ das braucht zusätzlich `IsWindowFocused()` aus der `AwesomeWotlkLib.dll`
 (Nr. 27).
 
 <a id="patch-charrandom"></a>
-**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 70, Autor: Alyst3r (0x539wowmod))* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 70, Autor: Alyst3r (0x539wowmod))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1299,7 +1299,7 @@ nicht mehr automatisch aus, man startet mit dem Standard-Aussehen. Der
 Zufall-Knopf funktioniert weiter – er nutzt im Client einen eigenen Weg.
 
 <a id="patch-lootopen"></a>
-**Lootfenster bleibt beim Laufen offen** *(Nr. 71, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
+**Lootfenster bleibt beim Laufen offen** *(Nr. 71, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1310,7 +1310,7 @@ Bewegungs-Handlern, die das Fenster schließen, werden übersprungen (je ein
 Byte).
 
 <a id="patch-showlevel"></a>
-**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir** *(Nr. 72, Autor: tb (ported by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]**
+**Echtes Level statt „??“ bei Gegnern ab 10 Level über dir** *(Nr. 72, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1322,7 +1322,7 @@ echte Level. Bosse zeigen weiterhin „??“ – diese Prüfung bleibt erhalten,
 nimmt Nr. 73 heraus.
 
 <a id="patch-showlevelboss"></a>
-**Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72)** *(Nr. 73, Autor: St0ny)* 🟡 **[auf öffentlichen Servern ungetestet]**
+**Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72)** *(Nr. 73, Autor: St0ny)* 🟠 **[auf öffentlichen Servern ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1340,7 +1340,7 @@ steht dort das Level, das der Server für den Boss schickt. Die Beschriftung
 > Nr. 72 einspielen; der Patcher weist darauf hin, wenn Nr. 72 fehlt.
 
 <a id="patch-holdrepeat"></a>
-**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: tb (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟠 **[Exe wird größer]**
+**Aktionstasten gedrückt halten zum Wiederholen** *(Nr. 74, Autor: tb (ported by St0ny))* 🔴 **[Bann-Gefahr]** 🟡 **[Exe wird größer]**
 
 > [!CAUTION]
 > **Bann-Gefahr** – kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben.
@@ -1372,7 +1372,7 @@ werden.
 > Patch eine Sektion an – die `Wow.exe` wird größer (Bann-Gefahr).
 
 <a id="patch-bubblerange"></a>
-**Sprechblasen-Reichweite erhöhen (Original 25 Meter)** *(Nr. 75, Autor: St0ny)* 🟡 **[auf öffentlichen Servern und im Spiel ungetestet]**
+**Sprechblasen-Reichweite erhöhen (Original 25 Meter)** *(Nr. 75, Autor: St0ny)* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
@@ -1449,7 +1449,7 @@ hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 80, Autor: Stormhand (fixed by St0ny))* 🟡 **[auf öffentlichen Servern ungetestet]** 🟠 **[Exe wird größer]**
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 80, Autor: Stormhand (fixed by St0ny))* 🟠 **[auf öffentlichen Servern ungetestet]** 🟡 **[Exe wird größer]**
 
 > [!WARNING]
 > **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.

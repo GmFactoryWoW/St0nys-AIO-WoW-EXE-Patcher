@@ -38,7 +38,7 @@ Removes the 30-second delay when refreshing the item cache. Item changes
 become visible immediately.
 
 <a id="patch-worldcrash"></a>
-**WorldFrame crash fix (invalid triangle indices)** *(No. 4, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🟡 **[untested on public servers and in game]**
+**WorldFrame crash fix (invalid triangle indices)** *(No. 4, Author: Alyst3r (0x539wowmod) (fixed by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -112,7 +112,7 @@ unthrottled.
 > protection could object – test it first on public servers.
 
 <a id="patch-mirrorfix"></a>
-**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -131,7 +131,7 @@ The small extra code (29 bytes) sits in an unused function of the exe – the
 file size does not change.
 
 <a id="patch-wmocube"></a>
-**Missing WMO file: error cube instead of ERROR #134** *(No. 8, Author: Alyst3r (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+**Missing WMO file: error cube instead of ERROR #134** *(No. 8, Author: Alyst3r (ported by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -150,7 +150,7 @@ not change.
 > not been tested yet.
 
 <a id="patch-glyphfix"></a>
-**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
+**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -358,7 +358,7 @@ out.
 > it as botting – this can lead to a ban.
 
 <a id="patch-keyprop"></a>
-**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk]** 🟡 **[untested in game]**
+**Pass all keyboard events on to addons (OnKeyDown)** *(No. 25, Author: Alyst3r (0x539wowmod))* 🔴 **[ban risk]** 🟠 **[untested in game]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -375,7 +375,7 @@ all key presses without blocking the normal controls.
 > bound action.
 
 <a id="patch-globalsv"></a>
-**Merge addon data of all accounts (SavedVariables)** *(No. 26, Author: St0ny (original by boredatom))* 🟡 **[untested on public servers and in game]**
+**Merge addon data of all accounts (SavedVariables)** *(No. 26, Author: St0ny (original by boredatom))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -469,7 +469,7 @@ the DLL is missing, WoW simply starts as usual. The file size does not change.
 > date and weekly holidays disappear from the calendar.
 
 <a id="patch-voicedll"></a>
-**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)* 🟡 **[untested on public servers and in game]**
+**Load voice.dll at startup (mod-voicechat) [ALPHA]** *(No. 29, Author: St0ny)* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -644,7 +644,7 @@ has to support this as well. Additional interface changes (GlueXML) are
 required for the character selection screen to show more than 10 slots.
 
 <a id="patch-customitem"></a>
-**Custom Item Fix (BETA) v2** *(No. 44, Author: Kebabstorm (fixed by St0ny))* 🟡 **[untested on public servers and in game]**
+**Custom Item Fix (BETA) v2** *(No. 44, Author: Kebabstorm (fixed by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -761,7 +761,7 @@ two previous patches.
 > lead to a ban.
 
 <a id="patch-doublejump"></a>
-**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]** 🟠 **[exe grows]**
+**Double jump (more jumps in the air)** *(No. 50, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🔴 **[ban risk]** 🟡 **[exe grows]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -793,7 +793,7 @@ writable); this makes `Wow.exe` slightly larger.
 > to a ban.**
 
 <a id="patch-noammo"></a>
-**Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+**Ranged attacks without ammo** *(No. 51, Author: Alyst3r (ported by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1105,7 +1105,7 @@ the character sits in a vehicle or is attached to another object, it can still
 become transparent when zooming in (same as in the original patch).
 
 <a id="patch-nofade"></a>
-**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 62, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🟡 **[untested on public servers and in game]**
+**No fade-out for NPCs with flag DO_NOT_FADE_IN** *(No. 62, Author: Alyst3r (0x539wowmod) (ported by St0ny))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1126,7 +1126,7 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1160,7 +1160,7 @@ otherwise read past the source.
 > exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 <a id="patch-iconsnap"></a>
-**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟡 **[untested on public servers and in game]** 🟠 **[exe grows]**
+**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1201,7 +1201,7 @@ and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
 <a id="patch-emblems"></a>
-**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)* 🟡 **[untested on public servers and in game]**
+**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1252,7 +1252,7 @@ which additionally needs `IsWindowFocused()` from `AwesomeWotlkLib.dll`
 (No. 27).
 
 <a id="patch-charrandom"></a>
-**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))* 🟡 **[untested on public servers and in game]**
+**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1265,7 +1265,7 @@ etc. automatically; you start with the default appearance. The randomize button
 keeps working – it uses a separate path in the client.
 
 <a id="patch-lootopen"></a>
-**Loot window stays open while moving** *(No. 71, Author: tb (ported by St0ny))* 🟡 **[untested on public servers]**
+**Loot window stays open while moving** *(No. 71, Author: tb (ported by St0ny))* 🟠 **[untested on public servers]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1275,7 +1275,7 @@ With the patch it stays open. The ten places in the movement handlers that
 close the window are skipped (one byte each).
 
 <a id="patch-showlevel"></a>
-**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: tb (ported by St0ny))* 🟡 **[untested on public servers]**
+**Real level instead of "??" for enemies 10+ levels above you** *(No. 72, Author: tb (ported by St0ny))* 🟠 **[untested on public servers]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1286,7 +1286,7 @@ With the patch, tooltip, nameplate and `UnitLevel` show the real level. Bosses
 still show "??" – that check is kept; No. 73 removes it.
 
 <a id="patch-showlevelboss"></a>
-**Real level for bosses too instead of "??" (extension to No. 72)** *(No. 73, Author: St0ny)* 🟡 **[untested on public servers]**
+**Real level for bosses too instead of "??" (extension to No. 72)** *(No. 73, Author: St0ny)* 🟠 **[untested on public servers]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1304,7 +1304,7 @@ nameplate stay.
 > patcher points it out if No. 72 is missing.
 
 <a id="patch-holdrepeat"></a>
-**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk]** 🟠 **[exe grows]**
+**Hold action buttons to repeat** *(No. 74, Author: tb (ported by St0ny))* 🔴 **[ban risk]** 🟡 **[exe grows]**
 
 > [!CAUTION]
 > **Ban risk** – can lead to a ban on many servers. Only use it on servers that allow it.
@@ -1333,7 +1333,7 @@ their own (`.hrep`). Up to 8 keys can be held at the same time.
 > appends a section – `Wow.exe` gets larger (ban risk).
 
 <a id="patch-bubblerange"></a>
-**Increase the chat bubble range (original 25 yards)** *(No. 75, Author: St0ny)* 🟡 **[untested on public servers and in game]**
+**Increase the chat bubble range (original 25 yards)** *(No. 75, Author: St0ny)* 🟠 **[untested on public servers and in game]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
@@ -1406,7 +1406,7 @@ A larger patch (4 parts) that fixes problems with mice using a high polling
 rate. Prevents cursor flicker and uncontrolled camera movement.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: camera height and zoom limits** *(No. 80, Author: Stormhand (fixed by St0ny))* 🟡 **[untested on public servers]** 🟠 **[exe grows]**
+**CameraReforged [BETA]: camera height and zoom limits** *(No. 80, Author: Stormhand (fixed by St0ny))* 🟠 **[untested on public servers]** 🟡 **[exe grows]**
 
 > [!WARNING]
 > **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
