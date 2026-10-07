@@ -297,7 +297,7 @@ Click the number of a patch to jump to its description.
 | [1](PATCHES.en.md#patch-laa) | 4GB patch (Large Address Aware) 🟢 **[safe]** | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.en.md#patch-cache) | Disable CACHE folder creation 🟢 **[safe]** | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately 🟢 **[safe]** | Robinsch | ✅ | ✅ | ✅ |
-| [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) 🟠 **[untested on public servers and in game]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
+| [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) 🟠 **[untested on public servers]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) 🟢 **[safe]** | St0ny | ✅ | – | ✅ |
 | [6](PATCHES.en.md#patch-nothrottle) | Do not throttle item and player name queries 🟢 **[safe]** | tb (ported by St0ny) | – | – | – |
 | [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) 🟢 **[safe]** | tb (ported by St0ny) | ✅ | – | – |
@@ -461,7 +461,7 @@ clicking the number of a patch takes you straight to its description.
     you kicked or banned: No. 4, 26, 29, 44, 51, 62, 68, 71–73 and 80 (red
     warning).
   - 🟠 **untested in game** – the function has not been checked in game yet,
-    possibly buggy: No. 4, 25, 26, 29, 44, 51, 62 and 68 (red warning).
+    possibly buggy: No. 25, 26, 29, 44, 51, 62 and 68 (red warning).
   - 🟡 **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
     63, 64, 74 and 80. This does not mean a certain ban, but it is a risk: some
     servers check the file size (yellow note). All other patches do not change

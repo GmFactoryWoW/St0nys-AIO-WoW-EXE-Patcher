@@ -310,7 +310,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [1](PATCHES.de.md#patch-laa) | 4GB-Patch (Large Address Aware) 🟢 **[sicher]** | Alastor StrixEfuartus / Kebabstorm / Robinsch | ✅ | ✅ | ✅ |
 | [2](PATCHES.de.md#patch-cache) | CACHE-Ordner-Erstellung deaktivieren 🟢 **[sicher]** | Alastor StrixEfuartus / Kebabstorm | – | – | – |
 | [3](PATCHES.de.md#patch-itemcache) | Item-Cache sofort aktualisieren 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [4](PATCHES.de.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
+| [4](PATCHES.de.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) 🟠 **[auf öffentlichen Servern ungetestet]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.de.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) 🟢 **[sicher]** | St0ny | ✅ | – | ✅ |
 | [6](PATCHES.de.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln 🟢 **[sicher]** | tb (ported by St0ny) | – | – | – |
 | [7](PATCHES.de.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) 🟢 **[sicher]** | tb (ported by St0ny) | ✅ | – | – |
@@ -474,7 +474,7 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
     kann zu Kick/Bann führen: Nr. 4, 26, 29, 44, 51, 62, 68, 71–73 und 80 (rote
     Warnung).
   - 🟠 **im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
-    möglicherweise verbuggt: Nr. 4, 25, 26, 29, 44, 51, 62 und 68 (rote Warnung).
+    möglicherweise verbuggt: Nr. 25, 26, 29, 44, 51, 62 und 68 (rote Warnung).
   - 🟡 **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
     Nr. 9, 50, 63, 64, 74 und 80. Das ist keine sichere Bann-Gefahr,
     aber ein Risiko: Manche Server prüfen die Dateigröße (gelber Hinweis). Alle
