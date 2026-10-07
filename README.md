@@ -250,7 +250,7 @@ the user or because no more input is possible).
 | `apply_patches.ps1` | Patch engine: language selection, checks, selection menu, backup; reads the EXE once, patches in memory, writes it back once |
 | `README.md`         | This file |
 | `README.de.md`      | German documentation |
-| `PATCHES.md`        | Detailed patch descriptions in German |
+| `PATCHES.de.md`     | Detailed patch descriptions in German |
 | `PATCHES.en.md`     | Detailed descriptions of all patches |
 | `patcher_selection.ini` | Created on the first start (remembered language), stores the accepted selection and the entered values |
 | `patcher_state.ini` | Created when patching: hash of the patched `Wow.exe`, applied patches, values and original bytes – speeds up the next start, but is not strictly required |

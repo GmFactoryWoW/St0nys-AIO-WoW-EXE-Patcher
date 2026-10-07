@@ -1,6 +1,6 @@
 # Patch descriptions
 
-[🇩🇪 Deutsch](PATCHES.md) | 🇬🇧 English
+[🇩🇪 Deutsch](PATCHES.de.md) | 🇬🇧 English
 
 Detailed descriptions of all patches of the
 [St0nys-AIO-WoW-EXE-Patcher](README.md). The overview with authors and
@@ -134,10 +134,6 @@ CMap::SafeOpen() failed". With the patch it loads the error cube
 `Spells\ErrorCube.mdx` instead – as in WotLK-Extensions, where this is built
 into the DLL. The change fits into the original function, the file size does
 not change.
-
-> [!NOTE]
-> Whether the client copes with the cube everywhere a WMO file is missing has
-> not been tested yet.
 
 <a id="patch-glyphfix"></a>
 **Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟢 **[safe]** 🟡 **[exe grows]**
@@ -1309,7 +1305,7 @@ their own (`.hrep`). Up to 8 keys can be held at the same time.
 The client shows chat bubbles (say, party, yell, NPC say and NPC yell) only for
 speakers up to 25 yards away. If the server sends a yell from 100 yards, for
 example, it only appears in the chat. The patch raises this limit; the patcher
-asks for the range: 50, 100, 150, 200 (suggestion) or 0 = unlimited.
+asks for the range: 50 (suggestion), 100, 150, 200 or 0 = unlimited.
 
 The client compares the squared distance with the constant 625.0 (= 25²) in
 two places: when the message arrives (VA `0x7200CE`, otherwise no bubble is

@@ -3817,7 +3817,7 @@ $patches = @(
        En = 'Increase the chat bubble range (original 25 yards)'
        PromptDe = 'Reichweite in Metern: 50, 100, 150, 200 oder 0 = unbegrenzt'
        PromptEn = 'Range in yards: 50, 100, 150, 200 or 0 = unlimited'
-       Default = '200'
+       Default = '50'
        Check = { param($v) Test-BubbleRange $v }
        Decode = { Get-BubbleRangeFromExe }
        Code = {

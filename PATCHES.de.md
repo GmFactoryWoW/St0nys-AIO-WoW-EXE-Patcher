@@ -137,10 +137,6 @@ Fehlerwürfel `Spells\ErrorCube.mdx` – wie in WotLK-Extensions, wo das fest in
 der DLL steckt. Die Änderung passt in die Original-Funktion, die Dateigröße
 ändert sich nicht.
 
-> [!NOTE]
-> Ob der Client den Würfel an jeder Stelle verkraftet, an der eine WMO-Datei
-> fehlt, ist noch nicht getestet.
-
 <a id="patch-glyphfix"></a>
 **Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟢 **[sicher]** 🟡 **[Exe wird größer]**
 
@@ -1348,8 +1344,8 @@ werden.
 Der Client zeigt Sprechblasen (Sagen, Gruppe, Schreien, NPC-Sagen und
 NPC-Schreien) nur für Sprecher bis 25 Meter Entfernung. Schickt der Server
 zum Beispiel ein Schreien aus 100 Metern, steht es nur im Chat. Der Patch
-erhöht diese Grenze; der Patcher fragt die Reichweite ab: 50, 100, 150, 200
-(Vorschlag) oder 0 = unbegrenzt.
+erhöht diese Grenze; der Patcher fragt die Reichweite ab: 50 (Vorschlag), 100,
+150, 200 oder 0 = unbegrenzt.
 
 Der Client vergleicht das Quadrat des Abstands an zwei Stellen mit der
 Konstante 625.0 (= 25²): beim Eintreffen der Nachricht (VA `0x7200CE`, sonst
