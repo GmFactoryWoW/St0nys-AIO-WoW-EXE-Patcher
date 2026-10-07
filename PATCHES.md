@@ -114,12 +114,7 @@ sind damit alle 15 Datenbank-Abfragen des Clients ungedrosselt.
 > testen.
 
 <a id="patch-mirrorfix"></a>
-**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)** *(Nr. 7, Autor: tb (ported by St0ny))* 🟢 **[sicher]**
 
 Behebt einen Blizzard-Fehler: Bekommt eine Einheit, die das Aussehen eines
 Spielers kopiert (Spiegelbilder, auf manchen Servern auch Spieler-Kopien als
@@ -133,12 +128,7 @@ Original-Funktion frei. Der kleine Zusatzcode (29 Byte) liegt in einer
 ungenutzten Funktion der Exe – die Dateigröße ändert sich nicht.
 
 <a id="patch-wmocube"></a>
-**Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134** *(Nr. 8, Autor: Alyst3r (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134** *(Nr. 8, Autor: Alyst3r (ported by St0ny))* 🟢 **[sicher]**
 
 Fehlt eine WMO-Datei (große Weltobjekte wie Gebäude oder Dungeons, z. B. in
 eigenen MPQs), bricht der Client mit „ERROR #134 Fatal Condition:
@@ -152,12 +142,7 @@ der DLL steckt. Die Änderung passt in die Original-Funktion, die Dateigröße
 > fehlt, ist noch nicht getestet.
 
 <a id="patch-glyphfix"></a>
-**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)** *(Nr. 9, Autor: tb (ported by St0ny))* 🟢 **[sicher]** 🟡 **[Exe wird größer]**
 
 Behebt Blizzard-Fehler im Glyphen-Cache, der die gerenderten Schriftzeichen
 auf Textur-Seiten ablegt: Texte (vor allem Zahlen, Schaden und Chat) zeigen
@@ -1158,12 +1143,7 @@ wie bisher.
 > passen zusammen hinein, die Dateigröße ändert sich nicht.
 
 <a id="patch-hdportraits"></a>
-**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**HD Unit-Frame Portraits: Renderauflösung 256 statt 64 Pixel** *(Nr. 63, Autor: St0ny (original by Badgermilk0))* 🟢 **[sicher]** 🟡 **[Exe wird größer]**
 
 Die Unit-Frames (Spieler, Ziel, Gruppe, Bosse usw.) zeigen im Client schon im
 Original das 3D-Modell des jeweiligen Charakters. Der Patch erzeugt also
@@ -1193,12 +1173,7 @@ Kopierschleife sonst über die Quelle hinaus liest.
 > egal was in `portraitResolution` steht.
 
 <a id="patch-iconsnap"></a>
-**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]** 🟡 **[Exe wird größer]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Icons im Text pixelgenau (scharf statt verschwommen)** *(Nr. 64, Autor: tb (ported by St0ny))* 🟢 **[sicher]** 🟡 **[Exe wird größer]**
 
 Texte können Icons enthalten (`|T…|t`, z. B. Zielmarkierungen, Währungen oder
 Questsymbole in Chat, Tooltips und Addons). Ihre Größe und Lage rechnet der
@@ -1287,12 +1262,7 @@ das braucht zusätzlich `IsWindowFocused()` aus der `AwesomeWotlkLib.dll`
 (Nr. 27).
 
 <a id="patch-charrandom"></a>
-**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 70, Autor: Alyst3r (0x539wowmod))* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Charaktererstellung: Aussehen nicht automatisch auswürfeln** *(Nr. 70, Autor: Alyst3r (0x539wowmod))* 🟢 **[sicher]**
 
 Beim Öffnen der Charaktererstellung (Klick auf „Neuer Charakter“) und beim
 Wechsel von Volk oder Geschlecht würfelt der Client Gesicht, Haut, Frisur usw.
@@ -1373,12 +1343,7 @@ werden.
 > Patch eine Sektion an – die `Wow.exe` wird größer (Bann-Gefahr).
 
 <a id="patch-bubblerange"></a>
-**Sprechblasen-Reichweite erhöhen (Original 25 Meter)** *(Nr. 75, Autor: St0ny)* 🟠 **[auf öffentlichen Servern und im Spiel ungetestet]**
-
-> [!WARNING]
-> **Auf öffentlichen Servern ungetestet** – mögliche Bann-Gefahr. Vorsicht, kann zu Kick/Bann führen.
->
-> **Im Spiel ungetestet** – die Funktion ist im Spiel noch nicht geprüft, möglicherweise verbuggt.
+**Sprechblasen-Reichweite erhöhen (Original 25 Meter)** *(Nr. 75, Autor: St0ny)* 🟢 **[sicher]**
 
 Der Client zeigt Sprechblasen (Sagen, Gruppe, Schreien, NPC-Sagen und
 NPC-Schreien) nur für Sprecher bis 25 Meter Entfernung. Schickt der Server

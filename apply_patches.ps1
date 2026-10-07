@@ -2606,7 +2606,7 @@ $patches = @(
         Patch 0x2756DE @(0x4E)   # VA 0x6762DE, namecache.wdb
     }}
 
-    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'mirrorfix'; Cat = 'system'; On = $false
        Author = 'tb (ported by St0ny)'
        De = 'Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern)'
        En = 'Mirror Image crash fix (memory leak with mirror images)'
@@ -2631,7 +2631,7 @@ $patches = @(
         Patch 0x32F8CA @(0xE8, 0x41, 0xBA, 0x13, 0x00)
     }}
 
-    @{ Id = 'wmocube'; Cat = 'system'; On = $false; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'wmocube'; Cat = 'system'; On = $false
        Author = 'Alyst3r (ported by St0ny)'
        De = 'Fehlende WMO-Datei: Fehlerwuerfel statt ERROR #134'
        En = 'Missing WMO file: error cube instead of ERROR #134'
@@ -2645,7 +2645,7 @@ $patches = @(
         Patch 0x3BC8AF @(0x53, 0x68, 0x60, 0x4B, 0xA3, 0x00, 0xE8, 0xC6, 0x7A, 0xC6, 0xFF, 0x5F, 0x5E, 0x5B, 0x5D, 0xC3)
     }}
 
-    @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'glyphfix'; Cat = 'system'; On = $false; GrowsExe = $true
        Author = 'tb (ported by St0ny)'
        De = 'Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten)'
        En = 'Font glyph fix (wrong or garbled characters in text)'
@@ -3614,7 +3614,7 @@ $patches = @(
         Add-NoFadeOutFlag
     }}
 
-    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'hdportraits'; Cat = 'graphics'; On = $false; GrowsExe = $true
        Author = 'St0ny (original by Badgermilk0)'
        De = 'HD Unit-Frame Portraits: Renderaufloesung 256 statt 64 Pixel'
        En = 'HD unit frame portraits: render resolution 256 instead of 64 pixels'
@@ -3626,7 +3626,7 @@ $patches = @(
         Add-HdPortraits 256
     }}
 
-    @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'iconsnap'; Cat = 'graphics'; On = $false; GrowsExe = $true
        Author = 'tb (ported by St0ny)'
        De = 'Icons im Text pixelgenau (scharf statt verschwommen)'
        En = 'Pixel-exact icons in text (sharp instead of blurry)'
@@ -3732,7 +3732,7 @@ $patches = @(
         Patch 0x606EE4 @(0x46, 0x6C, 0x61, 0x73, 0x68, 0x57, 0x69, 0x6E, 0x64, 0x6F, 0x77, 0x00, 0x00, 0x00)
     }}
 
-    @{ Id = 'charrandom'; Cat = 'ui'; On = $false; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'charrandom'; Cat = 'ui'; On = $false
        Author = 'Alyst3r (0x539wowmod)'
        De = 'Charaktererstellung: Aussehen nicht automatisch auswuerfeln'
        En = 'Character creation: do not randomize the appearance automatically'
@@ -3811,7 +3811,7 @@ $patches = @(
 
     # --- Fenster, Maus & Kamera ---
 
-    @{ Id = 'bubblerange'; Cat = 'ui'; On = $false; PublicUntested = $true; GameUntested = $true
+    @{ Id = 'bubblerange'; Cat = 'ui'; On = $false
        Author = 'St0ny'
        De = 'Sprechblasen-Reichweite erhoehen (Original 25 Meter)'
        En = 'Increase the chat bubble range (original 25 yards)'
@@ -4033,10 +4033,19 @@ $patches = @(
 
 # Standard-Preset "Project Reforged" - das offizielle Preset des Projekts
 # Project Reforged (https://projectreforged.github.io/wotlk/), zusammengestellt
-# von Stormhand. Nur sichere Patches ohne Bann-Gefahr. Im Menue mit R, ueber
+# von Stormhand. Nur sichere Patches, alle von Stormhand mehrere Stunden auf
+# Warmane getestet (Nr. 9, 63 und 64 vergroessern die Wow.exe). Im Menue mit R, ueber
 # -Select reforged; gilt beim ersten Start und fuer neue Patches.
 $PRESET_REFORGED = @(
-    'laa', 'itemcache', 'windowfix', 'mouse'
+    'laa', 'itemcache', 'timer', 'mirrorfix', 'wmocube', 'glyphfix',
+    'scandll', 'noserverpatch', 'nosurvey', 'skipbnet', 'skiprdp', 'nohttp',
+    'glue', 'mpqsig', 'mpqnames', 'localdata', 'awesome',
+    'areatrigger', 'swing', 'npcanim', 'spellanim', 'ghostattack', 'naked',
+    'forcereaction', 'mail', 'deadchat', 'level101',
+    'farclip', 'horizon', 'envdetail', 'grounddist', 'sliders', 'goscale',
+    'occluder', 'bluemoon', 'notransparency', 'hdportraits', 'iconsnap',
+    'tracker', 'worldmap', 'castbars', 'charrandom', 'bubblerange',
+    'window', 'maximize', 'windowfix', 'mouse', 'sound'
 )
 
 # Preset "St0nys_Wow.exe" - Billys Patch-Set plus

@@ -112,12 +112,7 @@ unthrottled.
 > protection could object – test it first on public servers.
 
 <a id="patch-mirrorfix"></a>
-**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Mirror Image crash fix (memory leak with mirror images)** *(No. 7, Author: tb (ported by St0ny))* 🟢 **[safe]**
 
 Fixes a Blizzard bug: when a unit that copies a player's appearance (mirror
 images, on some servers also player copies as creatures) receives new
@@ -131,12 +126,7 @@ The small extra code (29 bytes) sits in an unused function of the exe – the
 file size does not change.
 
 <a id="patch-wmocube"></a>
-**Missing WMO file: error cube instead of ERROR #134** *(No. 8, Author: Alyst3r (ported by St0ny))* 🟠 **[untested on public servers and in game]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Missing WMO file: error cube instead of ERROR #134** *(No. 8, Author: Alyst3r (ported by St0ny))* 🟢 **[safe]**
 
 If a WMO file is missing (large world objects such as buildings or dungeons,
 e.g. in custom MPQs), the client aborts with "ERROR #134 Fatal Condition:
@@ -150,12 +140,7 @@ not change.
 > not been tested yet.
 
 <a id="patch-glyphfix"></a>
-**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Font glyph fix (wrong or garbled characters in text)** *(No. 9, Author: tb (ported by St0ny))* 🟢 **[safe]** 🟡 **[exe grows]**
 
 Fixes Blizzard bugs in the glyph cache, which stores the rendered font
 characters on texture pages: otherwise texts (especially numbers, damage and
@@ -1126,12 +1111,7 @@ before.
 > in there together, the file size does not change.
 
 <a id="patch-hdportraits"></a>
-**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**HD unit frame portraits: render resolution 256 instead of 64 pixels** *(No. 63, Author: St0ny (original by Badgermilk0))* 🟢 **[safe]** 🟡 **[exe grows]**
 
 The unit frames (player, target, party, bosses etc.) already show the 3D model
 of the respective character in the unmodified client. So the patch creates
@@ -1160,12 +1140,7 @@ otherwise read past the source.
 > exe patch (256) always wins, whatever `portraitResolution` is set to.
 
 <a id="patch-iconsnap"></a>
-**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟠 **[untested on public servers and in game]** 🟡 **[exe grows]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Pixel-exact icons in text (sharp instead of blurry)** *(No. 64, Author: tb (ported by St0ny))* 🟢 **[safe]** 🟡 **[exe grows]**
 
 Texts can contain icons (`|T…|t`, e.g. raid target markers, currencies or quest
 symbols in chat, tooltips and addons). The client computes their size and
@@ -1253,12 +1228,7 @@ which additionally needs `IsWindowFocused()` from `AwesomeWotlkLib.dll`
 (No. 27).
 
 <a id="patch-charrandom"></a>
-**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))* 🟠 **[untested on public servers and in game]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Character creation: do not randomize the appearance automatically** *(No. 70, Author: Alyst3r (0x539wowmod))* 🟢 **[safe]**
 
 When opening character creation (clicking "Create New Character") and when
 changing race or gender, the client no longer randomizes face, skin, hair style
@@ -1334,12 +1304,7 @@ their own (`.hrep`). Up to 8 keys can be held at the same time.
 > appends a section – `Wow.exe` gets larger (ban risk).
 
 <a id="patch-bubblerange"></a>
-**Increase the chat bubble range (original 25 yards)** *(No. 75, Author: St0ny)* 🟠 **[untested on public servers and in game]**
-
-> [!WARNING]
-> **Untested on public servers** – possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested in game** – the function has not been checked in game yet, possibly buggy.
+**Increase the chat bubble range (original 25 yards)** *(No. 75, Author: St0ny)* 🟢 **[safe]**
 
 The client shows chat bubbles (say, party, yell, NPC say and NPC yell) only for
 speakers up to 25 yards away. If the server sends a yell from 100 yards, for
