@@ -99,7 +99,8 @@ tooltips for a while, and in busy cities or large raids names briefly show
 "Unknown". The patch lifts these two limits (0 = unlimited, one byte each in the
 constructors of `itemcache` and `namecache`), so the information arrives right
 away. All other queries (creatures, quests, guilds …) are already unlimited in
-the original.
+the original – so with the patch all 15 database queries of the client are
+unthrottled.
 
 > [!NOTE]
 > The client sends more queries at once this way. Servers with flood

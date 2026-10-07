@@ -100,7 +100,8 @@ eine Weile „Lade Gegenstandsinformationen“ oder leere Tooltips, und in volle
 Städten oder großen Schlachtzügen zeigen Namen kurz „Unbekannt“. Der Patch hebt
 diese beiden Grenzen auf (0 = unbegrenzt, je ein Byte in den Konstruktoren von
 `itemcache` und `namecache`), die Infos kommen sofort. Alle anderen Abfragen
-(Kreaturen, Quests, Gilden …) sind schon im Original unbegrenzt.
+(Kreaturen, Quests, Gilden …) sind schon im Original unbegrenzt – mit dem Patch
+sind damit alle 15 Datenbank-Abfragen des Clients ungedrosselt.
 
 > [!NOTE]
 > Der Client schickt dadurch mehr Anfragen auf einmal. Server mit
