@@ -1213,10 +1213,26 @@ Byte).
 Ist ein feindliches Ziel 10 oder mehr Level über dir, zeigt der Client statt
 des Levels „??“ (bzw. einen Totenkopf auf der Namensplakette, `UnitLevel`
 liefert -1). Mit dem Patch zeigen Tooltip, Namensplakette und `UnitLevel` das
-echte Level. Bosse zeigen weiterhin „??“ – diese Prüfung bleibt erhalten.
+echte Level. Bosse zeigen weiterhin „??“ – diese Prüfung bleibt erhalten, sie
+nimmt Nr. 73 heraus.
+
+<a id="patch-showlevelboss"></a>
+**Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) – ungetestet** *(Nr. 73, Autor: St0ny)*
+
+Kreaturen, die als Boss markiert sind (Flag in den Kreaturdaten, z. B.
+Schlachtzug- und Dungeonbosse), zeigen im Original immer „??“ – im Tooltip,
+auf der Namensplakette (Totenkopf) und über `UnitLevel` (-1), egal wie hoch
+dein eigenes Level ist. Der Patch nimmt diese drei Boss-Prüfungen heraus, dann
+steht dort das Level, das der Server für den Boss schickt. Die Beschriftung
+„Boss“ im Tooltip und das Elite-Symbol der Namensplakette bleiben.
+
+> [!NOTE]
+> Ist ein Boss 10 oder mehr Level über dir, greift zusätzlich die
+> Level-Prüfung – deren „??“ entfernt Nr. 72. Für alle Bosse daher zusammen mit
+> Nr. 72 einspielen; der Patcher weist darauf hin, wenn Nr. 72 fehlt.
 
 <a id="patch-holdrepeat"></a>
-**Aktionstasten gedrückt halten zum Wiederholen – ungetestet** *(Nr. 73, Autor: Hour of Twilight (ported by St0ny))*
+**Aktionstasten gedrückt halten zum Wiederholen – ungetestet** *(Nr. 74, Autor: Hour of Twilight (ported by St0ny))*
 
 Hältst du die Taste einer Aktionsleisten-Belegung gedrückt (die Hauptleiste,
 `ACTIONBUTTON1`–`12`, mit Seiten-, Haltungs- und Gestaltleisten), löst der
@@ -1246,37 +1262,37 @@ werden.
 ## Fenster, Maus & Kamera
 
 <a id="patch-window"></a>
-**Fenstermodus als Standard setzen** *(Nr. 74, Autor: St0ny)*
+**Fenstermodus als Standard setzen** *(Nr. 75, Autor: St0ny)*
 
 Setzt das CVar `gxWindow` standardmäßig auf 1. Das Spiel startet im
 Fenstermodus statt im Vollbild.
 
 > [!TIP]
-> **Nr. 74 und Nr. 75 gehören zusammen:** Nr. 74 schaltet den Fenstermodus ein,
-> Nr. 75 maximiert das Fenster.
+> **Nr. 75 und Nr. 76 gehören zusammen:** Nr. 75 schaltet den Fenstermodus ein,
+> Nr. 76 maximiert das Fenster.
 > - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
 >   Bildschirm.
-> - **Nur Nr. 74:** WoW startet als kleines Fenster in der Mitte des Desktops.
-> - **Nur Nr. 75:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+> - **Nur Nr. 75:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 76:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-maximize"></a>
-**Fenstermodus maximiert als Standard setzen** *(Nr. 75, Autor: St0ny)*
+**Fenstermodus maximiert als Standard setzen** *(Nr. 76, Autor: St0ny)*
 
 Setzt das CVar `gxMaximize` standardmäßig auf 1. Das Fenster wird beim Start
 automatisch maximiert.
 
 > [!TIP]
-> **Nr. 74 und Nr. 75 gehören zusammen:** Nr. 74 schaltet den Fenstermodus ein,
-> Nr. 75 maximiert das Fenster.
+> **Nr. 75 und Nr. 76 gehören zusammen:** Nr. 75 schaltet den Fenstermodus ein,
+> Nr. 76 maximiert das Fenster.
 > - **Beide gewählt:** WoW startet als maximiertes Fenster über den ganzen
 >   Bildschirm.
-> - **Nur Nr. 74:** WoW startet als kleines Fenster in der Mitte des Desktops.
-> - **Nur Nr. 75:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
+> - **Nur Nr. 75:** WoW startet als kleines Fenster in der Mitte des Desktops.
+> - **Nur Nr. 76:** keine Wirkung, WoW startet im Vollbild. Die Option „Fenster
 >   maximieren“ ist zwar aktiv, aber ausgegraut.
 
 <a id="patch-windowfix"></a>
-**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 76, Autor: Robinsch)*
+**Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus** *(Nr. 77, Autor: Robinsch)*
 
 Wer im laufenden Spiel in den Fenstermodus wechselt, bekommt danach keinen
 schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
@@ -1284,14 +1300,14 @@ schwarzen Bildschirm mehr. Technisch nimmt der Callback des CVars
 damit das CVar `DesktopGamma` sind ohne Wirkung.
 
 <a id="patch-mouse"></a>
-**Mausflackern / Kamerasprünge Fix** *(Nr. 77, Autor: Robinsch)*
+**Mausflackern / Kamerasprünge Fix** *(Nr. 78, Autor: Robinsch)*
 
 Ein umfangreicher Patch (4 Teile), der Probleme mit Mäusen behebt, die eine
 hohe Abtastrate (Polling-Rate) verwenden. Verhindert Flackern des Mauszeigers
 und unkontrollierte Kamerabewegungen.
 
 <a id="patch-camera"></a>
-**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 78, Autor: Stormhand (fixed by St0ny))*
+**CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen** *(Nr. 79, Autor: Stormhand (fixed by St0ny))*
 
 Portierung von [CameraReforged](https://github.com/Zendevve/CameraReforged)
 von **Stormhand** in diesen Patcher, damit
@@ -1362,7 +1378,7 @@ R6002-Absturz zurück und überschreibt die Tabelle des Slider-Patches.
 ## Sound
 
 <a id="patch-sound"></a>
-**Sound-Einstellungen optimieren** *(Nr. 79, Autor: St0ny)*
+**Sound-Einstellungen optimieren** *(Nr. 80, Autor: St0ny)*
 
 Umfasst folgende Änderungen:
 
@@ -1391,7 +1407,7 @@ einer Meldung neu abgefragt, und alle Werte werden geprüft, bevor irgendetwas
 geschrieben wird. Die Werte merkt sich der Patcher in `patcher_selection.ini`
 (`value.<Id>=…`); mit `-Unattended` gelten die gemerkten Werte, ohne gemerkten
 Wert die Originalwerte – Ausnahmen: Build-Datum (aktueller Zeitpunkt) und Icon
-(Abbruch), siehe Nr. 83 und 84. Steckt ein Patch schon in der `Wow.exe`, ist
+(Abbruch), siehe Nr. 84 und 85. Steckt ein Patch schon in der `Wow.exe`, ist
 sein aktueller Wert der Vorschlag.
 Bei der Abfrage steht er auch hinter dem Patchnamen (`-> Vorschlag: …`, bei einem
 bereits eingespielten Patch `-> aktuell: …`).
@@ -1401,7 +1417,7 @@ bereits eingespielten Patch `-> aktuell: …`).
 > muss also zum Server passen.
 
 <a id="patch-clientversion"></a>
-**Client-Version ändern (Original 3.3.5)** *(Nr. 80, Autor: MacWarrior)*
+**Client-Version ändern (Original 3.3.5)** *(Nr. 81, Autor: MacWarrior)*
 
 Setzt eine neue Version im Format `x.y.z` (z. B. `3.3.6` oder `3.3.123`, höchstens
 7 Zeichen). Geändert werden die Version, die der Client im Spiel anzeigt, die
@@ -1411,7 +1427,7 @@ FileVersion-Text (`3, 3, 5, 12340`) wird zur reinen Version (`3.3.6`). Haupt-
 und Nebenversion müssen zusammen in das ProductVersion-Feld passen (z. B. `3.3`).
 
 <a id="patch-clientbuild"></a>
-**Build-Nummer ändern (Original 12340)** *(Nr. 81, Autor: MacWarrior)*
+**Build-Nummer ändern (Original 12340)** *(Nr. 82, Autor: MacWarrior)*
 
 Setzt eine neue Build-Nummer (6142 bis 65535, Original `12340`): die interne
 Build-Nummer, die sichtbare Build-Nummer und den vierten Teil der FileVersion
@@ -1440,7 +1456,7 @@ den Server.
 > offline.
 
 <a id="patch-clienttitle"></a>
-**Programmtitel ändern (Dateieigenschaften und Fenstertitel)** *(Nr. 82, Autor: MacWarrior (fixed by St0ny))*
+**Programmtitel ändern (Dateieigenschaften und Fenstertitel)** *(Nr. 83, Autor: MacWarrior (fixed by St0ny))*
 
 Setzt FileDescription, InternalName und ProductName der Versionsressource, also
 das, was Windows z. B. in den Dateieigenschaften und im Task-Manager anzeigt.
@@ -1458,7 +1474,7 @@ ab, damit er stehen bleibt.
 > Titel.
 
 <a id="patch-clientdate"></a>
-**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 83, Autor: St0ny (original by MacWarrior))*
+**Build-Datum ändern (Original Jun 24 2010)** *(Nr. 84, Autor: St0ny (original by MacWarrior))*
 
 Setzt das Build-Datum (Original `Jun 24 2010`) an allen drei Stellen in der EXE
 und das Jahr im Copyright-Vermerk, dazu die Uhrzeit. Die steht an zwei Stellen:
@@ -1478,7 +1494,7 @@ Patchens. Ist der Patch schon eingespielt, steht dort das aktuelle Datum samt
 Uhrzeit der `Wow.exe`.
 
 <a id="patch-clienticon"></a>
-**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 84, Autor: St0ny (original by MacWarrior))*
+**Programm-Icon ändern (Symbol der Wow.exe)** *(Nr. 85, Autor: St0ny (original by MacWarrior))*
 
 Tauscht das Icon aus, das Windows für die `Wow.exe` anzeigt (Explorer,
 Taskleiste, Verknüpfungen). Der Patcher fragt nach dem Pfad einer `.ico`-

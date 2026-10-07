@@ -354,22 +354,23 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [69](PATCHES.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | Alyst3r (0x539wowmod) | – | – | – |
 | [71](PATCHES.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir – ungetestet *(Bosse zeigen weiter „??“)* | Hour of Twilight (ported by St0ny) | – | – | – |
-| [73](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen – ungetestet *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [72](PATCHES.md#patch-showlevel) | Echtes Level statt „??“ bei Gegnern ab 10 Level über dir – ungetestet *(Bosse zeigen weiter „??“ – dafür Nr. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [73](PATCHES.md#patch-showlevelboss) | Echtes Level auch bei Bossen statt „??“ (Erweiterung zu Nr. 72) – ungetestet | St0ny | – | – | – |
+| [74](PATCHES.md#patch-holdrepeat) | Aktionstasten gedrückt halten zum Wiederholen – ungetestet *(kann vom Server als Automatisierung (Bot) gewertet werden, Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |
 |    | **Fenster, Maus & Kamera** |  |  |  |  |
-| [74](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 75)* | St0ny | – | – | ✅ |
-| [75](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 74)* | St0ny | – | – | ✅ |
-| [76](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
-| [77](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
-| [78](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |
+| [75](PATCHES.md#patch-window) | Fenstermodus als Standard setzen *(startet als kleines Fenster mitten auf dem Desktop – maximiert nur zusammen mit Nr. 76)* | St0ny | – | – | ✅ |
+| [76](PATCHES.md#patch-maximize) | Fenstermodus maximiert als Standard setzen *(wirkt nur zusammen mit Nr. 75)* | St0ny | – | – | ✅ |
+| [77](PATCHES.md#patch-windowfix) | Kein schwarzer Bildschirm beim Wechsel in den Fenstermodus | Robinsch | ✅ | ✅ | ✅ |
+| [78](PATCHES.md#patch-mouse) | Mausflackern / Kamerasprünge Fix | Robinsch | ✅ | ✅ | ✅ |
+| [79](PATCHES.md#patch-camera) | CameraReforged [BETA]: Kamerahöhe und Zoom-Grenzen *(Schulterversatz noch ohne Wirkung; Exe wird größer – Bann-Gefahr)* | Stormhand (fixed by St0ny) | – | – | – |
 |    | **Sound** |  |  |  |  |
-| [79](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – | ✅ |
+| [80](PATCHES.md#patch-sound) | Sound-Einstellungen optimieren *(benötigt [OpenAL](https://github.com/kcat/openal-soft), sonst wirken die Einstellungen nicht)* | St0ny | – | – | ✅ |
 |    | **Client-Infos: Version, Build, Titel, Datum, Icon** |  |  |  |  |
-| [80](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
-| [81](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
-| [82](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
-| [83](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
-| [84](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
+| [81](PATCHES.md#patch-clientversion) | Client-Version ändern (Original 3.3.5) *(fragt den Wert ab)* | MacWarrior | – | – | – |
+| [82](PATCHES.md#patch-clientbuild) | Build-Nummer ändern (Original 12340) *(fragt den Wert ab)* | MacWarrior | – | – | – |
+| [83](PATCHES.md#patch-clienttitle) | Programmtitel ändern (Dateieigenschaften und Fenstertitel) *(fragt den Wert ab)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [84](PATCHES.md#patch-clientdate) | Build-Datum ändern (Original Jun 24 2010) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
+| [85](PATCHES.md#patch-clienticon) | Programm-Icon ändern (Symbol der Wow.exe) *(fragt den Wert ab)* | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -394,21 +395,21 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   Bann führen. Erstens Patches, die Server mit Anti-Cheat als Cheat oder
   Botting werten können: LUA Unlock (Nr. 23 und 24), Steigwinkel (45),
   Sprunghöhe (46), die Sprungsteuerung (47–49) und der Doppelsprung (50) sowie
-  „Aktionstasten gedrückt halten“ (73). Zweitens Patches, die eine Sektion an
+  „Aktionstasten gedrückt halten“ (74). Zweitens Patches, die eine Sektion an
   die `Wow.exe` anhängen und die Datei damit größer machen: Nr. 9, 50, 63, 64,
-  73 und 78 – viele Server tolerieren eine veränderte Dateigröße nicht.
+  74 und 79 – viele Server tolerieren eine veränderte Dateigröße nicht.
   Drittens Patches, die in den Anti-Cheat Warden eingreifen: der RCE-Fix
-  (Nr. 10) und „Warden komplett abschalten“ (Nr. 11) – öffentliche Server können
-  das erkennen. Alle drei Gruppen sind in der Übersicht mit „Bann-Gefahr“
-  markiert, und der Patcher zeigt vor der Sicherheitsabfrage eine rote
-  Warnung. Alle anderen Patches ändern die Dateigröße nicht.
+  (Nr. 10) und „Warden komplett abschalten“ (Nr. 11) – öffentliche Server
+  können das erkennen. Alle drei Gruppen sind in der Übersicht mit
+  „Bann-Gefahr“ markiert, und der Patcher zeigt vor der Sicherheitsabfrage
+  eine rote Warnung. Alle anderen Patches ändern die Dateigröße nicht.
 - **Signatur:** Die originale `Wow.exe` ist von Blizzard digital signiert. Jeder
   Patch macht diese Signatur ungültig. Windows warnt deshalb wahrscheinlich
   beim Start vor einer nicht signierten, möglicherweise schädlichen App; mit
   „Weitere Informationen“ → „Trotzdem ausführen“ startet WoW ganz normal. Eine
   neue Signatur, der Windows vertraut, gibt es nur von Zertifizierungsstellen
   mit Identitätsprüfung – für eine veränderte Blizzard-Datei bekommt man sie
-  nicht. Die Patches, die eine Sektion anhängen (Nr. 9, 50, 63, 64, 73 und 78), entfernen
+  nicht. Die Patches, die eine Sektion anhängen (Nr. 9, 50, 63, 64, 74 und 79), entfernen
   zusätzlich den Verweis auf die Signatur im Header: Die neue Sektion liegt hinter der
   Signatur, und manche Werkzeuge würden die Datei sonst als beschädigt melden.
   Die Signatur-Bytes selbst bleiben unangetastet, die Rücknahme stellt das

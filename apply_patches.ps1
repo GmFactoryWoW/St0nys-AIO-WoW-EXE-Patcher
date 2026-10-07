@@ -3694,16 +3694,32 @@ $patches = @(
        Author = 'Hour of Twilight (ported by St0ny)'
        De = 'Echtes Level statt "??" bei Gegnern ab 10 Level ueber dir - ungetestet'
        En = 'Real level instead of "??" for enemies 10+ levels above you - untested'
-       NoteDe = 'Bosse zeigen weiter "??"'
-       NoteEn = 'bosses still show "??"'
+       NoteDe = 'Bosse zeigen weiter "??" - dafuer Nr. 73'
+       NoteEn = 'bosses still show "??" - see No. 73'
        Code = {
         # Lua UnitLevel (VA 0x60F9E0), Tooltip (VA 0x620EE0) und Namensplakette
         # (VA 0x98EF10) zeigen "??" (bzw. -1 / Totenkopf), wenn ein feindliches
         # Ziel 10 oder mehr Level ueber dir ist. Diese Pruefung ("jle") faellt
-        # weg; die Boss-Pruefung direkt dahinter bleibt.
+        # weg; die Boss-Pruefung direkt dahinter bleibt (die nimmt Nr. 73 raus).
         Patch 0x20EEB2 @(0x90, 0x90)
         Patch 0x220B66 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
         Patch 0x58E3B9 @(0x90, 0x90)
+    }}
+
+    @{ Id = 'showlevelboss'; Cat = 'ui'; On = $false; Needs = @('showlevel')
+       Author = 'St0ny'
+       De = 'Echtes Level auch bei Bossen statt "??" (Erweiterung zu Nr. 72) - ungetestet'
+       En = 'Real level for bosses too instead of "??" (extension to No. 72) - untested'
+       Code = {
+        # Ist eine Kreatur als Boss markiert (Flag 0x4 in den Kreatur-Typflags,
+        # Pruefung CGUnit_C::IsBossMob bei VA 0x715D70), zeigen UnitLevel,
+        # Tooltip und Namensplakette immer "??" bzw. -1 / Totenkopf. Diese drei
+        # Boss-Pruefungen fallen weg; die Beschriftung "Boss" im Tooltip und das
+        # Elite-Symbol der Namensplakette bleiben. Gegner 10+ Level ueber dir
+        # zeigen ihr Level erst zusammen mit Nr. 72.
+        Patch 0x20EEBD @(0xEB)                                 # VA 0x60FABD UnitLevel: je -> jmp (kein -1)
+        Patch 0x220B78 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90)   # VA 0x621778 Tooltip: jne "??" -> nop
+        Patch 0x58E358 @(0xEB)                                 # VA 0x98EF58 Namensplakette: je -> jmp (Level statt Totenkopf)
     }}
 
     @{ Id = 'holdrepeat'; Cat = 'ui'; On = $false; GrowsExe = $true; BanRisk = $true
@@ -3727,8 +3743,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus als Standard setzen'
        En = 'Windowed mode by default'
-       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 75'
-       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 75'
+       NoteDe = 'startet als kleines Fenster mitten auf dem Desktop - maximiert nur zusammen mit Nr. 76'
+       NoteEn = 'starts as a small window in the middle of the desktop - maximized only together with No. 76'
        Code = {
         Patch 0x369A7D @(0x64, 0x14, 0x9E)
     }}
@@ -3737,8 +3753,8 @@ $patches = @(
        Author = 'St0ny'
        De = 'Fenstermodus maximiert als Standard setzen'
        En = 'Maximized window by default'
-       NoteDe = 'wirkt nur zusammen mit Nr. 74'
-       NoteEn = 'only works together with No. 74'
+       NoteDe = 'wirkt nur zusammen mit Nr. 75'
+       NoteEn = 'only works together with No. 75'
        Code = {
         Patch 0x369AB2 @(0x64, 0x14, 0x9E)
     }}
@@ -4167,6 +4183,9 @@ lootopen;32DFCA;74;1
 showlevel;20EEB2;7E0B;1
 showlevel;220B66;0F8EDD000000;1
 showlevel;58E3B9;7E9F;1
+showlevelboss;20EEBD;74;1
+showlevelboss;220B78;0F85CB000000;1
+showlevelboss;58E358;74;1
 holdrepeat;116;0600;0
 holdrepeat;160;00D09F00;0
 holdrepeat;1A8;007C750098120000;0

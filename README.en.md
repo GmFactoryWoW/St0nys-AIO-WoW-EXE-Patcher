@@ -346,22 +346,23 @@ Click the number of a patch to jump to its description.
 | [69](PATCHES.en.md#patch-flash) | FlashWindow patch *(requires the [FlashWindow addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.en.md#patch-charrandom) | Character creation: do not randomize the appearance automatically | Alyst3r (0x539wowmod) | – | – | – |
 | [71](PATCHES.en.md#patch-lootopen) | Loot window stays open while moving – untested | Hour of Twilight (ported by St0ny) | – | – | – |
-| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you – untested *(bosses still show "??")* | Hour of Twilight (ported by St0ny) | – | – | – |
-| [73](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat – untested *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [72](PATCHES.en.md#patch-showlevel) | Real level instead of "??" for enemies 10+ levels above you – untested *(bosses still show "??" – see No. 73)* | Hour of Twilight (ported by St0ny) | – | – | – |
+| [73](PATCHES.en.md#patch-showlevelboss) | Real level for bosses too instead of "??" (extension to No. 72) – untested | St0ny | – | – | – |
+| [74](PATCHES.en.md#patch-holdrepeat) | Hold action buttons to repeat – untested *(may be treated as automation (botting) by the server, exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |
 |    | **Window, mouse & camera** |  |  |  |  |
-| [74](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 75)* | St0ny | – | – | ✅ |
-| [75](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 74)* | St0ny | – | – | ✅ |
-| [76](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
-| [77](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
-| [78](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |
+| [75](PATCHES.en.md#patch-window) | Windowed mode by default *(starts as a small window in the middle of the desktop – maximized only together with No. 76)* | St0ny | – | – | ✅ |
+| [76](PATCHES.en.md#patch-maximize) | Maximized window by default *(only works together with No. 75)* | St0ny | – | – | ✅ |
+| [77](PATCHES.en.md#patch-windowfix) | No black screen when switching to windowed mode | Robinsch | ✅ | ✅ | ✅ |
+| [78](PATCHES.en.md#patch-mouse) | Mouse flicker / camera jump fix | Robinsch | ✅ | ✅ | ✅ |
+| [79](PATCHES.en.md#patch-camera) | CameraReforged [BETA]: camera height and zoom limits *(shoulder offset has no effect yet; exe grows – ban risk)* | Stormhand (fixed by St0ny) | – | – | – |
 |    | **Sound** |  |  |  |  |
-| [79](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – | ✅ |
+| [80](PATCHES.en.md#patch-sound) | Optimize sound settings *(requires [OpenAL](https://github.com/kcat/openal-soft), otherwise the settings have no effect)* | St0ny | – | – | ✅ |
 |    | **Client info: version, build, title, date, icon** |  |  |  |  |
-| [80](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
-| [81](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
-| [82](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
-| [83](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
-| [84](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
+| [81](PATCHES.en.md#patch-clientversion) | Change client version (original 3.3.5) *(asks for the value)* | MacWarrior | – | – | – |
+| [82](PATCHES.en.md#patch-clientbuild) | Change build number (original 12340) *(asks for the value)* | MacWarrior | – | – | – |
+| [83](PATCHES.en.md#patch-clienttitle) | Change program title (file properties and window title) *(asks for the value)* | MacWarrior (fixed by St0ny) | – | – | – |
+| [84](PATCHES.en.md#patch-clientdate) | Change build date (original Jun 24 2010) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
+| [85](PATCHES.en.md#patch-clienticon) | Change program icon (icon of Wow.exe) *(asks for the value)* | St0ny (original by MacWarrior) | – | – | – |
 
 </details>
 
@@ -386,8 +387,8 @@ clicking the number of a patch takes you straight to its description.
   First, patches that servers with anti-cheat may treat as cheating or
   botting: LUA unlock (No. 23 and 24), climb angle (45), jump height (46), the
   air steering (47–49) and the double jump (50) as well as "Hold action
-  buttons to repeat" (73). Second, patches that append a section to `Wow.exe`
-  and thus make the file larger: No. 9, 50, 63, 64, 73 and 78 – many servers
+  buttons to repeat" (74). Second, patches that append a section to `Wow.exe`
+  and thus make the file larger: No. 9, 50, 63, 64, 74 and 79 – many servers
   do not tolerate a changed file size. Third, patches that interfere with the
   Warden anti-cheat: the RCE fix (No. 10) and "Disable Warden completely"
   (No. 11) – public servers can detect this. All three groups are marked "ban
@@ -399,7 +400,7 @@ clicking the number of a patch takes you straight to its description.
   anyway" WoW starts normally. A new signature that Windows trusts is only
   issued by certificate authorities with identity verification – you cannot
   get one for a modified Blizzard file. The patches that append a section
-  (No. 9, 50, 63, 64, 73 and 78) also remove the reference to the
+  (No. 9, 50, 63, 64, 74 and 79) also remove the reference to the
   signature from the header: the new section lies behind the signature, and
   some tools would otherwise report the file as damaged. The signature bytes
   themselves stay untouched, and removing the patches restores the original
