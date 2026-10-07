@@ -551,7 +551,10 @@ relog needed to receive new mail.
 Slash commands also work while the character is dead.
 
 <a id="patch-follow"></a>
-**Allow /follow on NPCs** *(No. 39, Author: St0ny (original by Alastor StrixEfuartus))* 🟢 **[safe]**
+**Allow /follow on NPCs** *(No. 39, Author: St0ny (original by Alastor StrixEfuartus))* 🟠 **[untested online]**
+
+> [!WARNING]
+> **Untested online** – not tested on public servers, possible ban risk. Careful, it may get you kicked or banned.
 
 `/follow` also works on NPCs, not just players. Based on the `/follow` patch
 from Alastor StrixEfuartus' 12th Generation EXE, ported and adjusted by St0ny:
@@ -1171,12 +1174,10 @@ and focus, as well as on all default nameplates. Matches the behavior from
 Cataclysm onwards.
 
 <a id="patch-emblems"></a>
-**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)* 🟠 **[untested]**
+**Retail guild emblems: selection extended from 170 to 196** *(No. 68, Author: MacWarrior)* 🟠 **[untested online]**
 
 > [!WARNING]
 > **Untested online** – not tested on public servers, possible ban risk. Careful, it may get you kicked or banned.
->
-> **Untested ingame** – the function has not been checked in game yet, possibly buggy.
 
 The client keeps the number of selectable tabard variants in a small table
 (VA `0xA14908`, file offset `0x613108`): 170 emblems, 17 emblem colors,

@@ -3058,7 +3058,7 @@ $patches = @(
         Patch 0x10CA41 @(0xEB)
     }}
 
-    @{ Id = 'follow'; Cat = 'gameplay'; On = $false
+    @{ Id = 'follow'; Cat = 'gameplay'; On = $false; PublicUntested = $true
        Author = 'St0ny (original by Alastor StrixEfuartus)'
        De = '/follow auch bei NPCs erlauben'
        En = 'Allow /follow on NPCs'
@@ -3659,7 +3659,7 @@ $patches = @(
         Patch 0x123676 @(0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
     }}
 
-    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames'); PublicUntested = $true; GameUntested = $true
+    @{ Id = 'emblems'; Cat = 'ui'; On = $false; Needs = @('mpqnames'); PublicUntested = $true
        Author = 'MacWarrior'
        De = 'Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert'
        En = 'Retail guild emblems: selection extended from 170 to 196'

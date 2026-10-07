@@ -331,7 +331,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 |----:|-------|--------|-------|:--------:|:-----:|:-----:|
 | [19](PATCHES.de.md#patch-glue) | Custom Glue-XML erlauben | 🟢 **[sicher]** | Alastor StrixEfuartus / Kebabstorm (fixed by St0ny) | ✅ | ✅ | ✅ |
 | [20](PATCHES.de.md#patch-mpqsig) | Falsch/Nicht signierte MPQs zulassen | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | – | ✅ |
-| [21](PATCHES.de.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben | 🟢 **[sicher]** |  | ✅ | ✅ | ✅ |
+| [21](PATCHES.de.md#patch-mpqnames) | Erweiterte MPQ-Namen erlauben | 🟢 **[sicher]** | unbekannt | ✅ | ✅ | ✅ |
 | [22](PATCHES.de.md#patch-localdata) | Daten direkt aus dem Data-Ordner laden (ohne MPQ) | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | ✅ | ✅ |
 | [23](PATCHES.de.md#patch-luaunlock) | LUA Unlock (Zauber, Bewegung, Makros) | 🔴 **[unsicher]** | Alastor StrixEfuartus | – | – | – |
 | [24](PATCHES.de.md#patch-luaunlockfull) | LUA Unlock (vollständig): alle geschützten Funktionen freigeben | 🔴 **[unsicher]** | St0ny | – | – | – |
@@ -359,7 +359,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [36](PATCHES.de.md#patch-forcereaction) | Force-Reaction bei /reload erhalten | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [37](PATCHES.de.md#patch-mail) | Neue Post ohne 60 Sekunden Wartezeit | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
 | [38](PATCHES.de.md#patch-deadchat) | Chat-Befehle auch im Tod erlauben | 🟢 **[sicher]** | Robinsch | ✅ | ✅ | ✅ |
-| [39](PATCHES.de.md#patch-follow) | /follow auch bei NPCs erlauben | 🟢 **[sicher]** | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
+| [39](PATCHES.de.md#patch-follow) | /follow auch bei NPCs erlauben | 🟠 **[online ungetestet]** | St0ny (original by Alastor StrixEfuartus) | – | – | ✅ |
 | [40](PATCHES.de.md#patch-level101) | Level 101+ Fix (Spielwert-Tabellen, Barbierstuhl, Grundwerte) | 🟢 **[sicher]** | Alastor StrixEfuartus (fixed by St0ny) | ✅ | – | ✅ |
 | [41](PATCHES.de.md#patch-raceclass) | Charaktererstellung: mehr als 10 Klassen (Zufallsklasse) *(für eigene Klassen; Server muss es unterstützen)* | 🔴 **[unsicher]** | Alastor StrixEfuartus / Robinsch | – | – | – |
 | [42](PATCHES.de.md#patch-namecheck) | Namensprüfung bei der Charaktererstellung abschalten (z. B. Zahlen im Namen) *(Server muss die Namen ebenfalls erlauben)* | 🔴 **[unsicher]** | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | – |
@@ -380,7 +380,7 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 | [52](PATCHES.de.md#patch-farclip) | CVar farclip unlock (max 10000) | 🟢 **[sicher]** | Alastor StrixEfuartus | ✅ | ✅ | ✅ |
 | [53](PATCHES.de.md#patch-horizon) | CVar horizonFarclipScale unlock (max 12) | 🟢 **[sicher]** | St0ny | ✅ | ✅ | ✅ |
 | [54](PATCHES.de.md#patch-envdetail) | CVar environmentDetail unlock (kein Limit statt 1.5) | 🟢 **[sicher]** | St0ny | ✅ | ✅ | ✅ |
-| [55](PATCHES.de.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 statt 140) | 🟢 **[sicher]** |  | ✅ | ✅ | ✅ |
+| [55](PATCHES.de.md#patch-grounddist) | CVar groundEffectDist unlock (max 3166 statt 140) | 🟢 **[sicher]** | unbekannt | ✅ | ✅ | ✅ |
 | [56](PATCHES.de.md#patch-sliders) | Grafikoptionen: Slider-Maxima erweitern | 🟢 **[sicher]** | St0ny | ✅ | – | ✅ |
 | [57](PATCHES.de.md#patch-goscale) | GameObject Sichtweite: Cat 0 und Cat 4 auf environmentDetail reagieren lassen | 🟢 **[sicher]** | St0ny | ✅ | – | ✅ |
 | [58](PATCHES.de.md#patch-cat0) | GameObject Sichtweite: Cat 0 von 30 auf 50 Yards *(kostet Leistung, mehr Kleinkram sichtbar)* | 🟢 **[sicher]** | St0ny | – | – | ✅ |
@@ -395,10 +395,10 @@ Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 
 | Nr. | Patch | Status | Autor | Reforged | Billy | St0ny |
 |----:|-------|--------|-------|:--------:|:-----:|:-----:|
-| [65](PATCHES.de.md#patch-tracker) | Quest-Tracker automatisch sortieren | 🟢 **[sicher]** |  | ✅ | – | ✅ |
-| [66](PATCHES.de.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv | 🟢 **[sicher]** |  | ✅ | – | ✅ |
+| [65](PATCHES.de.md#patch-tracker) | Quest-Tracker automatisch sortieren | 🟢 **[sicher]** | unbekannt | ✅ | – | ✅ |
+| [66](PATCHES.de.md#patch-worldmap) | Erweiterte Weltkarte standardmäßig aktiv | 🟢 **[sicher]** | unbekannt | ✅ | – | ✅ |
 | [67](PATCHES.de.md#patch-castbars) | Cast Bars auf allen Frames | 🟢 **[sicher]** | Kebabstorm | ✅ | ✅ | ✅ |
-| [68](PATCHES.de.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | 🟠 **[ungetestet]** | MacWarrior | – | – | ✅ |
+| [68](PATCHES.de.md#patch-emblems) | Retail-Gildenembleme: Auswahl von 170 auf 196 erweitert *(benötigt [Patch-G](https://discord.com/channels/407664041016688662/1541873346608889936))* | 🟠 **[online ungetestet]** | MacWarrior | – | – | ✅ |
 | [69](PATCHES.de.md#patch-flash) | FlashWindow Patch *(benötigt [FlashWindow-Addon](https://github.com/noname08662/awesome_wotlk/tree/main/addons/Flash))* | 🟢 **[sicher]** | Kebabstorm | – | ✅ | ✅ |
 | [70](PATCHES.de.md#patch-charrandom) | Charaktererstellung: Aussehen nicht automatisch auswürfeln | 🟢 **[sicher]** | Alyst3r (0x539wowmod) | ✅ | – | – |
 | [71](PATCHES.de.md#patch-lootopen) | Lootfenster bleibt beim Laufen offen | 🟠 **[online ungetestet]** | tb (ported by St0ny) | – | – | – |
@@ -460,10 +460,10 @@ ein Klick auf die Nummer eines Patches direkt zu seiner Beschreibung.
   - 🔴 **unsicher** – Bann-Gefahr, kann auf vielen Servern zu einem Bann führen: Nr. 10,
     11, 23–25, 41, 42, 45–50, 74 und 82–86 (rote Warnung).
   - 🟠 **online ungetestet** – nicht auf öffentlichen Servern getestet, mögliche Bann-Gefahr, Vorsicht,
-    kann zu Kick/Bann führen: Nr. 4, 26, 29, 44, 51, 62, 68, 71–73 und 80 (rote
+    kann zu Kick/Bann führen: Nr. 4, 26, 29, 39, 44, 51, 62, 68, 71–73 und 80 (rote
     Warnung).
   - 🟠 **ingame ungetestet** – die Funktion ist im Spiel noch nicht geprüft,
-    möglicherweise verbuggt: Nr. 25, 26, 29, 44, 51, 62 und 68 (rote Warnung).
+    möglicherweise verbuggt: Nr. 25, 26, 29, 44, 51 und 62 (rote Warnung).
   - 🟡 **Exe wird größer** – diese Patches hängen eine Sektion an die `Wow.exe` an:
     Nr. 9, 50, 63, 64, 74 und 80. Das ist keine sichere Bann-Gefahr,
     aber ein Risiko: Manche Server prüfen die Dateigröße (gelber Hinweis). Alle
