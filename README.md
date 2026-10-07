@@ -267,28 +267,19 @@ Click the number of a patch to jump to its description.
 <details>
 <summary><b>Show all patches with author and preset assignment</b></summary>
 
-> [!IMPORTANT]
-> **What the ratings mean** – they are shown after the name of a patch. The
-> patcher shows the warnings in square brackets, safe patches have no addition
-> there:
->
-> - 🟢 **[safe]** – **safe**: tested in game, no warning and no note.
-> - 🔴 **[ban risk]** – **confirmed ban risk**: the patch can lead to a ban on
->   many servers. Only use it on servers that allow it. The patcher shows a
->   red warning before patching.
-> - 🟠 **[untested on public servers]** – **not tested on public servers,
->   possible ban risk**: careful, it may get you kicked or banned. Nobody can
->   predict how the server will react – the patcher shows a red warning before
->   patching.
-> - 🟠 **[untested in game]** – **function untested in game**: the patch has
->   not been checked in game yet and may be buggy. Nobody can predict how the
->   game will react – the patcher shows a red warning before patching.
-> - 🟡 **[exe grows]** – the patch appends a section to `Wow.exe`. This does not
->   mean a certain ban, but it is a risk: some servers check the file size of
->   `Wow.exe`. The patcher shows a yellow note before patching.
->
-> A patch can carry several warnings, e.g. 🟠 **[untested on public servers
-> and in game]** 🟡 **[exe grows]**.
+#### What the ratings mean
+
+| Rating | Meaning | In the patcher |
+|--------|---------|----------------|
+| 🟢 **[safe]** | Tested in game and safe to use. | no warning |
+| 🔴 **[ban risk]** | Confirmed ban risk: can lead to a ban on many servers. Only use it on servers that allow it. | red warning |
+| 🟠 **[untested on public servers]** | Possible ban risk: nobody can predict how the server will react. Careful, it may get you kicked or banned. | red warning |
+| 🟠 **[untested in game]** | The function has not been checked in game yet: nobody can predict how the game will react, possibly buggy. | red warning |
+| 🟡 **[exe grows]** | The patch appends a section to `Wow.exe`. Not a certain ban, but a risk: some servers check the file size. | yellow note |
+
+A patch can carry several ratings, e.g. 🟠 **[untested on public servers and in
+game]**. In the patcher the warnings are shown in square brackets after the
+name, and before patching it lists them once more.
 
 #### System & performance
 

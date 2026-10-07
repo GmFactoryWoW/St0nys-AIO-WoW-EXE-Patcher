@@ -277,31 +277,19 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 <details>
 <summary><b>Übersicht aller Patches mit Autor und Preset-Zuordnung anzeigen</b></summary>
 
-> [!IMPORTANT]
-> **Was die Einstufungen bedeuten** – sie stehen hinter dem Namen eines
-> Patches. Der Patcher zeigt die Warnungen in eckigen Klammern, sichere Patches
-> stehen dort ohne Zusatz:
->
-> - 🟢 **[sicher]** – **sicher**: im Spiel getestet, keine Warnung und kein
->   Hinweis.
-> - 🔴 **[Bann-Gefahr]** – **bestätigte Bann-Gefahr**: Der Patch kann auf
->   vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das
->   erlauben. Der Patcher zeigt vor dem Patchen eine rote Warnung.
-> - 🟠 **[auf öffentlichen Servern ungetestet]** – **nicht auf öffentlichen
->   Servern getestet, mögliche Bann-Gefahr**: Vorsicht, kann zu Kick/Bann
->   führen. Niemand kann vorhersagen, wie der Server darauf reagiert – der
->   Patcher zeigt vor dem Patchen eine rote Warnung.
-> - 🟠 **[im Spiel ungetestet]** – **Funktion im Spiel ungetestet**: Der Patch
->   ist im Spiel noch nicht geprüft und möglicherweise verbuggt. Niemand kann
->   vorhersagen, wie das Spiel darauf reagiert – der Patcher zeigt vor dem
->   Patchen eine rote Warnung.
-> - 🟡 **[Exe wird größer]** – der Patch hängt eine Sektion an die `Wow.exe` an.
->   Das ist keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen
->   die Dateigröße der `Wow.exe`. Der Patcher zeigt vor dem Patchen einen
->   gelben Hinweis.
->
-> Ein Patch kann mehrere Warnungen tragen, z. B. 🟠 **[auf öffentlichen Servern
-> und im Spiel ungetestet]** 🟡 **[Exe wird größer]**.
+#### Was die Kennzeichnungen bedeuten
+
+| Kennzeichnung | Bedeutung | Im Patcher |
+|---------------|-----------|------------|
+| 🟢 **[sicher]** | Im Spiel getestet und sicher nutzbar. | keine Warnung |
+| 🔴 **[Bann-Gefahr]** | Bestätigte Bann-Gefahr: kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben. | rote Warnung |
+| 🟠 **[auf öffentlichen Servern ungetestet]** | Mögliche Bann-Gefahr: Niemand kann vorhersagen, wie der Server reagiert. Vorsicht, kann zu Kick/Bann führen. | rote Warnung |
+| 🟠 **[im Spiel ungetestet]** | Die Funktion ist im Spiel noch nicht geprüft: Niemand kann vorhersagen, wie das Spiel reagiert, möglicherweise verbuggt. | rote Warnung |
+| 🟡 **[Exe wird größer]** | Der Patch hängt eine Sektion an die `Wow.exe` an. Keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen die Dateigröße. | gelber Hinweis |
+
+Ein Patch kann mehrere Kennzeichnungen tragen, z. B. 🟠 **[auf öffentlichen
+Servern und im Spiel ungetestet]**. Im Patcher stehen die Warnungen in eckigen
+Klammern hinter dem Namen, vor dem Patchen listet er sie noch einmal auf.
 
 #### System & Leistung
 
