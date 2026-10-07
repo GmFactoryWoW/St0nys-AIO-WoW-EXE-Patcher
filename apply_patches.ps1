@@ -2489,30 +2489,21 @@ $patches = @(
 
     @{ Id = 'nothrottle'; Cat = 'system'; On = $false
        Author = 'Hour of Twilight (ported by St0ny)'
-       De = 'Server-Abfragen nicht drosseln (Item- und Quest-Infos schneller) - ungetestet'
-       En = 'Do not throttle server queries (item and quest info loads faster) - untested'
+       De = 'Gegenstands- und Namensabfragen nicht drosseln - ungetestet'
+       En = 'Do not throttle item and player name queries - untested'
        Code = {
-        # Die 15 Datenbank-Caches (Items, Kreaturen, Quests, Namen ...) begrenzen
-        # die Anfragen an den Server pro 30-Sekunden-Fenster ([Cache+48h], aus
-        # "Anfragen pro Minute" im Konstruktor berechnet). 0 heisst unbegrenzt
-        # (Pruefung "test eax,eax / je"). Im Konstruktor wird statt des
-        # berechneten Werts (edx) ecx gespeichert, das dort 0 ist:
-        # mov [esi+48h],edx -> mov [esi+48h],ecx. Je ein Byte in allen 15.
-        Patch 0x2750EE @(0x4E)   # VA 0x675CEE
-        Patch 0x27521E @(0x4E)   # VA 0x675E1E
-        Patch 0x27534E @(0x4E)   # VA 0x675F4E
-        Patch 0x27547E @(0x4E)   # VA 0x67607E
-        Patch 0x2755AE @(0x4E)   # VA 0x6761AE
-        Patch 0x2756DE @(0x4E)   # VA 0x6762DE
-        Patch 0x27580E @(0x4E)   # VA 0x67640E
-        Patch 0x27593E @(0x4E)   # VA 0x67653E
-        Patch 0x275A6E @(0x4E)   # VA 0x67666E
-        Patch 0x275B9E @(0x4E)   # VA 0x67679E
-        Patch 0x275CCE @(0x4E)   # VA 0x6768CE
-        Patch 0x275DFE @(0x4E)   # VA 0x6769FE
-        Patch 0x275F2E @(0x4E)   # VA 0x676B2E
-        Patch 0x27605E @(0x4E)   # VA 0x676C5E
-        Patch 0x27618E @(0x4E)   # VA 0x676D8E
+        # Die Datenbank-Caches des Clients (Items, Kreaturen, Quests, Namen ...)
+        # koennen ihre Anfragen an den Server pro 30-Sekunden-Fenster begrenzen
+        # ([Cache+48h] = "Anfragen pro Minute" aus dem Konstruktor / 2). Ist die
+        # Grenze erreicht, kommt die Anfrage in eine Warteschlange (Pruefung bei
+        # VA 0x67B711), 0 heisst unbegrenzt. Von den 15 Caches ist das nur bei
+        # zweien gesetzt: itemcache (Gegenstands-Infos, 512 pro Minute) und
+        # namecache (Spielernamen, 256 pro Minute) - alle anderen bekommen schon
+        # im Original 0. In den beiden Konstruktoren wird statt des berechneten
+        # Werts (edx) ecx gespeichert, das dort 0 ist:
+        # mov [esi+48h],edx -> mov [esi+48h],ecx.
+        Patch 0x27547E @(0x4E)   # VA 0x67607E, itemcache.wdb
+        Patch 0x2756DE @(0x4E)   # VA 0x6762DE, namecache.wdb
     }}
 
     @{ Id = 'mirrorfix'; Cat = 'system'; On = $false
@@ -3971,21 +3962,8 @@ worldcrash;210;B3D35D00;0
 worldcrash;41C91B;0F834D010000;1
 worldcrash;5DD7B3;0000000000000000000000000000000000000000000000000000000000000000000000000000;1
 timer;46A08E;0F8582000000;1
-nothrottle;2750EE;56;1
-nothrottle;27521E;56;1
-nothrottle;27534E;56;1
 nothrottle;27547E;56;1
-nothrottle;2755AE;56;1
 nothrottle;2756DE;56;1
-nothrottle;27580E;56;1
-nothrottle;27593E;56;1
-nothrottle;275A6E;56;1
-nothrottle;275B9E;56;1
-nothrottle;275CCE;56;1
-nothrottle;275DFE;56;1
-nothrottle;275F2E;56;1
-nothrottle;27605E;56;1
-nothrottle;27618E;56;1
 mirrorfix;32F729;E85206DCFF;1
 mirrorfix;32F8CA;E8B104DCFF;1
 mirrorfix;46B310;558BEC8B4508687026870050E89FFFFFFF83C4085DC3CCCCCCCCCCCCCCCCCCCC;1

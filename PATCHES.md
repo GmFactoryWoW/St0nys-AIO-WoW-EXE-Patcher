@@ -89,14 +89,18 @@ Client etwa eine Viertelsekunde schneller.
 > gescheitert. Ohne Patch hilft auch `SET timingMethod "2"` in der `Config.wtf`.
 
 <a id="patch-nothrottle"></a>
-**Server-Abfragen nicht drosseln (Item- und Quest-Infos schneller) – ungetestet** *(Nr. 6, Autor: Hour of Twilight (ported by St0ny))*
+**Gegenstands- und Namensabfragen nicht drosseln – ungetestet** *(Nr. 6, Autor: Hour of Twilight (ported by St0ny))*
 
 Kennt der Client einen Gegenstand, eine Kreatur, eine Quest oder einen Namen
-noch nicht, fragt er beim Server nach. Jeder der 15 Datenbank-Caches erlaubt
-dabei nur eine begrenzte Zahl Anfragen pro 30 Sekunden – deshalb stehen in
-Tooltips, Taschen oder im Questlog oft eine Weile „Lade Gegenstandsinformationen“
-oder leere Einträge. Der Patch hebt das Limit auf (0 = unbegrenzt, je ein Byte
-in den 15 Cache-Konstruktoren), die Infos kommen sofort.
+noch nicht, fragt er beim Server nach. Zwei dieser Abfragen begrenzt der
+Client selbst: Gegenstands-Infos auf 512 und Spielernamen auf 256 pro Minute.
+Ist die Grenze erreicht, warten weitere Anfragen in einer Schlange – deshalb
+stehen z. B. beim ersten Öffnen voller Taschen, der Bank oder des Auktionshauses
+eine Weile „Lade Gegenstandsinformationen“ oder leere Tooltips, und in vollen
+Städten oder großen Schlachtzügen zeigen Namen kurz „Unbekannt“. Der Patch hebt
+diese beiden Grenzen auf (0 = unbegrenzt, je ein Byte in den Konstruktoren von
+`itemcache` und `namecache`), die Infos kommen sofort. Alle anderen Abfragen
+(Kreaturen, Quests, Gilden …) sind schon im Original unbegrenzt.
 
 > [!NOTE]
 > Der Client schickt dadurch mehr Anfragen auf einmal. Server mit

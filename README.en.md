@@ -273,7 +273,7 @@ Click the number of a patch to jump to its description.
 | [3](PATCHES.en.md#patch-itemcache) | Refresh item cache immediately | Robinsch | ✅ | ✅ | ✅ |
 | [4](PATCHES.en.md#patch-worldcrash) | WorldFrame crash fix (invalid triangle indices) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.en.md#patch-timer) | Always use the precise timer (fixes turning stutter) | St0ny | – | – | ✅ |
-| [6](PATCHES.en.md#patch-nothrottle) | Do not throttle server queries (item and quest info loads faster) – untested | Hour of Twilight (ported by St0ny) | – | – | – |
+| [6](PATCHES.en.md#patch-nothrottle) | Do not throttle item and player name queries – untested | Hour of Twilight (ported by St0ny) | – | – | – |
 | [7](PATCHES.en.md#patch-mirrorfix) | Mirror Image crash fix (memory leak with mirror images) – untested | Hour of Twilight (ported by St0ny) | – | – | – |
 | [8](PATCHES.en.md#patch-wmocube) | Missing WMO file: error cube instead of ERROR #134 – untested | Alyst3r (ported by St0ny) | – | – | – |
 | [9](PATCHES.en.md#patch-glyphfix) | Font glyph fix (wrong or garbled characters in text) – untested *(exe grows – ban risk)* | Hour of Twilight (ported by St0ny) | – | – | – |

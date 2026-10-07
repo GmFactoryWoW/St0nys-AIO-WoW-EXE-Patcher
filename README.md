@@ -281,7 +281,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | [3](PATCHES.md#patch-itemcache) | Item-Cache sofort aktualisieren | Robinsch | ✅ | ✅ | ✅ |
 | [4](PATCHES.md#patch-worldcrash) | WorldFrame-Absturzfix (ungültige Dreiecks-Indizes) | Alyst3r (0x539wowmod) (fixed by St0ny) | – | – | ✅ |
 | [5](PATCHES.md#patch-timer) | Genauen Timer immer nutzen (Ruckeln beim Drehen behoben) | St0ny | – | – | ✅ |
-| [6](PATCHES.md#patch-nothrottle) | Server-Abfragen nicht drosseln (Item- und Quest-Infos schneller) – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
+| [6](PATCHES.md#patch-nothrottle) | Gegenstands- und Namensabfragen nicht drosseln – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
 | [7](PATCHES.md#patch-mirrorfix) | Mirror-Image-Absturzfix (Speicherleck bei Spiegelbildern) – ungetestet | Hour of Twilight (ported by St0ny) | – | – | – |
 | [8](PATCHES.md#patch-wmocube) | Fehlende WMO-Datei: Fehlerwürfel statt ERROR #134 – ungetestet | Alyst3r (ported by St0ny) | – | – | – |
 | [9](PATCHES.md#patch-glyphfix) | Schrift-Glyphen-Fix (falsche oder kaputte Zeichen in Texten) – ungetestet *(Exe wird größer – Bann-Gefahr)* | Hour of Twilight (ported by St0ny) | – | – | – |

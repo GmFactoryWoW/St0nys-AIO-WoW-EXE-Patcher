@@ -88,14 +88,18 @@ faster.
 > `SET timingMethod "2"` in `Config.wtf` helps as well.
 
 <a id="patch-nothrottle"></a>
-**Do not throttle server queries (item and quest info loads faster) – untested** *(No. 6, Author: Hour of Twilight (ported by St0ny))*
+**Do not throttle item and player name queries – untested** *(No. 6, Author: Hour of Twilight (ported by St0ny))*
 
 When the client does not know an item, creature, quest or name yet, it asks the
-server. Each of the 15 database caches only allows a limited number of queries
-per 30 seconds – which is why tooltips, bags or the quest log often show
-"Retrieving item information" or empty entries for a while. The patch lifts the
-limit (0 = unlimited, one byte in each of the 15 cache constructors), so the
-information arrives right away.
+server. The client itself limits two of these queries: item info to 512 and
+player names to 256 per minute. Once the limit is reached, further queries wait
+in a queue – which is why, for example, the first time you open full bags, the
+bank or the auction house you see "Retrieving item information" or empty
+tooltips for a while, and in busy cities or large raids names briefly show
+"Unknown". The patch lifts these two limits (0 = unlimited, one byte each in the
+constructors of `itemcache` and `namecache`), so the information arrives right
+away. All other queries (creatures, quests, guilds …) are already unlimited in
+the original.
 
 > [!NOTE]
 > The client sends more queries at once this way. Servers with flood
