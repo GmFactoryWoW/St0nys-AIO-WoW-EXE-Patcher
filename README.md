@@ -275,7 +275,7 @@ Click the number of a patch to jump to its description.
 | 🔴 **[unsafe]** | Confirmed ban risk: can lead to a ban on many servers. Only use it on servers that allow it. | red warning |
 | 🟠 **[untested online]** | Not tested on public servers, possible ban risk: nobody can predict how the server will react. Careful, it may get you kicked or banned. | red warning |
 | 🟠 **[untested ingame]** | The function has not been checked in game yet: nobody can predict how the game will react, possibly buggy. | red warning |
-| 🟠 **[untested]** | Neither tested online nor ingame – both together. | red warning |
+| 🟠 **[untested]** | Neither tested online nor ingame. | red warning |
 | 🟡 **[exe grows]** | The patch appends a section to `Wow.exe`. Not a certain ban, but a risk: some servers check the file size. | yellow note |
 
 A patch can carry several ratings, e.g. 🟢 **[safe]** and 🟡 **[exe grows]**.

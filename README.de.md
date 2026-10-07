@@ -285,7 +285,7 @@ Ein Klick auf die Nummer eines Patches springt zu seiner Beschreibung.
 | 🔴 **[unsicher]** | Bestätigte Bann-Gefahr: kann auf vielen Servern zu einem Bann führen. Nur auf Servern nutzen, die das erlauben. | rote Warnung |
 | 🟠 **[online ungetestet]** | Nicht auf öffentlichen Servern getestet, mögliche Bann-Gefahr: Niemand kann vorhersagen, wie der Server reagiert. Vorsicht, kann zu Kick/Bann führen. | rote Warnung |
 | 🟠 **[ingame ungetestet]** | Die Funktion ist im Spiel noch nicht geprüft: Niemand kann vorhersagen, wie das Spiel reagiert, möglicherweise verbuggt. | rote Warnung |
-| 🟠 **[ungetestet]** | Weder online noch ingame getestet – beides zusammen. | rote Warnung |
+| 🟠 **[ungetestet]** | Weder online noch ingame getestet. | rote Warnung |
 | 🟡 **[Exe wird größer]** | Der Patch hängt eine Sektion an die `Wow.exe` an. Keine sichere Bann-Gefahr, aber ein Risiko: Manche Server prüfen die Dateigröße. | gelber Hinweis |
 
 Ein Patch kann mehrere Kennzeichnungen tragen, z. B. 🟢 **[sicher]** und
