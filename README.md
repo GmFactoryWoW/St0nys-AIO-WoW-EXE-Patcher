@@ -127,8 +127,8 @@ Before the confirmation prompt the patcher shows **notes** – nothing is blocke
 when a companion patch is missing (e.g. the extended slider maximums need the
 CVar unlocks), when one patch makes another unnecessary (disabling Warden
 completely replaces the RCE fix) and when selected patches carry a warning –
-with a red warning for ban risk and for patches that are still untested on
-public servers or in game, yellow for a larger `Wow.exe` (see [Notes](#notes)).
+red for ban risk, orange for patches that are still untested on public
+servers or in game, and yellow for a larger `Wow.exe` (see [Notes](#notes)).
 
 ### The selection is remembered
 
@@ -273,9 +273,9 @@ Click the number of a patch to jump to its description.
 |--------|---------|----------------|
 | 🟢 **[safe]** | Tested in game and safe to use. | no warning |
 | 🔴 **[unsafe]** | Confirmed ban risk: can lead to a ban on many servers. Only use it on servers that allow it. | red warning |
-| 🟠 **[untested online]** | Not tested on public servers, possible ban risk: nobody can predict how the server will react. Careful, it may get you kicked or banned. | red warning |
-| 🟠 **[untested ingame]** | The function has not been checked in game yet: nobody can predict how the game will react, possibly buggy. | red warning |
-| 🟠 **[untested]** | Neither tested online nor ingame. | red warning |
+| 🟠 **[untested online]** | Not tested on public servers, possible ban risk: nobody can predict how the server will react. Careful, it may get you kicked or banned. | orange warning |
+| 🟠 **[untested ingame]** | The function has not been checked in game yet: nobody can predict how the game will react, possibly buggy. | orange warning |
+| 🟠 **[untested]** | Neither tested online nor ingame. | orange warning |
 | 🟡 **[exe grows]** | The patch appends a section to `Wow.exe`. Not a certain ban, but a risk: some servers check the file size. | yellow note |
 
 A patch can carry several ratings. They then share one pair of brackets
@@ -454,10 +454,10 @@ clicking the number of a patch takes you straight to its description.
   - 🔴 **unsafe** – ban risk, can lead to a ban on many servers: No. 4, 10, 11, 23–25,
     41, 42, 45–50, 74 and 82–86 (red warning).
   - 🟠 **untested online** – not tested on public servers, possible ban risk, careful, may get
-    you kicked or banned: No. 26, 29, 39, 44, 51, 62, 68, 71–73 and 80 (red
+    you kicked or banned: No. 26, 29, 39, 44, 51, 62, 68, 71–73 and 80 (orange
     warning).
   - 🟠 **untested ingame** – the function has not been checked in game yet,
-    possibly buggy: No. 25, 26, 29, 44, 51 and 62 (red warning).
+    possibly buggy: No. 25, 26, 29, 44, 51 and 62 (orange warning).
   - 🟡 **exe grows** – these patches append a section to `Wow.exe`: No. 9, 50,
     63, 64, 74 and 80. This does not mean a certain ban, but it is a risk: some
     servers check the file size (yellow note). All other patches do not change
