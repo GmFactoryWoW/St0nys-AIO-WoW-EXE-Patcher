@@ -1,0 +1,63 @@
+name: Bug report
+description: Something does not work as expected.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! English or German is fine.
+        **Please do not attach `Wow.exe` or any other Blizzard files.**
+  - type: input
+    id: version
+    attributes:
+      label: Patcher version
+      description: The release (e.g. v2026.10.09) or branch you used.
+      placeholder: v2026.10.09
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: patches
+    attributes:
+      label: Selected patches
+      description: The preset (Reforged, Billy, St0ny) or the patch numbers, e.g. 1,3,5-8.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Please describe the problem as exactly as possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+  - type: textarea
+    id: output
+    attributes:
+      label: Patcher output or error message
+      description: Copy the text from the patcher window here.
+      render: text
+  - type: input
+    id: server
+    attributes:
+      label: Server (optional)
+      description: Private or public server, core (e.g. AzerothCore, TrinityCore).

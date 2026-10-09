@@ -1,0 +1,19 @@
+name: Question or other issue
+description: Questions, ideas or anything else that is not a bug or a new patch.
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English or German is fine.
+        **Please do not attach `Wow.exe` or any other Blizzard files.**
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional information (optional)
