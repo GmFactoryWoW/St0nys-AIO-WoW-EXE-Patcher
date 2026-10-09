@@ -3,7 +3,9 @@ name: Release
 # Bei jedem Push auf st0ny-main: ZIP des Projekts bauen (Ordner
 # St0nys-AIO-WoW-EXE-Patcher, ohne Dateien und Ordner, die mit einem Punkt
 # beginnen) und als neues Release veroeffentlichen. Hat sich seit dem letzten
-# Release nur an Punkt-Dateien etwas geaendert, endet der Job ohne Release.
+# Release nur an Punkt-Dateien etwas geaendert, gibt es kein neues Release.
+# Es bleibt immer nur das neueste Release stehen, aeltere werden samt Tag
+# geloescht.
 on:
   push:
     branches: [st0ny-main]
@@ -47,15 +49,19 @@ jobs:
             exit 0
           fi
 
-          # Version = Datum nach deutscher Zeit, ein zweites Release am selben Tag
-          # bekommt .2 usw.
+          # Version = Datum nach deutscher Zeit. Gibt es fuer heute schon ein Release
+          # (aeltere werden samt Tag geloescht, nur das neueste bleibt), bekommt das
+          # neue die naechste Nummer: .2, .3 usw.
           day=$(TZ=Europe/Berlin date +%Y.%m.%d)
-          version=$day
-          n=1
-          while git rev-parse -q --verify "refs/tags/v$version" >/dev/null; do
-            n=$((n + 1))
-            version="$day.$n"
+          last=0
+          for t in $(git tag --list "v$day" "v$day.*"); do
+            n=${t#"v$day"}
+            n=${n#.}
+            [ -n "$n" ] || n=1
+            case $n in *[!0-9]*) continue ;; esac
+            if [ "$n" -gt "$last" ]; then last=$n; fi
           done
+          if [ "$last" -eq 0 ]; then version=$day; else version="$day.$((last + 1))"; fi
           tag="v$version"
           zip="$PWD/$name-$version.zip"
 
@@ -123,3 +129,17 @@ jobs:
 
           gh release create "$tag" "$zip" --target "$GITHUB_SHA" \
             --title "$name $version" --notes-file release-notes.md --latest
+
+      - name: Keep only the newest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Es soll immer nur ein Release geben: alle aelteren samt Tag loeschen.
+          tags=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" --jq 'sort_by(.created_at) | reverse | .[].tag_name')
+          newest=${tags%%$'\n'*}
+          printf '%s\n' "$tags" | tail -n +2 | while read -r tag; do
+            [ -n "$tag" ] || continue
+            echo "Deleting old release $tag (newest: $newest)"
+            gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+          done
