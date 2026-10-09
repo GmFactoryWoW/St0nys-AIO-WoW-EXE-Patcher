@@ -2,17 +2,11 @@ name: Release
 
 # Bei jedem Push auf st0ny-main: ZIP des Projekts bauen (Ordner
 # St0nys-AIO-WoW-EXE-Patcher, ohne Dateien und Ordner, die mit einem Punkt
-# beginnen) und als neues Release veroeffentlichen.
+# beginnen) und als neues Release veroeffentlichen. Hat sich seit dem letzten
+# Release nur an Punkt-Dateien etwas geaendert, endet der Job ohne Release.
 on:
   push:
     branches: [st0ny-main]
-    # Pushes, die nur Punkt-Dateien aendern (z. B. .github, .gitattributes),
-    # erzeugen kein Release - deren Inhalt steckt ohnehin nicht im ZIP.
-    paths-ignore:
-      - '.*'
-      - '.*/**'
-      - '**/.*'
-      - '**/.*/**'
 
 permissions:
   contents: write
@@ -42,6 +36,14 @@ jobs:
           # Dieser Commit hat schon ein Release (z. B. erneuter Lauf): nichts zu tun.
           if git tag --points-at HEAD | grep '^v[0-9]' >/dev/null; then
             echo "Commit is already released."
+            exit 0
+          fi
+
+          # Seit dem letzten Release nur Punkt-Dateien geaendert (z. B. .github):
+          # kein neues Release - deren Inhalt steckt ohnehin nicht im ZIP.
+          prev=$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)
+          if [ -n "$prev" ] && ! git diff --name-only "$prev" HEAD | grep -v -E '(^|/)\.' >/dev/null; then
+            echo "Only dot files changed since $prev - no new release."
             exit 0
           fi
 
@@ -75,7 +77,6 @@ jobs:
 
           # Aenderungen: Commit-Titel seit dem letzten Release, ohne Merges, ohne
           # doppelte Titel und ohne Commits, die nur Punkt-Dateien aendern.
-          prev=$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)
           if [ -n "$prev" ]; then
             changes_title="Changes since the last release"
             changes=$(git log --no-merges --format='%H%x09%h%x09%s' "$prev..HEAD" |
